@@ -105,16 +105,24 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterStatePath();
+  const isPortal = pathname.startsWith("/portal");
 
   return (
     <QueryClientProvider client={queryClient}>
-      <Navbar />
+      {!isPortal && <Navbar />}
       <main className="min-h-screen">
         <Outlet />
       </main>
-      <Footer />
-      <WhatsAppButton />
+      {!isPortal && <Footer />}
+      {!isPortal && <WhatsAppButton />}
       <Toaster />
     </QueryClientProvider>
   );
+}
+
+function useRouterStatePath() {
+  // separate hook so we keep Route.useRouteContext usage above
+  const { useRouterState } = require("@tanstack/react-router") as typeof import("@tanstack/react-router");
+  return useRouterState({ select: (s) => s.location.pathname });
 }
