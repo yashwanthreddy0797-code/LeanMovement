@@ -1,0 +1,113 @@
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
+import { type ReactNode } from "react";
+import {
+  LayoutDashboard, LineChart, Dumbbell, Salad, ClipboardCheck,
+  MessageSquare, CreditCard, Users, LogOut, Sparkles,
+} from "lucide-react";
+import { setPortalUser, usePortalUser } from "@/lib/portal/auth";
+
+const nav = [
+  { to: "/portal/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { to: "/portal/progress", label: "Progress", icon: LineChart },
+  { to: "/portal/workouts", label: "Workouts", icon: Dumbbell },
+  { to: "/portal/nutrition", label: "Nutrition", icon: Salad },
+  { to: "/portal/checkin", label: "Check-in", icon: ClipboardCheck },
+  { to: "/portal/messages", label: "Messages", icon: MessageSquare },
+  { to: "/portal/payments", label: "Payments", icon: CreditCard },
+  { to: "/portal/community", label: "Community", icon: Users },
+] as const;
+
+export function ClientShell({ children }: { children: ReactNode }) {
+  const user = usePortalUser();
+  const router = useRouter();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+
+  const signOut = () => {
+    setPortalUser(null);
+    router.navigate({ to: "/portal/login" });
+  };
+
+  return (
+    <div className="portal-theme min-h-screen">
+      <div className="flex">
+        {/* Sidebar */}
+        <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
+          <div className="px-6 py-7">
+            <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold text-[#1A1F1B]">
+              <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white grid place-items-center text-xs">A</span>
+              Apex
+            </Link>
+          </div>
+          <nav className="flex-1 px-3 space-y-0.5">
+            {nav.map((n) => {
+              const Icon = n.icon;
+              const active = pathname === n.to;
+              return (
+                <Link
+                  key={n.to}
+                  to={n.to}
+                  className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors ${
+                    active
+                      ? "bg-[#EFF3EC] text-[#2A3E26] font-medium"
+                      : "text-[#4C534A] hover:bg-[#F2F0EB]"
+                  }`}
+                >
+                  <Icon size={17} strokeWidth={1.6} />
+                  {n.label}
+                </Link>
+              );
+            })}
+          </nav>
+          <div className="p-4 m-4 rounded-2xl bg-gradient-to-br from-[#EFF3EC] to-[#F8F5EF] border border-[var(--border)]">
+            <div className="flex items-center gap-2 text-[#3F5A3A] text-xs font-medium">
+              <Sparkles size={14} /> Premium 1:1
+            </div>
+            <p className="mt-2 text-xs text-[#6B6B66] leading-relaxed">Direct coach access, weekly check-ins, custom plans.</p>
+          </div>
+          <button
+            onClick={signOut}
+            className="m-4 flex items-center gap-2 text-xs text-[#6B6B66] hover:text-[#1A1F1B]"
+          >
+            <LogOut size={14} /> Sign out
+          </button>
+        </aside>
+
+        {/* Main */}
+        <div className="flex-1 lg:ml-64">
+          {/* Top bar */}
+          <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--background)]/70 border-b border-[var(--border)]">
+            <div className="px-5 lg:px-10 py-4 flex items-center justify-between">
+              <div className="lg:hidden font-semibold tracking-wider">APEX</div>
+              <div className="ml-auto flex items-center gap-3">
+                <span className="chip">Day 23 / 90</span>
+                <div className="w-9 h-9 rounded-full bg-[#EFE9DD] grid place-items-center text-xs font-semibold text-[#3F5A3A]">
+                  {user?.name?.[0] ?? "R"}
+                </div>
+              </div>
+            </div>
+          </header>
+
+          <main className="px-5 lg:px-10 py-8 lg:py-12 max-w-[1200px]">
+            {children}
+          </main>
+        </div>
+      </div>
+
+      {/* Mobile bottom nav */}
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-[var(--border)] bg-white/95 backdrop-blur-xl">
+        <div className="grid grid-cols-5">
+          {nav.slice(0, 5).map((n) => {
+            const Icon = n.icon;
+            const active = pathname === n.to;
+            return (
+              <Link key={n.to} to={n.to} className={`flex flex-col items-center gap-1 py-2.5 text-[10px] ${active ? "text-[#2A3E26]" : "text-[#6B6B66]"}`}>
+                <Icon size={18} strokeWidth={1.6} />
+                {n.label}
+              </Link>
+            );
+          })}
+        </div>
+      </nav>
+    </div>
+  );
+}
