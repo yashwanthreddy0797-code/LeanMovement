@@ -97,6 +97,13 @@ export function Navbar() {
             >
               Start Now
             </Link>
+            <Link
+              to="/portal/login"
+              onClick={() => setOpen(false)}
+              className="mt-3 inline-flex items-center justify-center px-6 py-4 border border-foreground/20 text-foreground text-sm font-semibold uppercase tracking-[0.2em]"
+            >
+              Client Login
+            </Link>
           </nav>
         </div>
       )}
