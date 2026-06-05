@@ -31,6 +31,10 @@ import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
 import { Route as PortalCommunityRouteImport } from './routes/portal.community'
 import { Route as PortalCheckinRouteImport } from './routes/portal.checkin'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as PortalCoachIndexRouteImport } from './routes/portal.coach.index'
+import { Route as PortalCoachClientsRouteImport } from './routes/portal.coach.clients'
+import { Route as PortalCoachCheckinsRouteImport } from './routes/portal.coach.checkins'
+import { Route as PortalCoachAnalyticsRouteImport } from './routes/portal.coach.analytics'
 
 const ResultsRoute = ResultsRouteImport.update({
   id: '/results',
@@ -142,6 +146,26 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalCoachIndexRoute = PortalCoachIndexRouteImport.update({
+  id: '/coach/',
+  path: '/coach/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachClientsRoute = PortalCoachClientsRouteImport.update({
+  id: '/coach/clients',
+  path: '/coach/clients',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachCheckinsRoute = PortalCoachCheckinsRouteImport.update({
+  id: '/coach/checkins',
+  path: '/coach/checkins',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachAnalyticsRoute = PortalCoachAnalyticsRouteImport.update({
+  id: '/coach/analytics',
+  path: '/coach/analytics',
+  getParentRoute: () => PortalRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -166,6 +190,10 @@ export interface FileRoutesByFullPath {
   '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog/': typeof BlogIndexRoute
   '/portal/': typeof PortalIndexRoute
+  '/portal/coach/analytics': typeof PortalCoachAnalyticsRoute
+  '/portal/coach/checkins': typeof PortalCoachCheckinsRoute
+  '/portal/coach/clients': typeof PortalCoachClientsRoute
+  '/portal/coach/': typeof PortalCoachIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -189,6 +217,10 @@ export interface FileRoutesByTo {
   '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog': typeof BlogIndexRoute
   '/portal': typeof PortalIndexRoute
+  '/portal/coach/analytics': typeof PortalCoachAnalyticsRoute
+  '/portal/coach/checkins': typeof PortalCoachCheckinsRoute
+  '/portal/coach/clients': typeof PortalCoachClientsRoute
+  '/portal/coach': typeof PortalCoachIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -214,6 +246,10 @@ export interface FileRoutesById {
   '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog/': typeof BlogIndexRoute
   '/portal/': typeof PortalIndexRoute
+  '/portal/coach/analytics': typeof PortalCoachAnalyticsRoute
+  '/portal/coach/checkins': typeof PortalCoachCheckinsRoute
+  '/portal/coach/clients': typeof PortalCoachClientsRoute
+  '/portal/coach/': typeof PortalCoachIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -240,6 +276,10 @@ export interface FileRouteTypes {
     | '/portal/workouts'
     | '/blog/'
     | '/portal/'
+    | '/portal/coach/analytics'
+    | '/portal/coach/checkins'
+    | '/portal/coach/clients'
+    | '/portal/coach/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -263,6 +303,10 @@ export interface FileRouteTypes {
     | '/portal/workouts'
     | '/blog'
     | '/portal'
+    | '/portal/coach/analytics'
+    | '/portal/coach/checkins'
+    | '/portal/coach/clients'
+    | '/portal/coach'
   id:
     | '__root__'
     | '/'
@@ -287,6 +331,10 @@ export interface FileRouteTypes {
     | '/portal/workouts'
     | '/blog/'
     | '/portal/'
+    | '/portal/coach/analytics'
+    | '/portal/coach/checkins'
+    | '/portal/coach/clients'
+    | '/portal/coach/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -458,6 +506,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/coach/': {
+      id: '/portal/coach/'
+      path: '/coach'
+      fullPath: '/portal/coach/'
+      preLoaderRoute: typeof PortalCoachIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/clients': {
+      id: '/portal/coach/clients'
+      path: '/coach/clients'
+      fullPath: '/portal/coach/clients'
+      preLoaderRoute: typeof PortalCoachClientsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/checkins': {
+      id: '/portal/coach/checkins'
+      path: '/coach/checkins'
+      fullPath: '/portal/coach/checkins'
+      preLoaderRoute: typeof PortalCoachCheckinsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/analytics': {
+      id: '/portal/coach/analytics'
+      path: '/coach/analytics'
+      fullPath: '/portal/coach/analytics'
+      preLoaderRoute: typeof PortalCoachAnalyticsRouteImport
+      parentRoute: typeof PortalRoute
+    }
   }
 }
 
@@ -474,6 +550,10 @@ interface PortalRouteChildren {
   PortalSignupRoute: typeof PortalSignupRoute
   PortalWorkoutsRoute: typeof PortalWorkoutsRoute
   PortalIndexRoute: typeof PortalIndexRoute
+  PortalCoachAnalyticsRoute: typeof PortalCoachAnalyticsRoute
+  PortalCoachCheckinsRoute: typeof PortalCoachCheckinsRoute
+  PortalCoachClientsRoute: typeof PortalCoachClientsRoute
+  PortalCoachIndexRoute: typeof PortalCoachIndexRoute
 }
 
 const PortalRouteChildren: PortalRouteChildren = {
@@ -489,6 +569,10 @@ const PortalRouteChildren: PortalRouteChildren = {
   PortalSignupRoute: PortalSignupRoute,
   PortalWorkoutsRoute: PortalWorkoutsRoute,
   PortalIndexRoute: PortalIndexRoute,
+  PortalCoachAnalyticsRoute: PortalCoachAnalyticsRoute,
+  PortalCoachCheckinsRoute: PortalCoachCheckinsRoute,
+  PortalCoachClientsRoute: PortalCoachClientsRoute,
+  PortalCoachIndexRoute: PortalCoachIndexRoute,
 }
 
 const PortalRouteWithChildren =
@@ -509,3 +593,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
