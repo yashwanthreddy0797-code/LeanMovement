@@ -2,7 +2,7 @@
 @source "../src";
 @import "tw-animate-css";
 
-@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;700&family=Inter:wght@300;400;500;600;700&family=Instrument+Serif&display=swap');
 
 @theme inline {
   --color-background: var(--background);
@@ -27,6 +27,7 @@
   --color-ring: var(--accent);
   --font-display: "Bebas Neue", sans-serif;
   --font-sans: "DM Sans", sans-serif;
+  --font-serif: "Instrument Serif", serif;
   --radius-sm: 2px;
   --radius-md: 4px;
   --radius-lg: 6px;
@@ -44,13 +45,59 @@
   --radius: 4px;
 }
 
+/* ====== PORTAL (light, calm, premium) ====== */
+.portal-theme {
+  --background: #F7F5F1;       /* warm off-white */
+  --surface: #FFFFFF;
+  --card: #FFFFFF;
+  --card-foreground: #1A1F1B;
+  --foreground: #1A1F1B;
+  --border: #E8E4DC;
+  --accent: #6F8F6A;           /* sage */
+  --muted-foreground: #6B6B66;
+  --radius: 16px;
+
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: "Inter", system-ui, sans-serif;
+  font-weight: 400;
+  background-image:
+    radial-gradient(1200px 600px at 0% 0%, rgba(196, 215, 188, 0.35), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(232, 224, 210, 0.5), transparent 55%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+.portal-theme h1, .portal-theme h2, .portal-theme h3, .portal-theme h4 {
+  font-family: "Instrument Serif", "Inter", serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+}
+
+.portal-theme .card-soft {
+  background: #FFFFFF;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(20, 30, 25, 0.03), 0 8px 24px -12px rgba(20, 30, 25, 0.08);
+}
+
+.portal-theme .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.25rem 0.65rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  background: #EFF3EC;
+  color: #3F5A3A;
+  letter-spacing: 0.02em;
+}
+
 @layer base {
-  * {
-    border-color: var(--color-border);
-  }
-  html {
-    scroll-behavior: smooth;
-  }
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; }
   body {
     background-color: var(--color-background);
     color: var(--color-foreground);
@@ -60,6 +107,9 @@
     background-image:
       radial-gradient(circle at 1px 1px, rgba(255,255,255,0.015) 1px, transparent 0);
     background-size: 3px 3px;
+  }
+  body:has(.portal-theme) {
+    background-image: none;
   }
   h1, h2, h3, h4, h5, h6, .font-display {
     font-family: var(--font-display);
