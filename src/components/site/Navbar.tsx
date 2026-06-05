@@ -54,6 +54,12 @@ export function Navbar() {
         </nav>
         <div className="flex items-center gap-3">
           <Link
+            to="/portal/login"
+            className="hidden md:inline-flex items-center px-4 py-2.5 border border-foreground/20 text-foreground text-xs font-semibold uppercase tracking-[0.2em] hover:border-accent hover:text-accent transition-colors"
+          >
+            Client Login
+          </Link>
+          <Link
             to="/book"
             className="hidden md:inline-flex items-center px-5 py-2.5 bg-accent text-background text-xs font-semibold uppercase tracking-[0.2em] hover:bg-accent/90 transition-colors"
           >
@@ -90,6 +96,13 @@ export function Navbar() {
               className="mt-8 inline-flex items-center justify-center px-6 py-4 bg-accent text-background text-sm font-semibold uppercase tracking-[0.2em]"
             >
               Start Now
+            </Link>
+            <Link
+              to="/portal/login"
+              onClick={() => setOpen(false)}
+              className="mt-3 inline-flex items-center justify-center px-6 py-4 border border-foreground/20 text-foreground text-sm font-semibold uppercase tracking-[0.2em]"
+            >
+              Client Login
             </Link>
           </nav>
         </div>

@@ -12,12 +12,29 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PortalRouteImport } from './routes/portal'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PortalIndexRouteImport } from './routes/portal.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
+import { Route as PortalWorkoutsRouteImport } from './routes/portal.workouts'
+import { Route as PortalSignupRouteImport } from './routes/portal.signup'
+import { Route as PortalProgressRouteImport } from './routes/portal.progress'
+import { Route as PortalPaymentsRouteImport } from './routes/portal.payments'
+import { Route as PortalNutritionRouteImport } from './routes/portal.nutrition'
+import { Route as PortalMessagesRouteImport } from './routes/portal.messages'
+import { Route as PortalLoginRouteImport } from './routes/portal.login'
+import { Route as PortalForgotRouteImport } from './routes/portal.forgot'
+import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
+import { Route as PortalCommunityRouteImport } from './routes/portal.community'
+import { Route as PortalCheckinRouteImport } from './routes/portal.checkin'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as PortalCoachIndexRouteImport } from './routes/portal.coach.index'
+import { Route as PortalCoachClientsRouteImport } from './routes/portal.coach.clients'
+import { Route as PortalCoachCheckinsRouteImport } from './routes/portal.coach.checkins'
+import { Route as PortalCoachAnalyticsRouteImport } from './routes/portal.coach.analytics'
 
 const ResultsRoute = ResultsRouteImport.update({
   id: '/results',
@@ -32,6 +49,11 @@ const ProgramsRoute = ProgramsRouteImport.update({
 const PricingRoute = PricingRouteImport.update({
   id: '/pricing',
   path: '/pricing',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -54,15 +76,95 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalIndexRoute = PortalIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => PortalRoute,
+} as any)
 const BlogIndexRoute = BlogIndexRouteImport.update({
   id: '/blog/',
   path: '/blog/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PortalWorkoutsRoute = PortalWorkoutsRouteImport.update({
+  id: '/workouts',
+  path: '/workouts',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalSignupRoute = PortalSignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProgressRoute = PortalProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPaymentsRoute = PortalPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalNutritionRoute = PortalNutritionRouteImport.update({
+  id: '/nutrition',
+  path: '/nutrition',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalMessagesRoute = PortalMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalLoginRoute = PortalLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalForgotRoute = PortalForgotRouteImport.update({
+  id: '/forgot',
+  path: '/forgot',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDashboardRoute = PortalDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCommunityRoute = PortalCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCheckinRoute = PortalCheckinRouteImport.update({
+  id: '/checkin',
+  path: '/checkin',
+  getParentRoute: () => PortalRoute,
+} as any)
 const BlogSlugRoute = BlogSlugRouteImport.update({
   id: '/blog/$slug',
   path: '/blog/$slug',
   getParentRoute: () => rootRouteImport,
+} as any)
+const PortalCoachIndexRoute = PortalCoachIndexRouteImport.update({
+  id: '/coach/',
+  path: '/coach/',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachClientsRoute = PortalCoachClientsRouteImport.update({
+  id: '/coach/clients',
+  path: '/coach/clients',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachCheckinsRoute = PortalCoachCheckinsRouteImport.update({
+  id: '/coach/checkins',
+  path: '/coach/checkins',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachAnalyticsRoute = PortalCoachAnalyticsRouteImport.update({
+  id: '/coach/analytics',
+  path: '/coach/analytics',
+  getParentRoute: () => PortalRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -70,11 +172,28 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
   '/results': typeof ResultsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/portal/checkin': typeof PortalCheckinRoute
+  '/portal/community': typeof PortalCommunityRoute
+  '/portal/dashboard': typeof PortalDashboardRoute
+  '/portal/forgot': typeof PortalForgotRoute
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/messages': typeof PortalMessagesRoute
+  '/portal/nutrition': typeof PortalNutritionRoute
+  '/portal/payments': typeof PortalPaymentsRoute
+  '/portal/progress': typeof PortalProgressRoute
+  '/portal/signup': typeof PortalSignupRoute
+  '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog/': typeof BlogIndexRoute
+  '/portal/': typeof PortalIndexRoute
+  '/portal/coach/analytics': typeof PortalCoachAnalyticsRoute
+  '/portal/coach/checkins': typeof PortalCoachCheckinsRoute
+  '/portal/coach/clients': typeof PortalCoachClientsRoute
+  '/portal/coach/': typeof PortalCoachIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -85,7 +204,23 @@ export interface FileRoutesByTo {
   '/programs': typeof ProgramsRoute
   '/results': typeof ResultsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/portal/checkin': typeof PortalCheckinRoute
+  '/portal/community': typeof PortalCommunityRoute
+  '/portal/dashboard': typeof PortalDashboardRoute
+  '/portal/forgot': typeof PortalForgotRoute
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/messages': typeof PortalMessagesRoute
+  '/portal/nutrition': typeof PortalNutritionRoute
+  '/portal/payments': typeof PortalPaymentsRoute
+  '/portal/progress': typeof PortalProgressRoute
+  '/portal/signup': typeof PortalSignupRoute
+  '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog': typeof BlogIndexRoute
+  '/portal': typeof PortalIndexRoute
+  '/portal/coach/analytics': typeof PortalCoachAnalyticsRoute
+  '/portal/coach/checkins': typeof PortalCoachCheckinsRoute
+  '/portal/coach/clients': typeof PortalCoachClientsRoute
+  '/portal/coach': typeof PortalCoachIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,11 +228,28 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/book': typeof BookRoute
   '/contact': typeof ContactRoute
+  '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
   '/results': typeof ResultsRoute
   '/blog/$slug': typeof BlogSlugRoute
+  '/portal/checkin': typeof PortalCheckinRoute
+  '/portal/community': typeof PortalCommunityRoute
+  '/portal/dashboard': typeof PortalDashboardRoute
+  '/portal/forgot': typeof PortalForgotRoute
+  '/portal/login': typeof PortalLoginRoute
+  '/portal/messages': typeof PortalMessagesRoute
+  '/portal/nutrition': typeof PortalNutritionRoute
+  '/portal/payments': typeof PortalPaymentsRoute
+  '/portal/progress': typeof PortalProgressRoute
+  '/portal/signup': typeof PortalSignupRoute
+  '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog/': typeof BlogIndexRoute
+  '/portal/': typeof PortalIndexRoute
+  '/portal/coach/analytics': typeof PortalCoachAnalyticsRoute
+  '/portal/coach/checkins': typeof PortalCoachCheckinsRoute
+  '/portal/coach/clients': typeof PortalCoachClientsRoute
+  '/portal/coach/': typeof PortalCoachIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -106,11 +258,28 @@ export interface FileRouteTypes {
     | '/about'
     | '/book'
     | '/contact'
+    | '/portal'
     | '/pricing'
     | '/programs'
     | '/results'
     | '/blog/$slug'
+    | '/portal/checkin'
+    | '/portal/community'
+    | '/portal/dashboard'
+    | '/portal/forgot'
+    | '/portal/login'
+    | '/portal/messages'
+    | '/portal/nutrition'
+    | '/portal/payments'
+    | '/portal/progress'
+    | '/portal/signup'
+    | '/portal/workouts'
     | '/blog/'
+    | '/portal/'
+    | '/portal/coach/analytics'
+    | '/portal/coach/checkins'
+    | '/portal/coach/clients'
+    | '/portal/coach/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -121,18 +290,51 @@ export interface FileRouteTypes {
     | '/programs'
     | '/results'
     | '/blog/$slug'
+    | '/portal/checkin'
+    | '/portal/community'
+    | '/portal/dashboard'
+    | '/portal/forgot'
+    | '/portal/login'
+    | '/portal/messages'
+    | '/portal/nutrition'
+    | '/portal/payments'
+    | '/portal/progress'
+    | '/portal/signup'
+    | '/portal/workouts'
     | '/blog'
+    | '/portal'
+    | '/portal/coach/analytics'
+    | '/portal/coach/checkins'
+    | '/portal/coach/clients'
+    | '/portal/coach'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/book'
     | '/contact'
+    | '/portal'
     | '/pricing'
     | '/programs'
     | '/results'
     | '/blog/$slug'
+    | '/portal/checkin'
+    | '/portal/community'
+    | '/portal/dashboard'
+    | '/portal/forgot'
+    | '/portal/login'
+    | '/portal/messages'
+    | '/portal/nutrition'
+    | '/portal/payments'
+    | '/portal/progress'
+    | '/portal/signup'
+    | '/portal/workouts'
     | '/blog/'
+    | '/portal/'
+    | '/portal/coach/analytics'
+    | '/portal/coach/checkins'
+    | '/portal/coach/clients'
+    | '/portal/coach/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -140,6 +342,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   BookRoute: typeof BookRoute
   ContactRoute: typeof ContactRoute
+  PortalRoute: typeof PortalRouteWithChildren
   PricingRoute: typeof PricingRoute
   ProgramsRoute: typeof ProgramsRoute
   ResultsRoute: typeof ResultsRoute
@@ -170,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -198,12 +408,96 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/': {
+      id: '/portal/'
+      path: '/'
+      fullPath: '/portal/'
+      preLoaderRoute: typeof PortalIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/blog/': {
       id: '/blog/'
       path: '/blog'
       fullPath: '/blog/'
       preLoaderRoute: typeof BlogIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/portal/workouts': {
+      id: '/portal/workouts'
+      path: '/workouts'
+      fullPath: '/portal/workouts'
+      preLoaderRoute: typeof PortalWorkoutsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/signup': {
+      id: '/portal/signup'
+      path: '/signup'
+      fullPath: '/portal/signup'
+      preLoaderRoute: typeof PortalSignupRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/progress': {
+      id: '/portal/progress'
+      path: '/progress'
+      fullPath: '/portal/progress'
+      preLoaderRoute: typeof PortalProgressRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/payments': {
+      id: '/portal/payments'
+      path: '/payments'
+      fullPath: '/portal/payments'
+      preLoaderRoute: typeof PortalPaymentsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/nutrition': {
+      id: '/portal/nutrition'
+      path: '/nutrition'
+      fullPath: '/portal/nutrition'
+      preLoaderRoute: typeof PortalNutritionRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/messages': {
+      id: '/portal/messages'
+      path: '/messages'
+      fullPath: '/portal/messages'
+      preLoaderRoute: typeof PortalMessagesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/login': {
+      id: '/portal/login'
+      path: '/login'
+      fullPath: '/portal/login'
+      preLoaderRoute: typeof PortalLoginRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/forgot': {
+      id: '/portal/forgot'
+      path: '/forgot'
+      fullPath: '/portal/forgot'
+      preLoaderRoute: typeof PortalForgotRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/dashboard': {
+      id: '/portal/dashboard'
+      path: '/dashboard'
+      fullPath: '/portal/dashboard'
+      preLoaderRoute: typeof PortalDashboardRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/community': {
+      id: '/portal/community'
+      path: '/community'
+      fullPath: '/portal/community'
+      preLoaderRoute: typeof PortalCommunityRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/checkin': {
+      id: '/portal/checkin'
+      path: '/checkin'
+      fullPath: '/portal/checkin'
+      preLoaderRoute: typeof PortalCheckinRouteImport
+      parentRoute: typeof PortalRoute
     }
     '/blog/$slug': {
       id: '/blog/$slug'
@@ -212,14 +506,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/portal/coach/': {
+      id: '/portal/coach/'
+      path: '/coach'
+      fullPath: '/portal/coach/'
+      preLoaderRoute: typeof PortalCoachIndexRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/clients': {
+      id: '/portal/coach/clients'
+      path: '/coach/clients'
+      fullPath: '/portal/coach/clients'
+      preLoaderRoute: typeof PortalCoachClientsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/checkins': {
+      id: '/portal/coach/checkins'
+      path: '/coach/checkins'
+      fullPath: '/portal/coach/checkins'
+      preLoaderRoute: typeof PortalCoachCheckinsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/analytics': {
+      id: '/portal/coach/analytics'
+      path: '/coach/analytics'
+      fullPath: '/portal/coach/analytics'
+      preLoaderRoute: typeof PortalCoachAnalyticsRouteImport
+      parentRoute: typeof PortalRoute
+    }
   }
 }
+
+interface PortalRouteChildren {
+  PortalCheckinRoute: typeof PortalCheckinRoute
+  PortalCommunityRoute: typeof PortalCommunityRoute
+  PortalDashboardRoute: typeof PortalDashboardRoute
+  PortalForgotRoute: typeof PortalForgotRoute
+  PortalLoginRoute: typeof PortalLoginRoute
+  PortalMessagesRoute: typeof PortalMessagesRoute
+  PortalNutritionRoute: typeof PortalNutritionRoute
+  PortalPaymentsRoute: typeof PortalPaymentsRoute
+  PortalProgressRoute: typeof PortalProgressRoute
+  PortalSignupRoute: typeof PortalSignupRoute
+  PortalWorkoutsRoute: typeof PortalWorkoutsRoute
+  PortalIndexRoute: typeof PortalIndexRoute
+  PortalCoachAnalyticsRoute: typeof PortalCoachAnalyticsRoute
+  PortalCoachCheckinsRoute: typeof PortalCoachCheckinsRoute
+  PortalCoachClientsRoute: typeof PortalCoachClientsRoute
+  PortalCoachIndexRoute: typeof PortalCoachIndexRoute
+}
+
+const PortalRouteChildren: PortalRouteChildren = {
+  PortalCheckinRoute: PortalCheckinRoute,
+  PortalCommunityRoute: PortalCommunityRoute,
+  PortalDashboardRoute: PortalDashboardRoute,
+  PortalForgotRoute: PortalForgotRoute,
+  PortalLoginRoute: PortalLoginRoute,
+  PortalMessagesRoute: PortalMessagesRoute,
+  PortalNutritionRoute: PortalNutritionRoute,
+  PortalPaymentsRoute: PortalPaymentsRoute,
+  PortalProgressRoute: PortalProgressRoute,
+  PortalSignupRoute: PortalSignupRoute,
+  PortalWorkoutsRoute: PortalWorkoutsRoute,
+  PortalIndexRoute: PortalIndexRoute,
+  PortalCoachAnalyticsRoute: PortalCoachAnalyticsRoute,
+  PortalCoachCheckinsRoute: PortalCoachCheckinsRoute,
+  PortalCoachClientsRoute: PortalCoachClientsRoute,
+  PortalCoachIndexRoute: PortalCoachIndexRoute,
+}
+
+const PortalRouteWithChildren =
+  PortalRoute._addFileChildren(PortalRouteChildren)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BookRoute: BookRoute,
   ContactRoute: ContactRoute,
+  PortalRoute: PortalRouteWithChildren,
   PricingRoute: PricingRoute,
   ProgramsRoute: ProgramsRoute,
   ResultsRoute: ResultsRoute,
@@ -229,13 +593,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
