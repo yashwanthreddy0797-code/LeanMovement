@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -105,7 +106,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
-  const pathname = useRouterStatePath();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isPortal = pathname.startsWith("/portal");
 
   return (
@@ -119,10 +120,4 @@ function RootComponent() {
       <Toaster />
     </QueryClientProvider>
   );
-}
-
-function useRouterStatePath() {
-  // separate hook so we keep Route.useRouteContext usage above
-  const { useRouterState } = require("@tanstack/react-router") as typeof import("@tanstack/react-router");
-  return useRouterState({ select: (s) => s.location.pathname });
 }
