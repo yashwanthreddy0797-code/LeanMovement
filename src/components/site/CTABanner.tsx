@@ -35,7 +35,7 @@ export function CTABanner({
           <p className="mt-6 max-w-xl text-foreground/70">{subtitle}</p>
           <Link
             to={ctaTo}
-            className="mt-10 inline-flex items-center gap-3 px-8 py-4 bg-accent text-background text-sm font-semibold uppercase tracking-[0.2em] hover:bg-foreground transition-colors"
+            className="mt-10 btn-pill-accent"
           >
             {ctaText} <ArrowUpRight size={18} />
           </Link>
