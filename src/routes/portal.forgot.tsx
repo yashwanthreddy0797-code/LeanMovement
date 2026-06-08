@@ -12,7 +12,7 @@ function ForgotPage() {
     <div className="portal-theme min-h-screen flex items-center justify-center p-6 sm:p-12">
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center gap-2 mb-10 text-sm tracking-[0.2em] uppercase font-semibold">
-          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
+          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
           LeanMovement
         </Link>
         <h2 className="text-3xl text-[#1A1F1B]">Reset your password</h2>

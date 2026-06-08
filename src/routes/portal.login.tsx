@@ -25,7 +25,7 @@ function LoginPage() {
       {/* Left brand panel */}
       <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-[#EFF3EC] via-[#F8F5EF] to-[#F2EFE7] relative overflow-hidden">
         <Link to="/" className="flex items-center gap-2 text-sm tracking-[0.2em] uppercase font-semibold">
-          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
+          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
           LeanMovement
         </Link>
         <div>
@@ -44,7 +44,7 @@ function LoginPage() {
       <div className="flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-sm">
           <Link to="/" className="lg:hidden flex items-center gap-2 mb-10 text-sm tracking-[0.2em] uppercase font-semibold">
-            <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
+            <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
             LeanMovement
           </Link>
           <div className="text-[11px] uppercase tracking-[0.2em] text-[#6B6B66] mb-2">Welcome back</div>

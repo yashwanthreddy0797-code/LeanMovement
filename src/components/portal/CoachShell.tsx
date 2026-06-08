@@ -26,7 +26,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
             <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold">
-              <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
+              <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
               LeanMovement Studio
             </Link>
             <div className="mt-2 text-[11px] uppercase tracking-widest text-[#6B6B66]">Coach Console</div>

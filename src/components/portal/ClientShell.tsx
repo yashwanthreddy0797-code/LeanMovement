@@ -34,7 +34,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
             <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold text-[#1A1F1B]">
-              <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white grid place-items-center text-xs">A</span>
+              <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white grid place-items-center text-xs">L</span>
               LeanMovement
             </Link>
           </div>
