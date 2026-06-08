@@ -16,7 +16,7 @@ export function PlanCard({ plan }: { plan: Plan }) {
   const isPopular = plan.popular;
   return (
     <div
-      className={`group relative flex flex-col p-8 md:p-10 border transition-all duration-300 ${
+      className={`group relative flex flex-col p-8 md:p-10 border transition-all duration-500 hover:-translate-y-1 ${
         isPopular
           ? "bg-accent text-background border-accent"
           : "bg-card border-border hover:border-accent"
@@ -51,10 +51,10 @@ export function PlanCard({ plan }: { plan: Plan }) {
         <Link
           to="/pricing"
           aria-label={`Choose ${plan.name}`}
-          className={`p-3 border transition-colors ${
+          className={`w-12 h-12 rounded-full border grid place-items-center transition-all ${
             isPopular
               ? "border-background hover:bg-background hover:text-accent"
-              : "border-border group-hover:border-accent group-hover:text-accent"
+              : "border-border group-hover:border-accent group-hover:bg-accent group-hover:text-white"
           }`}
         >
           <ArrowRight size={18} />

@@ -43,9 +43,9 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative min-h-screen flex items-end overflow-hidden">
-        <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-50" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-background/30" />
-        <div className="absolute inset-0 grid-overlay opacity-40" />
+        <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-60 img-up" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/20" />
+        <div className="absolute inset-0 grid-overlay opacity-30" />
         <div className="container-x relative pb-20 pt-32 w-full">
           <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-end">
             <FadeUp>
@@ -61,10 +61,10 @@ function HomePage() {
                 No fluff, no fads — just results that last.
               </p>
               <div className="mt-10 flex flex-wrap gap-3">
-                <Link to="/pricing" className="inline-flex items-center gap-2 px-8 py-4 bg-accent text-background text-xs font-semibold uppercase tracking-[0.2em] hover:bg-foreground transition-colors">
+                <Link to="/pricing" className="btn-pill-accent">
                   View Plans <ArrowUpRight size={16} />
                 </Link>
-                <Link to="/about" className="inline-flex items-center gap-2 px-8 py-4 border border-foreground/30 text-xs font-semibold uppercase tracking-[0.2em] hover:border-accent hover:text-accent transition-colors">
+                <Link to="/about" className="btn-pill-ghost">
                   Our Method
                 </Link>
               </div>
@@ -92,7 +92,7 @@ function HomePage() {
             <div className="grid grid-cols-2 gap-3">
               {MOSAIC.map((src, i) => (
                 <div key={i} className={`overflow-hidden ${i % 2 === 0 ? "aspect-[3/4]" : "aspect-square mt-12"}`}>
-                  <img src={src} alt="" loading="lazy" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                  <img src={src} alt="" loading="lazy" className="img-up w-full h-full object-cover hover:scale-[1.04]" />
                 </div>
               ))}
             </div>

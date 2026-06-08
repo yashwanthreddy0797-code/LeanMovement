@@ -55,15 +55,15 @@ export function Navbar() {
         <div className="flex items-center gap-3">
           <Link
             to="/portal/login"
-            className="hidden md:inline-flex items-center px-4 py-2.5 border border-foreground/20 text-foreground text-xs font-semibold uppercase tracking-[0.2em] hover:border-accent hover:text-accent transition-colors"
+            className="hidden md:inline-flex btn-pill-ghost"
           >
             Client Login
           </Link>
           <Link
             to="/book"
-            className="hidden md:inline-flex items-center px-5 py-2.5 bg-accent text-background text-xs font-semibold uppercase tracking-[0.2em] hover:bg-accent/90 transition-colors"
+            className="hidden md:inline-flex btn-pill-accent"
           >
-            Start Now
+            Enquire Now
           </Link>
           <button
             className="lg:hidden text-foreground p-2"
@@ -76,7 +76,7 @@ export function Navbar() {
       </div>
 
       {open && (
-        <div className="lg:hidden fixed inset-0 top-20 bg-background z-40 animate-fade-in">
+        <div className="lg:hidden fixed inset-0 top-20 bg-background z-40 animate-fade-in overflow-y-auto">
           <nav className="flex flex-col container-x py-10 gap-1">
             {links.map((l) => (
               <Link
@@ -93,14 +93,14 @@ export function Navbar() {
             <Link
               to="/book"
               onClick={() => setOpen(false)}
-              className="mt-8 inline-flex items-center justify-center px-6 py-4 bg-accent text-background text-sm font-semibold uppercase tracking-[0.2em]"
+              className="mt-8 btn-pill-accent justify-center"
             >
-              Start Now
+              Enquire Now
             </Link>
             <Link
               to="/portal/login"
               onClick={() => setOpen(false)}
-              className="mt-3 inline-flex items-center justify-center px-6 py-4 border border-foreground/20 text-foreground text-sm font-semibold uppercase tracking-[0.2em]"
+              className="mt-3 btn-pill-ghost justify-center"
             >
               Client Login
             </Link>
