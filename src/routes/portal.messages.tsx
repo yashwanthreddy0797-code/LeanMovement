@@ -5,7 +5,7 @@ import { messages as initialMessages } from "@/lib/portal/data";
 import { Mic, Paperclip, Send } from "lucide-react";
 
 export const Route = createFileRoute("/portal/messages")({
-  head: () => ({ meta: [{ title: "Messages — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Messages — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Messages /></ClientShell>,
 });
 
@@ -29,7 +29,7 @@ function Messages() {
         <div className="flex-1 overflow-y-auto">
           {[
             { name: "Arjun Kapoor", role: "Head Coach", last: "Don't forget your check-in 🙌", time: "10:40 AM", active: true, unread: 1 },
-            { name: "Apex Community", role: "Group", last: "Karan: Just hit 180kg deadlift!", time: "Yest", active: false },
+            { name: "LeanMovement Community", role: "Group", last: "Karan: Just hit 180kg deadlift!", time: "Yest", active: false },
             { name: "Nutrition Team", role: "Support", last: "Your new meal plan is ready", time: "Mon", active: false },
           ].map((c) => (
             <div key={c.name} className={`px-4 py-3.5 flex items-start gap-3 cursor-pointer border-b border-[var(--border)] ${c.active ? "bg-[#EFF3EC]" : "hover:bg-white"}`}>

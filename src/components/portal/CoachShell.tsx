@@ -26,8 +26,8 @@ export function CoachShell({ children }: { children: ReactNode }) {
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
             <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold">
-              <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
-              Apex Studio
+              <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
+              LeanMovement Studio
             </Link>
             <div className="mt-2 text-[11px] uppercase tracking-widest text-[#6B6B66]">Coach Console</div>
           </div>
@@ -66,7 +66,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
         <div className="flex-1 lg:ml-64">
           <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--background)]/70 border-b border-[var(--border)]">
             <div className="px-5 lg:px-10 py-4 flex items-center justify-between">
-              <div className="lg:hidden font-semibold tracking-wider">APEX · COACH</div>
+              <div className="lg:hidden font-semibold tracking-wider">LEANMOVEMENT · COACH</div>
               <div className="ml-auto flex items-center gap-3">
                 <button className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#4C534A] hover:bg-white/60">
                   <Settings size={13} /> Settings

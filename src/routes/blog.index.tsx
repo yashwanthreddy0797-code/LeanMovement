@@ -7,9 +7,9 @@ import { POSTS } from "@/lib/posts";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "Journal — APEX Coaching" },
+      { title: "Journal — LEANMOVEMENT Coaching" },
       { name: "description", content: "Notes on training, nutrition, and recovery — for the modern Indian lifter. No clickbait, no fluff." },
-      { property: "og:title", content: "Journal — APEX Coaching" },
+      { property: "og:title", content: "Journal — LEANMOVEMENT Coaching" },
       { property: "og:description", content: "Long-form notes on training and nutrition." },
     ],
   }),

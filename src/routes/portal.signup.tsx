@@ -3,7 +3,7 @@ import { useState } from "react";
 import { setPortalUser } from "@/lib/portal/auth";
 
 export const Route = createFileRoute("/portal/signup")({
-  head: () => ({ meta: [{ title: "Request Access — APEX" }] }),
+  head: () => ({ meta: [{ title: "Request Access — LEANMOVEMENT" }] }),
   component: SignupPage,
 });
 
@@ -20,8 +20,8 @@ function SignupPage() {
     <div className="portal-theme min-h-screen flex items-center justify-center p-6 sm:p-12">
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center gap-2 mb-10 text-sm tracking-[0.2em] uppercase font-semibold">
-          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
-          Apex
+          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
+          LeanMovement
         </Link>
         <div className="text-[11px] uppercase tracking-[0.2em] text-[#6B6B66] mb-2">Begin your journey</div>
         <h2 className="text-3xl text-[#1A1F1B]">Create your account</h2>

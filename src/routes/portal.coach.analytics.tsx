@@ -5,7 +5,7 @@ import { coachRevenue, coachSignups } from "@/lib/portal/data";
 import { Bar, BarChart, CartesianGrid, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis, Legend } from "recharts";
 
 export const Route = createFileRoute("/portal/coach/analytics")({
-  head: () => ({ meta: [{ title: "Analytics — APEX Coach" }] }),
+  head: () => ({ meta: [{ title: "Analytics — LEANMOVEMENT Coach" }] }),
   component: () => <CoachShell><Analytics /></CoachShell>,
 });
 

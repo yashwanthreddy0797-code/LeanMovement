@@ -15,10 +15,10 @@ import {
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — APEX Coaching" },
+      { title: "Contact — LEANMOVEMENT Coaching" },
       { name: "description", content: "Get in touch. Email, WhatsApp, or drop in via Hyderabad. We reply within 2 hours during business hours." },
-      { property: "og:title", content: "Contact — APEX Coaching" },
-      { property: "og:description", content: "Get in touch with APEX Coaching." },
+      { property: "og:title", content: "Contact — LEANMOVEMENT Coaching" },
+      { property: "og:description", content: "Get in touch with LEANMOVEMENT Coaching." },
     ],
   }),
   component: ContactPage,

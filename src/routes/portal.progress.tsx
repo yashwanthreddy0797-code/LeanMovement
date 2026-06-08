@@ -5,7 +5,7 @@ import { weightTrend, waistTrend } from "@/lib/portal/data";
 import { Area, AreaChart, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 export const Route = createFileRoute("/portal/progress")({
-  head: () => ({ meta: [{ title: "Progress — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Progress — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Progress /></ClientShell>,
 });
 

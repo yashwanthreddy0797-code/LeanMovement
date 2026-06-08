@@ -13,9 +13,9 @@ import {
 export const Route = createFileRoute("/programs")({
   head: () => ({
     meta: [
-      { title: "The Programs — APEX Coaching" },
+      { title: "The Programs — LEANMOVEMENT Coaching" },
       { name: "description", content: "Four tiers of online coaching, from Foundation to VIP. Built for serious results — no templates, no shortcuts." },
-      { property: "og:title", content: "The Programs — APEX Coaching" },
+      { property: "og:title", content: "The Programs — LEANMOVEMENT Coaching" },
       { property: "og:description", content: "Four tiers of premium online fitness coaching." },
     ],
   }),

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { setPortalUser } from "@/lib/portal/auth";
 
 export const Route = createFileRoute("/portal/login")({
-  head: () => ({ meta: [{ title: "Client Login — APEX" }] }),
+  head: () => ({ meta: [{ title: "Client Login — LEANMOVEMENT" }] }),
   component: LoginPage,
 });
 
@@ -25,8 +25,8 @@ function LoginPage() {
       {/* Left brand panel */}
       <div className="hidden lg:flex flex-col justify-between p-12 bg-gradient-to-br from-[#EFF3EC] via-[#F8F5EF] to-[#F2EFE7] relative overflow-hidden">
         <Link to="/" className="flex items-center gap-2 text-sm tracking-[0.2em] uppercase font-semibold">
-          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
-          Apex
+          <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
+          LeanMovement
         </Link>
         <div>
           <h1 className="text-5xl xl:text-6xl text-[#1A1F1B] leading-[1.05] max-w-md">
@@ -37,15 +37,15 @@ function LoginPage() {
             Sign in to your personalised coaching dashboard — workouts, nutrition, check-ins and direct access to your coach, all in one calm space.
           </p>
         </div>
-        <div className="text-xs text-[#6B6B66]">© APEX Performance · Private members area</div>
+        <div className="text-xs text-[#6B6B66]">© LEANMOVEMENT Performance · Private members area</div>
       </div>
 
       {/* Form */}
       <div className="flex items-center justify-center p-6 sm:p-12">
         <div className="w-full max-w-sm">
           <Link to="/" className="lg:hidden flex items-center gap-2 mb-10 text-sm tracking-[0.2em] uppercase font-semibold">
-            <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
-            Apex
+            <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
+            LeanMovement
           </Link>
           <div className="text-[11px] uppercase tracking-[0.2em] text-[#6B6B66] mb-2">Welcome back</div>
           <h2 className="text-3xl text-[#1A1F1B]">Sign in to your portal</h2>
@@ -81,7 +81,7 @@ function LoginPage() {
           </form>
 
           <p className="mt-6 text-xs text-[#6B6B66] text-center">
-            New to Apex? <Link to="/portal/signup" className="text-[#3F5A3A] font-medium hover:underline">Request access</Link>
+            New to LeanMovement? <Link to="/portal/signup" className="text-[#3F5A3A] font-medium hover:underline">Request access</Link>
           </p>
           <p className="mt-8 text-[10px] text-center text-[#9A9A95] leading-relaxed">
             Demo mode — credentials aren't validated. Pick a role and continue.

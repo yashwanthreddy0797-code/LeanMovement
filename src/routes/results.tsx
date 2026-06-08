@@ -8,9 +8,9 @@ import { CTABanner } from "@/components/site/CTABanner";
 export const Route = createFileRoute("/results")({
   head: () => ({
     meta: [
-      { title: "Results — APEX Coaching" },
+      { title: "Results — LEANMOVEMENT Coaching" },
       { name: "description", content: "Real people. Real transformations. See what 12 weeks of focused coaching produces." },
-      { property: "og:title", content: "Results — APEX Coaching" },
+      { property: "og:title", content: "Results — LEANMOVEMENT Coaching" },
       { property: "og:description", content: "500+ clients. Real transformations. Real numbers." },
     ],
   }),
@@ -46,7 +46,7 @@ const TESTIMONIALS = [
   { name: "Rohan K.", role: "Founder", quote: "I've worked with three coaches before. None came close. The check-ins were sharp, the program adapted weekly.", result: "+6kg lean mass" },
   { name: "Neha R.", role: "Doctor", quote: "Programs that respect a 70-hour work week. I finally have a plan I can actually run.", result: "−7kg sustained" },
   { name: "Vikram P.", role: "Lawyer", quote: "The VIP tier was worth every rupee. Direct access, real attention, results that hold.", result: "+8kg lean" },
-  { name: "Anjali D.", role: "Founder", quote: "Six months in and the habits feel permanent. That's the part no one promises but APEX delivered.", result: "Sustainable change" },
+  { name: "Anjali D.", role: "Founder", quote: "Six months in and the habits feel permanent. That's the part no one promises but LEANMOVEMENT delivered.", result: "Sustainable change" },
 ];
 
 const STATS = [
