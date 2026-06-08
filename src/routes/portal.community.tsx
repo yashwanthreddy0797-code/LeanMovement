@@ -5,7 +5,7 @@ import { communityFeed } from "@/lib/portal/data";
 import { Heart, MessageCircle, Share2 } from "lucide-react";
 
 export const Route = createFileRoute("/portal/community")({
-  head: () => ({ meta: [{ title: "Community — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Community — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Community /></ClientShell>,
 });
 
@@ -15,7 +15,7 @@ function Community() {
     <div className="space-y-10 max-w-2xl mx-auto">
       <div>
         <div className="text-[11px] uppercase tracking-[0.2em] text-[#6B6B66] mb-1.5">Members only</div>
-        <h1 className="text-4xl md:text-5xl">The Apex circle</h1>
+        <h1 className="text-4xl md:text-5xl">The LeanMovement circle</h1>
         <p className="mt-2 text-[#6B6B66]">A private space for clients to share wins, ask questions, and lift each other up.</p>
       </div>
 

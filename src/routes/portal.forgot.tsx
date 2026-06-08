@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 
 export const Route = createFileRoute("/portal/forgot")({
-  head: () => ({ meta: [{ title: "Reset Password — APEX" }] }),
+  head: () => ({ meta: [{ title: "Reset Password — LEANMOVEMENT" }] }),
   component: ForgotPage,
 });
 
@@ -13,7 +13,7 @@ function ForgotPage() {
       <div className="w-full max-w-md">
         <Link to="/" className="flex items-center gap-2 mb-10 text-sm tracking-[0.2em] uppercase font-semibold">
           <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">A</span>
-          Apex
+          LeanMovement
         </Link>
         <h2 className="text-3xl text-[#1A1F1B]">Reset your password</h2>
         <p className="mt-2 text-sm text-[#6B6B66]">Enter the email associated with your account. We'll send you a secure reset link.</p>

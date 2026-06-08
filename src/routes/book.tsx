@@ -6,9 +6,9 @@ import { FadeUp } from "@/components/site/FadeUp";
 export const Route = createFileRoute("/book")({
   head: () => ({
     meta: [
-      { title: "Book a Call — APEX Coaching" },
+      { title: "Book a Call — LEANMOVEMENT Coaching" },
       { name: "description", content: "Book a free 15-minute consultation. No obligation. We figure out if we're the right fit before any money changes hands." },
-      { property: "og:title", content: "Book a Free Call — APEX Coaching" },
+      { property: "og:title", content: "Book a Free Call — LEANMOVEMENT Coaching" },
       { property: "og:description", content: "Free 15-min consultation. No sales pitch." },
     ],
   }),

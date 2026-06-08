@@ -35,7 +35,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
           <div className="px-6 py-7">
             <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold text-[#1A1F1B]">
               <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white grid place-items-center text-xs">A</span>
-              Apex
+              LeanMovement
             </Link>
           </div>
           <nav className="flex-1 px-3 space-y-0.5">
@@ -77,7 +77,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
           {/* Top bar */}
           <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--background)]/70 border-b border-[var(--border)]">
             <div className="px-5 lg:px-10 py-4 flex items-center justify-between">
-              <div className="lg:hidden font-semibold tracking-wider">APEX</div>
+              <div className="lg:hidden font-semibold tracking-wider">LEANMOVEMENT</div>
               <div className="ml-auto flex items-center gap-3">
                 <span className="chip">Day 23 / 90</span>
                 <div className="w-9 h-9 rounded-full bg-[#EFE9DD] grid place-items-center text-xs font-semibold text-[#3F5A3A]">

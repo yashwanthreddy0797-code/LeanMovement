@@ -4,7 +4,7 @@ import { ProgressRing, SectionTitle, SoftCard } from "@/components/portal/ui";
 import { meals, nutritionConsumed, nutritionTargets } from "@/lib/portal/data";
 
 export const Route = createFileRoute("/portal/nutrition")({
-  head: () => ({ meta: [{ title: "Nutrition — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Nutrition — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Nutrition /></ClientShell>,
 });
 

@@ -6,7 +6,7 @@ import { workoutToday } from "@/lib/portal/data";
 import { Check, Play, Timer } from "lucide-react";
 
 export const Route = createFileRoute("/portal/workouts")({
-  head: () => ({ meta: [{ title: "Workouts — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Workouts — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Workouts /></ClientShell>,
 });
 

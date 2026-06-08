@@ -6,7 +6,7 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 import { ArrowRight, Flame, Trophy } from "lucide-react";
 
 export const Route = createFileRoute("/portal/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Dashboard — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Dashboard /></ClientShell>,
 });
 

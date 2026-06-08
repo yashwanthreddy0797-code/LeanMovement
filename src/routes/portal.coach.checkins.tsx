@@ -4,7 +4,7 @@ import { SectionTitle, SoftCard } from "@/components/portal/ui";
 import { coachCheckins } from "@/lib/portal/data";
 
 export const Route = createFileRoute("/portal/coach/checkins")({
-  head: () => ({ meta: [{ title: "Check-ins — APEX Coach" }] }),
+  head: () => ({ meta: [{ title: "Check-ins — LEANMOVEMENT Coach" }] }),
   component: () => <CoachShell><CheckIns /></CoachShell>,
 });
 

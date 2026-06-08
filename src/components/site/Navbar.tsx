@@ -37,7 +37,7 @@ export function Navbar() {
     >
       <div className="container-x flex items-center justify-between h-20">
         <Link to="/" className="font-display text-3xl tracking-widest text-foreground">
-          APEX<span className="text-accent">.</span>
+          LEANMOVEMENT<span className="text-accent">.</span>
         </Link>
         <nav className="hidden lg:flex items-center gap-10">
           {links.map((l) => (

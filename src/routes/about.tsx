@@ -7,9 +7,9 @@ import { CTABanner } from "@/components/site/CTABanner";
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "About — APEX Coaching" },
+      { title: "About — LEANMOVEMENT Coaching" },
       { name: "description", content: "Meet the coach. Six years of evidence-based training and over 500 clients later, the philosophy hasn't changed: train on your own terms." },
-      { property: "og:title", content: "About — APEX Coaching" },
+      { property: "og:title", content: "About — LEANMOVEMENT Coaching" },
       { property: "og:description", content: "Meet your coach. Science-first, no-fluff online fitness coaching." },
     ],
   }),
@@ -35,7 +35,7 @@ const GALLERY = [
 function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="Meet Your Coach" title="APEX." subtitle="Six years. 500+ transformations. Zero shortcuts." image={COACH_IMG} compact />
+      <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="Six years. 500+ transformations. Zero shortcuts." image={COACH_IMG} compact />
 
       <section className="container-x py-24 md:py-32">
         <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-20">

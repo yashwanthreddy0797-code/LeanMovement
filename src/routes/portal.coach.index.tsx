@@ -6,7 +6,7 @@ import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "rec
 import { ArrowRight, Plus } from "lucide-react";
 
 export const Route = createFileRoute("/portal/coach/")({
-  head: () => ({ meta: [{ title: "Coach Overview — APEX" }] }),
+  head: () => ({ meta: [{ title: "Coach Overview — LEANMOVEMENT" }] }),
   component: () => <CoachShell><Overview /></CoachShell>,
 });
 

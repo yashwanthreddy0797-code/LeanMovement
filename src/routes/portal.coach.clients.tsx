@@ -6,7 +6,7 @@ import { coachClients } from "@/lib/portal/data";
 import { Search, Plus, Upload, X } from "lucide-react";
 
 export const Route = createFileRoute("/portal/coach/clients")({
-  head: () => ({ meta: [{ title: "Clients — APEX Coach" }] }),
+  head: () => ({ meta: [{ title: "Clients — LEANMOVEMENT Coach" }] }),
   component: () => <CoachShell><Clients /></CoachShell>,
 });
 

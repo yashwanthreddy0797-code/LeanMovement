@@ -5,7 +5,7 @@ import { SectionTitle, SoftCard } from "@/components/portal/ui";
 import { Upload, Check } from "lucide-react";
 
 export const Route = createFileRoute("/portal/checkin")({
-  head: () => ({ meta: [{ title: "Weekly Check-in — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Weekly Check-in — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><CheckIn /></ClientShell>,
 });
 

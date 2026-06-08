@@ -5,7 +5,7 @@ import { invoices, clientProfile } from "@/lib/portal/data";
 import { Download, CreditCard, CheckCircle2 } from "lucide-react";
 
 export const Route = createFileRoute("/portal/payments")({
-  head: () => ({ meta: [{ title: "Payments — APEX Portal" }] }),
+  head: () => ({ meta: [{ title: "Payments — LEANMOVEMENT Portal" }] }),
   component: () => <ClientShell><Payments /></ClientShell>,
 });
 

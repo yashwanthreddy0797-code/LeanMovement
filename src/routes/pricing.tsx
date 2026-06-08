@@ -14,9 +14,9 @@ import {
 export const Route = createFileRoute("/pricing")({
   head: () => ({
     meta: [
-      { title: "Pricing — APEX Coaching" },
+      { title: "Pricing — LEANMOVEMENT Coaching" },
       { name: "description", content: "Transparent pricing. No hidden fees. Four tiers of online fitness coaching, monthly or bundled." },
-      { property: "og:title", content: "Pricing — APEX Coaching" },
+      { property: "og:title", content: "Pricing — LEANMOVEMENT Coaching" },
       { property: "og:description", content: "Transparent pricing for premium online coaching." },
     ],
   }),

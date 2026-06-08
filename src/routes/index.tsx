@@ -8,9 +8,9 @@ import { CTABanner } from "@/components/site/CTABanner";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "APEX — Train On Your Own Terms" },
+      { title: "LEANMOVEMENT — Train On Your Own Terms" },
       { name: "description", content: "Science-backed online fitness coaching for the modern Indian professional. No fluff, no fads — just results that last." },
-      { property: "og:title", content: "APEX — Train On Your Own Terms" },
+      { property: "og:title", content: "LEANMOVEMENT — Train On Your Own Terms" },
       { property: "og:description", content: "Premium online fitness coaching from Hyderabad." },
     ],
   }),

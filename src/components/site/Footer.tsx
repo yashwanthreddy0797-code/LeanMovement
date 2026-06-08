@@ -8,7 +8,7 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
             <Link to="/" className="font-display text-4xl tracking-widest">
-              APEX<span className="text-accent">.</span>
+              LEANMOVEMENT<span className="text-accent">.</span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-sm">
               Science-backed online coaching for the modern Indian professional. Hyderabad.
@@ -43,7 +43,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} APEX. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} LEANMOVEMENT. All rights reserved.</p>
           <p>Built with <span className="text-accent">Brilliantzero</span></p>
         </div>
       </div>
