@@ -208,48 +208,66 @@ function HomePage() {
 
       <Ticker />
 
-      {/* ============ SOCIAL PROOF — RESULTS ============ */}
-      <section className="container-x py-24 md:py-32">
-        <FadeUp className="max-w-3xl mb-16">
-          <span className="eyebrow">
-            <span className="w-8 h-px bg-accent" />
-            Client Results
-          </span>
-          <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">
-            Results That Speak<br />For Themselves.
-          </h2>
-          <p className="mt-6 text-foreground/70 max-w-xl">
-            A sample of outcomes from clients who completed our programs. Anonymised by request —
-            real metrics, real timeframes.
-          </p>
-        </FadeUp>
+      {/* ============ SOCIAL PROOF — CLIENT STORIES (UP-style hover expand) ============ */}
+      <section className="bg-surface py-20 md:py-28">
+        <div className="container-x">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+            <FadeUp>
+              <span className="inline-block px-4 py-1.5 border border-accent text-accent text-[10px] uppercase tracking-[0.25em] rounded-full">
+                Clients Stories
+              </span>
+              <h2 className="font-display text-4xl md:text-6xl mt-7 leading-[0.95]">
+                REAL CLIENTS.<br />LIFE-CHANGING RESULTS
+              </h2>
+              <p className="mt-6 text-foreground/70 max-w-xl">
+                Ambitious professionals of all starting points have achieved meaningful, lasting change with LEANMOVEMENT.
+                These results don't happen by chance — they're the outcome of a proven method, delivered with uncompromising consistency.
+              </p>
+            </FadeUp>
+            <FadeUp>
+              <Link
+                to="/results"
+                className="inline-flex items-center gap-3 px-6 py-3.5 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors"
+              >
+                See More Client Results <ArrowUpRight size={16} />
+              </Link>
+            </FadeUp>
+          </div>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
-          {PROOF_CARDS.map((c, i) => (
-            <FadeUp key={i} delay={i * 0.08} className="bg-background">
-              <div className="p-8 md:p-9 h-full flex flex-col justify-between min-h-[280px] hover:bg-card transition-colors">
-                <div>
-                  <div className="font-display text-5xl md:text-6xl text-accent leading-none">{c.metric}</div>
-                  <div className="mt-3 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                    in {c.period}
-                  </div>
+        <FadeUp>
+          <div className="flex w-full h-[460px] md:h-[560px] overflow-hidden px-4 md:px-8 gap-1.5 md:gap-2">
+            {CLIENT_STORIES.map((c, i) => (
+              <div
+                key={i}
+                className="group relative flex-1 hover:flex-[4] transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden cursor-pointer"
+              >
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
+                {/* Before/After inset — appears on hover */}
+                <div className="absolute bottom-28 right-6 w-32 h-24 md:w-44 md:h-32 border-2 border-accent shadow-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 grid grid-cols-2 overflow-hidden">
+                  <img src={c.before} alt="Before" className="w-full h-full object-cover grayscale" />
+                  <img src={c.after} alt="After" className="w-full h-full object-cover" />
                 </div>
-                <div>
-                  <p className="text-sm text-foreground/70 leading-relaxed">{c.note}</p>
-                  <div className="mt-5 pt-5 border-t border-border flex items-center justify-between text-xs">
-                    <span className="text-foreground/80">{c.role}</span>
-                    <span className="text-accent uppercase tracking-[0.2em] text-[10px]">{c.tier}</span>
+                {/* Info card — appears on hover */}
+                <div className="absolute left-0 right-0 bottom-0 bg-background/95 backdrop-blur p-5 md:p-6 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
+                  <h3 className="font-display text-lg md:text-2xl leading-tight">
+                    {c.headline}
+                  </h3>
+                  <p className="mt-2 text-xs md:text-sm text-foreground/70 line-clamp-2">
+                    {c.note}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-foreground rounded-full text-[10px] uppercase tracking-[0.25em]">
+                    Read Now <ArrowUpRight size={12} />
                   </div>
                 </div>
               </div>
-            </FadeUp>
-          ))}
-        </div>
-
-        <FadeUp className="mt-12">
-          <Link to="/results" className="inline-flex items-center gap-2 text-accent text-sm uppercase tracking-[0.2em] hover:gap-4 transition-all">
-            View All Transformations <ArrowUpRight size={16} />
-          </Link>
+            ))}
+          </div>
         </FadeUp>
       </section>
 
