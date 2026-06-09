@@ -102,15 +102,15 @@ function HomePage() {
               <span className="w-8 h-px bg-accent" />
               The Method
             </span>
-            <h2 className="font-display text-5xl md:text-7xl mt-6">Built on Science.<br />Driven by Results.</h2>
-            <p className="mt-6 text-foreground/70">
+            <h2 className="font-display text-3xl md:text-5xl mt-6">Built on Science.<br />Driven by Results.</h2>
+            <p className="mt-6 text-sm text-foreground/70">
               Every program is engineered around evidence-based training and nutrition principles —
               then personalized to your body, your schedule, and your goals. No templates. No shortcuts.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10">
               {STATS.map((s) => (
                 <div key={s.l} className="border-l border-border pl-5">
-                  <div className="font-display text-5xl text-accent">{s.n}</div>
+                  <div className="font-display text-3xl text-accent">{s.n}</div>
                   <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-2">{s.l}</div>
                 </div>
               ))}
