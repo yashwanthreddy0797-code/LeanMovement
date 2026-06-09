@@ -7,7 +7,6 @@ import {
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
 import { PlanCard, CORE_PLANS } from "@/components/site/PlanCard";
-import { CTABanner } from "@/components/site/CTABanner";
 
 export const Route = createFileRoute("/")({
   head: () => ({
