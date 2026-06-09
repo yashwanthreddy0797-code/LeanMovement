@@ -44,28 +44,29 @@
   --radius: 4px;
 }
 
-/* ====== PORTAL (light, calm, premium) ====== */
+/* ====== PORTAL (premium white + red + black) ====== */
 .portal-theme {
-  --background: #F7F5F1;       /* warm off-white */
-  --surface: #FFFFFF;
+  --background: #FFFFFF;
+  --surface: #FAFAFA;
   --card: #FFFFFF;
-  --card-foreground: #1A1F1B;
-  --foreground: #1A1F1B;
-  --border: #E8E4DC;
-  --accent: #6F8F6A;           /* sage */
-  --muted-foreground: #6B6B66;
-  --radius: 16px;
+  --card-foreground: #000000;
+  --foreground: #000000;
+  --border: #EAEAEA;
+  --accent: #E11D2A;
+  --muted-foreground: #737373;
+  --radius: 4px;
 
   background-color: var(--background);
   color: var(--foreground);
   font-family: "Inter", system-ui, sans-serif;
   font-weight: 400;
   background-image:
-    radial-gradient(1200px 600px at 0% 0%, rgba(196, 215, 188, 0.35), transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(232, 224, 210, 0.5), transparent 55%);
+    radial-gradient(900px 500px at 0% 0%, rgba(225, 29, 42, 0.06), transparent 60%),
+    radial-gradient(700px 500px at 100% 0%, rgba(0, 0, 0, 0.04), transparent 55%);
   background-attachment: fixed;
   min-height: 100vh;
 }
+
 
 .portal-theme h1, .portal-theme h2, .portal-theme h3, .portal-theme h4 {
   font-family: "Instrument Serif", "Inter", serif;
@@ -88,11 +89,13 @@
   padding: 0.25rem 0.65rem;
   border-radius: 999px;
   font-size: 0.7rem;
-  font-weight: 500;
-  background: #EFF3EC;
-  color: #3F5A3A;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  background: #FEE2E2;
+  color: #E11D2A;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
 }
+
 
 @layer base {
   * { border-color: var(--color-border); }
