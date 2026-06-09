@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
+import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
 
 const links = [
   { to: "/", label: "Home" },
@@ -53,8 +54,9 @@ export function Navbar() {
               : "bg-background/40 backdrop-blur-xl border border-white/5"
           }`}
         >
-          <Link to="/" className="font-display text-lg md:text-xl tracking-[0.18em] text-foreground shrink-0">
-            LEANMOVEMENT<span className="text-accent">.</span>
+          <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="LEANMOVEMENT home">
+            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-7 md:h-8 w-auto" />
+            <span className="font-display text-sm md:text-base tracking-[0.22em] text-foreground">LEANMOVEMENT</span>
           </Link>
           <nav className="hidden lg:flex items-center gap-7">
             {links.map((l) => (

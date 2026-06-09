@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram, Youtube, MessageCircle } from "lucide-react";
+import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
 
 export function Footer() {
   return (
@@ -7,8 +8,11 @@ export function Footer() {
       <div className="container-x py-16">
         <div className="grid md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
-            <Link to="/" className="font-display text-4xl tracking-widest">
-              LEANMOVEMENT<span className="text-accent">.</span>
+            <Link to="/" className="inline-flex items-center gap-3">
+              <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-12 w-auto" />
+              <span className="font-display text-2xl md:text-3xl tracking-[0.22em] text-foreground">
+                LEANMOVEMENT<span className="text-accent">.</span>
+              </span>
             </Link>
             <p className="mt-4 text-sm text-muted-foreground max-w-sm">
               Science-backed online coaching for the modern Indian professional. Hyderabad.
