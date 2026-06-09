@@ -3,16 +3,6 @@ import {
   ArrowUpRight,
   ArrowRight,
   Check,
-  ClipboardList,
-  Target,
-  MessageSquare,
-  TrendingUp,
-  ShieldCheck,
-  FlaskConical,
-  Briefcase,
-  Headphones,
-  UserCog,
-  Infinity as InfinityIcon,
 } from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
