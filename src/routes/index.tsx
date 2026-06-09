@@ -208,43 +208,6 @@ function HomePage() {
 
       <Ticker />
 
-      {/* ============ PROBLEM ============ */}
-      <section className="border-y border-border bg-surface relative overflow-hidden">
-        <div className="absolute inset-0 grid-overlay opacity-30" />
-        <div className="container-x py-24 md:py-32 relative">
-          <div className="grid lg:grid-cols-[1fr_1.2fr] gap-16 lg:gap-24">
-            <FadeUp>
-              <span className="eyebrow">
-                <span className="w-8 h-px bg-accent" />
-                The Reality
-              </span>
-              <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">
-                Why Most<br />Transformations<br />
-                <span className="text-accent">Fail.</span>
-              </h2>
-              <p className="mt-8 text-foreground/70 leading-relaxed max-w-md">
-                People don't fail because they lack motivation. They fail because they're handed
-                generic plans, asked to coach themselves, and abandoned when life gets in the way.
-              </p>
-              <p className="mt-6 text-foreground/85 leading-relaxed max-w-md">
-                LEANMOVEMENT exists to remove every one of those reasons.
-              </p>
-            </FadeUp>
-
-            <div className="grid sm:grid-cols-2 gap-px bg-border self-start">
-              {PROBLEMS.map((p, i) => (
-                <FadeUp key={p.t} delay={i * 0.08} className="bg-surface">
-                  <div className="p-8 h-full hover:bg-card transition-colors">
-                    <div className="text-accent font-display text-3xl">0{i + 1}</div>
-                    <h3 className="font-display text-2xl mt-4">{p.t}</h3>
-                    <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{p.d}</p>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* ============ METHOD ============ */}
       <section id="method" className="container-x py-24 md:py-32">
