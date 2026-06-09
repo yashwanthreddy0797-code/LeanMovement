@@ -85,6 +85,65 @@ const PROOF_CARDS = [
   },
 ] as const;
 
+const CLIENT_STORIES = [
+  {
+    name: "Software Engineer, 32",
+    headline: "Arjun lost 11kg in 14 weeks",
+    note: "Sustained fat loss while protecting strength and an 80-hour work week. No crash protocols.",
+    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80",
+  },
+  {
+    name: "Founder, 29",
+    headline: "Priya returned to elite condition at 45",
+    note: "Full recomposition with travel-proof nutrition across 4 timezones. Strength up across all lifts.",
+    image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80",
+  },
+  {
+    name: "Consultant, 36",
+    headline: "Rohan added 6kg of lean mass",
+    note: "Structured hypertrophy block. Visible muscle gain with bloodwork improvements across the board.",
+    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&q=80",
+  },
+  {
+    name: "Doctor, 34",
+    headline: "Neha dropped 7kg between hospital shifts",
+    note: "Sustainable fat loss without sacrificing performance on 24-hour on-call rotations.",
+    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=80",
+  },
+  {
+    name: "Lawyer, 41",
+    headline: "Vikram rebuilt his body at 41",
+    note: "Eight kilos of lean mass added over six months. Stronger, leaner, sharper — and sustainable.",
+    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80",
+  },
+  {
+    name: "Founder, 38",
+    headline: "Anjali made the change permanent",
+    note: "Six months in, the habits feel automatic. Performance, body composition and energy all up.",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=400&q=80",
+  },
+  {
+    name: "Analyst, 30",
+    headline: "Kabir cut 9kg in 16 weeks",
+    note: "Lean and athletic without sacrificing the deadlift. Energy and focus reported at all-time highs.",
+    image: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80",
+  },
+] as const;
+
 const PROBLEMS = [
   { t: "No Structure", d: "Random workouts and ever-changing diets create noise, not progress." },
   { t: "No Accountability", d: "Without weekly checkpoints, slip-ups quietly compound into stalls." },
