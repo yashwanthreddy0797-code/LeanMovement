@@ -110,41 +110,6 @@ const PROBLEMS = [
   { t: "No Consistency", d: "Programs that don't bend to real life — travel, work, family — get abandoned." },
 ] as const;
 
-const METHOD = [
-  {
-    n: "01",
-    icon: ClipboardList,
-    t: "Assessment",
-    d: "Deep dive into your goals, lifestyle, training history, schedule, and limitations. We measure where you actually are.",
-  },
-  {
-    n: "02",
-    icon: Target,
-    t: "Precision Planning",
-    d: "A training and nutrition strategy engineered for your body and your calendar — not a template recycled from a spreadsheet.",
-  },
-  {
-    n: "03",
-    icon: MessageSquare,
-    t: "Accountability",
-    d: "Weekly check-ins, direct coach access, and continuous program adjustment. You are never coaching yourself.",
-  },
-  {
-    n: "04",
-    icon: TrendingUp,
-    t: "Transformation",
-    d: "Measurable, repeatable, sustainable results. A body and a system you keep long after coaching ends.",
-  },
-] as const;
-
-const DIFFERENTIATORS = [
-  { icon: ShieldCheck, t: "Zero Supplement Sales", d: "No upsells, no affiliate stacks. Our only product is your result." },
-  { icon: FlaskConical, t: "Evidence-Based", d: "Programs built on peer-reviewed science, not gym folklore or influencer trends." },
-  { icon: Briefcase, t: "Built For Professionals", d: "Travel, meetings, late nights, family. Your program flexes around the life you have." },
-  { icon: Headphones, t: "High Accountability", d: "Weekly check-ins, direct coach access, real conversations — not bot replies." },
-  { icon: UserCog, t: "Truly Personalised", d: "Every plan is written from scratch for one person. No app-generated templates." },
-  { icon: InfinityIcon, t: "Long-Term Results", d: "We teach you the system. You leave coaching with skills, not dependence." },
-] as const;
 
 function HomePage() {
   return (
