@@ -263,6 +263,43 @@ function HomePage() {
       </section>
 
 
+      {/* ============ GOALS BANNER ============ */}
+      <section className="bg-black text-white overflow-hidden">
+        <div className="container-x py-24 md:py-36 text-center">
+          <FadeUp>
+            <span className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-white/70">
+              <span className="w-8 h-px bg-accent" />
+              What We Offer
+              <span className="w-8 h-px bg-accent" />
+            </span>
+          </FadeUp>
+
+          <FadeUp delay={0.1}>
+            <h2 className="font-display mt-10 leading-[0.95] tracking-tight text-5xl md:text-7xl lg:text-8xl">
+              <span className="block text-white">SCULPT.</span>
+              <span className="block text-white/40">STRENGTHEN.</span>
+              <span className="block text-white/15">TRANSFORM.</span>
+            </h2>
+          </FadeUp>
+
+          <FadeUp delay={0.2}>
+            <p className="mt-12 mx-auto max-w-xl text-base md:text-lg text-white/70 leading-relaxed">
+              Built for fast, real results in 12 weeks.<br />
+              Show up — I'll handle the rest.
+            </p>
+          </FadeUp>
+
+          <FadeUp delay={0.3}>
+            <div className="mt-10 flex items-center justify-center gap-6 text-xs uppercase tracking-[0.25em] text-white/50">
+              <span>12 Weeks</span>
+              <span className="w-1 h-1 rounded-full bg-accent" />
+              <span>Real Results</span>
+              <span className="w-1 h-1 rounded-full bg-accent" />
+              <span>Zero Guesswork</span>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
 
 
       {/* ============ METHOD ============ */}
