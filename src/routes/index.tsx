@@ -85,6 +85,65 @@ const PROOF_CARDS = [
   },
 ] as const;
 
+const CLIENT_STORIES = [
+  {
+    name: "Software Engineer, 32",
+    headline: "Arjun lost 11kg in 14 weeks",
+    note: "Sustained fat loss while protecting strength and an 80-hour work week. No crash protocols.",
+    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80",
+  },
+  {
+    name: "Founder, 29",
+    headline: "Priya returned to elite condition at 45",
+    note: "Full recomposition with travel-proof nutrition across 4 timezones. Strength up across all lifts.",
+    image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80",
+  },
+  {
+    name: "Consultant, 36",
+    headline: "Rohan added 6kg of lean mass",
+    note: "Structured hypertrophy block. Visible muscle gain with bloodwork improvements across the board.",
+    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&q=80",
+  },
+  {
+    name: "Doctor, 34",
+    headline: "Neha dropped 7kg between hospital shifts",
+    note: "Sustainable fat loss without sacrificing performance on 24-hour on-call rotations.",
+    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=80",
+  },
+  {
+    name: "Lawyer, 41",
+    headline: "Vikram rebuilt his body at 41",
+    note: "Eight kilos of lean mass added over six months. Stronger, leaner, sharper — and sustainable.",
+    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80",
+  },
+  {
+    name: "Founder, 38",
+    headline: "Anjali made the change permanent",
+    note: "Six months in, the habits feel automatic. Performance, body composition and energy all up.",
+    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=400&q=80",
+  },
+  {
+    name: "Analyst, 30",
+    headline: "Kabir cut 9kg in 16 weeks",
+    note: "Lean and athletic without sacrificing the deadlift. Energy and focus reported at all-time highs.",
+    image: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=900&q=80",
+    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
+    after: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80",
+  },
+] as const;
+
 const PROBLEMS = [
   { t: "No Structure", d: "Random workouts and ever-changing diets create noise, not progress." },
   { t: "No Accountability", d: "Without weekly checkpoints, slip-ups quietly compound into stalls." },
@@ -208,48 +267,66 @@ function HomePage() {
 
       <Ticker />
 
-      {/* ============ SOCIAL PROOF — RESULTS ============ */}
-      <section className="container-x py-24 md:py-32">
-        <FadeUp className="max-w-3xl mb-16">
-          <span className="eyebrow">
-            <span className="w-8 h-px bg-accent" />
-            Client Results
-          </span>
-          <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">
-            Results That Speak<br />For Themselves.
-          </h2>
-          <p className="mt-6 text-foreground/70 max-w-xl">
-            A sample of outcomes from clients who completed our programs. Anonymised by request —
-            real metrics, real timeframes.
-          </p>
-        </FadeUp>
+      {/* ============ SOCIAL PROOF — CLIENT STORIES (UP-style hover expand) ============ */}
+      <section className="bg-surface py-20 md:py-28">
+        <div className="container-x">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+            <FadeUp>
+              <span className="inline-block px-4 py-1.5 border border-accent text-accent text-[10px] uppercase tracking-[0.25em] rounded-full">
+                Clients Stories
+              </span>
+              <h2 className="font-display text-4xl md:text-6xl mt-7 leading-[0.95]">
+                REAL CLIENTS.<br />LIFE-CHANGING RESULTS
+              </h2>
+              <p className="mt-6 text-foreground/70 max-w-xl">
+                Ambitious professionals of all starting points have achieved meaningful, lasting change with LEANMOVEMENT.
+                These results don't happen by chance — they're the outcome of a proven method, delivered with uncompromising consistency.
+              </p>
+            </FadeUp>
+            <FadeUp>
+              <Link
+                to="/results"
+                className="inline-flex items-center gap-3 px-6 py-3.5 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors"
+              >
+                See More Client Results <ArrowUpRight size={16} />
+              </Link>
+            </FadeUp>
+          </div>
+        </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-border">
-          {PROOF_CARDS.map((c, i) => (
-            <FadeUp key={i} delay={i * 0.08} className="bg-background">
-              <div className="p-8 md:p-9 h-full flex flex-col justify-between min-h-[280px] hover:bg-card transition-colors">
-                <div>
-                  <div className="font-display text-5xl md:text-6xl text-accent leading-none">{c.metric}</div>
-                  <div className="mt-3 text-[10px] uppercase tracking-[0.25em] text-muted-foreground">
-                    in {c.period}
-                  </div>
+        <FadeUp>
+          <div className="flex w-full h-[460px] md:h-[560px] overflow-hidden px-4 md:px-8 gap-1.5 md:gap-2">
+            {CLIENT_STORIES.map((c, i) => (
+              <div
+                key={i}
+                className="group relative flex-1 hover:flex-[4] transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden cursor-pointer"
+              >
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
+                {/* Before/After inset — appears on hover */}
+                <div className="absolute bottom-28 right-6 w-32 h-24 md:w-44 md:h-32 border-2 border-accent shadow-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 grid grid-cols-2 overflow-hidden">
+                  <img src={c.before} alt="Before" className="w-full h-full object-cover grayscale" />
+                  <img src={c.after} alt="After" className="w-full h-full object-cover" />
                 </div>
-                <div>
-                  <p className="text-sm text-foreground/70 leading-relaxed">{c.note}</p>
-                  <div className="mt-5 pt-5 border-t border-border flex items-center justify-between text-xs">
-                    <span className="text-foreground/80">{c.role}</span>
-                    <span className="text-accent uppercase tracking-[0.2em] text-[10px]">{c.tier}</span>
+                {/* Info card — appears on hover */}
+                <div className="absolute left-0 right-0 bottom-0 bg-background/95 backdrop-blur p-5 md:p-6 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
+                  <h3 className="font-display text-lg md:text-2xl leading-tight">
+                    {c.headline}
+                  </h3>
+                  <p className="mt-2 text-xs md:text-sm text-foreground/70 line-clamp-2">
+                    {c.note}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-foreground rounded-full text-[10px] uppercase tracking-[0.25em]">
+                    Read Now <ArrowUpRight size={12} />
                   </div>
                 </div>
               </div>
-            </FadeUp>
-          ))}
-        </div>
-
-        <FadeUp className="mt-12">
-          <Link to="/results" className="inline-flex items-center gap-2 text-accent text-sm uppercase tracking-[0.2em] hover:gap-4 transition-all">
-            View All Transformations <ArrowUpRight size={16} />
-          </Link>
+            ))}
+          </div>
         </FadeUp>
       </section>
 
