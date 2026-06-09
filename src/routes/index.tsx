@@ -3,16 +3,6 @@ import {
   ArrowUpRight,
   ArrowRight,
   Check,
-  ClipboardList,
-  Target,
-  MessageSquare,
-  TrendingUp,
-  ShieldCheck,
-  FlaskConical,
-  Briefcase,
-  Headphones,
-  UserCog,
-  Infinity as InfinityIcon,
 } from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
@@ -120,41 +110,6 @@ const PROBLEMS = [
   { t: "No Consistency", d: "Programs that don't bend to real life — travel, work, family — get abandoned." },
 ] as const;
 
-const METHOD = [
-  {
-    n: "01",
-    icon: ClipboardList,
-    t: "Assessment",
-    d: "Deep dive into your goals, lifestyle, training history, schedule, and limitations. We measure where you actually are.",
-  },
-  {
-    n: "02",
-    icon: Target,
-    t: "Precision Planning",
-    d: "A training and nutrition strategy engineered for your body and your calendar — not a template recycled from a spreadsheet.",
-  },
-  {
-    n: "03",
-    icon: MessageSquare,
-    t: "Accountability",
-    d: "Weekly check-ins, direct coach access, and continuous program adjustment. You are never coaching yourself.",
-  },
-  {
-    n: "04",
-    icon: TrendingUp,
-    t: "Transformation",
-    d: "Measurable, repeatable, sustainable results. A body and a system you keep long after coaching ends.",
-  },
-] as const;
-
-const DIFFERENTIATORS = [
-  { icon: ShieldCheck, t: "Zero Supplement Sales", d: "No upsells, no affiliate stacks. Our only product is your result." },
-  { icon: FlaskConical, t: "Evidence-Based", d: "Programs built on peer-reviewed science, not gym folklore or influencer trends." },
-  { icon: Briefcase, t: "Built For Professionals", d: "Travel, meetings, late nights, family. Your program flexes around the life you have." },
-  { icon: Headphones, t: "High Accountability", d: "Weekly check-ins, direct coach access, real conversations — not bot replies." },
-  { icon: UserCog, t: "Truly Personalised", d: "Every plan is written from scratch for one person. No app-generated templates." },
-  { icon: InfinityIcon, t: "Long-Term Results", d: "We teach you the system. You leave coaching with skills, not dependence." },
-] as const;
 
 function HomePage() {
   return (
@@ -302,77 +257,6 @@ function HomePage() {
       </section>
 
 
-      {/* ============ METHOD ============ */}
-      <section id="method" className="container-x py-24 md:py-32">
-        <FadeUp className="max-w-3xl mb-20">
-          <span className="eyebrow">
-            <span className="w-8 h-px bg-accent" />
-            The Method
-          </span>
-          <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">
-            The LEANMOVEMENT<br />Method.
-          </h2>
-          <p className="mt-6 text-foreground/70 max-w-xl">
-            A four-stage system engineered to produce measurable, sustainable transformation —
-            without burnout, guesswork, or supplement upsells.
-          </p>
-        </FadeUp>
-
-        <div className="relative">
-          <div className="hidden lg:block absolute top-[88px] left-0 right-0 h-px bg-border" />
-          <div className="grid lg:grid-cols-4 gap-px lg:gap-0 lg:gap-x-px bg-border lg:bg-transparent">
-            {METHOD.map((m, i) => {
-              const Icon = m.icon;
-              return (
-                <FadeUp key={m.n} delay={i * 0.1} className="bg-background lg:bg-transparent">
-                  <div className="p-8 lg:p-0 lg:pr-10 h-full relative">
-                    <div className="flex items-center gap-4 mb-6">
-                      <div className="w-14 h-14 border border-border bg-background grid place-items-center text-accent relative z-10">
-                        <Icon size={22} strokeWidth={1.5} />
-                      </div>
-                      <span className="font-display text-xs tracking-[0.3em] text-muted-foreground">
-                        STEP {m.n}
-                      </span>
-                    </div>
-                    <h3 className="font-display text-3xl">{m.t}</h3>
-                    <p className="mt-4 text-sm text-foreground/70 leading-relaxed max-w-xs">{m.d}</p>
-                  </div>
-                </FadeUp>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* ============ DIFFERENTIATION ============ */}
-      <section className="border-t border-border bg-surface">
-        <div className="container-x py-24 md:py-32">
-          <FadeUp className="max-w-3xl mb-16">
-            <span className="eyebrow">
-              <span className="w-8 h-px bg-accent" />
-              The Difference
-            </span>
-            <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">
-              Why LEANMOVEMENT<br />Is Different.
-            </h2>
-          </FadeUp>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-border">
-            {DIFFERENTIATORS.map((d, i) => {
-              const Icon = d.icon;
-              return (
-                <FadeUp key={d.t} delay={i * 0.06} className="bg-surface">
-                  <div className="p-9 h-full hover:bg-card transition-colors group">
-                    <Icon size={28} strokeWidth={1.4} className="text-accent" />
-                    <h3 className="font-display text-2xl mt-7">{d.t}</h3>
-                    <p className="mt-3 text-sm text-foreground/70 leading-relaxed">{d.d}</p>
-                  </div>
-                </FadeUp>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
       {/* ============ PROGRAMS ============ */}
       <section className="container-x py-24 md:py-32">
