@@ -450,6 +450,115 @@ function HomePage() {
         ctaText="Book Free Consultation"
         ctaTo="/book"
       />
+
+      <HomeFooter />
     </>
+  );
+}
+
+function HomeFooter() {
+  return (
+    <footer className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top,_#1a2a1f_0%,_#0a0d0a_55%,_#000_100%)] text-white">
+      <div className="container-x pt-24 md:pt-32 pb-10">
+        {/* Big headline */}
+        <div className="max-w-5xl mx-auto text-center">
+          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
+            Find the perfect fitness journey for you and{" "}
+            <span className="text-white/35">unlock your strongest healthiest self with us.</span>
+          </h2>
+          <div className="mt-10 flex justify-center">
+            <Link
+              to="/book"
+              className="group inline-flex items-center gap-3 bg-white text-black pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition"
+            >
+              Start Transforming
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-background group-hover:rotate-45 transition-transform">
+                <ArrowUpRight size={18} />
+              </span>
+            </Link>
+          </div>
+        </div>
+
+        {/* Columns */}
+        <div className="mt-24 md:mt-32 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 lg:gap-8 relative z-10">
+          <div>
+            <ul className="space-y-3 text-sm text-white/85">
+              {[
+                ["/", "Home"],
+                ["/about", "About Us"],
+                ["/programs", "Programs"],
+                ["/results", "Results"],
+              ].map(([to, label]) => (
+                <li key={to} className="flex items-center gap-2">
+                  <span className="w-1 h-1 rounded-full bg-white/60" />
+                  <Link to={to} className="hover:text-accent">{label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="text-sm text-white/85 space-y-3">
+            <p>hello@leanmovement.in</p>
+            <p>[+91] 99999-99999</p>
+            <p className="text-white/70 leading-relaxed">
+              LEANMOVEMENT Studio,<br />
+              Jubilee Hills, Road No. 36,<br />
+              Hyderabad, 500033
+            </p>
+          </div>
+
+          <div>
+            <ul className="space-y-3 text-sm text-white/85">
+              {[
+                ["Instagram", "https://instagram.com"],
+                ["YouTube", "https://youtube.com"],
+                ["WhatsApp", "https://wa.me/919999999999"],
+                ["LinkedIn", "https://linkedin.com"],
+              ].map(([label, href]) => (
+                <li key={label}>
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 underline underline-offset-4 decoration-white/30 hover:text-accent hover:decoration-accent">
+                    {label} <ArrowUpRight size={14} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="col-span-2 lg:col-span-2">
+            <h4 className="font-display text-xl mb-4">Join Our Newsletter</h4>
+            <form
+              onSubmit={(e) => e.preventDefault()}
+              className="flex items-center gap-2 rounded-full border border-white/25 bg-transparent pl-5 pr-2 py-2"
+            >
+              <input
+                type="email"
+                placeholder="Your email address"
+                className="flex-1 bg-transparent outline-none text-sm placeholder:text-white/50"
+              />
+              <button
+                type="submit"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-background hover:rotate-45 transition-transform"
+                aria-label="Subscribe"
+              >
+                <ArrowUpRight size={16} />
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {/* Giant wordmark */}
+        <div aria-hidden className="relative mt-16 select-none pointer-events-none">
+          <div className="font-display text-white/[0.06] tracking-tight leading-none text-center whitespace-nowrap text-[22vw] md:text-[18vw] lg:text-[15vw]">
+            LEANMOVEMENT
+          </div>
+        </div>
+
+        {/* Bottom bar */}
+        <div className="mt-4 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/55">
+          <p>© {new Date().getFullYear()} LEANMOVEMENT. All rights reserved.</p>
+          <a href="#" className="hover:text-white">Privacy policy</a>
+        </div>
+      </div>
+    </footer>
   );
 }
