@@ -35,7 +35,7 @@ const GALLERY = [
 function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="Six years. 500+ transformations. Zero shortcuts." image={COACH_IMG} compact />
+      <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="" image={COACH_IMG} compact />
 
       <section className="container-x py-24 md:py-32">
         <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-20">
