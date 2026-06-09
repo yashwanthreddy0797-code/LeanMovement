@@ -25,7 +25,7 @@ export function Footer() {
                 ["/about", "About"],
                 ["/programs", "Programs"],
                 ["/pricing", "Pricing"],
-                ["/results", "Results"],
+                ["/blog", "Blog"],
               ].map(([to, label]) => (
                 <li key={to}><Link to={to} className="hover:text-accent">{label}</Link></li>
               ))}

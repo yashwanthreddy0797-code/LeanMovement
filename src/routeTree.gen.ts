@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortalRouteImport } from './routes/portal'
@@ -36,11 +35,6 @@ import { Route as PortalCoachClientsRouteImport } from './routes/portal.coach.cl
 import { Route as PortalCoachCheckinsRouteImport } from './routes/portal.coach.checkins'
 import { Route as PortalCoachAnalyticsRouteImport } from './routes/portal.coach.analytics'
 
-const ResultsRoute = ResultsRouteImport.update({
-  id: '/results',
-  path: '/results',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ProgramsRoute = ProgramsRouteImport.update({
   id: '/programs',
   path: '/programs',
@@ -175,7 +169,6 @@ export interface FileRoutesByFullPath {
   '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
-  '/results': typeof ResultsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/portal/checkin': typeof PortalCheckinRoute
   '/portal/community': typeof PortalCommunityRoute
@@ -202,7 +195,6 @@ export interface FileRoutesByTo {
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
-  '/results': typeof ResultsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/portal/checkin': typeof PortalCheckinRoute
   '/portal/community': typeof PortalCommunityRoute
@@ -231,7 +223,6 @@ export interface FileRoutesById {
   '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
-  '/results': typeof ResultsRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/portal/checkin': typeof PortalCheckinRoute
   '/portal/community': typeof PortalCommunityRoute
@@ -261,7 +252,6 @@ export interface FileRouteTypes {
     | '/portal'
     | '/pricing'
     | '/programs'
-    | '/results'
     | '/blog/$slug'
     | '/portal/checkin'
     | '/portal/community'
@@ -288,7 +278,6 @@ export interface FileRouteTypes {
     | '/contact'
     | '/pricing'
     | '/programs'
-    | '/results'
     | '/blog/$slug'
     | '/portal/checkin'
     | '/portal/community'
@@ -316,7 +305,6 @@ export interface FileRouteTypes {
     | '/portal'
     | '/pricing'
     | '/programs'
-    | '/results'
     | '/blog/$slug'
     | '/portal/checkin'
     | '/portal/community'
@@ -345,20 +333,12 @@ export interface RootRouteChildren {
   PortalRoute: typeof PortalRouteWithChildren
   PricingRoute: typeof PricingRoute
   ProgramsRoute: typeof ProgramsRoute
-  ResultsRoute: typeof ResultsRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/results': {
-      id: '/results'
-      path: '/results'
-      fullPath: '/results'
-      preLoaderRoute: typeof ResultsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/programs': {
       id: '/programs'
       path: '/programs'
@@ -586,7 +566,6 @@ const rootRouteChildren: RootRouteChildren = {
   PortalRoute: PortalRouteWithChildren,
   PricingRoute: PricingRoute,
   ProgramsRoute: ProgramsRoute,
-  ResultsRoute: ResultsRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,
 }
