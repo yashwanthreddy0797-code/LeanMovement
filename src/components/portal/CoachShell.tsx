@@ -2,6 +2,8 @@ import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { type ReactNode } from "react";
 import { LayoutDashboard, Users, ClipboardCheck, BarChart3, LogOut, Settings } from "lucide-react";
 import { setPortalUser, usePortalUser } from "@/lib/portal/auth";
+import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
+
 
 const nav = [
   { to: "/portal/coach", label: "Overview", icon: LayoutDashboard },
@@ -25,12 +27,12 @@ export function CoachShell({ children }: { children: ReactNode }) {
       <div className="flex">
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
-            <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold">
-              <span className="w-7 h-7 rounded-full bg-[#000000] text-white grid place-items-center text-xs">L</span>
-              LeanMovement Studio
+            <Link to="/" className="flex items-center">
+              <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-8 w-auto object-contain" />
             </Link>
-            <div className="mt-2 text-[11px] uppercase tracking-widest text-[#737373]">Coach Console</div>
+            <div className="mt-2 text-[10px] uppercase tracking-[0.28em] text-[#737373]">Coach Console</div>
           </div>
+
           <nav className="flex-1 px-3 space-y-0.5">
             {nav.map((n) => {
               const Icon = n.icon;

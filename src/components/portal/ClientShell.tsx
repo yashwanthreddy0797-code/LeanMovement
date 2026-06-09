@@ -80,7 +80,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
           {/* Top bar */}
           <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--background)]/70 border-b border-[var(--border)]">
             <div className="px-5 lg:px-10 py-4 flex items-center justify-between">
-              <div className="lg:hidden font-semibold tracking-wider">LEANMOVEMENT</div>
+              <Link to="/" className="lg:hidden flex items-center"><img src={logoAsset.url} alt="LEANMOVEMENT" className="h-7 w-auto object-contain" /></Link>
               <div className="ml-auto flex items-center gap-3">
                 <span className="chip">Day 23 / 90</span>
                 <div className="w-9 h-9 rounded-full bg-[#F5F5F5] grid place-items-center text-xs font-semibold text-[#E11D2A]">
