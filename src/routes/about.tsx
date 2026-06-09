@@ -3,6 +3,7 @@ import { FlaskConical, Repeat, UserCog } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { CTABanner } from "@/components/site/CTABanner";
+import coachPortraitAsset from "@/assets/coach-portrait.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -16,7 +17,7 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
-const COACH_IMG = "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=1200&q=80";
+const COACH_IMG = coachPortraitAsset.url;
 const PILLARS = [
   { icon: FlaskConical, title: "Science", body: "Every recommendation is rooted in peer-reviewed research. No trends, no guesswork." },
   { icon: Repeat, title: "Consistency", body: "Sustainable habits over heroic effort. The plan you can run for a decade beats the one you abandon in 8 weeks." },
