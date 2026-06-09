@@ -54,7 +54,7 @@ export function Navbar() {
               : "bg-background/40 backdrop-blur-xl border border-white/5"
           }`}
         >
-          <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="LEANMOVEMENT home">
+          <Link to="/" className="flex items-center gap-1.5 shrink-0" aria-label="LEANMOVEMENT home">
             <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-9 md:h-11 w-auto" />
             <span className="font-display text-sm md:text-base tracking-[0.22em] text-foreground">LEANMOVEMENT</span>
           </Link>
