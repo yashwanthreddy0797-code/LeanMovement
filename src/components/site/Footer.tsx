@@ -8,7 +8,7 @@ export function Footer() {
       <div className="container-x py-16">
         <div className="grid md:grid-cols-4 gap-12">
           <div className="md:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-4">
+            <Link to="/" className="inline-flex items-center gap-2">
               <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-20 md:h-24 w-auto" />
               <span className="font-display text-3xl md:text-4xl tracking-[0.22em] text-foreground">
                 LEANMOVEMENT<span className="text-accent">.</span>
