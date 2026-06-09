@@ -82,7 +82,7 @@ export function Navbar() {
               to="/book"
               className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-all"
             >
-              Enquire
+              Book Consultation
             </Link>
             <button
               className="lg:hidden text-foreground p-1.5"
