@@ -113,6 +113,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isPortal = pathname.startsWith("/portal");
+  const isHome = pathname === "/";
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -120,7 +121,7 @@ function RootComponent() {
       <main className="min-h-screen">
         <Outlet />
       </main>
-      {!isPortal && <Footer />}
+      {!isPortal && !isHome && <Footer />}
       {!isPortal && <WhatsAppButton />}
       <Toaster />
     </QueryClientProvider>
