@@ -51,7 +51,6 @@ const FAQ = [
   { q: "What if I travel a lot for work?", a: "Travel weeks are planned into your program. We adjust training and nutrition around hotel gyms, restaurant menus, and time zones." },
   { q: "How quickly will I see results?", a: "Body composition shifts visibly in 6–8 weeks for most clients. Strength and performance markers improve from week one if the work is consistent." },
   { q: "Can I switch plans later?", a: "Yes — you can upgrade or downgrade at the start of any billing cycle. No lock-ins beyond your current month." },
-  { q: "Do you coach women?", a: "Absolutely. Roughly 40% of clients are women. Programming respects hormonal cycles and individual goals — fat loss, recomp, or strength." },
   { q: "Is the coaching available outside India?", a: "Yes. Currently coaching clients across India, the UAE, UK, and US." },
 ];
 
@@ -60,63 +59,76 @@ function ProgramsPage() {
     <>
       <PageHero eyebrow="The Programs" title="Four Tiers. One Standard." subtitle="From Foundation to VIP — pick the level of access that matches your ambition." compact />
 
-      <section className="container-x py-16 md:py-24">
-        <div className="grid md:grid-cols-2 gap-6">
-          {ALL_PLANS.map((p, i) => (
-            <FadeUp key={p.name} delay={i * 0.08}>
-              <div className="h-full flex flex-col">
-                <PlanCard plan={p} />
-                <div className="bg-card border border-t-0 border-border p-6 text-sm">
-                  <div className="mb-3">
-                    <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">Ideal For</div>
-                    <p className="mt-1 text-foreground/80">{IDEAL[p.name as keyof typeof IDEAL]}</p>
+      {/* PLANS — premium white */}
+      <section className="bg-white text-black">
+        <div className="container-x py-20 md:py-28">
+          <div className="grid md:grid-cols-2 gap-6">
+            {ALL_PLANS.map((p, i) => (
+              <FadeUp key={p.name} delay={i * 0.08}>
+                <div className="h-full flex flex-col">
+                  <PlanCard plan={p} light />
+                  <div className="bg-white border border-t-0 border-black/10 p-6 text-sm shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]">
+                    <div className="mb-3">
+                      <div className="text-[11px] uppercase tracking-[0.25em] text-black/55">Ideal For</div>
+                      <p className="mt-1 text-black/80">{IDEAL[p.name as keyof typeof IDEAL]}</p>
+                    </div>
+                    <div className="text-[11px] uppercase tracking-[0.25em] text-accent">{CAPACITY[p.name as keyof typeof CAPACITY]}</div>
                   </div>
-                  <div className="text-[11px] uppercase tracking-[0.25em] text-accent">{CAPACITY[p.name as keyof typeof CAPACITY]}</div>
                 </div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      <section className="container-x py-24 border-t border-border">
-        <FadeUp className="mb-12">
-          <span className="eyebrow"><span className="w-8 h-px bg-accent" />Bundles</span>
-          <h2 className="font-display text-5xl md:text-5xl mt-6">Commit. Save.</h2>
-        </FadeUp>
-        <div className="grid md:grid-cols-3 gap-6">
-          {BUNDLES.map((b, i) => (
-            <FadeUp key={b.title} delay={i * 0.1}>
-              <div className="p-8 border border-border bg-surface h-full flex flex-col hover:border-accent transition-colors">
-                <span className="text-[11px] uppercase tracking-[0.25em] text-accent">{b.save}</span>
-                <h3 className="font-display text-3xl mt-3">{b.title}</h3>
-                <p className="mt-3 text-sm text-foreground/70 flex-1">{b.body}</p>
-                <div className="font-display text-4xl mt-8 text-accent">{b.price}</div>
-              </div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-      <section className="container-x py-24 border-t border-border">
-        <FadeUp className="max-w-2xl mb-12">
-          <span className="eyebrow"><span className="w-8 h-px bg-accent" />FAQ</span>
-          <h2 className="font-display text-5xl md:text-5xl mt-6">Common Questions.</h2>
-        </FadeUp>
-        <FadeUp delay={0.1}>
-          <Accordion type="single" collapsible className="max-w-3xl">
-            {FAQ.map((f, i) => (
-              <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                <AccordionTrigger className="font-display text-2xl md:text-3xl text-left hover:text-accent hover:no-underline py-6">
-                  {f.q}
-                </AccordionTrigger>
-                <AccordionContent className="text-foreground/70 text-base pb-6">
-                  {f.a}
-                </AccordionContent>
-              </AccordionItem>
+              </FadeUp>
             ))}
-          </Accordion>
-        </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* BUNDLES — premium white */}
+      <section className="bg-white text-black border-t border-black/10">
+        <div className="container-x py-24">
+          <FadeUp className="mb-12">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
+              <span className="w-8 h-px bg-accent" />Bundles
+            </span>
+            <h2 className="font-display text-5xl md:text-5xl mt-6">Commit. Save.</h2>
+          </FadeUp>
+          <div className="grid md:grid-cols-3 gap-6">
+            {BUNDLES.map((b, i) => (
+              <FadeUp key={b.title} delay={i * 0.1}>
+                <div className="p-8 border border-black/10 bg-white h-full flex flex-col hover:border-accent transition-colors shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]">
+                  <span className="text-[11px] uppercase tracking-[0.25em] text-accent">{b.save}</span>
+                  <h3 className="font-display text-3xl mt-3">{b.title}</h3>
+                  <p className="mt-3 text-sm text-black/70 flex-1">{b.body}</p>
+                  <div className="font-display text-4xl mt-8 text-accent">{b.price}</div>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ — premium white */}
+      <section className="bg-white text-black border-t border-black/10">
+        <div className="container-x py-24">
+          <FadeUp className="max-w-2xl mb-12">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
+              <span className="w-8 h-px bg-accent" />FAQ
+            </span>
+            <h2 className="font-display text-5xl md:text-5xl mt-6">Common Questions.</h2>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <Accordion type="single" collapsible className="max-w-3xl">
+              {FAQ.map((f, i) => (
+                <AccordionItem key={i} value={`item-${i}`} className="border-black/10">
+                  <AccordionTrigger className="font-display text-2xl md:text-3xl text-left text-black hover:text-accent hover:no-underline py-6">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="text-black/70 text-base pb-6">
+                    {f.a}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </FadeUp>
+        </div>
       </section>
 
       <CTABanner eyebrow="Not Sure Yet?" title="Not sure which plan?" highlight="plan" subtitle="Book a free 15-minute call. We'll figure out the right tier for your goal." />
