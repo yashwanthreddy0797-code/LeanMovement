@@ -55,7 +55,7 @@ export function Navbar() {
           }`}
         >
           <Link to="/" className="flex items-center gap-2 shrink-0" aria-label="LEANMOVEMENT home">
-            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-7 md:h-8 w-auto" />
+            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-9 md:h-11 w-auto" />
             <span className="font-display text-sm md:text-base tracking-[0.22em] text-foreground">LEANMOVEMENT</span>
           </Link>
           <nav className="hidden lg:flex items-center gap-7">
