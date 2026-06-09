@@ -207,6 +207,63 @@ function HomePage() {
 
       <Ticker />
 
+      {/* ============ PILLARS ============ */}
+      <section className="bg-surface">
+        <div className="container-x py-20 md:py-28 space-y-16 md:space-y-24">
+          {[
+            {
+              eyebrow: "Training",
+              title: "Precision strength training",
+              copy: "Training methods refined over 15+ years and delivered by the top 1% of coaches — engineered for results in 3 hours per week, or less.",
+              image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=85",
+              reverse: false,
+            },
+            {
+              eyebrow: "Nutrition",
+              title: "Nutrition, built around you",
+              copy: "Personalised nutrition calculated for your body, tracked with data, and coached daily using proven principles you can maintain long term.",
+              image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=85",
+              reverse: true,
+            },
+            {
+              eyebrow: "Accountability",
+              title: "Expert coaching and accountability",
+              copy: "A dedicated coach takes full ownership of your training, nutrition, and progress — guiding decisions and supporting you beyond the gym, 7 days a week.",
+              image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=85",
+              reverse: false,
+            },
+            {
+              eyebrow: "Progress",
+              title: "Data-driven results",
+              copy: "Your progress is tracked across 50+ metrics to remove guesswork and make every change visible, measurable, and repeatable.",
+              image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=85",
+              reverse: true,
+            },
+          ].map((p) => (
+            <FadeUp key={p.title}>
+              <div className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${p.reverse ? "lg:[&>div:first-child]:order-2" : ""}`}>
+                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+                  <img src={p.image} alt={p.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
+                </div>
+                <div>
+                  <span className="eyebrow">
+                    <span className="w-8 h-px bg-accent" />
+                    {p.eyebrow}
+                  </span>
+                  <h3 className="font-display text-4xl md:text-5xl lg:text-6xl mt-6 leading-[0.95]">{p.title}</h3>
+                  <p className="mt-6 text-foreground/75 leading-relaxed max-w-lg">{p.copy}</p>
+                  <a href="#method" className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors">
+                    Explore The Method <ArrowUpRight size={14} />
+                  </a>
+                </div>
+              </div>
+            </FadeUp>
+          ))}
+        </div>
+      </section>
+
+
+
 
       {/* ============ METHOD ============ */}
       <section id="method" className="container-x py-24 md:py-32">
