@@ -168,7 +168,7 @@ function HomePage() {
           <FadeUp>
             <span className="eyebrow">
               <span className="w-10 h-px bg-accent" />
-              PREMIER ONLINE FITNESS COACHING
+              
             </span>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] mt-7 leading-[0.92] max-w-5xl">
               Build The<br />
@@ -176,7 +176,7 @@ function HomePage() {
               Of <span className="text-accent">Yourself.</span>
             </h1>
             <p className="mt-7 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed">
-              Personalised coaching for ambitious professionals who want lasting body transformation,
+              Personalised training, nutrition, and accountability for ambitious professionals who want lasting body transformation,
               better performance, and complete confidence in their health.
             </p>
 
