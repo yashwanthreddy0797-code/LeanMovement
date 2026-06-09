@@ -149,7 +149,7 @@ function HomePage() {
       <section className="container-x py-24 md:py-32 border-t border-border">
         <FadeUp className="mb-16">
           <span className="eyebrow"><span className="w-8 h-px bg-accent" />Receipts</span>
-          <h2 className="font-display text-5xl md:text-7xl mt-6">What Clients Say.</h2>
+          <h2 className="font-display text-3xl md:text-5xl mt-6">What Clients Say.</h2>
         </FadeUp>
         <div className="grid md:grid-cols-3 gap-6">
           {TESTIMONIALS.map((t, i) => (
