@@ -115,7 +115,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-6 inline-flex items-center justify-center px-5 py-3 rounded-full text-[11px] uppercase tracking-[0.22em] font-semibold bg-accent text-white"
             >
-              Enquire Now
+              Book Free Consultation
             </Link>
             <Link
               to="/portal/login"
