@@ -319,10 +319,10 @@ function HomePage() {
             </FadeUp>
             <FadeUp>
               <Link
-                to="/results"
+                to="/programs"
                 className="inline-flex items-center gap-3 px-6 py-3.5 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors"
               >
-                See More Client Results <ArrowUpRight size={16} />
+                Explore Programs <ArrowUpRight size={16} />
               </Link>
             </FadeUp>
           </div>
@@ -401,7 +401,7 @@ function HomeFooter() {
                 ["/", "Home"],
                 ["/about", "About Us"],
                 ["/programs", "Programs"],
-                ["/results", "Results"],
+                ["/pricing", "Pricing"],
               ].map(([to, label]) => (
                 <li key={to} className="flex items-center gap-2">
                   <span className="w-1 h-1 rounded-full bg-white/60" />
