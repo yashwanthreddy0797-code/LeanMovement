@@ -160,16 +160,12 @@ function HomePage() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section className="relative min-h-screen flex items-end overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden">
         <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-55 img-up" />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/30" />
         <div className="absolute inset-0 grid-overlay opacity-25" />
-        <div className="container-x relative pb-20 md:pb-28 pt-36 w-full">
+        <div className="container-x relative pb-16 md:pb-20 pt-28 md:pt-32 w-full">
           <FadeUp>
-            <span className="eyebrow">
-              <span className="w-10 h-px bg-accent" />
-              
-            </span>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] mt-7 leading-[0.92] max-w-5xl">
               Build The<br />
               Strongest Version<br />
