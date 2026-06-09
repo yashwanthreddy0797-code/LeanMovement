@@ -46,7 +46,7 @@ function AboutPage() {
           </FadeUp>
           <FadeUp delay={0.1} className="space-y-6 text-foreground/80 leading-relaxed">
             <span className="eyebrow"><span className="w-8 h-px bg-accent" />The Story</span>
-            <h2 className="font-display text-5xl md:text-6xl text-foreground">A coach, not a salesman.</h2>
+            <h2 className="font-display text-5xl md:text-6xl text-foreground">A coach,</h2>
             <p>I started coaching out of a small gym in Hyderabad in 2019 with one rule: never sell anything I wouldn't use myself. That meant no fad diets, no supplement pyramids, no fear-mongering.</p>
             <p>Six years later, the rule still stands. Over 500 clients have transformed under this method — corporate professionals, parents, students, athletes. The training shifts. The principles don't.</p>
             <p>I believe fitness should give you energy for the rest of your life, not consume it. That means programs that fit into real schedules, nutrition that respects Indian food, and a coach who picks up the phone.</p>

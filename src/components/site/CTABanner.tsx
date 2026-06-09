@@ -6,7 +6,7 @@ export function CTABanner({
   eyebrow = "Take the first step",
   title = "Ready to Start?",
   highlight = "Start",
-  subtitle = "A 15-minute call. No sales pitch. We figure out if we're the right fit — then build the plan.",
+  subtitle = "A coach. No sales pitch. We figure out if we're the right fit — then build the plan.",
   ctaText = "Book a Free Call",
   ctaTo = "/book",
 }: {
