@@ -54,37 +54,6 @@ const TRUST_BAR = [
   { n: "92%", l: "Completion Rate" },
 ] as const;
 
-const PROOF_CARDS = [
-  {
-    metric: "−11 kg",
-    period: "14 weeks",
-    role: "Software Engineer, 32",
-    tier: "Transform",
-    note: "Lost fat while maintaining strength. No crash diet, no extreme cardio.",
-  },
-  {
-    metric: "+6 kg lean",
-    period: "22 weeks",
-    role: "Founder, 29",
-    tier: "Elite",
-    note: "Structured hypertrophy block with travel-proof nutrition system.",
-  },
-  {
-    metric: "−14% BF",
-    period: "20 weeks",
-    role: "Consultant, 36",
-    tier: "Transform",
-    note: "Recomposition while flying weekly. Adapted weekly to schedule.",
-  },
-  {
-    metric: "−8 kg",
-    period: "12 weeks",
-    role: "Doctor, 34",
-    tier: "Foundation",
-    note: "Sustainable fat loss between hospital shifts. Bloodwork improved.",
-  },
-] as const;
-
 const CLIENT_STORIES = [
   {
     name: "Software Engineer, 32",
@@ -187,30 +156,6 @@ const DIFFERENTIATORS = [
   { icon: InfinityIcon, t: "Long-Term Results", d: "We teach you the system. You leave coaching with skills, not dependence." },
 ] as const;
 
-const TESTIMONIALS = [
-  {
-    quote:
-      "I've worked with three coaches before LEANMOVEMENT. None came close. The check-ins were sharp and the program adapted weekly to my travel.",
-    role: "Consultant",
-    age: "36",
-    result: "+6 kg lean · 22 weeks",
-  },
-  {
-    quote:
-      "Finally a coach who takes nutrition seriously without pushing supplements. My energy is steadier than it has been in a decade.",
-    role: "Product Manager",
-    age: "33",
-    result: "Recomp · 18 weeks",
-  },
-  {
-    quote:
-      "I expected a workout plan. I got a system — for training, eating, recovering, and travelling — that I still run on my own a year later.",
-    role: "Founder",
-    age: "29",
-    result: "−9 kg · 16 weeks",
-  },
-] as const;
-
 function HomePage() {
   return (
     <>
@@ -266,69 +211,6 @@ function HomePage() {
       </section>
 
       <Ticker />
-
-      {/* ============ SOCIAL PROOF — CLIENT STORIES (UP-style hover expand) ============ */}
-      <section className="bg-surface py-20 md:py-28">
-        <div className="container-x">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
-            <FadeUp>
-              <span className="inline-block px-4 py-1.5 border border-accent text-accent text-[10px] uppercase tracking-[0.25em] rounded-full">
-                Clients Stories
-              </span>
-              <h2 className="font-display text-4xl md:text-6xl mt-7 leading-[0.95]">
-                REAL CLIENTS.<br />LIFE-CHANGING RESULTS
-              </h2>
-              <p className="mt-6 text-foreground/70 max-w-xl">
-                Ambitious professionals of all starting points have achieved meaningful, lasting change with LEANMOVEMENT.
-                These results don't happen by chance — they're the outcome of a proven method, delivered with uncompromising consistency.
-              </p>
-            </FadeUp>
-            <FadeUp>
-              <Link
-                to="/results"
-                className="inline-flex items-center gap-3 px-6 py-3.5 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors"
-              >
-                See More Client Results <ArrowUpRight size={16} />
-              </Link>
-            </FadeUp>
-          </div>
-        </div>
-
-        <FadeUp>
-          <div className="flex w-full h-[460px] md:h-[560px] overflow-hidden px-4 md:px-8 gap-1.5 md:gap-2">
-            {CLIENT_STORIES.map((c, i) => (
-              <div
-                key={i}
-                className="group relative flex-1 hover:flex-[4] transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden cursor-pointer"
-              >
-                <img
-                  src={c.image}
-                  alt={c.name}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                />
-                {/* Before/After inset — appears on hover */}
-                <div className="absolute bottom-28 right-6 w-32 h-24 md:w-44 md:h-32 border-2 border-accent shadow-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 grid grid-cols-2 overflow-hidden">
-                  <img src={c.before} alt="Before" className="w-full h-full object-cover grayscale" />
-                  <img src={c.after} alt="After" className="w-full h-full object-cover" />
-                </div>
-                {/* Info card — appears on hover */}
-                <div className="absolute left-0 right-0 bottom-0 bg-background/95 backdrop-blur p-5 md:p-6 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
-                  <h3 className="font-display text-lg md:text-2xl leading-tight">
-                    {c.headline}
-                  </h3>
-                  <p className="mt-2 text-xs md:text-sm text-foreground/70 line-clamp-2">
-                    {c.note}
-                  </p>
-                  <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-foreground rounded-full text-[10px] uppercase tracking-[0.25em]">
-                    Read Now <ArrowUpRight size={12} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </FadeUp>
-      </section>
 
       {/* ============ PROBLEM ============ */}
       <section className="border-y border-border bg-surface relative overflow-hidden">
@@ -482,40 +364,67 @@ function HomePage() {
         </FadeUp>
       </section>
 
-      {/* ============ TESTIMONIALS ============ */}
-      <section className="border-t border-border bg-surface">
-        <div className="container-x py-24 md:py-32">
-          <FadeUp className="mb-16 max-w-3xl">
-            <span className="eyebrow">
-              <span className="w-8 h-px bg-accent" />
-              In Their Words
-            </span>
-            <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">
-              What Clients Say.
-            </h2>
-          </FadeUp>
-
-          <div className="grid md:grid-cols-3 gap-px bg-border">
-            {TESTIMONIALS.map((t, i) => (
-              <FadeUp key={i} delay={i * 0.08} className="bg-surface">
-                <div className="p-9 h-full flex flex-col hover:bg-card transition-colors">
-                  <span className="font-display text-6xl text-accent leading-none">"</span>
-                  <p className="mt-2 text-foreground/85 leading-relaxed flex-1 text-[15px]">
-                    {t.quote}
-                  </p>
-                  <div className="mt-8 pt-6 border-t border-border">
-                    <div className="text-sm text-foreground">
-                      {t.role} <span className="text-muted-foreground">· {t.age}</span>
-                    </div>
-                    <div className="text-xs text-accent uppercase tracking-[0.2em] mt-1.5">
-                      {t.result}
-                    </div>
-                  </div>
-                </div>
-              </FadeUp>
-            ))}
+      {/* ============ CLIENT STORIES — hover expand strip ============ */}
+      <section className="bg-surface py-20 md:py-28">
+        <div className="container-x">
+          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
+            <FadeUp>
+              <span className="inline-block px-4 py-1.5 border border-accent text-accent text-[10px] uppercase tracking-[0.25em] rounded-full">
+                Clients Stories
+              </span>
+              <h2 className="font-display text-4xl md:text-6xl mt-7 leading-[0.95]">
+                REAL CLIENTS.<br />LIFE-CHANGING RESULTS
+              </h2>
+              <p className="mt-6 text-foreground/70 max-w-xl">
+                Ambitious professionals of all starting points have achieved meaningful, lasting change with LEANMOVEMENT.
+                These results don't happen by chance — they're the outcome of a proven method, delivered with uncompromising consistency.
+              </p>
+            </FadeUp>
+            <FadeUp>
+              <Link
+                to="/results"
+                className="inline-flex items-center gap-3 px-6 py-3.5 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors"
+              >
+                See More Client Results <ArrowUpRight size={16} />
+              </Link>
+            </FadeUp>
           </div>
         </div>
+
+        <FadeUp>
+          <div className="flex w-full h-[460px] md:h-[560px] overflow-hidden px-4 md:px-8 gap-1.5 md:gap-2">
+            {CLIENT_STORIES.map((c, i) => (
+              <div
+                key={i}
+                className="group relative flex-1 hover:flex-[4] transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden cursor-pointer"
+              >
+                <img
+                  src={c.image}
+                  alt={c.name}
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                />
+                {/* Before/After inset — appears on hover */}
+                <div className="absolute bottom-28 right-6 w-32 h-24 md:w-44 md:h-32 border-2 border-accent shadow-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 grid grid-cols-2 overflow-hidden">
+                  <img src={c.before} alt="Before" className="w-full h-full object-cover grayscale" />
+                  <img src={c.after} alt="After" className="w-full h-full object-cover" />
+                </div>
+                {/* Info card — appears on hover */}
+                <div className="absolute left-0 right-0 bottom-0 bg-background/95 backdrop-blur p-5 md:p-6 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
+                  <h3 className="font-display text-lg md:text-2xl leading-tight">
+                    {c.headline}
+                  </h3>
+                  <p className="mt-2 text-xs md:text-sm text-foreground/70 line-clamp-2">
+                    {c.note}
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-foreground rounded-full text-[10px] uppercase tracking-[0.25em]">
+                    Read Now <ArrowUpRight size={12} />
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </FadeUp>
       </section>
 
       <CTABanner
