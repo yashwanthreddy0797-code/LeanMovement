@@ -130,7 +130,7 @@ function HomePage() {
               <span className="w-8 h-px bg-accent" />
               Programs
             </span>
-            <h2 className="font-display text-5xl md:text-7xl mt-6">Choose Your Plan.</h2>
+            <h2 className="font-display text-3xl md:text-5xl mt-6">Choose Your Plan.</h2>
           </div>
           <Link to="/programs" className="text-accent text-sm uppercase tracking-[0.2em] inline-flex items-center gap-2 hover:gap-4 transition-all">
             See All Programs <ArrowUpRight size={16} />
