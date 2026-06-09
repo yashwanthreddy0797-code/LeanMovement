@@ -43,7 +43,7 @@ function BlogPost() {
               <ArrowLeft size={14} /> Back to Journal
             </Link>
             <span className="block mt-8 text-[11px] uppercase tracking-[0.25em] text-accent">{post.category} · {post.date}</span>
-            <h1 className="font-display text-5xl md:text-7xl lg:text-8xl mt-4 max-w-4xl leading-[0.95]">{post.title}</h1>
+            <h1 className="font-display text-5xl md:text-5xl lg:text-6xl mt-4 max-w-4xl leading-[0.95]">{post.title}</h1>
           </FadeUp>
         </div>
       </section>

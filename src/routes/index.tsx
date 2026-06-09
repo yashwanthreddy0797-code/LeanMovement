@@ -53,10 +53,10 @@ function HomePage() {
                 <span className="w-10 h-px bg-accent" />
                 Online Coaching · Hyderabad
               </span>
-              <h1 className="font-display text-6xl sm:text-8xl lg:text-[9rem] mt-6 leading-[0.88]">
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl mt-6 leading-[0.9]">
                 Train<br />On Your Own<br />Terms.
               </h1>
-              <p className="mt-8 max-w-xl text-lg text-foreground/75">
+              <p className="mt-6 max-w-xl text-base text-foreground/75">
                 Science-backed fitness coaching built for the modern Indian professional.
                 No fluff, no fads — just results that last.
               </p>
@@ -73,7 +73,7 @@ function HomePage() {
               <div className="border-l border-border pl-8 space-y-8">
                 {[["500+", "Clients"], ["4.9", "Rating"], ["6 yrs", "Experience"]].map(([n, l]) => (
                   <div key={l}>
-                    <div className="font-display text-5xl text-accent">{n}</div>
+                    <div className="font-display text-3xl text-accent">{n}</div>
                     <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-1">{l}</div>
                   </div>
                 ))}
@@ -102,15 +102,15 @@ function HomePage() {
               <span className="w-8 h-px bg-accent" />
               The Method
             </span>
-            <h2 className="font-display text-5xl md:text-7xl mt-6">Built on Science.<br />Driven by Results.</h2>
-            <p className="mt-6 text-foreground/70">
+            <h2 className="font-display text-3xl md:text-5xl mt-6">Built on Science.<br />Driven by Results.</h2>
+            <p className="mt-6 text-sm text-foreground/70">
               Every program is engineered around evidence-based training and nutrition principles —
               then personalized to your body, your schedule, and your goals. No templates. No shortcuts.
             </p>
             <div className="mt-10 grid grid-cols-2 gap-x-8 gap-y-10">
               {STATS.map((s) => (
                 <div key={s.l} className="border-l border-border pl-5">
-                  <div className="font-display text-5xl text-accent">{s.n}</div>
+                  <div className="font-display text-3xl text-accent">{s.n}</div>
                   <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-2">{s.l}</div>
                 </div>
               ))}
@@ -130,7 +130,7 @@ function HomePage() {
               <span className="w-8 h-px bg-accent" />
               Programs
             </span>
-            <h2 className="font-display text-5xl md:text-7xl mt-6">Choose Your Plan.</h2>
+            <h2 className="font-display text-3xl md:text-5xl mt-6">Choose Your Plan.</h2>
           </div>
           <Link to="/programs" className="text-accent text-sm uppercase tracking-[0.2em] inline-flex items-center gap-2 hover:gap-4 transition-all">
             See All Programs <ArrowUpRight size={16} />
@@ -149,7 +149,7 @@ function HomePage() {
       <section className="container-x py-24 md:py-32 border-t border-border">
         <FadeUp className="mb-16">
           <span className="eyebrow"><span className="w-8 h-px bg-accent" />Receipts</span>
-          <h2 className="font-display text-5xl md:text-7xl mt-6">What Clients Say.</h2>
+          <h2 className="font-display text-3xl md:text-5xl mt-6">What Clients Say.</h2>
         </FadeUp>
         <div className="grid md:grid-cols-3 gap-6">
           {TESTIMONIALS.map((t, i) => (

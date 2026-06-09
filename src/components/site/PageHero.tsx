@@ -31,8 +31,8 @@ export function PageHero({
             <span className="w-8 h-px bg-accent" />
             {eyebrow}
           </span>
-          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl mt-6 max-w-5xl leading-[0.9]">{title}</h1>
-          {subtitle && <p className="mt-6 max-w-2xl text-lg text-foreground/70">{subtitle}</p>}
+          <h1 className="font-display text-4xl md:text-6xl lg:text-7xl mt-6 max-w-5xl leading-[0.92]">{title}</h1>
+          {subtitle && <p className="mt-6 max-w-2xl text-base text-foreground/70">{subtitle}</p>}
           {children}
         </FadeUp>
       </div>
