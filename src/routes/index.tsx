@@ -171,7 +171,7 @@ function HomePage() {
               Strongest Version<br />
               Of <span className="text-accent">Yourself.</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed font-sans">
+            <p className="mt-7 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed font-sans not-italic">
               Premium fitness coaching designed around your life.
             </p>
 
