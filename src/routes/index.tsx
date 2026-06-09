@@ -365,16 +365,6 @@ function HomePage() {
         </FadeUp>
       </section>
 
-      <CTABanner
-        eyebrow="The first step"
-        title="A Conversation Comes First."
-        highlight="Conversation"
-        subtitle="A 15-minute call. No sales pitch. We diagnose where you are, where you want to be, and the fastest honest path to get there."
-        ctaText="Book Free Consultation"
-        ctaTo="/book"
-      />
-
-      <HomeFooter />
     </>
   );
 }
