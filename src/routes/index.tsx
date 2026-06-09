@@ -71,7 +71,7 @@ function HomePage() {
             </FadeUp>
             <FadeUp delay={0.2} className="hidden lg:block">
               <div className="border-l border-border pl-8 space-y-8">
-                {[["500+", "Clients"], ["4.9", "Rating"], ["6 yrs", "Experience"]].map(([n, l]) => (
+                {[["\n", "\n"], ["\n", "\n"], ["\n", "\n"]].map(([n, l]) => (
                   <div key={l}>
                     <div className="font-display text-3xl text-accent">{n}</div>
                     <div className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground mt-1">{l}</div>
