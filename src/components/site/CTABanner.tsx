@@ -27,7 +27,7 @@ export function CTABanner({
             <span className="w-8 h-px bg-accent" />
             {eyebrow}
           </span>
-          <h2 className="font-display text-6xl md:text-8xl mt-6 leading-[0.9]">
+          <h2 className="font-display text-6xl md:text-6xl mt-6 leading-[0.9]">
             {before}
             <span className="text-accent">{highlight}</span>
             {after}

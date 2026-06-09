@@ -82,7 +82,7 @@ function ProgramsPage() {
       <section className="container-x py-24 border-t border-border">
         <FadeUp className="mb-12">
           <span className="eyebrow"><span className="w-8 h-px bg-accent" />Bundles</span>
-          <h2 className="font-display text-5xl md:text-7xl mt-6">Commit. Save.</h2>
+          <h2 className="font-display text-5xl md:text-5xl mt-6">Commit. Save.</h2>
         </FadeUp>
         <div className="grid md:grid-cols-3 gap-6">
           {BUNDLES.map((b, i) => (
@@ -101,7 +101,7 @@ function ProgramsPage() {
       <section className="container-x py-24 border-t border-border">
         <FadeUp className="max-w-2xl mb-12">
           <span className="eyebrow"><span className="w-8 h-px bg-accent" />FAQ</span>
-          <h2 className="font-display text-5xl md:text-7xl mt-6">Common Questions.</h2>
+          <h2 className="font-display text-5xl md:text-5xl mt-6">Common Questions.</h2>
         </FadeUp>
         <FadeUp delay={0.1}>
           <Accordion type="single" collapsible className="max-w-3xl">

@@ -113,7 +113,7 @@ function ResultsPage() {
       <section className="container-x py-24 border-t border-border">
         <FadeUp className="mb-12">
           <span className="eyebrow"><span className="w-8 h-px bg-accent" />In Their Words</span>
-          <h2 className="font-display text-5xl md:text-7xl mt-6">What They Say.</h2>
+          <h2 className="font-display text-5xl md:text-5xl mt-6">What They Say.</h2>
         </FadeUp>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
           {TESTIMONIALS.map((t, i) => (
@@ -140,7 +140,7 @@ function ResultsPage() {
           {STATS.map((s, i) => (
             <FadeUp key={s.l} delay={i * 0.1}>
               <div>
-                <div className="font-display text-6xl md:text-7xl text-accent">{s.n}</div>
+                <div className="font-display text-6xl md:text-5xl text-accent">{s.n}</div>
                 <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground mt-3">{s.l}</div>
               </div>
             </FadeUp>
