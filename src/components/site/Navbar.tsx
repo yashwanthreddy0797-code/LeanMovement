@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -14,21 +14,38 @@ const links = [
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 20);
+      if (y > lastScrollY.current && y > 80 && !open) {
+        setHidden(true);
+      } else {
+        setHidden(false);
+      }
+      lastScrollY.current = y;
+    };
     onScroll();
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  }, [open]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
   }, [open]);
 
+
   return (
-    <header className="fixed inset-x-0 top-0 z-50 pointer-events-none">
+    <header
+      className={`fixed inset-x-0 top-0 z-50 pointer-events-none transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        hidden ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <div className="container-x pt-4 md:pt-5">
+
         <div
           className={`pointer-events-auto mx-auto flex items-center justify-between gap-6 h-14 md:h-16 px-4 md:px-6 rounded-full transition-all duration-500 ${
             scrolled || open
