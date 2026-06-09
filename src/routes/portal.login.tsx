@@ -3,6 +3,7 @@ import { useState } from "react";
 import { setPortalUser } from "@/lib/portal/auth";
 import { ArrowRight } from "lucide-react";
 import loginHero from "@/assets/login-hero.jpg.asset.json";
+import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
 
 export const Route = createFileRoute("/portal/login")({
   head: () => ({ meta: [{ title: "Client Login — LEANMOVEMENT" }] }),
@@ -36,10 +37,10 @@ function LoginPage() {
         <div className="absolute top-0 left-0 h-full w-[6px] bg-[#E11D2A]" />
 
         <div className="relative z-10 flex flex-col justify-between h-full p-12 text-white">
-          <Link to="/" className="flex items-center gap-2 text-xs tracking-[0.28em] uppercase font-semibold">
-            <span className="w-7 h-7 rounded-full bg-[#E11D2A] grid place-items-center text-[10px]">L</span>
-            LEANMOVEMENT
+          <Link to="/" className="flex items-center">
+            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-9 w-auto object-contain brightness-0 invert" />
           </Link>
+
 
           <div>
             <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-[#E11D2A] mb-5">
@@ -69,10 +70,10 @@ function LoginPage() {
         <div className="absolute bottom-0 left-0 w-24 h-24 border-b-2 border-l-2 border-black" />
 
         <div className="w-full max-w-sm">
-          <Link to="/" className="lg:hidden flex items-center gap-2 mb-10 text-xs tracking-[0.28em] uppercase font-semibold">
-            <span className="w-7 h-7 rounded-full bg-[#E11D2A] text-white grid place-items-center text-[10px]">L</span>
-            LEANMOVEMENT
+          <Link to="/" className="lg:hidden flex items-center mb-10">
+            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-8 w-auto object-contain" />
           </Link>
+
 
           <div className="flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-[#E11D2A] mb-3">
             <span className="w-6 h-px bg-[#E11D2A]" /> Welcome back
