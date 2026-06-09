@@ -82,7 +82,7 @@ export function Navbar() {
               to="/book"
               className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-all"
             >
-              Enquire
+              Book Consultation
             </Link>
             <button
               className="lg:hidden text-foreground p-1.5"
@@ -115,7 +115,7 @@ export function Navbar() {
               onClick={() => setOpen(false)}
               className="mt-6 inline-flex items-center justify-center px-5 py-3 rounded-full text-[11px] uppercase tracking-[0.22em] font-semibold bg-accent text-white"
             >
-              Enquire Now
+              Book Free Consultation
             </Link>
             <Link
               to="/portal/login"
