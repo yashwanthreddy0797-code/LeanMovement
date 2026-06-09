@@ -26,7 +26,7 @@ function Dashboard() {
   return (
     <div className="space-y-12">
       {/* ===== Editorial hero ===== */}
-      <section className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[#1A1F1B]">
+      <section className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[#000000]">
         <div className="grid lg:grid-cols-[1.05fr_1fr]">
           {/* Copy side */}
           <div className="relative z-10 p-8 md:p-12 lg:p-14 text-white">
@@ -79,15 +79,15 @@ function Dashboard() {
               width={1536}
               height={1024}
             />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#1A1F1B] via-[#1A1F1B]/40 to-transparent lg:block hidden" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#1A1F1B]/80 via-transparent to-transparent lg:hidden" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/40 to-transparent lg:block hidden" />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-transparent lg:hidden" />
 
             {/* Floating metric chip */}
             <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl shadow-black/30 w-[180px]">
-              <div className="text-[10px] uppercase tracking-[0.2em] text-[#6B6B66]">Streak</div>
+              <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Streak</div>
               <div className="mt-1 flex items-baseline gap-1.5">
-                <span className="font-serif text-3xl text-[#1A1F1B]">14</span>
-                <span className="text-xs text-[#6B6B66]">days</span>
+                <span className="font-serif text-3xl text-[#000000]">14</span>
+                <span className="text-xs text-[#737373]">days</span>
               </div>
               <div className="mt-2 flex items-center gap-1 text-[11px] text-[var(--accent)] font-medium">
                 <Flame size={11} fill="currentColor" /> Personal best
@@ -102,7 +102,7 @@ function Dashboard() {
         <SectionTitle
           eyebrow="Today's snapshot"
           title="Your numbers"
-          action={<Link to="/portal/progress" className="text-xs text-[#3F5A3A] font-medium hover:underline inline-flex items-center gap-1">View progress <ArrowRight size={14} /></Link>}
+          action={<Link to="/portal/progress" className="text-xs text-[#E11D2A] font-medium hover:underline inline-flex items-center gap-1">View progress <ArrowRight size={14} /></Link>}
         />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {kpis.map((k) => <KPICard key={k.label} {...k} />)}
@@ -118,20 +118,20 @@ function Dashboard() {
               <AreaChart data={weightTrend}>
                 <defs>
                   <linearGradient id="w" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#6F8F6A" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="#6F8F6A" stopOpacity={0} />
+                    <stop offset="0%" stopColor="#E11D2A" stopOpacity={0.4} />
+                    <stop offset="100%" stopColor="#E11D2A" stopOpacity={0} />
                   </linearGradient>
                 </defs>
-                <XAxis dataKey="d" stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} width={32} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E8E4DC", background: "#fff", fontSize: 12 }} />
-                <Area type="monotone" dataKey="w" stroke="#6F8F6A" strokeWidth={2.5} fill="url(#w)" />
+                <XAxis dataKey="d" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={32} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} />
+                <Area type="monotone" dataKey="w" stroke="#E11D2A" strokeWidth={2.5} fill="url(#w)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
           <div className="mt-4 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs">
-            <span className="text-[#6B6B66]">Starting <span className="text-[#1A1F1B] font-medium">87.0kg</span></span>
-            <span className="text-[#6B6B66]">Current <span className="text-[#1A1F1B] font-medium">78.4kg</span></span>
+            <span className="text-[#737373]">Starting <span className="text-[#000000] font-medium">87.0kg</span></span>
+            <span className="text-[#737373]">Current <span className="text-[#000000] font-medium">78.4kg</span></span>
             <span className="text-[var(--accent)] font-medium">−8.6kg</span>
           </div>
         </SoftCard>
@@ -141,7 +141,7 @@ function Dashboard() {
           <div className="relative h-44 overflow-hidden">
             <img src={workoutImg.url} alt="Workout" className="absolute inset-0 w-full h-full object-cover" loading="lazy" width={1024} height={1024} />
             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
-            <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur text-[10px] uppercase tracking-[0.18em] text-[#1A1F1B] font-medium">
+            <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur text-[10px] uppercase tracking-[0.18em] text-[#000000] font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" /> Today
             </div>
             <div className="absolute bottom-3 left-4 right-4 text-white">
@@ -153,15 +153,15 @@ function Dashboard() {
             <div className="space-y-2.5 flex-1">
               {workoutToday.exercises.slice(0, 4).map((e) => (
                 <div key={e.name} className="flex items-center justify-between text-sm">
-                  <span className={`flex items-center gap-2 ${e.done ? "text-[#9A9A95] line-through" : "text-[#1A1F1B]"}`}>
-                    <span className={`w-4 h-4 rounded-full border ${e.done ? "bg-[var(--accent)] border-[var(--accent)]" : "border-[#D8D2C4]"}`} />
+                  <span className={`flex items-center gap-2 ${e.done ? "text-[#A3A3A3] line-through" : "text-[#000000]"}`}>
+                    <span className={`w-4 h-4 rounded-full border ${e.done ? "bg-[var(--accent)] border-[var(--accent)]" : "border-[#E5E5E5]"}`} />
                     {e.name}
                   </span>
-                  <span className="text-[11px] text-[#6B6B66] font-medium">{e.sets}×{e.reps}</span>
+                  <span className="text-[11px] text-[#737373] font-medium">{e.sets}×{e.reps}</span>
                 </div>
               ))}
             </div>
-            <Link to="/portal/workouts" className="mt-5 inline-flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#1A1F1B] text-white text-xs font-medium hover:bg-[#2A2F2B] transition">
+            <Link to="/portal/workouts" className="mt-5 inline-flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#000000] text-white text-xs font-medium hover:bg-[#111111] transition">
               Open today's session <ChevronRight size={14} />
             </Link>
           </div>
@@ -174,9 +174,9 @@ function Dashboard() {
         <div className="card-soft overflow-hidden">
           <div className="grid grid-cols-[1fr_120px]">
             <div className="p-5">
-              <div className="text-[10px] uppercase tracking-[0.2em] text-[#6B6B66]">Today's nutrition</div>
-              <div className="mt-1.5 font-serif text-2xl text-[#1A1F1B]">{nutritionConsumed.kcal}<span className="text-sm text-[#6B6B66] font-sans"> / {nutritionTargets.kcal} kcal</span></div>
-              <div className="mt-3 h-1.5 bg-[#EFE9DD] rounded-full overflow-hidden">
+              <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Today's nutrition</div>
+              <div className="mt-1.5 font-serif text-2xl text-[#000000]">{nutritionConsumed.kcal}<span className="text-sm text-[#737373] font-sans"> / {nutritionTargets.kcal} kcal</span></div>
+              <div className="mt-3 h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
                 <div className="h-full bg-[var(--accent)]" style={{ width: `${kcalPct}%` }} />
               </div>
               <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
@@ -189,30 +189,30 @@ function Dashboard() {
               <img src={mealImg.url} alt="Meal" className="absolute inset-0 w-full h-full object-cover" loading="lazy" width={1024} height={1024} />
             </div>
           </div>
-          <Link to="/portal/nutrition" className="block px-5 py-3 text-xs text-[#3F5A3A] font-medium hover:bg-[#F8F5EF] transition border-t border-[var(--border)]">
+          <Link to="/portal/nutrition" className="block px-5 py-3 text-xs text-[#E11D2A] font-medium hover:bg-[#FAFAFA] transition border-t border-[var(--border)]">
             Log meals →
           </Link>
         </div>
 
         {/* Coach message */}
-        <div className="card-soft p-6 bg-gradient-to-br from-white to-[#F4F1EA]">
+        <div className="card-soft p-6 bg-gradient-to-br from-white to-[#FAFAFA]">
           <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#3F5A3A] to-[#6F8F6A] grid place-items-center text-white text-sm font-semibold">AK</div>
+            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#E11D2A] to-[#E11D2A] grid place-items-center text-white text-sm font-semibold">AK</div>
             <div>
-              <div className="text-sm font-medium text-[#1A1F1B]">{clientProfile.coach}</div>
-              <div className="text-[11px] text-[#6B6B66]">Your coach · online</div>
+              <div className="text-sm font-medium text-[#000000]">{clientProfile.coach}</div>
+              <div className="text-[11px] text-[#737373]">Your coach · online</div>
             </div>
           </div>
-          <Quote size={22} className="mt-5 text-[#B5C7AF]" />
-          <p className="mt-2 text-[15px] text-[#1A1F1B] leading-relaxed">{messages[2].text}</p>
-          <div className="mt-4 text-[11px] text-[#6B6B66]">{messages[2].time} today</div>
-          <Link to="/portal/messages" className="mt-5 inline-flex items-center gap-1 text-xs text-[#3F5A3A] font-medium hover:underline">
+          <Quote size={22} className="mt-5 text-[#FCA5A5]" />
+          <p className="mt-2 text-[15px] text-[#000000] leading-relaxed">{messages[2].text}</p>
+          <div className="mt-4 text-[11px] text-[#737373]">{messages[2].time} today</div>
+          <Link to="/portal/messages" className="mt-5 inline-flex items-center gap-1 text-xs text-[#E11D2A] font-medium hover:underline">
             Open conversation <ArrowRight size={13} />
           </Link>
         </div>
 
         {/* Milestone */}
-        <div className="card-soft p-6 bg-[#1A1F1B] text-white relative overflow-hidden">
+        <div className="card-soft p-6 bg-[#000000] text-white relative overflow-hidden">
           <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--accent)]/20 blur-2xl" />
           <div className="relative">
             <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
@@ -257,11 +257,11 @@ function Macro({ label, v, t }: { label: string; v: number; t: number }) {
   return (
     <div>
       <div className="flex items-baseline justify-between">
-        <span className="text-[#6B6B66] font-medium">{label}</span>
-        <span className="text-[#1A1F1B]">{v}<span className="text-[#9A9A95]">g</span></span>
+        <span className="text-[#737373] font-medium">{label}</span>
+        <span className="text-[#000000]">{v}<span className="text-[#A3A3A3]">g</span></span>
       </div>
-      <div className="mt-1 h-1 bg-[#EFE9DD] rounded-full overflow-hidden">
-        <div className="h-full bg-[#6F8F6A]" style={{ width: `${pct}%` }} />
+      <div className="mt-1 h-1 bg-[#F5F5F5] rounded-full overflow-hidden">
+        <div className="h-full bg-[#E11D2A]" style={{ width: `${pct}%` }} />
       </div>
     </div>
   );

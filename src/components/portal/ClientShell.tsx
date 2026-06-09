@@ -33,7 +33,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
         {/* Sidebar */}
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
-            <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold text-[#1A1F1B]">
+            <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold text-[#000000]">
               <span className="w-7 h-7 rounded-full bg-[var(--accent)] text-white grid place-items-center text-xs">L</span>
               LeanMovement
             </Link>
@@ -48,8 +48,8 @@ export function ClientShell({ children }: { children: ReactNode }) {
                   to={n.to}
                   className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors ${
                     active
-                      ? "bg-[#EFF3EC] text-[#2A3E26] font-medium"
-                      : "text-[#4C534A] hover:bg-[#F2F0EB]"
+                      ? "bg-[#FEE2E2] text-[#000000] font-medium"
+                      : "text-[#404040] hover:bg-[#F5F5F5]"
                   }`}
                 >
                   <Icon size={17} strokeWidth={1.6} />
@@ -58,15 +58,15 @@ export function ClientShell({ children }: { children: ReactNode }) {
               );
             })}
           </nav>
-          <div className="p-4 m-4 rounded-2xl bg-gradient-to-br from-[#EFF3EC] to-[#F8F5EF] border border-[var(--border)]">
-            <div className="flex items-center gap-2 text-[#3F5A3A] text-xs font-medium">
+          <div className="p-4 m-4 rounded-2xl bg-gradient-to-br from-[#FEE2E2] to-[#FAFAFA] border border-[var(--border)]">
+            <div className="flex items-center gap-2 text-[#E11D2A] text-xs font-medium">
               <Sparkles size={14} /> Premium 1:1
             </div>
-            <p className="mt-2 text-xs text-[#6B6B66] leading-relaxed">Direct coach access, weekly check-ins, custom plans.</p>
+            <p className="mt-2 text-xs text-[#737373] leading-relaxed">Direct coach access, weekly check-ins, custom plans.</p>
           </div>
           <button
             onClick={signOut}
-            className="m-4 flex items-center gap-2 text-xs text-[#6B6B66] hover:text-[#1A1F1B]"
+            className="m-4 flex items-center gap-2 text-xs text-[#737373] hover:text-[#000000]"
           >
             <LogOut size={14} /> Sign out
           </button>
@@ -80,7 +80,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
               <div className="lg:hidden font-semibold tracking-wider">LEANMOVEMENT</div>
               <div className="ml-auto flex items-center gap-3">
                 <span className="chip">Day 23 / 90</span>
-                <div className="w-9 h-9 rounded-full bg-[#EFE9DD] grid place-items-center text-xs font-semibold text-[#3F5A3A]">
+                <div className="w-9 h-9 rounded-full bg-[#F5F5F5] grid place-items-center text-xs font-semibold text-[#E11D2A]">
                   {user?.name?.[0] ?? "R"}
                 </div>
               </div>
@@ -100,7 +100,7 @@ export function ClientShell({ children }: { children: ReactNode }) {
             const Icon = n.icon;
             const active = pathname === n.to;
             return (
-              <Link key={n.to} to={n.to} className={`flex flex-col items-center gap-1 py-2.5 text-[10px] ${active ? "text-[#2A3E26]" : "text-[#6B6B66]"}`}>
+              <Link key={n.to} to={n.to} className={`flex flex-col items-center gap-1 py-2.5 text-[10px] ${active ? "text-[#000000]" : "text-[#737373]"}`}>
                 <Icon size={18} strokeWidth={1.6} />
                 {n.label}
               </Link>

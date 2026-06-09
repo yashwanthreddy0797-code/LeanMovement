@@ -15,10 +15,10 @@ const retention = [
 ];
 
 const programs = [
-  { name: "Lean Transformation", v: 64, c: "#6F8F6A" },
+  { name: "Lean Transformation", v: 64, c: "#E11D2A" },
   { name: "Fat Loss", v: 48, c: "#A77B2C" },
-  { name: "Muscle Gain", v: 39, c: "#1A1F1B" },
-  { name: "Hybrid Athlete", v: 22, c: "#B5C7AF" },
+  { name: "Muscle Gain", v: 39, c: "#000000" },
+  { name: "Hybrid Athlete", v: 22, c: "#FCA5A5" },
   { name: "Lean & Strong", v: 18, c: "#EFC988" },
 ];
 
@@ -26,7 +26,7 @@ function Analytics() {
   return (
     <div className="space-y-10">
       <div>
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#6B6B66] mb-1.5">Studio analytics</div>
+        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Studio analytics</div>
         <h1 className="text-4xl md:text-5xl">How the business is performing.</h1>
       </div>
 
@@ -38,9 +38,9 @@ function Analytics() {
           { l: "Avg LTV", v: "₹2.1L", d: "Per client" },
         ].map((k) => (
           <div key={k.l} className="card-soft p-5">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-[#6B6B66]">{k.l}</div>
+            <div className="text-[11px] uppercase tracking-[0.18em] text-[#737373]">{k.l}</div>
             <div className="mt-2 text-2xl font-serif">{k.v}</div>
-            <div className="text-[11px] text-[#3F5A3A] mt-1">{k.d}</div>
+            <div className="text-[11px] text-[#E11D2A] mt-1">{k.d}</div>
           </div>
         ))}
       </div>
@@ -51,11 +51,11 @@ function Analytics() {
           <div className="h-64 -mx-2">
             <ResponsiveContainer>
               <BarChart data={coachRevenue}>
-                <CartesianGrid stroke="#EFE9DD" vertical={false} />
-                <XAxis dataKey="m" stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} width={32} tickFormatter={(v) => `${v}L`} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E8E4DC", background: "#fff", fontSize: 12 }} formatter={(v: number) => [`₹${v}L`, "Revenue"]} />
-                <Bar dataKey="r" radius={[8, 8, 0, 0]} fill="#6F8F6A" />
+                <CartesianGrid stroke="#F5F5F5" vertical={false} />
+                <XAxis dataKey="m" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={32} tickFormatter={(v) => `${v}L`} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} formatter={(v: number) => [`₹${v}L`, "Revenue"]} />
+                <Bar dataKey="r" radius={[8, 8, 0, 0]} fill="#E11D2A" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -66,11 +66,11 @@ function Analytics() {
           <div className="h-64 -mx-2">
             <ResponsiveContainer>
               <BarChart data={coachSignups}>
-                <CartesianGrid stroke="#EFE9DD" vertical={false} />
-                <XAxis dataKey="m" stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} width={28} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E8E4DC", background: "#fff", fontSize: 12 }} />
-                <Bar dataKey="n" radius={[8, 8, 0, 0]} fill="#1A1F1B" />
+                <CartesianGrid stroke="#F5F5F5" vertical={false} />
+                <XAxis dataKey="m" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={28} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} />
+                <Bar dataKey="n" radius={[8, 8, 0, 0]} fill="#000000" />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -81,8 +81,8 @@ function Analytics() {
           <div className="space-y-3 mt-2">
             {retention.map((r) => (
               <div key={r.name}>
-                <div className="flex justify-between text-xs mb-1.5"><span className="text-[#4C534A]">{r.name}</span><span className="font-medium">{r.v}%</span></div>
-                <div className="h-2 bg-[#EFE9DD] rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#6F8F6A] to-[#B5C7AF]" style={{ width: `${r.v}%` }} /></div>
+                <div className="flex justify-between text-xs mb-1.5"><span className="text-[#404040]">{r.name}</span><span className="font-medium">{r.v}%</span></div>
+                <div className="h-2 bg-[#F5F5F5] rounded-full overflow-hidden"><div className="h-full bg-gradient-to-r from-[#E11D2A] to-[#FCA5A5]" style={{ width: `${r.v}%` }} /></div>
               </div>
             ))}
           </div>
