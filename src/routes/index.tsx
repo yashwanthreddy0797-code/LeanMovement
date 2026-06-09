@@ -47,7 +47,7 @@ function HomePage() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/20" />
         <div className="absolute inset-0 grid-overlay opacity-30" />
         <div className="container-x relative pb-20 pt-32 w-full">
-          <div className="grid lg:grid-cols-[1fr_auto] gap-12 items-end">
+          <div className="grid lg:grid-cols-[1.4fr_1fr] gap-12 lg:gap-20 items-end">
             <FadeUp>
               <span className="eyebrow">
                 <span className="w-10 h-px bg-accent" />
