@@ -53,10 +53,10 @@ function HomePage() {
                 <span className="w-10 h-px bg-accent" />
                 Online Coaching · Hyderabad
               </span>
-              <h1 className="font-display text-6xl sm:text-8xl lg:text-[9rem] mt-6 leading-[0.88]">
+              <h1 className="font-display text-5xl sm:text-6xl lg:text-7xl mt-6 leading-[0.9]">
                 Train<br />On Your Own<br />Terms.
               </h1>
-              <p className="mt-8 max-w-xl text-lg text-foreground/75">
+              <p className="mt-6 max-w-xl text-base text-foreground/75">
                 Science-backed fitness coaching built for the modern Indian professional.
                 No fluff, no fads — just results that last.
               </p>
