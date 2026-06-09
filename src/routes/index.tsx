@@ -208,7 +208,7 @@ function HomePage() {
       <Ticker />
 
       {/* ============ PILLARS ============ */}
-      <section className="bg-surface">
+      <section className="bg-white text-black">
         <div className="container-x py-20 md:py-28 space-y-16 md:space-y-24">
           {[
             {
@@ -222,14 +222,14 @@ function HomePage() {
               eyebrow: "Nutrition",
               title: "Nutrition, built around you",
               copy: "Personalised nutrition calculated for your body, tracked with data, and coached daily using proven principles you can maintain long term.",
-              image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=85",
+              image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&q=85",
               reverse: true,
             },
             {
               eyebrow: "Accountability",
               title: "Expert coaching and accountability",
               copy: "A dedicated coach takes full ownership of your training, nutrition, and progress — guiding decisions and supporting you beyond the gym, 7 days a week.",
-              image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=85",
+              image: "https://images.unsplash.com/photo-1583500178690-f7fd39c44b4f?w=1200&q=85",
               reverse: false,
             },
             {
@@ -246,13 +246,13 @@ function HomePage() {
                   <img src={p.image} alt={p.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
                 </div>
                 <div>
-                  <span className="eyebrow">
+                  <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60">
                     <span className="w-8 h-px bg-accent" />
                     {p.eyebrow}
                   </span>
-                  <h3 className="font-display text-4xl md:text-5xl lg:text-6xl mt-6 leading-[0.95]">{p.title}</h3>
-                  <p className="mt-6 text-foreground/75 leading-relaxed max-w-lg">{p.copy}</p>
-                  <a href="#method" className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors">
+                  <h3 className="font-display text-4xl md:text-5xl lg:text-6xl mt-6 leading-[0.95] text-black">{p.title}</h3>
+                  <p className="mt-6 text-black/70 leading-relaxed max-w-lg">{p.copy}</p>
+                  <a href="#method" className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-black rounded-full text-xs uppercase tracking-[0.25em] text-black hover:bg-black hover:text-white transition-colors">
                     Explore The Method <ArrowUpRight size={14} />
                   </a>
                 </div>
