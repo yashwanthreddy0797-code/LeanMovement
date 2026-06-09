@@ -184,7 +184,7 @@ function HomePage() {
               eyebrow: "Accountability",
               title: "Expert coaching and accountability",
               copy: "A dedicated coach takes full ownership of your training, nutrition, and progress — guiding decisions and supporting you beyond the gym, 7 days a week.",
-              image: "https://images.unsplash.com/photo-1583500178690-f7fd39c44b4f?w=1200&q=85",
+              image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=1200&q=85",
               reverse: false,
             },
             {
