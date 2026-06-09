@@ -15,7 +15,7 @@ export function Ticker() {
         {repeated.map((item, i) => (
           <span key={i} className="font-display text-2xl md:text-3xl tracking-wider mx-8 flex items-center gap-8">
             {item}
-            <span className="text-background/60">·</span>
+            <span className="text-red-500/60">·</span>
           </span>
         ))}
       </div>
