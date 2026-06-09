@@ -49,9 +49,9 @@ const HERO_POINTS = [
 ] as const;
 
 const TRUST_BAR = [
-  { n: "500+", l: "Transformations" },
-  { n: "6 Yrs", l: "Coaching Experience" },
-  { n: "92%", l: "Completion Rate" },
+  { n: "", l: "" },
+  { n: "", l: "" },
+  { n: "", l: "" },
 ] as const;
 
 const CLIENT_STORIES = [
