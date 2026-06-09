@@ -168,7 +168,7 @@ function HomePage() {
           <FadeUp>
             <span className="eyebrow">
               <span className="w-10 h-px bg-accent" />
-              PREMIER ONLINE COACHING
+              PREMIER ONLINE FITNESS COACHING
             </span>
             <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] mt-7 leading-[0.92] max-w-5xl">
               Build The<br />
