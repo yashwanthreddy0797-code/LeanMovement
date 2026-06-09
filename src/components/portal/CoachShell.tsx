@@ -26,10 +26,10 @@ export function CoachShell({ children }: { children: ReactNode }) {
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
             <Link to="/" className="flex items-center gap-2 text-[15px] tracking-[0.18em] uppercase font-semibold">
-              <span className="w-7 h-7 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs">L</span>
+              <span className="w-7 h-7 rounded-full bg-[#000000] text-white grid place-items-center text-xs">L</span>
               LeanMovement Studio
             </Link>
-            <div className="mt-2 text-[11px] uppercase tracking-widest text-[#6B6B66]">Coach Console</div>
+            <div className="mt-2 text-[11px] uppercase tracking-widest text-[#737373]">Coach Console</div>
           </div>
           <nav className="flex-1 px-3 space-y-0.5">
             {nav.map((n) => {
@@ -38,7 +38,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
                 ? pathname === "/portal/coach"
                 : pathname.startsWith(n.to);
               return (
-                <Link key={n.to} to={n.to} className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-[#EFF3EC] text-[#2A3E26] font-medium" : "text-[#4C534A] hover:bg-[#F2F0EB]"}`}>
+                <Link key={n.to} to={n.to} className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm transition-colors ${active ? "bg-[#FEE2E2] text-[#000000] font-medium" : "text-[#404040] hover:bg-[#F5F5F5]"}`}>
                   <Icon size={17} strokeWidth={1.6} />
                   {n.label}
                 </Link>
@@ -48,16 +48,16 @@ export function CoachShell({ children }: { children: ReactNode }) {
           <div className="p-4">
             <div className="card-soft p-4">
               <div className="flex items-center gap-3">
-                <div className="w-9 h-9 rounded-full bg-[#1A1F1B] text-white grid place-items-center text-xs font-semibold">
+                <div className="w-9 h-9 rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold">
                   {user?.name?.[0] ?? "A"}
                 </div>
                 <div>
                   <div className="text-sm font-medium">{user?.name ?? "Arjun Kapoor"}</div>
-                  <div className="text-[11px] text-[#6B6B66]">Head Coach</div>
+                  <div className="text-[11px] text-[#737373]">Head Coach</div>
                 </div>
               </div>
             </div>
-            <button onClick={signOut} className="mt-4 flex items-center gap-2 text-xs text-[#6B6B66] hover:text-[#1A1F1B]">
+            <button onClick={signOut} className="mt-4 flex items-center gap-2 text-xs text-[#737373] hover:text-[#000000]">
               <LogOut size={14} /> Sign out
             </button>
           </div>
@@ -68,7 +68,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
             <div className="px-5 lg:px-10 py-4 flex items-center justify-between">
               <div className="lg:hidden font-semibold tracking-wider">LEANMOVEMENT · COACH</div>
               <div className="ml-auto flex items-center gap-3">
-                <button className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#4C534A] hover:bg-white/60">
+                <button className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#404040] hover:bg-white/60">
                   <Settings size={13} /> Settings
                 </button>
                 <span className="chip">All systems live</span>

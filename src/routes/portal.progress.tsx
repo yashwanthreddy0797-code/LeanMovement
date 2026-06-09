@@ -27,7 +27,7 @@ function Progress() {
   return (
     <div className="space-y-10">
       <div>
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#6B6B66] mb-1.5">Progress center</div>
+        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Progress center</div>
         <h1 className="text-4xl md:text-5xl">Your transformation, measured.</h1>
       </div>
 
@@ -37,11 +37,11 @@ function Progress() {
           <div className="h-64 -mx-2">
             <ResponsiveContainer>
               <AreaChart data={weightTrend}>
-                <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#6F8F6A" stopOpacity={0.35} /><stop offset="100%" stopColor="#6F8F6A" stopOpacity={0} /></linearGradient></defs>
-                <XAxis dataKey="d" stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} width={32} domain={["auto", "auto"]} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E8E4DC", background: "#fff", fontSize: 12 }} />
-                <Area type="monotone" dataKey="w" stroke="#6F8F6A" strokeWidth={2.5} fill="url(#g1)" />
+                <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#E11D2A" stopOpacity={0.35} /><stop offset="100%" stopColor="#E11D2A" stopOpacity={0} /></linearGradient></defs>
+                <XAxis dataKey="d" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={32} domain={["auto", "auto"]} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} />
+                <Area type="monotone" dataKey="w" stroke="#E11D2A" strokeWidth={2.5} fill="url(#g1)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -52,9 +52,9 @@ function Progress() {
           <div className="h-64 -mx-2">
             <ResponsiveContainer>
               <LineChart data={weightTrend}>
-                <XAxis dataKey="d" stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} width={32} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E8E4DC", background: "#fff", fontSize: 12 }} />
+                <XAxis dataKey="d" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={32} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} />
                 <Line type="monotone" dataKey="bf" stroke="#A77B2C" strokeWidth={2.5} dot={{ r: 3 }} />
               </LineChart>
             </ResponsiveContainer>
@@ -66,11 +66,11 @@ function Progress() {
           <div className="h-64 -mx-2">
             <ResponsiveContainer>
               <AreaChart data={waistTrend}>
-                <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#1A1F1B" stopOpacity={0.18} /><stop offset="100%" stopColor="#1A1F1B" stopOpacity={0} /></linearGradient></defs>
-                <XAxis dataKey="d" stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#9A9A95" fontSize={11} tickLine={false} axisLine={false} width={32} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E8E4DC", background: "#fff", fontSize: 12 }} />
-                <Area type="monotone" dataKey="v" stroke="#1A1F1B" strokeWidth={2.5} fill="url(#g2)" />
+                <defs><linearGradient id="g2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#000000" stopOpacity={0.18} /><stop offset="100%" stopColor="#000000" stopOpacity={0} /></linearGradient></defs>
+                <XAxis dataKey="d" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
+                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={32} />
+                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} />
+                <Area type="monotone" dataKey="v" stroke="#000000" strokeWidth={2.5} fill="url(#g2)" />
               </AreaChart>
             </ResponsiveContainer>
           </div>
@@ -81,7 +81,7 @@ function Progress() {
         <SectionTitle eyebrow="Photo journal" title="Before & after" />
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {photos.map((p, i) => (
-            <div key={i} className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#EFE9DD] relative group">
+            <div key={i} className="aspect-[3/4] rounded-2xl overflow-hidden bg-[#F5F5F5] relative group">
               <img src={p} alt={`Progress week ${i * 3 + 1}`} loading="lazy" className="w-full h-full object-cover" />
               <div className="absolute bottom-0 inset-x-0 p-3 bg-gradient-to-t from-black/60 to-transparent text-white text-xs font-medium">Week {i * 3 + 1}</div>
             </div>
@@ -92,12 +92,12 @@ function Progress() {
       <div>
         <SectionTitle eyebrow="Milestones" title="Progress timeline" />
         <div className="card-soft p-6">
-          <ol className="relative border-l-2 border-[#EFE9DD] ml-2 space-y-6">
+          <ol className="relative border-l-2 border-[#F5F5F5] ml-2 space-y-6">
             {timeline.map((t, i) => (
               <li key={i} className="pl-6 relative">
-                <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#6F8F6A] border-4 border-white" />
-                <div className="text-xs uppercase tracking-[0.18em] text-[#3F5A3A] font-medium">{t.wk}</div>
-                <div className="text-[#1A1F1B] mt-0.5">{t.note}</div>
+                <span className="absolute -left-[9px] top-1.5 w-4 h-4 rounded-full bg-[#E11D2A] border-4 border-white" />
+                <div className="text-xs uppercase tracking-[0.18em] text-[#E11D2A] font-medium">{t.wk}</div>
+                <div className="text-[#000000] mt-0.5">{t.note}</div>
               </li>
             ))}
           </ol>
