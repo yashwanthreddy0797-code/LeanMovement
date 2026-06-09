@@ -171,9 +171,8 @@ function HomePage() {
               Strongest Version<br />
               Of <span className="text-accent">Yourself.</span>
             </h1>
-            <p className="mt-7 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed">
-              Personalised training, nutrition, and accountability for ambitious professionals who want lasting body transformation,
-              better performance, and complete confidence in their health.
+            <p className="mt-7 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed font-sans">
+              Premium fitness coaching designed around your life.
             </p>
 
             <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3 max-w-3xl">
