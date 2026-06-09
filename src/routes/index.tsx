@@ -184,7 +184,7 @@ function HomePage() {
               eyebrow: "Accountability",
               title: "Expert coaching and accountability",
               copy: "A dedicated coach takes full ownership of your training, nutrition, and progress — guiding decisions and supporting you beyond the gym, 7 days a week.",
-              image: "https://images.unsplash.com/photo-1583500178690-f7fd39c44b4f?w=1200&q=85",
+              image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=1200&q=85",
               reverse: false,
             },
             {
@@ -259,45 +259,47 @@ function HomePage() {
 
 
       {/* ============ PROGRAMS ============ */}
-      <section className="container-x py-24 md:py-32">
-        <FadeUp className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-          <div className="max-w-2xl">
-            <span className="eyebrow">
-              <span className="w-8 h-px bg-accent" />
-              Levels Of Support
-            </span>
-            <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95]">Choose Your Tier.</h2>
-            <p className="mt-6 text-foreground/70">
-              Three levels of coaching depth. The same standards, methodology, and direct coach access — different cadences of contact.
-            </p>
-          </div>
-          <Link
-            to="/programs"
-            className="text-accent text-sm uppercase tracking-[0.2em] inline-flex items-center gap-2 hover:gap-4 transition-all"
-          >
-            Compare All Tiers <ArrowUpRight size={16} />
-          </Link>
-        </FadeUp>
+      <section className="bg-white text-black">
+        <div className="container-x py-24 md:py-32">
+          <FadeUp className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
+            <div className="max-w-2xl">
+              <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60">
+                <span className="w-8 h-px bg-accent" />
+                Levels Of Support
+              </span>
+              <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95] text-black">Choose Your Tier.</h2>
+              <p className="mt-6 text-black/70">
+                Three levels of coaching depth. The same standards, methodology, and direct coach access — different cadences of contact.
+              </p>
+            </div>
+            <Link
+              to="/programs"
+              className="text-accent text-sm uppercase tracking-[0.2em] inline-flex items-center gap-2 hover:gap-4 transition-all"
+            >
+              Compare All Tiers <ArrowUpRight size={16} />
+            </Link>
+          </FadeUp>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          {CORE_PLANS.map((p, i) => (
-            <FadeUp key={p.name} delay={i * 0.1}>
-              <PlanCard plan={p} />
-            </FadeUp>
-          ))}
+          <div className="grid md:grid-cols-3 gap-6">
+            {CORE_PLANS.map((p, i) => (
+              <FadeUp key={p.name} delay={i * 0.1}>
+                <PlanCard plan={p} light />
+              </FadeUp>
+            ))}
+          </div>
+
+          <FadeUp className="mt-12 flex flex-wrap items-center justify-between gap-6 p-8 border border-black/10 bg-white shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]">
+            <div>
+              <h3 className="font-display text-2xl text-black">Not sure which tier fits?</h3>
+              <p className="text-sm text-black/70 mt-2">
+                Book a free consultation. We'll recommend the right level for your goal — even if it's the smallest one.
+              </p>
+            </div>
+            <Link to="/book" className="btn-pill-accent">
+              Book Free Consultation <ArrowRight size={16} />
+            </Link>
+          </FadeUp>
         </div>
-
-        <FadeUp className="mt-12 flex flex-wrap items-center justify-between gap-6 p-8 border border-border bg-card">
-          <div>
-            <h3 className="font-display text-2xl">Not sure which tier fits?</h3>
-            <p className="text-sm text-foreground/70 mt-2">
-              Book a free consultation. We'll recommend the right level for your goal — even if it's the smallest one.
-            </p>
-          </div>
-          <Link to="/book" className="btn-pill-accent">
-            Book Free Consultation <ArrowRight size={16} />
-          </Link>
-        </FadeUp>
       </section>
 
       {/* ============ CLIENT STORIES — hover expand strip ============ */}
