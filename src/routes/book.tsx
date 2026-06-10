@@ -41,8 +41,8 @@ function BookPage() {
                   </div>
                 ))}
               </div>
-              <div className="mt-10 aspect-[4/5] max-w-sm overflow-hidden">
-                <img src={COACH_IMG} alt="Coach" loading="lazy" className="w-full h-full object-cover grayscale" />
+              <div className="mt-10 max-w-md">
+                <img src={COACH_IMG} alt="Coach" loading="lazy" className="w-full h-auto object-contain grayscale" />
               </div>
             </FadeUp>
 
