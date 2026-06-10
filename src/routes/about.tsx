@@ -4,6 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { CTABanner } from "@/components/site/CTABanner";
 import coachPortraitAsset from "@/assets/coach-portrait.png.asset.json";
+import storyCoachAsset from "@/assets/story-coach.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
