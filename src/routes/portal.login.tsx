@@ -2,7 +2,7 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { setPortalUser } from "@/lib/portal/auth";
 import { ArrowRight } from "lucide-react";
-import loginHero from "@/assets/login-hero.jpg.asset.json";
+import loginHero from "@/assets/login-hero-men.jpg.asset.json";
 import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
 
 export const Route = createFileRoute("/portal/login")({
