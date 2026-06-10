@@ -24,7 +24,7 @@
   --color-border: var(--border);
   --color-input: var(--border);
   --color-ring: var(--accent);
-  --font-display: "Archivo", "Inter", sans-serif;
+  --font-display: "Barlow Condensed", "Oswald", "Archivo", sans-serif;
   --font-sans: "Inter", "DM Sans", sans-serif;
   --font-serif: "Instrument Serif", serif;
   --radius-sm: 0px;
