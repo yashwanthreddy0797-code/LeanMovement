@@ -188,11 +188,11 @@ function PricingPage() {
         </div>
       </section>
 
-      {/* FAQ — premium white */}
-      <section className="bg-white text-black border-t border-black/10">
+      {/* FAQ — black */}
+      <section className="bg-black text-white">
         <div className="container-x py-24">
           <FadeUp className="max-w-2xl mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60">
               <span className="w-8 h-px bg-accent" />FAQ
             </span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">Pricing Questions.</h2>
@@ -200,11 +200,11 @@ function PricingPage() {
           <FadeUp delay={0.1}>
             <Accordion type="single" collapsible className="max-w-3xl">
               {PRICING_FAQ.map((f, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-black/10">
-                  <AccordionTrigger className="font-display text-2xl text-left text-black hover:text-accent hover:no-underline py-6">
+                <AccordionItem key={i} value={`item-${i}`} className="border-white/15">
+                  <AccordionTrigger className="font-display text-2xl text-left text-white hover:text-accent hover:no-underline py-6">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-black/70 pb-6">{f.a}</AccordionContent>
+                  <AccordionContent className="text-white/70 pb-6">{f.a}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
