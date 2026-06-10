@@ -191,7 +191,7 @@ function HomePage() {
               eyebrow: "Progress",
               title: "Data-driven results",
               copy: "Your progress is tracked across 50+ metrics to remove guesswork and make every change visible, measurable, and repeatable.",
-              image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=85",
+              image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=85",
               reverse: true,
             },
           ].map((p, i) => (
