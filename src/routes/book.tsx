@@ -15,7 +15,8 @@ export const Route = createFileRoute("/book")({
   component: BookPage,
 });
 
-const COACH_IMG = "https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=900&q=80";
+import bookCoachAsset from "@/assets/book-coach.png.asset.json";
+const COACH_IMG = bookCoachAsset.url;
 
 function BookPage() {
   return (
