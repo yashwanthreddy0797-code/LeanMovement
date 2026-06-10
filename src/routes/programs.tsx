@@ -81,11 +81,11 @@ function ProgramsPage() {
         </div>
       </section>
 
-      {/* BUNDLES — premium white */}
-      <section className="bg-white text-black border-t border-black/10">
+      {/* BUNDLES — black */}
+      <section className="bg-black text-white">
         <div className="container-x py-24">
           <FadeUp className="mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60">
               <span className="w-8 h-px bg-accent" />Bundles
             </span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">Commit. Save.</h2>
@@ -93,10 +93,10 @@ function ProgramsPage() {
           <div className="grid md:grid-cols-3 gap-6">
             {BUNDLES.map((b, i) => (
               <FadeUp key={b.title} delay={i * 0.1}>
-                <div className="p-8 border border-black/10 bg-white h-full flex flex-col hover:border-accent transition-colors shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]">
+                <div className="p-8 border border-white/15 bg-white/[0.03] h-full flex flex-col hover:border-accent transition-colors">
                   <span className="text-[11px] uppercase tracking-[0.25em] text-accent">{b.save}</span>
                   <h3 className="font-display text-3xl mt-3">{b.title}</h3>
-                  <p className="mt-3 text-sm text-black/70 flex-1">{b.body}</p>
+                  <p className="mt-3 text-sm text-white/70 flex-1">{b.body}</p>
                   <div className="font-display text-4xl mt-8 text-accent">{b.price}</div>
                 </div>
               </FadeUp>
