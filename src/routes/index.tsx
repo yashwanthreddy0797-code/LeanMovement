@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 });
 
 const HERO_IMG =
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=85";
+  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=2000&q=90";
 
 const HERO_POINTS = [
   "Custom Training",
@@ -170,7 +170,7 @@ function HomePage() {
               eyebrow: "Training",
               title: "Precision strength training",
               copy: "Training methods refined over 15+ years and delivered by the top 1% of coaches — engineered for results in 3 hours per week, or less.",
-              image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=85",
+              image: "https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=1400&q=90",
               reverse: false,
             },
             {
