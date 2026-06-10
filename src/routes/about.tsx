@@ -37,15 +37,15 @@ const GALLERY = [
 function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="" image={COACH_IMG} compact />
+      <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="" compact />
 
       {/* STORY — premium white */}
       <section className="bg-white text-black">
         <div className="container-x py-24 md:py-32">
-          <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-20">
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <FadeUp>
-              <div className="aspect-[3/4] overflow-hidden sticky top-32">
-                <img src={storyCoachAsset.url} alt="Coach portrait" loading="lazy" className="w-full h-full object-contain" />
+              <div className="relative w-full lg:-ml-8 xl:-ml-16">
+                <img src={storyCoachAsset.url} alt="Coach portrait" loading="lazy" className="w-full h-auto object-contain scale-110 origin-center" />
               </div>
             </FadeUp>
             <FadeUp delay={0.1} className="space-y-6 text-black/75 leading-relaxed">
