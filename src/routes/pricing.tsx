@@ -125,11 +125,11 @@ function PricingPage() {
         </div>
       </section>
 
-      {/* COMPARISON — premium white */}
-      <section className="bg-white text-black border-t border-black/10">
+      {/* COMPARISON — black */}
+      <section className="bg-black text-white">
         <div className="container-x py-24">
           <FadeUp className="mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60">
               <span className="w-8 h-px bg-accent" />Compare
             </span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">What's Included.</h2>
@@ -138,9 +138,9 @@ function PricingPage() {
             <table className="w-full min-w-[700px] border-collapse">
               <thead>
                 <tr>
-                  <th className="text-left py-5 px-4 text-[11px] uppercase tracking-[0.25em] text-black/55 font-medium border-b border-black/10">Feature</th>
+                  <th className="text-left py-5 px-4 text-[11px] uppercase tracking-[0.25em] text-white/55 font-medium border-b border-white/15">Feature</th>
                   {ALL_PLANS.map((p) => (
-                    <th key={p.name} className="text-left py-5 px-4 border-b border-black/10">
+                    <th key={p.name} className="text-left py-5 px-4 border-b border-white/15">
                       <div className="font-display text-2xl">{p.name}</div>
                     </th>
                   ))}
@@ -148,13 +148,13 @@ function PricingPage() {
               </thead>
               <tbody>
                 {FEATURES.map(([label, ...vals]) => (
-                  <tr key={label as string} className="border-b border-black/10">
-                    <td className="py-5 px-4 text-sm text-black/80">{label}</td>
+                  <tr key={label as string} className="border-b border-white/10">
+                    <td className="py-5 px-4 text-sm text-white/80">{label}</td>
                     {vals.map((v, i) => (
                       <td key={i} className="py-5 px-4 text-sm">
                         {v === true ? <Check size={18} className="text-accent" /> :
-                         v === false ? <X size={18} className="text-black/25" /> :
-                         <span className="text-black/80">{v}</span>}
+                         v === false ? <X size={18} className="text-white/25" /> :
+                         <span className="text-white/85">{v}</span>}
                       </td>
                     ))}
                   </tr>
