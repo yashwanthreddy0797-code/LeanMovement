@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
@@ -193,24 +194,68 @@ function HomePage() {
               image: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=85",
               reverse: true,
             },
-          ].map((p) => (
-            <FadeUp key={p.title}>
-              <div className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${p.reverse ? "lg:[&>div:first-child]:order-2" : ""}`}>
-                <div className="relative aspect-[4/3] overflow-hidden rounded-3xl">
+          ].map((p, i) => (
+            <FadeUp key={p.title} delay={i * 0.08}>
+              <motion.div
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-60px" }}
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
+                }}
+                className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${p.reverse ? "lg:[&>div:first-child]:order-2" : ""}`}
+              >
+                <motion.div
+                  className="relative aspect-[4/3] overflow-hidden rounded-3xl"
+                  variants={{
+                    hidden: { opacity: 0, scale: 1.08, y: 30 },
+                    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
+                  }}
+                >
                   <img src={p.image} alt={p.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-                </div>
-                <div>
-                  <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60">
+                </motion.div>
+                <motion.div>
+                  <motion.span
+                    className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                  >
                     <span className="w-8 h-px bg-accent" />
                     {p.eyebrow}
-                  </span>
-                  <h3 className="font-display text-4xl md:text-5xl lg:text-6xl mt-6 leading-[0.95] text-black">{p.title}</h3>
-                  <p className="mt-6 text-black/70 leading-relaxed max-w-lg">{p.copy}</p>
-                  <a href="#method" className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-black rounded-full text-xs uppercase tracking-[0.25em] text-black hover:bg-black hover:text-white transition-colors">
+                  </motion.span>
+                  <motion.h3
+                    className="font-display text-4xl md:text-5xl lg:text-6xl mt-6 leading-[0.95] text-black"
+                    variants={{
+                      hidden: { opacity: 0, y: 30 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                  >
+                    {p.title}
+                  </motion.h3>
+                  <motion.p
+                    className="mt-6 text-black/70 leading-relaxed max-w-lg"
+                    variants={{
+                      hidden: { opacity: 0, y: 25 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                  >
+                    {p.copy}
+                  </motion.p>
+                  <motion.a
+                    href="#method"
+                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-black rounded-full text-xs uppercase tracking-[0.25em] text-black hover:bg-black hover:text-white transition-colors"
+                    variants={{
+                      hidden: { opacity: 0, y: 20 },
+                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                  >
                     Explore The Method <ArrowUpRight size={14} />
-                  </a>
-                </div>
-              </div>
+                  </motion.a>
+                </motion.div>
+              </motion.div>
             </FadeUp>
           ))}
         </div>
