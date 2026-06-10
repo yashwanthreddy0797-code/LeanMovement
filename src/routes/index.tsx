@@ -29,7 +29,7 @@ export const Route = createFileRoute("/")({
 });
 
 const HERO_IMG =
-  "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1800&q=85";
+  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=2000&q=90";
 
 const HERO_POINTS = [
   "Custom Training",
