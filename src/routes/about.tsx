@@ -4,6 +4,7 @@ import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { CTABanner } from "@/components/site/CTABanner";
 import coachPortraitAsset from "@/assets/coach-portrait.png.asset.json";
+import storyCoachAsset from "@/assets/story-coach.png.asset.json";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -44,7 +45,7 @@ function AboutPage() {
           <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-20">
             <FadeUp>
               <div className="aspect-[3/4] overflow-hidden sticky top-32">
-                <img src={COACH_IMG} alt="Coach portrait" loading="lazy" className="w-full h-full object-cover grayscale" />
+                <img src={storyCoachAsset.url} alt="Coach portrait" loading="lazy" className="w-full h-full object-contain" />
               </div>
             </FadeUp>
             <FadeUp delay={0.1} className="space-y-6 text-black/75 leading-relaxed">
