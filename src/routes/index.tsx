@@ -170,7 +170,7 @@ function HomePage() {
               eyebrow: "Training",
               title: "Precision strength training",
               copy: "Training methods refined over 15+ years and delivered by the top 1% of coaches — engineered for results in 3 hours per week, or less.",
-              image: "https://images.unsplash.com/photo-1532384748853-8f54a8f476e2?w=1400&q=90",
+              image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1400&q=90",
               reverse: false,
             },
             {
