@@ -38,62 +38,72 @@ function AboutPage() {
     <>
       <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="" image={COACH_IMG} compact />
 
-      <section className="container-x py-24 md:py-32">
-        <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-20">
-          <FadeUp>
-            <div className="aspect-[3/4] overflow-hidden sticky top-32">
-              <img src={COACH_IMG} alt="Coach portrait" loading="lazy" className="w-full h-full object-cover grayscale" />
-            </div>
-          </FadeUp>
-          <FadeUp delay={0.1} className="space-y-6 text-foreground/80 leading-relaxed">
-            <span className="eyebrow"><span className="w-8 h-px bg-accent" />The Story</span>
-            <h2 className="font-display text-5xl md:text-6xl text-foreground">A coach,</h2>
-            <p>I started coaching out of a small gym in Hyderabad in 2019 with one rule: never sell anything I wouldn't use myself. That meant no fad diets, no supplement pyramids, no fear-mongering.</p>
-            <p>Six years later, the rule still stands. Over 500 clients have transformed under this method — corporate professionals, parents, students, athletes. The training shifts. The principles don't.</p>
-            <p>I believe fitness should give you energy for the rest of your life, not consume it. That means programs that fit into real schedules, nutrition that respects Indian food, and a coach who picks up the phone.</p>
-            <p>If that sounds like the kind of coaching you've been looking for — let's talk.</p>
-          </FadeUp>
-        </div>
-      </section>
-
-      <section className="container-x py-24 md:py-32 border-t border-border">
-        <FadeUp className="max-w-2xl mb-16">
-          <span className="eyebrow"><span className="w-8 h-px bg-accent" />Philosophy</span>
-          <h2 className="font-display text-5xl md:text-5xl mt-6">Three Pillars.</h2>
-        </FadeUp>
-        <div className="grid md:grid-cols-3 gap-6">
-          {PILLARS.map((p, i) => (
-            <FadeUp key={p.title} delay={i * 0.1}>
-              <div className="p-10 border border-border bg-card h-full">
-                <p.icon className="text-accent" size={32} strokeWidth={1.5} />
-                <h3 className="font-display text-4xl mt-8">{p.title}</h3>
-                <p className="mt-4 text-foreground/70">{p.body}</p>
+      {/* STORY — premium white */}
+      <section className="bg-white text-black">
+        <div className="container-x py-24 md:py-32">
+          <div className="grid lg:grid-cols-[2fr_3fr] gap-12 lg:gap-20">
+            <FadeUp>
+              <div className="aspect-[3/4] overflow-hidden sticky top-32">
+                <img src={COACH_IMG} alt="Coach portrait" loading="lazy" className="w-full h-full object-cover grayscale" />
               </div>
             </FadeUp>
-          ))}
+            <FadeUp delay={0.1} className="space-y-6 text-black/75 leading-relaxed">
+              <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60"><span className="w-8 h-px bg-accent" />The Story</span>
+              <h2 className="font-display text-5xl md:text-6xl text-black">A coach,</h2>
+              <p>I started coaching out of a small gym in Hyderabad in 2019 with one rule: never sell anything I wouldn't use myself. That meant no fad diets, no supplement pyramids, no fear-mongering.</p>
+              <p>Six years later, the rule still stands. Over 500 clients have transformed under this method — corporate professionals, parents, students, athletes. The training shifts. The principles don't.</p>
+              <p>I believe fitness should give you energy for the rest of your life, not consume it. That means programs that fit into real schedules, nutrition that respects Indian food, and a coach who picks up the phone.</p>
+              <p>If that sounds like the kind of coaching you've been looking for — let's talk.</p>
+            </FadeUp>
+          </div>
         </div>
       </section>
 
-      <section className="border-y border-border bg-surface py-10">
-        <div className="container-x flex flex-wrap items-center gap-x-12 gap-y-4 text-xs uppercase tracking-[0.25em] text-muted-foreground">
+      {/* PHILOSOPHY — black */}
+      <section className="bg-black text-white">
+        <div className="container-x py-24 md:py-32">
+          <FadeUp className="max-w-2xl mb-16">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60"><span className="w-8 h-px bg-accent" />Philosophy</span>
+            <h2 className="font-display text-5xl md:text-5xl mt-6">Three Pillars.</h2>
+          </FadeUp>
+          <div className="grid md:grid-cols-3 gap-6">
+            {PILLARS.map((p, i) => (
+              <FadeUp key={p.title} delay={i * 0.1}>
+                <div className="p-10 border border-white/15 bg-white/[0.03] h-full hover:border-accent transition-colors">
+                  <p.icon className="text-accent" size={32} strokeWidth={1.5} />
+                  <h3 className="font-display text-4xl mt-8">{p.title}</h3>
+                  <p className="mt-4 text-white/70">{p.body}</p>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CREDENTIALS — white strip */}
+      <section className="bg-white text-black border-y border-black/10 py-10">
+        <div className="container-x flex flex-wrap items-center gap-x-12 gap-y-4 text-xs uppercase tracking-[0.25em] text-black/60">
           <span className="text-accent">Credentials</span>
           {CREDENTIALS.map((c) => <span key={c}>· {c}</span>)}
         </div>
       </section>
 
-      <section className="container-x py-24 md:py-32">
-        <FadeUp className="mb-12">
-          <span className="eyebrow"><span className="w-8 h-px bg-accent" />Inside The Work</span>
-          <h2 className="font-display text-5xl md:text-5xl mt-6">From the Gym.</h2>
-        </FadeUp>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
-          {GALLERY.map((src, i) => (
-            <FadeUp key={src} delay={i * 0.05}>
-              <div className={`overflow-hidden ${i === 1 || i === 4 ? "md:row-span-2 aspect-[3/5]" : "aspect-square"}`}>
-                <img src={src} alt="" loading="lazy" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
-              </div>
-            </FadeUp>
-          ))}
+      {/* GALLERY — black */}
+      <section className="bg-black text-white">
+        <div className="container-x py-24 md:py-32">
+          <FadeUp className="mb-12">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60"><span className="w-8 h-px bg-accent" />Inside The Work</span>
+            <h2 className="font-display text-5xl md:text-5xl mt-6">From the Gym.</h2>
+          </FadeUp>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">
+            {GALLERY.map((src, i) => (
+              <FadeUp key={src} delay={i * 0.05}>
+                <div className={`overflow-hidden ${i === 1 || i === 4 ? "md:row-span-2 aspect-[3/5]" : "aspect-square"}`}>
+                  <img src={src} alt="" loading="lazy" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </section>
 
