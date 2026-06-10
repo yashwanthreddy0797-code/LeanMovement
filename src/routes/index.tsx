@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
