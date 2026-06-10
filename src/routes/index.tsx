@@ -417,21 +417,24 @@ function HomePage() {
 
 function HomeFooter() {
   return (
-    <footer className="relative overflow-hidden bg-[radial-gradient(ellipse_at_top,_#1a2a1f_0%,_#0a0d0a_55%,_#000_100%)] text-white">
+    <footer className="relative overflow-hidden bg-white text-black border-t border-black/5">
+      {/* Subtle top accent line */}
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent" />
+
       <div className="container-x pt-24 md:pt-32 pb-10">
         {/* Big headline */}
         <div className="max-w-5xl mx-auto text-center">
           <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
             Find the perfect fitness journey for you and{" "}
-            <span className="text-white/35">unlock your strongest healthiest self with us.</span>
+            <span className="text-black/25">unlock your strongest healthiest self with us.</span>
           </h2>
           <div className="mt-10 flex justify-center">
             <Link
               to="/book"
-              className="group inline-flex items-center gap-3 bg-white text-black pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition"
+              className="group inline-flex items-center gap-3 bg-black text-white pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-black/90 transition"
             >
               Start Transforming
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-background group-hover:rotate-45 transition-transform">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white group-hover:rotate-45 transition-transform">
                 <ArrowUpRight size={18} />
               </span>
             </Link>
@@ -441,7 +444,8 @@ function HomeFooter() {
         {/* Columns */}
         <div className="mt-24 md:mt-32 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 lg:gap-8 relative z-10">
           <div>
-            <ul className="space-y-3 text-sm text-white/85">
+            <h4 className="font-display text-xs uppercase tracking-[0.25em] text-black/40 mb-5">Navigate</h4>
+            <ul className="space-y-3 text-sm text-black/80">
               {[
                 ["/", "Home"],
                 ["/about", "About Us"],
@@ -449,25 +453,29 @@ function HomeFooter() {
                 ["/pricing", "Pricing"],
               ].map(([to, label]) => (
                 <li key={to} className="flex items-center gap-2">
-                  <span className="w-1 h-1 rounded-full bg-white/60" />
-                  <Link to={to} className="hover:text-accent">{label}</Link>
+                  <span className="w-1 h-1 rounded-full bg-accent" />
+                  <Link to={to} className="hover:text-accent transition-colors">{label}</Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="text-sm text-white/85 space-y-3">
-            <p>hello@leanmovement.in</p>
-            <p>[+91] 99999-99999</p>
-            <p className="text-white/70 leading-relaxed">
-              LEANMOVEMENT Studio,<br />
-              Jubilee Hills, Road No. 36,<br />
-              Hyderabad, 500033
-            </p>
+          <div className="col-span-2 md:col-span-1">
+            <h4 className="font-display text-xs uppercase tracking-[0.25em] text-black/40 mb-5">Contact</h4>
+            <div className="text-sm text-black/80 space-y-3">
+              <p className="hover:text-accent transition-colors cursor-pointer">hello@leanmovement.in</p>
+              <p>[+91] 99999-99999</p>
+              <p className="text-black/60 leading-relaxed">
+                LEANMOVEMENT Studio,<br />
+                Jubilee Hills, Road No. 36,<br />
+                Hyderabad, 500033
+              </p>
+            </div>
           </div>
 
           <div>
-            <ul className="space-y-3 text-sm text-white/85">
+            <h4 className="font-display text-xs uppercase tracking-[0.25em] text-black/40 mb-5">Social</h4>
+            <ul className="space-y-3 text-sm text-black/80">
               {[
                 ["Instagram", "https://instagram.com"],
                 ["YouTube", "https://youtube.com"],
@@ -475,7 +483,7 @@ function HomeFooter() {
                 ["LinkedIn", "https://linkedin.com"],
               ].map(([label, href]) => (
                 <li key={label}>
-                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 underline underline-offset-4 decoration-white/30 hover:text-accent hover:decoration-accent">
+                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 underline underline-offset-4 decoration-black/20 hover:text-accent hover:decoration-accent transition-colors">
                     {label} <ArrowUpRight size={14} />
                   </a>
                 </li>
@@ -485,18 +493,19 @@ function HomeFooter() {
 
           <div className="col-span-2 lg:col-span-2">
             <h4 className="font-display text-xl mb-4">Join Our Newsletter</h4>
+            <p className="text-sm text-black/60 mb-4">Weekly insights on training, nutrition, and transformation. No noise.</p>
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 rounded-full border border-white/25 bg-transparent pl-5 pr-2 py-2"
+              className="flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.02] pl-5 pr-2 py-2"
             >
               <input
                 type="email"
                 placeholder="Your email address"
-                className="flex-1 bg-transparent outline-none text-sm placeholder:text-white/50"
+                className="flex-1 bg-transparent outline-none text-sm placeholder:text-black/40 text-black"
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-background hover:rotate-45 transition-transform"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-white hover:rotate-45 transition-transform"
                 aria-label="Subscribe"
               >
                 <ArrowUpRight size={16} />
@@ -507,15 +516,15 @@ function HomeFooter() {
 
         {/* Giant wordmark */}
         <div aria-hidden className="relative mt-16 select-none pointer-events-none">
-          <div className="font-display text-white/[0.06] tracking-tight leading-none text-center whitespace-nowrap text-[22vw] md:text-[18vw] lg:text-[15vw]">
+          <div className="font-display text-black/[0.04] tracking-tight leading-none text-center whitespace-nowrap text-[22vw] md:text-[18vw] lg:text-[15vw]">
             LEANMOVEMENT
           </div>
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-4 pt-6 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/55">
+        <div className="mt-4 pt-6 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-black/50">
           <p>© {new Date().getFullYear()} LEANMOVEMENT. All rights reserved.</p>
-          <a href="#" className="hover:text-white">Privacy policy</a>
+          <a href="#" className="hover:text-black transition-colors">Privacy policy</a>
         </div>
       </div>
     </footer>
