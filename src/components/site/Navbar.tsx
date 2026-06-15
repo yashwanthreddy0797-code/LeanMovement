@@ -94,38 +94,67 @@ export function Navbar() {
         </div>
       </div>
 
-      {open && (
-        <div className="pointer-events-auto lg:hidden fixed inset-0 top-24 bg-background z-40 animate-fade-in overflow-y-auto">
-          <nav className="flex flex-col container-x py-8 gap-1">
-            {links.map((l) => (
+      {/* Mobile menu */}
+      <div
+        className={`pointer-events-none lg:hidden fixed inset-0 top-0 z-40 transition-opacity duration-300 ${
+          open ? "opacity-100 pointer-events-auto" : "opacity-0"
+        }`}
+        aria-hidden={!open}
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-background/70 backdrop-blur-2xl"
+          onClick={() => setOpen(false)}
+        />
+
+        {/* Panel */}
+        <div
+          className={`relative mx-4 mt-24 rounded-3xl border border-white/10 bg-background/95 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+            open ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
+          }`}
+        >
+          <nav className="flex flex-col px-2 py-3">
+            {links.map((l, i) => (
               <Link
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="font-display text-4xl py-3 border-b border-border text-foreground hover:text-accent"
-                activeProps={{ className: "text-accent" }}
+                className="group flex items-center justify-between px-5 py-4 rounded-2xl text-foreground/85 hover:bg-white/[0.04] hover:text-foreground transition-colors"
+                activeProps={{ className: "!text-accent bg-white/[0.03]" }}
                 activeOptions={{ exact: l.to === "/" }}
               >
-                {l.label}
+                <span className="flex items-baseline gap-4">
+                  <span className="text-[10px] font-mono tracking-[0.22em] text-foreground/40 group-hover:text-accent transition-colors">
+                    0{i + 1}
+                  </span>
+                  <span className="font-display text-2xl tracking-tight">{l.label}</span>
+                </span>
+                <span className="text-foreground/30 group-hover:text-accent group-hover:translate-x-1 transition-all text-lg">
+                  →
+                </span>
               </Link>
             ))}
+          </nav>
+
+          <div className="border-t border-white/10 p-4 grid grid-cols-1 gap-2.5">
             <Link
               to="/book"
               onClick={() => setOpen(false)}
-              className="mt-6 inline-flex items-center justify-center px-5 py-3 rounded-full text-[11px] uppercase tracking-[0.22em] font-semibold bg-accent text-white"
+              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-colors"
             >
               Book Free Consultation
             </Link>
             <Link
               to="/portal/login"
               onClick={() => setOpen(false)}
-              className="mt-3 inline-flex items-center justify-center px-5 py-3 rounded-full text-[11px] uppercase tracking-[0.22em] font-semibold border border-white/15 text-foreground"
+              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold border border-white/15 text-foreground/80 hover:text-foreground hover:border-white/40 transition-colors"
             >
               Client Login
             </Link>
-          </nav>
+          </div>
         </div>
-      )}
+      </div>
+
     </header>
   );
 }
