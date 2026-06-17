@@ -114,7 +114,7 @@ function HomePage() {
                 />
               </div>
             </FadeUp>
-            <FadeUp delay={0.15} className="md:col-span-7 flex flex-col justify-center">
+            <FadeUp delay={0.15} className="md:col-span-7 flex flex-col justify-end pb-2">
               <div className="space-y-10 md:space-y-12">
                 <p className="text-foreground/85 text-xl md:text-2xl lg:text-[1.65rem] leading-[1.5]">
                   LEANMOVEMENT was built around a simple belief. The work you do for your body
