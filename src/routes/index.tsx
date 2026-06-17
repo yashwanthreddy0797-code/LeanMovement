@@ -105,6 +105,14 @@ function HomePage() {
               <h2 className="mt-8 font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
                 Fitness should create freedom — not dependency.
               </h2>
+              <div className="mt-12 relative aspect-[4/5] w-full overflow-hidden bg-surface">
+                <img
+                  src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=80"
+                  alt="Disciplined lift under controlled tension"
+                  loading="lazy"
+                  className="absolute inset-0 w-full h-full object-cover grayscale contrast-[1.05]"
+                />
+              </div>
             </FadeUp>
             <FadeUp delay={0.15} className="md:col-span-6 md:col-start-7 space-y-8 text-foreground/75 text-lg leading-relaxed">
               <p>
