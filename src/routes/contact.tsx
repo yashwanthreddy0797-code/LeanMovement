@@ -28,7 +28,7 @@ const CHANNELS = [
   { icon: Mail, label: "Email", value: "hello@natty.finesse", href: "mailto:hello@natty.finesse" },
   { icon: Phone, label: "Phone", value: "+91 99999 99999", href: "tel:+919999999999" },
   { icon: MessageCircle, label: "WhatsApp", value: "+91 99999 99999", href: "https://wa.me/919999999999" },
-  { icon: Instagram, label: "Instagram", value: "@natty.finesse", href: "https://instagram.com" },
+  { icon: Instagram, label: "Instagram", value: "@natty.finesse", href: "https://www.instagram.com/natty.finesse/" },
   { icon: Youtube, label: "YouTube", value: "/nattyfinesse", href: "https://youtube.com" },
   { icon: MapPin, label: "Studio", value: "Jubilee Hills, Hyderabad", href: "#map" },
 ];
