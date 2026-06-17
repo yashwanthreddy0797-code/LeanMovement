@@ -1,7 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FadeUp } from "@/components/site/FadeUp";
-import heroImg from "@/assets/lm-hero-minimal.jpg.asset.json";
-import aboutImg from "@/assets/lm-about-minimal.jpg.asset.json";
+import heroImg from "@/assets/coach/coach-5.jpg.asset.json";
+import aboutImg from "@/assets/coach/coach-4.jpg.asset.json";
+import g1 from "@/assets/coach/coach-1.jpg.asset.json";
+import g2 from "@/assets/coach/coach-8.jpg.asset.json";
+import g3 from "@/assets/coach/coach-3.jpg.asset.json";
+import g4 from "@/assets/coach/coach-6.jpg.asset.json";
+import g5 from "@/assets/coach/coach-2.jpg.asset.json";
+import g6 from "@/assets/coach/coach-7.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
