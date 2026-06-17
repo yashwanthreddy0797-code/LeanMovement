@@ -210,15 +210,15 @@ function HomePage() {
                   className={`group h-full flex flex-col p-8 transition-colors ${
                     p.featured
                       ? "bg-foreground text-background"
-                      : "bg-background text-foreground hover:bg-surface"
+                      : "bg-background text-foreground hover:bg-foreground hover:text-background"
                   }`}
                 >
-                  <div className={`text-[10px] uppercase tracking-[0.32em] ${p.featured ? "text-accent" : "text-muted-foreground"}`}>
+                  <div className={`text-[10px] uppercase tracking-[0.32em] ${p.featured ? "text-accent" : "text-muted-foreground group-hover:text-accent"}`}>
                     {p.tag}
                   </div>
                   <h3 className="mt-5 font-display text-3xl uppercase tracking-[0.01em]">{p.name}</h3>
-                  <p className={`mt-4 text-sm flex-1 ${p.featured ? "text-background/75" : "text-foreground/70"}`}>{p.desc}</p>
-                  <div className={`mt-8 font-display text-2xl ${p.featured ? "text-accent" : "text-foreground"}`}>{p.price}</div>
+                  <p className={`mt-4 text-sm flex-1 ${p.featured ? "text-background/75" : "text-foreground/70 group-hover:text-background/75"}`}>{p.desc}</p>
+                  <div className={`mt-8 font-display text-2xl ${p.featured ? "text-accent" : "text-foreground group-hover:text-accent"}`}>{p.price}</div>
                   <span className="mt-4 text-[10px] uppercase tracking-[0.32em] inline-flex items-center gap-2 opacity-70 group-hover:opacity-100">
                     View <span aria-hidden>→</span>
                   </span>
