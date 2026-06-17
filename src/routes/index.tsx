@@ -3,11 +3,11 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
   ArrowRight,
-  Check,
 } from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
 import { PlanCard, CORE_PLANS } from "@/components/site/PlanCard";
+import heroMaleTrainer from "@/assets/hero-male-trainer.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,21 +28,8 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const HERO_IMG =
-  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=2000&q=90";
+const HERO_IMG = heroMaleTrainer.url;
 
-const HERO_POINTS = [
-  "Custom Training",
-  "Personalised Nutrition",
-  "Weekly Accountability",
-  "Data-Driven Progress",
-] as const;
-
-const TRUST_BAR = [
-  { n: "", l: "" },
-  { n: "", l: "" },
-  { n: "", l: "" },
-] as const;
 
 const CLIENT_STORIES = [
   {
@@ -115,46 +102,37 @@ function HomePage() {
   return (
     <>
       {/* ============ HERO ============ */}
-      <section className="relative min-h-screen flex items-center overflow-hidden">
-        <img src={HERO_IMG} alt="" className="absolute inset-0 w-full h-full object-cover opacity-55 img-up" />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/30" />
-        <div className="absolute inset-0 grid-overlay opacity-25" />
-        <div className="container-x relative pb-16 md:pb-20 pt-28 md:pt-32 w-full">
+      <section className="bg-white text-black pt-32 md:pt-40 pb-16 md:pb-24 overflow-hidden">
+        <div className="container-x">
           <FadeUp>
-            <h1 className="font-display text-5xl sm:text-6xl lg:text-[5.5rem] mt-7 leading-[0.92] max-w-5xl">
-              Build The<br />
-              Strongest Version<br />
-              Of <span className="text-accent">Yourself.</span>
+            <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.88] tracking-tight max-w-5xl">
+              FIND YOUR<br />
+              STRENGTH
             </h1>
-            <p className="mt-7 max-w-2xl text-base md:text-lg text-foreground/75 leading-relaxed font-sans not-italic">
-              Premium fitness coaching designed around your life.
+            <p className="mt-6 max-w-xl text-base md:text-lg text-black/65 leading-relaxed font-sans normal-case">
+              Science-backed coaching from certified professionals, tailored to your level and designed around your life.
             </p>
 
-            <ul className="mt-8 flex flex-wrap gap-x-7 gap-y-3 max-w-3xl">
-              {HERO_POINTS.map((p) => (
-                <li key={p} className="flex items-center gap-2 text-sm text-foreground/80">
-                  <Check size={16} className="text-accent shrink-0" />
-                  {p}
-                </li>
-              ))}
-            </ul>
-
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/book" className="btn-pill-accent">
-                Book Free Consultation <ArrowUpRight size={16} />
+              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-black transition-colors">
+                Start Training <ArrowUpRight size={16} />
               </Link>
-              <a href="#method" className="btn-pill-ghost">
-                See How It Works
+              <a href="#programs" className="inline-flex items-center gap-2 px-7 py-3.5 border border-black/20 text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-black hover:text-white transition-colors">
+                Take the FitQuiz
               </a>
             </div>
+          </FadeUp>
 
-            <div className="mt-14 pt-8 border-t border-white/10 max-w-2xl flex flex-wrap gap-x-10 gap-y-4">
-              {TRUST_BAR.map((t) => (
-                <div key={t.l} className="flex items-baseline gap-2.5">
-                  <span className="font-display text-2xl text-foreground">{t.n}</span>
-                  <span className="text-[10px] uppercase tracking-[0.25em] text-muted-foreground">{t.l}</span>
-                </div>
-              ))}
+          <FadeUp delay={0.15}>
+            <div className="mt-12 md:mt-16 relative">
+              <div className="rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-30px_rgba(0,0,0,0.35)]">
+                <img
+                  src={HERO_IMG}
+                  alt="Male personal trainer performing deadlift in gym"
+                  className="w-full h-auto object-cover"
+                  loading="eager"
+                />
+              </div>
             </div>
           </FadeUp>
         </div>
