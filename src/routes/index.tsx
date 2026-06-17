@@ -3,7 +3,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowUpRight,
   ArrowRight,
-  Check,
 } from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
