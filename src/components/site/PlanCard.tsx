@@ -29,12 +29,12 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
           Most Popular
         </span>
       )}
-      <span className={`text-[11px] tracking-[0.25em] uppercase font-medium ${isPopular ? "text-black/70" : light ? "text-black/55" : "text-muted-foreground"}`}>
+      <span className={`text-[11px] tracking-[0.25em] uppercase font-medium ${isPopular ? "text-white/70" : light ? "text-black/55" : "text-black/55"}`}>
         {plan.tag}
       </span>
       <h3 className="font-display text-5xl md:text-6xl mt-3">{plan.name}</h3>
-      <p className={`mt-3 text-sm ${isPopular ? "text-black/80" : light ? "text-black/65" : "text-foreground/70"}`}>{plan.description}</p>
-      <div className={`my-8 h-px ${isPopular ? "bg-black/20" : light ? "bg-black/10" : "bg-border"}`} />
+      <p className={`mt-3 text-sm ${isPopular ? "text-white/80" : "text-black/65"}`}>{plan.description}</p>
+      <div className={`my-8 h-px ${isPopular ? "bg-white/20" : "bg-black/10"}`} />
       <ul className="space-y-3 flex-1">
         {plan.features.map((f) => (
           <li key={f} className="flex items-start gap-3 text-sm">
