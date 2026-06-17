@@ -17,7 +17,7 @@ function Wordmark({ className = "" }: { className?: string }) {
         <path d="M2 2v18h6" stroke="currentColor" strokeWidth="1" />
         <path d="M12 20V2l4 9 4-9v18" stroke="currentColor" strokeWidth="1" />
       </svg>
-      <span className="font-display text-[13px] tracking-[0.32em] uppercase font-medium">
+      <span className="font-display text-[15px] tracking-[0.32em] uppercase font-medium">
         LEAN<span className="font-normal">MOVEMENT</span>
       </span>
     </span>
@@ -46,7 +46,7 @@ export function Navbar() {
       }`}
     >
       <div className="container-x">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20 md:h-24">
           <Link to="/" aria-label="LEANMOVEMENT home" className="text-foreground">
             <Wordmark />
           </Link>
@@ -56,7 +56,7 @@ export function Navbar() {
               <Link
                 key={l.to}
                 to={l.to}
-                className="text-[11px] uppercase tracking-[0.28em] text-foreground/65 hover:text-foreground transition-colors"
+                className="text-[13px] uppercase tracking-[0.28em] text-foreground/65 hover:text-foreground transition-colors"
                 activeProps={{ className: "text-foreground" }}
                 activeOptions={{ exact: l.to === "/" }}
               >
@@ -68,7 +68,7 @@ export function Navbar() {
           <div className="flex items-center gap-3">
             <Link
               to="/apply"
-              className="hidden lg:inline-flex items-center px-5 py-2.5 text-[10px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
+              className="hidden lg:inline-flex items-center px-6 py-3 text-[11px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
             >
               Apply For Lean
             </Link>
