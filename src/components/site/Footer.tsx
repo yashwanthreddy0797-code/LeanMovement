@@ -24,7 +24,7 @@ export function Footer() {
             </Link>
             <div className="flex flex-col md:items-end gap-3 text-[11px] uppercase tracking-[0.28em] text-foreground/70">
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/natty.finesse/"
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
