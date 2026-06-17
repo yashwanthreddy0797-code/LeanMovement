@@ -10,7 +10,7 @@ export function Footer() {
             <div className="font-display text-5xl md:text-7xl tracking-[0.04em] uppercase leading-[0.95]">
               LEAN<span className="font-normal">MOVEMENT</span>
             </div>
-            <p className="mt-6 font-serif italic text-2xl md:text-3xl text-foreground/70">
+            <p className="mt-6 font-serif text-2xl md:text-3xl text-foreground/70">
               Pure work in solitude.
             </p>
           </div>

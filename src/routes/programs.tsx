@@ -273,7 +273,7 @@ function ProgramsPage() {
                     {p.name}
                   </h2>
                   <p
-                    className={`mt-6 font-serif italic text-xl md:text-2xl ${
+                    className={`mt-6 font-serif text-xl md:text-2xl ${
                       p.highlight ? "text-background/85" : "text-foreground/85"
                     }`}
                   >
