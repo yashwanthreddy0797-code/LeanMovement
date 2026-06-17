@@ -97,7 +97,7 @@ function HomePage() {
       </section>
 
       {/* ABOUT */}
-      <section className="bg-background border-t border-border">
+      <section className="bg-background">
         <div className="container-x py-16 md:py-24">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Philosophy</div>
@@ -138,7 +138,7 @@ function HomePage() {
       </section>
 
       {/* MANTRA */}
-      <section className="bg-background border-t border-border">
+      <section className="bg-background">
         <div className="container-x py-32 md:py-48">
           <FadeUp>
             <div className="grid md:grid-cols-12 gap-16 items-end">
@@ -159,7 +159,7 @@ function HomePage() {
       </section>
 
       {/* PRINCIPLES */}
-      <section className="bg-surface border-y border-border">
+      <section className="bg-surface">
         <div className="container-x py-32 md:py-48">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />Principles</div>
@@ -252,7 +252,7 @@ function HomePage() {
       </section>
 
       {/* CLOSING CTA */}
-      <section className="bg-surface border-t border-border">
+      <section className="bg-surface">
         <div className="container-x py-32 md:py-44 text-center">
           <FadeUp>
             <div className="eyebrow justify-center"><span className="w-6 h-px bg-accent" />Apply</div>
