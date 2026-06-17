@@ -106,11 +106,6 @@
     font-family: var(--font-sans);
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
-    background-image:
-      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.015) 1px, transparent 0);
-    background-size: 3px 3px;
-  }
-  body:has(.portal-theme) {
     background-image: none;
   }
   h1, h2, h3, h4, h5, h6, .font-display {
