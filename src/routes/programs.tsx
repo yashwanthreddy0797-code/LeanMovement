@@ -163,8 +163,6 @@ const PROGRAMS: Program[] = [
     price: "₹6,999",
     period: "one-time payment",
     tagline: "Strength. Engine. Longevity.",
-    featured: true,
-    highlight: true,
     sections: [
       {
         title: "What's included",
