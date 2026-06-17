@@ -114,7 +114,7 @@ function HomePage() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white transition-colors">
+              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white transition-colors">
                 Start Training <ArrowUpRight size={16} />
               </Link>
               <a href="#programs" className="inline-flex items-center gap-2 px-7 py-3.5 border border-black/20 text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition-colors">
@@ -412,7 +412,7 @@ function HomeFooter() {
               className="group inline-flex items-center gap-3 bg-white text-black pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition"
             >
               Start Transforming
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-black group-hover:rotate-45 transition-transform">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white group-hover:rotate-45 transition-transform">
                 <ArrowUpRight size={18} />
               </span>
             </Link>
@@ -483,7 +483,7 @@ function HomeFooter() {
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-black hover:rotate-45 transition-transform"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-white hover:rotate-45 transition-transform"
                 aria-label="Subscribe"
               >
                 <ArrowUpRight size={16} />

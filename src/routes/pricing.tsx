@@ -108,8 +108,8 @@ function PricingPage() {
                       aria-label={`Pay with Razorpay for ${p.name}`}
                       className={`mt-6 inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
                         isPopular
-                          ? "bg-white text-black hover:bg-accent hover:text-black"
-                          : "bg-accent text-black hover:bg-white"
+                          ? "bg-white text-black hover:bg-accent hover:text-white"
+                          : "bg-accent text-white hover:bg-white"
                       }`}
                     >
                       Pay with Razorpay

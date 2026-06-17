@@ -79,7 +79,7 @@ export function Navbar() {
             </Link>
             <Link
               to="/book"
-              className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold bg-accent text-black hover:bg-foreground hover:text-background transition-all"
+              className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-all"
             >
               Book Consultation
             </Link>
@@ -140,7 +140,7 @@ export function Navbar() {
             <Link
               to="/book"
               onClick={() => setOpen(false)}
-              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold bg-accent text-black hover:bg-foreground hover:text-background transition-colors"
+              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-colors"
             >
               Book Free Consultation
             </Link>
