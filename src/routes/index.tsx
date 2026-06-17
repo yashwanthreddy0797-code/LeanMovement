@@ -40,7 +40,7 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative bg-background overflow-hidden">
-        <div className="container-x pt-28 md:pt-36 pb-16 md:pb-24">
+        <div className="container-x pt-28 md:pt-36 pb-12 md:pb-16">
           <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
             <div className="md:col-span-7">
               <FadeUp>
