@@ -1,54 +1,43 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram, Youtube, MessageCircle } from "lucide-react";
-import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
+import { Instagram } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-surface">
-      <div className="container-x py-16">
-        <div className="grid md:grid-cols-4 gap-12">
-          <div className="md:col-span-2">
-            <Link to="/" className="inline-flex items-center gap-2">
-              <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-20 md:h-24 w-auto" />
-              <span className="font-display text-3xl md:text-4xl tracking-[0.22em] text-foreground">
-                LEANMOVEMENT<span className="text-accent">.</span>
-              </span>
-            </Link>
-            <p className="mt-4 text-sm text-muted-foreground max-w-sm">
-              Science-backed online coaching for the modern Indian professional. Hyderabad.
+    <footer className="border-t border-border bg-background">
+      <div className="container-x py-20 md:py-28">
+        <div className="grid md:grid-cols-12 gap-12 items-start">
+          <div className="md:col-span-7">
+            <div className="font-display text-5xl md:text-7xl tracking-[0.04em] uppercase leading-[0.95]">
+              LEAN<span className="font-normal">MOVEMENT</span>
+            </div>
+            <p className="mt-6 font-serif italic text-2xl md:text-3xl text-foreground/70">
+              Pure work in solitude.
             </p>
           </div>
-          <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Explore</h4>
-            <ul className="space-y-2 text-sm">
-              {[
-                ["/about", "About"],
-                ["/programs", "Programs"],
-                ["/pricing", "Pricing"],
-                ["/blog", "Blog"],
-              ].map(([to, label]) => (
-                <li key={to}><Link to={to} className="hover:text-accent">{label}</Link></li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h4 className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-4">Connect</h4>
-            <div className="flex gap-3">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="p-2 border border-border hover:border-accent hover:text-accent">
-                <Instagram size={18} />
-              </a>
-              <a href="https://youtube.com" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="p-2 border border-border hover:border-accent hover:text-accent">
-                <Youtube size={18} />
-              </a>
-              <a href="https://wa.me/919999999999" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" className="p-2 border border-border hover:border-accent hover:text-accent">
-                <MessageCircle size={18} />
-              </a>
-            </div>
+
+          <div className="md:col-span-5 md:text-right flex flex-col md:items-end gap-6">
+            <Link
+              to="/book"
+              className="inline-flex w-fit items-center px-7 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+            >
+              Apply Now
+            </Link>
+            <a
+              href="https://instagram.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Instagram"
+              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-foreground/70 hover:text-accent transition-colors"
+            >
+              <Instagram size={16} />
+              Instagram
+            </a>
           </div>
         </div>
-        <div className="mt-16 pt-8 border-t border-border flex flex-col md:flex-row justify-between gap-4 text-xs text-muted-foreground">
-          <p>© {new Date().getFullYear()} LEANMOVEMENT. All rights reserved.</p>
-          <p>Built with <span className="text-accent">Brilliantzero</span></p>
+
+        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between gap-4 text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+          <p>© {new Date().getFullYear()} LEANMOVEMENT</p>
+          <p>Hyderabad · India</p>
         </div>
       </div>
     </footer>

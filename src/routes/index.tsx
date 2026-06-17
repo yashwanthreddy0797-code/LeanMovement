@@ -1,615 +1,295 @@
-import { motion } from "motion/react";
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowUpRight,
-  ArrowRight,
-} from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
-import { Ticker } from "@/components/site/Ticker";
-import { PlanCard, CORE_PLANS } from "@/components/site/PlanCard";
-import heroTrack from "@/assets/lm-hero-track.jpg.asset.json";
-import grid1 from "@/assets/lm-grid-1.jpg.asset.json";
-import grid2 from "@/assets/lm-grid-2.jpg.asset.json";
-import grid3 from "@/assets/lm-grid-3.jpg.asset.json";
-import grid4 from "@/assets/lm-grid-4.jpg.asset.json";
-import philosophyImg from "@/assets/lm-philosophy.jpg.asset.json";
+import heroImg from "@/assets/lm-hero-minimal.jpg.asset.json";
+import aboutImg from "@/assets/lm-about-minimal.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "LEANMOVEMENT — Premium Online Body Transformation Coaching" },
+      { title: "LEANMOVEMENT — Become The Strongest Version Of Yourself" },
       {
         name: "description",
         content:
-          "High-accountability online coaching for ambitious professionals. Custom training, personalised nutrition, weekly check-ins, lasting transformation.",
+          "Evidence-informed coaching for busy professionals, entrepreneurs and individuals seeking sustainable fat loss, strength and performance without sacrificing their lifestyle.",
       },
-      { property: "og:title", content: "LEANMOVEMENT — Premium Online Body Transformation Coaching" },
-      {
-        property: "og:description",
-        content: "Premium online transformation coaching for ambitious professionals.",
-      },
-      { property: "og:image", content: heroTrack.url },
+      { property: "og:title", content: "LEANMOVEMENT — Pure Work In Solitude" },
+      { property: "og:description", content: "Evidence-informed coaching for the disciplined professional." },
+      { property: "og:image", content: heroImg.url },
     ],
   }),
   component: HomePage,
 });
 
-
-
-const CLIENT_STORIES = [
-  {
-    name: "Software Engineer, 32",
-    headline: "Arjun lost 11kg in 14 weeks",
-    note: "Sustained fat loss while protecting strength and an 80-hour work week. No crash protocols.",
-    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80",
-  },
-  {
-    name: "Founder, 29",
-    headline: "Priya returned to elite condition at 45",
-    note: "Full recomposition with travel-proof nutrition across 4 timezones. Strength up across all lifts.",
-    image: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80",
-  },
-  {
-    name: "Consultant, 36",
-    headline: "Rohan added 6kg of lean mass",
-    note: "Structured hypertrophy block. Visible muscle gain with bloodwork improvements across the board.",
-    image: "https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=400&q=80",
-  },
-  {
-    name: "Doctor, 34",
-    headline: "Neha dropped 7kg between hospital shifts",
-    note: "Sustainable fat loss without sacrificing performance on 24-hour on-call rotations.",
-    image: "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=400&q=80",
-  },
-  {
-    name: "Lawyer, 41",
-    headline: "Vikram rebuilt his body at 41",
-    note: "Eight kilos of lean mass added over six months. Stronger, leaner, sharper — and sustainable.",
-    image: "https://images.unsplash.com/photo-1568602471122-7832951cc4c5?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=400&q=80",
-  },
-  {
-    name: "Founder, 38",
-    headline: "Anjali made the change permanent",
-    note: "Six months in, the habits feel automatic. Performance, body composition and energy all up.",
-    image: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1594381898411-846e7d193883?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1518310383802-640c2de311b2?w=400&q=80",
-  },
-  {
-    name: "Analyst, 30",
-    headline: "Kabir cut 9kg in 16 weeks",
-    note: "Lean and athletic without sacrificing the deadlift. Energy and focus reported at all-time highs.",
-    image: "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?w=900&q=80",
-    before: "https://images.unsplash.com/photo-1581009137042-c552e485697a?w=400&q=80",
-    after: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=400&q=80",
-  },
+const PRINCIPLES = [
+  { n: "01", t: "Train For Performance", d: "Strength, capacity, longevity. Aesthetics follow." },
+  { n: "02", t: "Sustainability Wins", d: "A protocol you can't repeat for a decade isn't a protocol." },
+  { n: "03", t: "Education Over Dependence", d: "You learn the why. You leave self-sufficient." },
+  { n: "04", t: "Consistency Beats Perfection", d: "Showing up imperfectly, repeated, beats the perfect plan abandoned." },
+  { n: "05", t: "Health Is A Lifestyle", d: "Sleep, food, training, recovery — designed around your life, not against it." },
 ] as const;
 
-const PROBLEMS = [
-  { t: "No Structure", d: "Random workouts and ever-changing diets create noise, not progress." },
-  { t: "No Accountability", d: "Without weekly checkpoints, slip-ups quietly compound into stalls." },
-  { t: "Bad Information", d: "Influencer advice optimised for views, not for your body or your life." },
-  { t: "No Consistency", d: "Programs that don't bend to real life — travel, work, family — get abandoned." },
+const PACKAGES = [
+  {
+    name: "Foundation",
+    price: "₹5,999",
+    note: "One-time setup",
+    features: [
+      "Calorie targets",
+      "Macro setup",
+      "Workout template",
+      "Supplement recommendations",
+      "Habit checklist",
+      "PDF resources",
+    ],
+  },
+  {
+    name: "Transformation Blueprint",
+    price: "₹11,999",
+    note: "One-time setup",
+    features: [
+      "Everything in Foundation",
+      "Travel nutrition guide",
+      "Restaurant eating guide",
+      "Progress tracker",
+      "Exercise video library",
+      "One adjustment after four weeks",
+    ],
+    featured: true,
+  },
+  {
+    name: "Elite Mentorship",
+    price: "₹24,999",
+    note: "One-time setup",
+    features: [
+      "Everything above",
+      "Two private online consultations",
+      "Technique review submissions",
+      "Priority messaging",
+      "Biweekly check-ins for 90 days",
+    ],
+  },
 ] as const;
-
 
 function HomePage() {
   return (
     <>
-      {/* ============ HERO — full-bleed editorial ============ */}
-      <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
+      {/* ============ HERO ============ */}
+      <section className="relative min-h-[100svh] flex items-end overflow-hidden bg-background">
         <img
-          src={heroTrack.url}
-          alt="Empty running track at dawn"
-          className="absolute inset-0 w-full h-full object-cover opacity-90"
-          loading="eager"
+          src={heroImg.url}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover opacity-95"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-background/10" />
 
-        <div className="absolute inset-0 flex flex-col justify-end">
-          <div className="container-x pb-12 md:pb-16">
-            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
-              <FadeUp>
-                <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-white/70">
-                  <span className="w-8 h-px bg-accent" />
-                  Online Coaching · Hyderabad
-                </span>
-                <h1 className="font-display mt-6 text-white text-6xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.88] tracking-tight max-w-5xl">
-                  TRAIN ON<br />YOUR OWN TIME.
-                </h1>
-              </FadeUp>
-
-              <FadeUp delay={0.2}>
-                <Link
-                  to="/book"
-                  className="group inline-flex items-center gap-4 pl-7 pr-2 py-2 rounded-full border border-white/40 text-white text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-black transition-colors"
-                >
-                  Join Now
-                  <span className="w-10 h-10 grid place-items-center rounded-full bg-accent text-white group-hover:rotate-45 transition-transform">
-                    <ArrowUpRight size={16} />
-                  </span>
-                </Link>
-              </FadeUp>
+        <div className="relative container-x pb-16 md:pb-24 pt-32 w-full">
+          <FadeUp>
+            <div className="text-[10px] uppercase tracking-[0.4em] text-foreground/55">
+              Evidence-Informed Coaching · Est. Hyderabad
             </div>
-          </div>
+          </FadeUp>
+          <FadeUp delay={0.1}>
+            <h1 className="mt-8 font-display uppercase tracking-[0.02em] text-foreground text-5xl sm:text-7xl md:text-8xl lg:text-[9rem] leading-[0.92] max-w-6xl">
+              LEAN<span className="font-normal">MOVEMENT</span>
+            </h1>
+          </FadeUp>
+          <FadeUp delay={0.2}>
+            <p className="mt-8 max-w-2xl font-serif italic text-2xl md:text-3xl text-foreground/80 leading-snug">
+              Become the strongest version of yourself.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.3}>
+            <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+              Evidence-informed coaching for busy professionals, entrepreneurs and individuals
+              seeking sustainable fat loss, strength and performance — without sacrificing their lifestyle.
+            </p>
+          </FadeUp>
+          <FadeUp delay={0.4}>
+            <div className="mt-10 flex flex-wrap gap-4">
+              <Link
+                to="/book"
+                className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+              >
+                Apply Now
+              </Link>
+              <Link
+                to="/programs"
+                className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+              >
+                Explore Coaching
+              </Link>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
-      <Ticker />
-
-      {/* ============ MISSION ============ */}
-      <section className="bg-white text-black">
-        <div className="container-x py-24 md:py-36">
-          <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-start">
-            <FadeUp className="md:col-span-5">
-              <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60">
-                <span className="w-8 h-px bg-accent" />
-                Our Aim
-              </span>
-              <h2 className="font-display mt-6 text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tight">
-                Coaching dedicated to lasting, science-backed transformation.
+      {/* ============ ABOUT ============ */}
+      <section className="bg-background">
+        <div className="container-x py-32 md:py-48">
+          <div className="grid md:grid-cols-12 gap-16 md:gap-24 items-start">
+            <FadeUp className="md:col-span-5 md:sticky md:top-32">
+              <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Philosophy</div>
+              <h2 className="mt-8 font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
+                Fitness should create freedom — not dependency.
               </h2>
             </FadeUp>
-            <FadeUp delay={0.15} className="md:col-span-6 md:col-start-7">
-              <p className="text-lg leading-relaxed text-black/70 font-sans normal-case">
-                LEANMOVEMENT is built for the ambitious professional who refuses average. We blend
-                evidence-based training, personalised nutrition, and daily accountability into one
-                programme — engineered to fit a real life of meetings, travel, and family. No fads,
-                no shortcuts. Just measurable progress, week after week.
+            <FadeUp delay={0.15} className="md:col-span-6 md:col-start-7 space-y-8 text-foreground/75 text-lg leading-relaxed">
+              <p>
+                LEANMOVEMENT was built on the belief that the work you do for your body should
+                give back to every other corner of your life — your focus, your discipline,
+                your standards.
               </p>
-              <p className="mt-6 text-base leading-relaxed text-black/60 font-sans normal-case">
-                Every plan is built around your body, your schedule, and your goals — then refined
-                with data from over 50 tracked metrics. The result is a system you can sustain long
-                after the programme ends.
+              <p>No detoxes. No unnecessary restrictions. No gimmicks.</p>
+              <p>
+                Only systems that fit into real life, refined over years of practice, and built
+                to produce long-term results long after the programme ends.
               </p>
             </FadeUp>
           </div>
         </div>
       </section>
 
-      {/* ============ EDITORIAL PHOTO GRID ============ */}
-      <section className="bg-white">
-        <div className="container-x pb-24 md:pb-36">
-          <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-6">
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="col-span-2 md:col-span-7 aspect-[4/5] md:aspect-[5/6] overflow-hidden"
-            >
-              <img src={grid1.url} alt="Strength training" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="md:col-span-5 aspect-[4/5] overflow-hidden"
-            >
-              <img src={grid2.url} alt="Grip and chalk" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-              className="md:col-span-5 aspect-[4/5] overflow-hidden"
-            >
-              <img src={grid3.url} alt="Conditioning" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="col-span-2 md:col-span-7 aspect-[5/4] overflow-hidden"
-            >
-              <img src={grid4.url} alt="Tools of the trade" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ PHILOSOPHY — full-bleed dark moment ============ */}
-      <section className="relative w-full overflow-hidden bg-black">
-        <img
-          src={philosophyImg.url}
-          alt="Empty premium gym at dawn"
-          loading="lazy"
-          className="absolute inset-0 w-full h-full object-cover opacity-50"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
-        <div className="relative container-x py-32 md:py-48">
+      {/* ============ EDITORIAL IMAGE ============ */}
+      <section className="bg-background">
+        <div className="container-x pb-32 md:pb-48">
           <FadeUp>
-            <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-white/70">
-              <span className="w-8 h-px bg-accent" />
-              Philosophy
-            </span>
-            <p className="font-serif italic mt-8 text-white text-3xl md:text-5xl lg:text-6xl leading-[1.1] max-w-4xl">
-              One disciplined repetition, practised ten thousand times, will outwork ten thousand half-measures every time.
-            </p>
-            <p className="mt-8 text-xs uppercase tracking-[0.3em] text-white/60">— The LEANMOVEMENT way</p>
+            <div className="grid md:grid-cols-12 gap-8 items-end">
+              <div className="md:col-span-8 aspect-[4/5] md:aspect-[16/11] overflow-hidden">
+                <img src={aboutImg.url} alt="Quiet training" loading="lazy" className="w-full h-full object-cover" />
+              </div>
+              <div className="md:col-span-3 md:col-start-10">
+                <div className="eyebrow"><span className="w-6 h-px bg-accent" />Mantra</div>
+                <p className="mt-6 font-serif italic text-2xl md:text-3xl leading-snug text-foreground">
+                  Pure work in solitude.
+                </p>
+              </div>
+            </div>
           </FadeUp>
         </div>
       </section>
 
-
-      {/* ============ PILLARS ============ */}
-      <section className="bg-white text-black">
-        <div className="container-x py-20 md:py-28 space-y-16 md:space-y-24">
-          {[
-            {
-              eyebrow: "Training",
-              title: "Precision strength training",
-              copy: "Training methods refined over 15+ years and delivered by the top 1% of coaches — engineered for results in 3 hours per week, or less.",
-              image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1400&q=90",
-              reverse: false,
-            },
-            {
-              eyebrow: "Nutrition",
-              title: "Nutrition, built around you",
-              copy: "Personalised nutrition calculated for your body, tracked with data, and coached daily using proven principles you can maintain long term.",
-              image: "https://images.unsplash.com/photo-1547592180-85f173990554?w=1200&q=85",
-              reverse: true,
-            },
-            {
-              eyebrow: "Accountability",
-              title: "Expert coaching and accountability",
-              copy: "A dedicated coach takes full ownership of your training, nutrition, and progress — guiding decisions and supporting you beyond the gym, 7 days a week.",
-              image: "https://images.unsplash.com/photo-1599058917212-d750089bc07e?w=1200&q=85",
-              reverse: false,
-            },
-            {
-              eyebrow: "Progress",
-              title: "Data-driven results",
-              copy: "Your progress is tracked across 50+ metrics to remove guesswork and make every change visible, measurable, and repeatable.",
-              image: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438?w=1200&q=85",
-              reverse: true,
-            },
-          ].map((p, i) => (
-            <FadeUp key={p.title} delay={i * 0.08}>
-              <motion.div
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, margin: "-60px" }}
-                variants={{
-                  hidden: {},
-                  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } },
-                }}
-                className={`grid lg:grid-cols-2 gap-10 lg:gap-16 items-center ${p.reverse ? "lg:[&>div:first-child]:order-2" : ""}`}
-              >
-                <motion.div
-                  className="relative aspect-[4/3] overflow-hidden rounded-3xl"
-                  variants={{
-                    hidden: { opacity: 0, scale: 1.08, y: 30 },
-                    visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] } },
-                  }}
-                >
-                  <img src={p.image} alt={p.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover" />
-                </motion.div>
-                <motion.div>
-                  <motion.span
-                    className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60"
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-                    }}
-                  >
-                    <span className="w-8 h-px bg-accent" />
-                    {p.eyebrow}
-                  </motion.span>
-                  <motion.h3
-                    className="font-display text-4xl md:text-5xl lg:text-6xl mt-6 leading-[0.95] text-black"
-                    variants={{
-                      hidden: { opacity: 0, y: 30 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
-                    }}
-                  >
-                    {p.title}
-                  </motion.h3>
-                  <motion.p
-                    className="mt-6 text-black/70 leading-relaxed max-w-lg"
-                    variants={{
-                      hidden: { opacity: 0, y: 25 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
-                    }}
-                  >
-                    {p.copy}
-                  </motion.p>
-                  <motion.a
-                    href="#method"
-                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-black rounded-full text-xs uppercase tracking-[0.25em] text-black hover:bg-white hover:text-black transition-colors"
-                    variants={{
-                      hidden: { opacity: 0, y: 20 },
-                      visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-                    }}
-                  >
-                    Explore The Method <ArrowUpRight size={14} />
-                  </motion.a>
-                </motion.div>
-              </motion.div>
-            </FadeUp>
-          ))}
-        </div>
-      </section>
-
-
-      {/* ============ GOALS BANNER ============ */}
-      <section className="bg-white text-black overflow-hidden">
-        <div className="container-x py-24 md:py-36 text-center">
+      {/* ============ PRINCIPLES ============ */}
+      <section className="bg-surface border-y border-border">
+        <div className="container-x py-32 md:py-48">
           <FadeUp>
-            <span className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-black/70">
-              <span className="w-8 h-px bg-accent" />
-              What We Offer
-              <span className="w-8 h-px bg-accent" />
-            </span>
-          </FadeUp>
-
-          <FadeUp delay={0.1}>
-            <h2 className="font-display mt-10 leading-[0.95] tracking-tight text-5xl md:text-7xl lg:text-8xl">
-              <span className="block text-black">SCULPT.</span>
-              <span className="block text-black/40">STRENGTHEN.</span>
-              <span className="block text-black/15">TRANSFORM.</span>
+            <div className="eyebrow"><span className="w-6 h-px bg-accent" />Principles</div>
+            <h2 className="mt-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] max-w-4xl leading-[1.02]">
+              Five non-negotiables that shape every programme.
             </h2>
           </FadeUp>
 
-          <FadeUp delay={0.2}>
-            <p className="mt-12 mx-auto max-w-xl text-base md:text-lg text-black/70 leading-relaxed">
-              Built for fast, real results in 12 weeks.<br />
-              Show up — I'll handle the rest.
-            </p>
-          </FadeUp>
-
-          <FadeUp delay={0.3}>
-            <div className="mt-10 flex items-center justify-center gap-6 text-xs uppercase tracking-[0.25em] text-black/50">
-              <span>12 Weeks</span>
-              <span className="w-1 h-1 rounded-full bg-accent" />
-              <span>Real Results</span>
-              <span className="w-1 h-1 rounded-full bg-accent" />
-              <span>Zero Guesswork</span>
-            </div>
-          </FadeUp>
-        </div>
-      </section>
-
-
-
-      {/* ============ PROGRAMS ============ */}
-      <section className="bg-white text-black">
-        <div className="container-x py-24 md:py-32">
-          <FadeUp className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
-            <div className="max-w-2xl">
-              <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60">
-                <span className="w-8 h-px bg-accent" />
-                Levels Of Support
-              </span>
-              <h2 className="font-display text-4xl md:text-6xl mt-6 leading-[0.95] text-black">Choose Your Tier.</h2>
-              <p className="mt-6 text-black/70">
-                Three levels of coaching depth. The same standards, methodology, and direct coach access — different cadences of contact.
-              </p>
-            </div>
-            <Link
-              to="/programs"
-              className="text-accent text-sm uppercase tracking-[0.2em] inline-flex items-center gap-2 hover:gap-4 transition-all"
-            >
-              Compare All Tiers <ArrowUpRight size={16} />
-            </Link>
-          </FadeUp>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {CORE_PLANS.map((p, i) => (
-              <FadeUp key={p.name} delay={i * 0.1}>
-                <PlanCard plan={p} light />
+          <div className="mt-20 md:mt-28 divide-y divide-border border-t border-border">
+            {PRINCIPLES.map((p, i) => (
+              <FadeUp key={p.n} delay={i * 0.05}>
+                <div className="grid md:grid-cols-12 gap-6 md:gap-12 py-10 md:py-12 items-baseline">
+                  <div className="md:col-span-1 font-mono text-xs text-muted-foreground tracking-widest">{p.n}</div>
+                  <h3 className="md:col-span-5 font-display text-2xl md:text-4xl uppercase tracking-[0.01em]">
+                    {p.t}
+                  </h3>
+                  <p className="md:col-span-6 text-foreground/70 text-base md:text-lg leading-relaxed">
+                    {p.d}
+                  </p>
+                </div>
               </FadeUp>
             ))}
           </div>
+        </div>
+      </section>
 
-          <FadeUp className="mt-12 flex flex-wrap items-center justify-between gap-6 p-8 border border-black/10 bg-white shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]">
-            <div>
-              <h3 className="font-display text-2xl text-black">Not sure which tier fits?</h3>
-              <p className="text-sm text-black/70 mt-2">
-                Book a free consultation. We'll recommend the right level for your goal — even if it's the smallest one.
+      {/* ============ COACHING / PACKAGES ============ */}
+      <section className="bg-background">
+        <div className="container-x py-32 md:py-48">
+          <FadeUp>
+            <div className="eyebrow"><span className="w-6 h-px bg-accent" />Coaching</div>
+            <div className="mt-8 grid md:grid-cols-12 gap-10 items-end">
+              <h2 className="md:col-span-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
+                Three ways to begin.
+              </h2>
+              <p className="md:col-span-4 text-foreground/70 text-base leading-relaxed">
+                Choose the level of guidance that matches where you are. Each pathway is built on
+                the same evidence-informed foundations.
               </p>
             </div>
-            <Link to="/book" className="btn-pill-accent">
-              Book Free Consultation <ArrowRight size={16} />
-            </Link>
+          </FadeUp>
+
+          <div className="mt-20 grid md:grid-cols-3 gap-px bg-border border border-border">
+            {PACKAGES.map((pkg, i) => (
+              <FadeUp key={pkg.name} delay={i * 0.08}>
+                <div
+                  className={`h-full flex flex-col p-10 md:p-12 transition-colors ${
+                    pkg.featured
+                      ? "bg-foreground text-background"
+                      : "bg-background text-foreground hover:bg-surface"
+                  }`}
+                >
+                  <div
+                    className={`text-[10px] uppercase tracking-[0.32em] ${
+                      pkg.featured ? "text-background/60" : "text-muted-foreground"
+                    }`}
+                  >
+                    {pkg.note}
+                  </div>
+                  <h3 className="mt-5 font-display text-3xl md:text-4xl uppercase tracking-[0.01em] leading-[1.05]">
+                    {pkg.name}
+                  </h3>
+                  <div
+                    className={`mt-8 font-display text-5xl md:text-6xl tracking-tight ${
+                      pkg.featured ? "text-accent" : "text-foreground"
+                    }`}
+                  >
+                    {pkg.price}
+                  </div>
+
+                  <ul className={`mt-10 space-y-3 flex-1 text-[15px] ${pkg.featured ? "text-background/80" : "text-foreground/75"}`}>
+                    {pkg.features.map((f) => (
+                      <li key={f} className="flex gap-3">
+                        <span className={`mt-2 w-1 h-1 shrink-0 ${pkg.featured ? "bg-accent" : "bg-foreground"}`} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <Link
+                    to="/book"
+                    className={`mt-12 inline-flex items-center justify-between px-6 py-4 text-[11px] uppercase tracking-[0.32em] border transition-colors ${
+                      pkg.featured
+                        ? "border-background/40 text-background hover:bg-accent hover:border-accent"
+                        : "border-foreground text-foreground hover:bg-foreground hover:text-background"
+                    }`}
+                  >
+                    <span>Apply</span>
+                    <span aria-hidden>→</span>
+                  </Link>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ============ CLOSING CTA ============ */}
+      <section className="bg-surface border-t border-border">
+        <div className="container-x py-32 md:py-44 text-center">
+          <FadeUp>
+            <div className="eyebrow justify-center"><span className="w-6 h-px bg-accent" />Apply</div>
+            <h2 className="mt-8 font-display text-4xl md:text-6xl lg:text-7xl uppercase tracking-[0.01em] max-w-4xl mx-auto leading-[1.02]">
+              The work is quiet. The results are not.
+            </h2>
+            <p className="mt-8 max-w-xl mx-auto text-foreground/70 text-base md:text-lg">
+              Coaching slots are intentionally limited. If LEANMOVEMENT sounds like your standard,
+              submit an application.
+            </p>
+            <div className="mt-10 flex justify-center">
+              <Link
+                to="/book"
+                className="inline-flex items-center px-10 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+              >
+                Apply Now
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </section>
-
-      {/* ============ CLIENT STORIES — hover expand strip ============ */}
-      <section className="bg-surface py-20 md:py-28">
-        <div className="container-x">
-          <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8 mb-14">
-            <FadeUp>
-              <span className="inline-block px-4 py-1.5 border border-accent text-accent text-[10px] uppercase tracking-[0.25em] rounded-full">
-                Clients Stories
-              </span>
-              <h2 className="font-display text-4xl md:text-6xl mt-7 leading-[0.95]">
-                REAL CLIENTS.<br />LIFE-CHANGING RESULTS
-              </h2>
-              <p className="mt-6 text-foreground/70 max-w-xl">
-                Ambitious professionals of all starting points have achieved meaningful, lasting change with LEANMOVEMENT.
-                These results don't happen by chance — they're the outcome of a proven method, delivered with uncompromising consistency.
-              </p>
-            </FadeUp>
-            <FadeUp>
-              <Link
-                to="/programs"
-                className="inline-flex items-center gap-3 px-6 py-3.5 border border-foreground/80 rounded-full text-xs uppercase tracking-[0.25em] hover:bg-foreground hover:text-background transition-colors"
-              >
-                Explore Programs <ArrowUpRight size={16} />
-              </Link>
-            </FadeUp>
-          </div>
-        </div>
-
-        <FadeUp>
-          <div className="flex w-full h-[460px] md:h-[560px] overflow-hidden px-4 md:px-8 gap-1.5 md:gap-2">
-            {CLIENT_STORIES.map((c, i) => (
-              <div
-                key={i}
-                className="group relative flex-1 hover:flex-[4] transition-[flex-grow] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] overflow-hidden cursor-pointer"
-              >
-                <img
-                  src={c.image}
-                  alt={c.name}
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                />
-                {/* Before/After inset — appears on hover */}
-                <div className="absolute bottom-28 right-6 w-32 h-24 md:w-44 md:h-32 border-2 border-accent shadow-2xl opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 grid grid-cols-2 overflow-hidden">
-                  <img src={c.before} alt="Before" className="w-full h-full object-cover grayscale" />
-                  <img src={c.after} alt="After" className="w-full h-full object-cover" />
-                </div>
-                {/* Info card — appears on hover */}
-                <div className="absolute left-0 right-0 bottom-0 bg-background/95 backdrop-blur p-5 md:p-6 opacity-0 translate-y-6 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-150">
-                  <h3 className="font-display text-lg md:text-2xl leading-tight">
-                    {c.headline}
-                  </h3>
-                  <p className="mt-2 text-xs md:text-sm text-foreground/70 line-clamp-2">
-                    {c.note}
-                  </p>
-                  <div className="mt-4 inline-flex items-center gap-2 px-4 py-2 border border-foreground rounded-full text-[10px] uppercase tracking-[0.25em]">
-                    Read Now <ArrowUpRight size={12} />
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </FadeUp>
-      </section>
-
-
-      <HomeFooter />
     </>
-  );
-}
-
-function HomeFooter() {
-  return (
-    <footer className="relative overflow-hidden bg-white text-black border-t border-black/5">
-      {/* Subtle top accent line */}
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent to-transparent" />
-
-      <div className="container-x pt-24 md:pt-32 pb-10">
-        {/* Big headline */}
-        <div className="max-w-5xl mx-auto text-center">
-          <h2 className="font-display text-4xl md:text-6xl lg:text-7xl leading-[1.05] tracking-tight">
-            Find the perfect fitness journey for you and{" "}
-            <span className="text-black/25">unlock your strongest healthiest self with us.</span>
-          </h2>
-          <div className="mt-10 flex justify-center">
-            <Link
-              to="/book"
-              className="group inline-flex items-center gap-3 bg-white text-black pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition"
-            >
-              Start Transforming
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white group-hover:rotate-45 transition-transform">
-                <ArrowUpRight size={18} />
-              </span>
-            </Link>
-          </div>
-        </div>
-
-        {/* Columns */}
-        <div className="mt-24 md:mt-32 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-10 lg:gap-8 relative z-10">
-          <div>
-            <h4 className="font-display text-xs uppercase tracking-[0.25em] text-black/40 mb-5">Navigate</h4>
-            <ul className="space-y-3 text-sm text-black/80">
-              {[
-                ["/", "Home"],
-                ["/about", "About Us"],
-                ["/programs", "Programs"],
-                ["/pricing", "Pricing"],
-              ].map(([to, label]) => (
-                <li key={to} className="flex items-center gap-2">
-                  <span className="w-1 h-1 rounded-full bg-accent" />
-                  <Link to={to} className="hover:text-accent transition-colors">{label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="col-span-2 md:col-span-1">
-            <h4 className="font-display text-xs uppercase tracking-[0.25em] text-black/40 mb-5">Contact</h4>
-            <div className="text-sm text-black/80 space-y-3">
-              <p className="hover:text-accent transition-colors cursor-pointer">hello@leanmovement.in</p>
-              <p>[+91] 99999-99999</p>
-              <p className="text-black/60 leading-relaxed">
-                LEANMOVEMENT Studio,<br />
-                Jubilee Hills, Road No. 36,<br />
-                Hyderabad, 500033
-              </p>
-            </div>
-          </div>
-
-          <div>
-            <h4 className="font-display text-xs uppercase tracking-[0.25em] text-black/40 mb-5">Social</h4>
-            <ul className="space-y-3 text-sm text-black/80">
-              {[
-                ["Instagram", "https://instagram.com"],
-                ["YouTube", "https://youtube.com"],
-                ["WhatsApp", "https://wa.me/919999999999"],
-                ["LinkedIn", "https://linkedin.com"],
-              ].map(([label, href]) => (
-                <li key={label}>
-                  <a href={href} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 underline underline-offset-4 decoration-black/20 hover:text-accent hover:decoration-accent transition-colors">
-                    {label} <ArrowUpRight size={14} />
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="col-span-2 lg:col-span-2">
-            <h4 className="font-display text-xl mb-4">Join Our Newsletter</h4>
-            <p className="text-sm text-black/60 mb-4">Weekly insights on training, nutrition, and transformation. No noise.</p>
-            <form
-              onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.02] pl-5 pr-2 py-2"
-            >
-              <input
-                type="email"
-                placeholder="Your email address"
-                className="flex-1 bg-transparent outline-none text-sm placeholder:text-black/40 text-black"
-              />
-              <button
-                type="submit"
-                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-white hover:rotate-45 transition-transform"
-                aria-label="Subscribe"
-              >
-                <ArrowUpRight size={16} />
-              </button>
-            </form>
-          </div>
-        </div>
-
-        {/* Giant wordmark */}
-        <div aria-hidden className="relative mt-16 select-none pointer-events-none">
-          <div className="font-display text-black/[0.04] tracking-tight leading-none text-center whitespace-nowrap text-[22vw] md:text-[18vw] lg:text-[15vw]">
-            LEANMOVEMENT
-          </div>
-        </div>
-
-        {/* Bottom bar */}
-        <div className="mt-4 pt-6 border-t border-black/10 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-black/50">
-          <p>© {new Date().getFullYear()} LEANMOVEMENT. All rights reserved.</p>
-          <a href="#" className="hover:text-black transition-colors">Privacy policy</a>
-        </div>
-      </div>
-    </footer>
   );
 }
