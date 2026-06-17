@@ -200,8 +200,8 @@ const PROGRAMS: Program[] = [
   {
     name: "LEAN",
     tag: "90 Day Mentorship · Application Only",
-    price: "₹29,999",
-    period: "limited spots",
+    price: "",
+    period: "",
     tagline: "Peak human performance.",
     featured: true,
     sections: [
