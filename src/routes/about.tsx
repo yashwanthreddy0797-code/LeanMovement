@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FlaskConical, Repeat, UserCog } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { CTABanner } from "@/components/site/CTABanner";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
