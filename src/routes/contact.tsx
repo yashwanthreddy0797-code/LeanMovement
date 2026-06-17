@@ -28,7 +28,7 @@ const CHANNELS = [
   { icon: Mail, label: "Email", value: "hello@natty.finesse", href: "mailto:hello@natty.finesse" },
   { icon: Phone, label: "Phone", value: "+91 99999 99999", href: "tel:+919999999999" },
   { icon: MessageCircle, label: "WhatsApp", value: "+91 99999 99999", href: "https://wa.me/919999999999" },
-  { icon: Instagram, label: "Instagram", value: "@natty.finesse", href: "https://instagram.com" },
+  { icon: Instagram, label: "Instagram", value: "@natty.finesse", href: "https://www.instagram.com/natty.finesse/" },
   { icon: Youtube, label: "YouTube", value: "/nattyfinesse", href: "https://youtube.com" },
   { icon: MapPin, label: "Studio", value: "Jubilee Hills, Hyderabad", href: "#map" },
 ];
@@ -53,7 +53,7 @@ function ContactPage() {
             <h2 className="font-display text-4xl">Channels.</h2>
             <div className="mt-10 space-y-5">
               {CHANNELS.map((c) => (
-                <a key={c.label} href={c.href} className="flex items-center gap-5 py-4 border-b border-border group">
+                <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel={c.href.startsWith("http") ? "noopener noreferrer" : undefined} className="flex items-center gap-5 py-4 border-b border-border group">
                   <c.icon className="text-accent shrink-0" size={22} strokeWidth={1.5} />
                   <div className="flex-1">
                     <div className="text-[11px] uppercase tracking-[0.25em] text-muted-foreground">{c.label}</div>
