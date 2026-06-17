@@ -41,42 +41,55 @@ function HomePage() {
       {/* HERO */}
       <section className="relative bg-background overflow-hidden">
         <div className="container-x pt-28 md:pt-36 pb-16 md:pb-24">
-          <div className="max-w-4xl">
-            <FadeUp>
-              <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
-                Evidence-Informed Coaching · Hyderabad
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.1}>
-              <h1 className="mt-6 sm:mt-8 font-display uppercase tracking-[0.02em] text-foreground text-[2.5rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.92] break-words">
-                LEAN<span className="font-normal">MOVEMENT</span>
-              </h1>
-            </FadeUp>
-            <FadeUp delay={0.2}>
-              <p className="mt-6 sm:mt-8 max-w-2xl font-serif text-xl sm:text-2xl md:text-3xl text-foreground/85 leading-snug">
-                Become the strongest version of yourself.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.3}>
-              <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
-                Evidence-informed coaching systems designed for ambitious individuals seeking sustainable fat loss,
-                muscle gain and peak human performance.
-              </p>
-            </FadeUp>
-            <FadeUp delay={0.4}>
-              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
-                <Link
-                  to="/apply"
-                  className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
-                >
-                  Apply For Lean
-                </Link>
-                <Link
-                  to="/programs"
-                  className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
-                >
-                  Explore Programs
-                </Link>
+          <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
+            <div className="md:col-span-7">
+              <FadeUp>
+                <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+                  Evidence-Informed Coaching · Hyderabad
+                </div>
+              </FadeUp>
+              <FadeUp delay={0.1}>
+                <h1 className="mt-6 sm:mt-8 font-display uppercase tracking-[0.02em] text-foreground text-[2.5rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] break-words">
+                  LEAN<span className="font-normal">MOVEMENT</span>
+                </h1>
+              </FadeUp>
+              <FadeUp delay={0.2}>
+                <p className="mt-6 sm:mt-8 max-w-2xl font-serif text-xl sm:text-2xl md:text-3xl text-foreground/85 leading-snug">
+                  Become the strongest version of yourself.
+                </p>
+              </FadeUp>
+              <FadeUp delay={0.3}>
+                <p className="mt-6 max-w-xl text-[15px] leading-relaxed text-muted-foreground">
+                  Evidence-informed coaching systems designed for ambitious individuals seeking sustainable fat loss,
+                  muscle gain and peak human performance.
+                </p>
+              </FadeUp>
+              <FadeUp delay={0.4}>
+                <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
+                  <Link
+                    to="/apply"
+                    className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+                  >
+                    Apply For Lean
+                  </Link>
+                  <Link
+                    to="/programs"
+                    className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  >
+                    Explore Programs
+                  </Link>
+                </div>
+              </FadeUp>
+            </div>
+            <FadeUp delay={0.2} className="md:col-span-5">
+              <div className="relative aspect-[4/5] w-full overflow-hidden bg-surface">
+                <img
+                  src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1400&q=80"
+                  alt="Athlete training in focused solitude"
+                  loading="eager"
+                  className="absolute inset-0 w-full h-full object-cover grayscale contrast-[1.05]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/40 via-transparent to-transparent" />
               </div>
             </FadeUp>
           </div>
