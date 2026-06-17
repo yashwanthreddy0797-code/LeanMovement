@@ -18,10 +18,10 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
     <div
       className={`group relative flex flex-col p-8 md:p-10 border transition-all duration-500 hover:-translate-y-1 ${
         isPopular
-          ? "bg-white text-black border-black"
+          ? "bg-black text-white border-black"
           : light
             ? "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]"
-            : "bg-card border-border hover:border-accent"
+            : "bg-white text-black border-black/10 hover:border-accent"
       } ${plan.vip ? "shadow-[0_0_60px_-15px_var(--accent)]" : ""}`}
     >
       {isPopular && (
