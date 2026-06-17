@@ -33,15 +33,15 @@
 }
 
 :root {
-  --background: #080808;
-  --surface: #111111;
-  --card: #161616;
-  --card-foreground: #F0EDE8;
-  --foreground: #F0EDE8;
-  --border: #222222;
+  --background: #FFFFFF;
+  --surface: #FAFAFA;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --foreground: #0A0A0A;
+  --border: #ECECEC;
   --accent: #E11D2A;
-  --muted-foreground: #666666;
-  --radius: 4px;
+  --muted-foreground: #6B6B6B;
+  --radius: 2px;
 }
 
 /* ====== PORTAL (premium white + red + black) ====== */
