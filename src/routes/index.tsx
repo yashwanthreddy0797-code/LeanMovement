@@ -28,7 +28,15 @@ const PRINCIPLES = [
   { n: "05", t: "Health Is A Lifestyle", d: "Sleep, food, training, recovery — designed around your life, not against it." },
 ] as const;
 
-const PACKAGES = [
+type Pkg = {
+  name: string;
+  price: string;
+  note: string;
+  features: string[];
+  featured?: boolean;
+};
+
+const PACKAGES: Pkg[] = [
   {
     name: "Foundation",
     price: "₹5,999",
@@ -68,7 +76,7 @@ const PACKAGES = [
       "Biweekly check-ins for 90 days",
     ],
   },
-] as const;
+];
 
 function HomePage() {
   return (
