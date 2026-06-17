@@ -200,8 +200,8 @@ const PROGRAMS: Program[] = [
   {
     name: "LEAN",
     tag: "90 Day Mentorship · Application Only",
-    price: "₹29,999",
-    period: "limited spots",
+    price: "",
+    period: "",
     tagline: "Peak human performance.",
     featured: true,
     sections: [
@@ -266,9 +266,11 @@ function ProgramsPage() {
                     {p.tagline}
                   </p>
                   <div className="mt-8">
-                    <div className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-foreground group-hover:text-accent">
-                      {p.price}
-                    </div>
+                    {p.price && (
+                      <div className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-foreground group-hover:text-accent">
+                        {p.price}
+                      </div>
+                    )}
                     {p.period && (
                       <div className="mt-2 text-[10px] uppercase tracking-[0.32em] text-muted-foreground group-hover:text-background/60">
                         {p.period}
@@ -322,9 +324,6 @@ function ProgramsPage() {
 
                   {p.meta && (
                     <div className="sm:col-span-2">
-                      <h3 className="text-[10px] uppercase tracking-[0.32em] mb-5 text-muted-foreground group-hover:text-accent">
-                        Details
-                      </h3>
                       <dl className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t border-border group-hover:border-background/15">
                         {p.meta.map((m) => (
                           <div key={m.label}>
