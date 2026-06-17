@@ -53,7 +53,7 @@ function HomePage() {
               </h1>
             </FadeUp>
             <FadeUp delay={0.2}>
-              <p className="mt-8 max-w-2xl font-serif italic text-2xl md:text-3xl text-foreground/85 leading-snug">
+              <p className="mt-8 max-w-2xl font-serif text-2xl md:text-3xl text-foreground/85 leading-snug">
                 Become the strongest version of yourself.
               </p>
             </FadeUp>
@@ -116,7 +116,7 @@ function HomePage() {
             <div className="grid md:grid-cols-12 gap-16 items-end">
               <div className="md:col-span-8">
                 <div className="eyebrow"><span className="w-6 h-px bg-accent" />Mantra</div>
-                <p className="mt-10 font-serif italic text-4xl md:text-5xl lg:text-6xl leading-snug text-foreground">
+                <p className="mt-10 font-serif text-4xl md:text-5xl lg:text-6xl leading-snug text-foreground">
                   Pure work in solitude.
                 </p>
               </div>

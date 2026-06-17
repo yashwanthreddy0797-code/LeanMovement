@@ -34,7 +34,7 @@ function Dashboard() {
 
             <h1 className="mt-5 font-serif text-[42px] md:text-[58px] leading-[1.02] tracking-[-0.01em]">
               Welcome back,<br />
-              <span className="italic text-white/85">{clientProfile.name}.</span>
+              <span className="text-white/85">{clientProfile.name}.</span>
             </h1>
 
             <p className="mt-5 text-white/70 text-[15px] leading-relaxed max-w-md">
