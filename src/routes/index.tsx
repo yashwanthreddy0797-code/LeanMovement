@@ -139,7 +139,7 @@ function HomePage() {
 
       {/* MANTRA */}
       <section className="bg-background">
-        <div className="container-x py-32 md:py-48">
+        <div className="container-x py-20 md:py-28">
           <FadeUp>
             <div className="grid md:grid-cols-12 gap-16 items-end">
               <div className="md:col-span-8">
