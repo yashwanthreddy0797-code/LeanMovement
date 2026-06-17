@@ -8,7 +8,7 @@ export function CTABanner({
   highlight = "Start",
   subtitle = "A coach. No sales pitch. We figure out if we're the right fit — then build the plan.",
   ctaText = "Book a Free Call",
-  ctaTo = "/book",
+  ctaTo = "/contact",
 }: {
   eyebrow?: string;
   title?: string;

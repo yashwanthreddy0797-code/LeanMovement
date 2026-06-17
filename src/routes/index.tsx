@@ -106,16 +106,16 @@ function HomePage() {
             <FadeUp delay={0.4}>
               <div className="mt-10 flex flex-wrap gap-4">
                 <Link
-                  to="/book"
+                  to="/contact"
                   className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
                 >
-                  Apply Now
+                  Get In Touch
                 </Link>
                 <Link
                   to="/programs"
                   className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
                 >
-                  Explore Coaching
+                  Explore Programs
                 </Link>
               </div>
             </FadeUp>
@@ -252,14 +252,14 @@ function HomePage() {
                   </ul>
 
                   <Link
-                    to="/book"
+                    to="/contact"
                     className={`mt-12 inline-flex items-center justify-between px-6 py-4 text-[11px] uppercase tracking-[0.32em] border transition-colors ${
                       pkg.featured
                         ? "border-background/40 text-background hover:bg-accent hover:border-accent"
                         : "border-foreground text-foreground hover:bg-foreground hover:text-background"
                     }`}
                   >
-                    <span>Apply</span>
+                    <span>Get In Touch</span>
                     <span aria-hidden>→</span>
                   </Link>
                 </div>
@@ -283,10 +283,10 @@ function HomePage() {
             </p>
             <div className="mt-10 flex justify-center">
               <Link
-                to="/book"
+                to="/contact"
                 className="inline-flex items-center px-10 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
               >
-                Apply Now
+                Get In Touch
               </Link>
             </div>
           </FadeUp>

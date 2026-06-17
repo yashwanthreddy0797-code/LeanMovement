@@ -17,10 +17,10 @@ export function Footer() {
 
           <div className="md:col-span-5 md:text-right flex flex-col md:items-end gap-6">
             <Link
-              to="/book"
+              to="/contact"
               className="inline-flex w-fit items-center px-7 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
             >
-              Apply Now
+              Get In Touch
             </Link>
             <a
               href="https://instagram.com"
