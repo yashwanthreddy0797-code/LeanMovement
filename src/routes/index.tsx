@@ -40,7 +40,7 @@ function HomePage() {
     <>
       {/* HERO */}
       <section className="relative bg-background overflow-hidden">
-        <div className="container-x pt-32 md:pt-36 pb-16 md:pb-24">
+        <div className="container-x pt-28 md:pt-36 pb-16 md:pb-24">
           <div className="max-w-4xl">
             <FadeUp>
               <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
@@ -48,12 +48,12 @@ function HomePage() {
               </div>
             </FadeUp>
             <FadeUp delay={0.1}>
-              <h1 className="mt-8 font-display uppercase tracking-[0.02em] text-foreground text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.92]">
+              <h1 className="mt-6 sm:mt-8 font-display uppercase tracking-[0.02em] text-foreground text-[2.5rem] sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.92] break-words">
                 LEAN<span className="font-normal">MOVEMENT</span>
               </h1>
             </FadeUp>
             <FadeUp delay={0.2}>
-              <p className="mt-8 max-w-2xl font-serif text-2xl md:text-3xl text-foreground/85 leading-snug">
+              <p className="mt-6 sm:mt-8 max-w-2xl font-serif text-xl sm:text-2xl md:text-3xl text-foreground/85 leading-snug">
                 Become the strongest version of yourself.
               </p>
             </FadeUp>
@@ -64,16 +64,16 @@ function HomePage() {
               </p>
             </FadeUp>
             <FadeUp delay={0.4}>
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <Link
                   to="/apply"
-                  className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
                 >
                   Apply For Lean
                 </Link>
                 <Link
                   to="/programs"
-                  className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
                 >
                   Explore Programs
                 </Link>
