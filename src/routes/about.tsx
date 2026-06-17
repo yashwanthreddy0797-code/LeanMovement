@@ -65,23 +65,13 @@ function AboutPage() {
       {/* FOUNDER */}
       <section className="bg-surface border-t border-border">
         <div className="container-x py-24 md:py-32">
-          <div className="grid md:grid-cols-12 gap-12 md:gap-16 items-center">
-            <FadeUp className="md:col-span-5">
-              <div className="relative aspect-[4/5] w-full overflow-hidden bg-background">
-                <img
-                  src={founderImg}
-                  alt="Founder and head coach of LEANMOVEMENT"
-                  loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover grayscale contrast-[1.05]"
-                />
-              </div>
-            </FadeUp>
-            <FadeUp delay={0.15} className="md:col-span-6 md:col-start-7">
-              <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Coach</div>
+          <FadeUp>
+            <div className="max-w-3xl mx-auto text-center">
+              <div className="eyebrow justify-center"><span className="w-6 h-px bg-accent" />The Coach</div>
               <h2 className="mt-8 font-display text-4xl md:text-5xl uppercase tracking-[0.01em] leading-[1.02]">
                 Built by discipline. Proven by results.
               </h2>
-              <div className="mt-8 space-y-6 text-foreground/75 leading-relaxed text-lg">
+              <div className="mt-8 space-y-6 text-foreground/75 leading-relaxed text-lg text-left md:text-left">
                 <p>
                   Six years in evidence-based coaching. Over 500 clients across fat loss,
                   muscle gain and performance. One thing never changed — the belief that
@@ -91,12 +81,12 @@ function AboutPage() {
                   Every programme is designed from first principles: what does the evidence say,
                   what does the individual need, and what can they actually sustain.
                 </p>
-                <p className="font-display text-foreground text-xl tracking-[0.01em]">
+                <p className="font-display text-foreground text-xl tracking-[0.01em] text-center">
                   No gimmicks. No dependency. Just systems that work.
                 </p>
               </div>
-            </FadeUp>
-          </div>
+            </div>
+          </FadeUp>
         </div>
       </section>
 
