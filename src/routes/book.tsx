@@ -63,7 +63,7 @@ function BookPage() {
                   href="https://wa.me/919999999999"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] hover:bg-white transition-colors"
+                  className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] hover:bg-black transition-colors"
                 >
                   <MessageCircle size={16} /> Message on WhatsApp
                 </a>

@@ -34,7 +34,7 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
       </span>
       <h3 className="font-display text-5xl md:text-6xl mt-3">{plan.name}</h3>
       <p className={`mt-3 text-sm ${isPopular ? "text-black/80" : light ? "text-black/65" : "text-foreground/70"}`}>{plan.description}</p>
-      <div className={`my-8 h-px ${isPopular ? "bg-black/20" : light ? "bg-white/10" : "bg-border"}`} />
+      <div className={`my-8 h-px ${isPopular ? "bg-black/20" : light ? "bg-black/10" : "bg-border"}`} />
       <ul className="space-y-3 flex-1">
         {plan.features.map((f) => (
           <li key={f} className="flex items-start gap-3 text-sm">
@@ -57,8 +57,8 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
             isPopular
               ? "border-black hover:bg-white hover:text-black"
               : light
-                ? "border-black/30 group-hover:border-accent group-hover:bg-accent group-hover:text-black"
-                : "border-border group-hover:border-accent group-hover:bg-accent group-hover:text-black"
+                ? "border-black/30 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                : "border-border group-hover:border-accent group-hover:bg-accent group-hover:text-white"
           }`}
         >
           <ArrowRight size={18} />

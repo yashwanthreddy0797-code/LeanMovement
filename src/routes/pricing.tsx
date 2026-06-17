@@ -90,7 +90,7 @@ function PricingPage() {
                   >
                     <span className={`text-[11px] uppercase tracking-[0.25em] ${isPopular ? "text-black/70" : "text-black/55"}`}>{p.tag}</span>
                     <h3 className="font-display text-4xl mt-2">{p.name}</h3>
-                    <div className={`my-6 h-px ${isPopular ? "bg-black/20" : "bg-white/10"}`} />
+                    <div className={`my-6 h-px ${isPopular ? "bg-black/20" : "bg-black/10"}`} />
                     <ul className="space-y-2 text-sm flex-1">
                       {p.features.slice(0, 4).map((f) => (
                         <li key={f} className="flex gap-2">
@@ -109,7 +109,7 @@ function PricingPage() {
                       className={`mt-6 inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
                         isPopular
                           ? "bg-white text-black hover:bg-accent hover:text-white"
-                          : "bg-accent text-white hover:bg-white"
+                          : "bg-accent text-white hover:bg-black"
                       }`}
                     >
                       Pay with Razorpay

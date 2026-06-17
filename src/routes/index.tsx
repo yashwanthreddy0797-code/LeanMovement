@@ -114,7 +114,7 @@ function HomePage() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white transition-colors">
+              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-black transition-colors">
                 Start Training <ArrowUpRight size={16} />
               </Link>
               <a href="#programs" className="inline-flex items-center gap-2 px-7 py-3.5 border border-black/20 text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition-colors">
@@ -474,7 +474,7 @@ function HomeFooter() {
             <p className="text-sm text-black/60 mb-4">Weekly insights on training, nutrition, and transformation. No noise.</p>
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 rounded-full border border-black/15 bg-white/[0.02] pl-5 pr-2 py-2"
+              className="flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.02] pl-5 pr-2 py-2"
             >
               <input
                 type="email"
