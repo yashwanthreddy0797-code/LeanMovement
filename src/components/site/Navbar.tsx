@@ -94,7 +94,18 @@ export function Navbar() {
         aria-hidden={!open}
       >
         <div className="absolute inset-0 bg-background" onClick={() => setOpen(false)} />
-        <div className="relative h-full w-full flex flex-col pt-20 pb-8 px-6 overflow-y-auto">
+        <div className="relative h-full w-full flex flex-col pt-6 pb-8 px-6 overflow-y-auto">
+          {/* Close button */}
+          <div className="flex items-center justify-end mb-8">
+            <button
+              onClick={() => setOpen(false)}
+              aria-label="Close menu"
+              className="text-foreground p-2 -mr-2"
+            >
+              <X size={24} />
+            </button>
+          </div>
+
           <nav className="flex flex-col flex-1">
             {links.map((l, i) => (
               <Link
