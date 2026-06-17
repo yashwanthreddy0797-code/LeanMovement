@@ -51,7 +51,7 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
           </div>
         </div>
         <Link
-          to="/pricing"
+          to="/programs"
           aria-label={`Choose ${plan.name}`}
           className={`w-12 h-12 rounded-full border grid place-items-center transition-all ${
             isPopular
