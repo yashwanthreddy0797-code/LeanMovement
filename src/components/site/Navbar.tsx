@@ -49,8 +49,8 @@ export function Navbar() {
         <div
           className={`pointer-events-auto mx-auto flex items-center justify-between gap-6 h-14 md:h-16 px-4 md:px-6 rounded-full transition-all duration-500 ${
             scrolled || open
-              ? "bg-background/80 backdrop-blur-2xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]"
-              : "bg-background/40 backdrop-blur-xl border border-white/5"
+              ? "bg-background/80 backdrop-blur-2xl border border-black/10 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.8)]"
+              : "bg-background/40 backdrop-blur-xl border border-black/5"
           }`}
         >
           <Link to="/" className="flex items-center gap-1.5 shrink-0" aria-label="LEANMOVEMENT home">
@@ -73,13 +73,13 @@ export function Navbar() {
           <div className="flex items-center gap-2">
             <Link
               to="/portal/login"
-              className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold border border-white/15 text-foreground/80 hover:text-foreground hover:border-white/40 transition-all"
+              className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold border border-black/15 text-foreground/80 hover:text-foreground hover:border-black/40 transition-all"
             >
               Client Login
             </Link>
             <Link
               to="/book"
-              className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-all"
+              className="hidden md:inline-flex items-center px-4 py-2 rounded-full text-[10px] uppercase tracking-[0.22em] font-semibold bg-accent text-black hover:bg-foreground hover:text-background transition-all"
             >
               Book Consultation
             </Link>
@@ -109,7 +109,7 @@ export function Navbar() {
 
         {/* Panel */}
         <div
-          className={`relative mx-4 mt-24 rounded-3xl border border-white/10 bg-background/95 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          className={`relative mx-4 mt-24 rounded-3xl border border-black/10 bg-background/95 backdrop-blur-2xl shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)] overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] ${
             open ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
           }`}
         >
@@ -119,8 +119,8 @@ export function Navbar() {
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="group flex items-center justify-between px-5 py-4 rounded-2xl text-foreground/85 hover:bg-white/[0.04] hover:text-foreground transition-colors"
-                activeProps={{ className: "!text-accent bg-white/[0.03]" }}
+                className="group flex items-center justify-between px-5 py-4 rounded-2xl text-foreground/85 hover:bg-black/[0.04] hover:text-foreground transition-colors"
+                activeProps={{ className: "!text-accent bg-black/[0.03]" }}
                 activeOptions={{ exact: l.to === "/" }}
               >
                 <span className="flex items-baseline gap-4">
@@ -136,18 +136,18 @@ export function Navbar() {
             ))}
           </nav>
 
-          <div className="border-t border-white/10 p-4 grid grid-cols-1 gap-2.5">
+          <div className="border-t border-black/10 p-4 grid grid-cols-1 gap-2.5">
             <Link
               to="/book"
               onClick={() => setOpen(false)}
-              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold bg-accent text-white hover:bg-foreground hover:text-background transition-colors"
+              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold bg-accent text-black hover:bg-foreground hover:text-background transition-colors"
             >
               Book Free Consultation
             </Link>
             <Link
               to="/portal/login"
               onClick={() => setOpen(false)}
-              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold border border-white/15 text-foreground/80 hover:text-foreground hover:border-white/40 transition-colors"
+              className="inline-flex items-center justify-center px-5 py-3.5 rounded-full text-[10px] uppercase tracking-[0.24em] font-semibold border border-black/15 text-foreground/80 hover:text-foreground hover:border-black/40 transition-colors"
             >
               Client Login
             </Link>

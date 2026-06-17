@@ -63,7 +63,7 @@ function BookPage() {
                   href="https://wa.me/919999999999"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] hover:bg-black transition-colors"
+                  className="mt-6 inline-flex items-center gap-2 px-6 py-3.5 bg-accent text-black text-xs font-semibold uppercase tracking-[0.2em] hover:bg-white transition-colors"
                 >
                   <MessageCircle size={16} /> Message on WhatsApp
                 </a>
@@ -74,8 +74,8 @@ function BookPage() {
       </section>
 
       {/* TRUST STRIP — black */}
-      <section className="bg-black text-white">
-        <div className="container-x py-10 flex flex-wrap justify-center items-center gap-x-12 gap-y-3 text-xs uppercase tracking-[0.25em] text-white/60">
+      <section className="bg-white text-black">
+        <div className="container-x py-10 flex flex-wrap justify-center items-center gap-x-12 gap-y-3 text-xs uppercase tracking-[0.25em] text-black/60">
           <span className="text-accent">100% Free</span>
           <span>·</span>
           <span>No Obligation</span>

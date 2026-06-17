@@ -18,7 +18,7 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
     <div
       className={`group relative flex flex-col p-8 md:p-10 border transition-all duration-500 hover:-translate-y-1 ${
         isPopular
-          ? "bg-black text-white border-black"
+          ? "bg-white text-black border-black"
           : light
             ? "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]"
             : "bg-card border-border hover:border-accent"
@@ -29,12 +29,12 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
           Most Popular
         </span>
       )}
-      <span className={`text-[11px] tracking-[0.25em] uppercase font-medium ${isPopular ? "text-white/70" : light ? "text-black/55" : "text-muted-foreground"}`}>
+      <span className={`text-[11px] tracking-[0.25em] uppercase font-medium ${isPopular ? "text-black/70" : light ? "text-black/55" : "text-muted-foreground"}`}>
         {plan.tag}
       </span>
       <h3 className="font-display text-5xl md:text-6xl mt-3">{plan.name}</h3>
-      <p className={`mt-3 text-sm ${isPopular ? "text-white/80" : light ? "text-black/65" : "text-foreground/70"}`}>{plan.description}</p>
-      <div className={`my-8 h-px ${isPopular ? "bg-white/20" : light ? "bg-black/10" : "bg-border"}`} />
+      <p className={`mt-3 text-sm ${isPopular ? "text-black/80" : light ? "text-black/65" : "text-foreground/70"}`}>{plan.description}</p>
+      <div className={`my-8 h-px ${isPopular ? "bg-black/20" : light ? "bg-white/10" : "bg-border"}`} />
       <ul className="space-y-3 flex-1">
         {plan.features.map((f) => (
           <li key={f} className="flex items-start gap-3 text-sm">
@@ -46,7 +46,7 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
       <div className="mt-10 flex items-end justify-between">
         <div>
           <div className="font-display text-5xl">{plan.price}</div>
-          <div className={`text-xs uppercase tracking-[0.2em] mt-1 ${isPopular ? "text-white/70" : light ? "text-black/55" : "text-muted-foreground"}`}>
+          <div className={`text-xs uppercase tracking-[0.2em] mt-1 ${isPopular ? "text-black/70" : light ? "text-black/55" : "text-muted-foreground"}`}>
             {plan.period ?? "per month"}
           </div>
         </div>
@@ -55,10 +55,10 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
           aria-label={`Choose ${plan.name}`}
           className={`w-12 h-12 rounded-full border grid place-items-center transition-all ${
             isPopular
-              ? "border-white hover:bg-white hover:text-black"
+              ? "border-black hover:bg-white hover:text-black"
               : light
-                ? "border-black/30 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
-                : "border-border group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                ? "border-black/30 group-hover:border-accent group-hover:bg-accent group-hover:text-black"
+                : "border-border group-hover:border-accent group-hover:bg-accent group-hover:text-black"
           }`}
         >
           <ArrowRight size={18} />

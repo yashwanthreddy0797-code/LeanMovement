@@ -61,19 +61,19 @@ function AboutPage() {
       </section>
 
       {/* PHILOSOPHY — black */}
-      <section className="bg-black text-white">
+      <section className="bg-white text-black">
         <div className="container-x py-24 md:py-32">
           <FadeUp className="max-w-2xl mb-16">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60"><span className="w-8 h-px bg-accent" />Philosophy</span>
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60"><span className="w-8 h-px bg-accent" />Philosophy</span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">Three Pillars.</h2>
           </FadeUp>
           <div className="grid md:grid-cols-3 gap-6">
             {PILLARS.map((p, i) => (
               <FadeUp key={p.title} delay={i * 0.1}>
-                <div className="p-10 border border-white/15 bg-white/[0.03] h-full hover:border-accent transition-colors">
+                <div className="p-10 border border-black/15 bg-black/[0.03] h-full hover:border-accent transition-colors">
                   <p.icon className="text-accent" size={32} strokeWidth={1.5} />
                   <h3 className="font-display text-4xl mt-8">{p.title}</h3>
-                  <p className="mt-4 text-white/70">{p.body}</p>
+                  <p className="mt-4 text-black/70">{p.body}</p>
                 </div>
               </FadeUp>
             ))}
@@ -90,10 +90,10 @@ function AboutPage() {
       </section>
 
       {/* GALLERY — black */}
-      <section className="bg-black text-white">
+      <section className="bg-white text-black">
         <div className="container-x py-24 md:py-32">
           <FadeUp className="mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60"><span className="w-8 h-px bg-accent" />Inside The Work</span>
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60"><span className="w-8 h-px bg-accent" />Inside The Work</span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">From the Gym.</h2>
           </FadeUp>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-5">

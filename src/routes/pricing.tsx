@@ -62,7 +62,7 @@ function PricingPage() {
                   key={m}
                   onClick={() => setMode(m)}
                   className={`px-6 py-2.5 text-xs uppercase tracking-[0.2em] transition-colors ${
-                    mode === m ? "bg-black text-white" : "text-black/60 hover:text-black"
+                    mode === m ? "bg-white text-black" : "text-black/60 hover:text-black"
                   }`}
                 >
                   {m === "monthly" ? "Monthly" : "Bundle · Save 10%"}
@@ -84,13 +84,13 @@ function PricingPage() {
                   <div
                     className={`flex flex-col h-full p-8 border transition-all hover:-translate-y-1 duration-500 ${
                       isPopular
-                        ? "bg-black text-white border-black shadow-[0_20px_60px_-20px_rgba(0,0,0,0.4)]"
+                        ? "bg-white text-black border-black shadow-[0_20px_60px_-20px_rgba(0,0,0,0.4)]"
                         : "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]"
                     } ${p.vip && !isPopular ? "shadow-[0_0_40px_-15px_var(--accent)]" : ""}`}
                   >
-                    <span className={`text-[11px] uppercase tracking-[0.25em] ${isPopular ? "text-white/70" : "text-black/55"}`}>{p.tag}</span>
+                    <span className={`text-[11px] uppercase tracking-[0.25em] ${isPopular ? "text-black/70" : "text-black/55"}`}>{p.tag}</span>
                     <h3 className="font-display text-4xl mt-2">{p.name}</h3>
-                    <div className={`my-6 h-px ${isPopular ? "bg-white/20" : "bg-black/10"}`} />
+                    <div className={`my-6 h-px ${isPopular ? "bg-black/20" : "bg-white/10"}`} />
                     <ul className="space-y-2 text-sm flex-1">
                       {p.features.slice(0, 4).map((f) => (
                         <li key={f} className="flex gap-2">
@@ -100,21 +100,21 @@ function PricingPage() {
                       ))}
                     </ul>
                     <div className="mt-8">
-                      <div className={`font-display text-4xl ${isPopular ? "text-white" : "text-accent"}`}>{display}</div>
-                      <div className={`text-[11px] uppercase tracking-[0.25em] mt-1 ${isPopular ? "text-white/70" : "text-black/55"}`}>{period}</div>
+                      <div className={`font-display text-4xl ${isPopular ? "text-black" : "text-accent"}`}>{display}</div>
+                      <div className={`text-[11px] uppercase tracking-[0.25em] mt-1 ${isPopular ? "text-black/70" : "text-black/55"}`}>{period}</div>
                     </div>
                     <a
                       href="#"
                       aria-label={`Pay with Razorpay for ${p.name}`}
                       className={`mt-6 inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
                         isPopular
-                          ? "bg-white text-black hover:bg-accent hover:text-white"
-                          : "bg-accent text-white hover:bg-black"
+                          ? "bg-white text-black hover:bg-accent hover:text-black"
+                          : "bg-accent text-black hover:bg-white"
                       }`}
                     >
                       Pay with Razorpay
                     </a>
-                    <a href="/book" className={`mt-3 text-center text-xs uppercase tracking-[0.2em] ${isPopular ? "text-white/60 hover:text-white" : "text-black/55 hover:text-accent"}`}>
+                    <a href="/book" className={`mt-3 text-center text-xs uppercase tracking-[0.2em] ${isPopular ? "text-black/60 hover:text-black" : "text-black/55 hover:text-accent"}`}>
                       or book a call first
                     </a>
                   </div>
@@ -126,10 +126,10 @@ function PricingPage() {
       </section>
 
       {/* COMPARISON — black */}
-      <section className="bg-black text-white">
+      <section className="bg-white text-black">
         <div className="container-x py-24">
           <FadeUp className="mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
               <span className="w-8 h-px bg-accent" />Compare
             </span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">What's Included.</h2>
@@ -138,9 +138,9 @@ function PricingPage() {
             <table className="w-full min-w-[700px] border-collapse">
               <thead>
                 <tr>
-                  <th className="text-left py-5 px-4 text-[11px] uppercase tracking-[0.25em] text-white/55 font-medium border-b border-white/15">Feature</th>
+                  <th className="text-left py-5 px-4 text-[11px] uppercase tracking-[0.25em] text-black/55 font-medium border-b border-black/15">Feature</th>
                   {ALL_PLANS.map((p) => (
-                    <th key={p.name} className="text-left py-5 px-4 border-b border-white/15">
+                    <th key={p.name} className="text-left py-5 px-4 border-b border-black/15">
                       <div className="font-display text-2xl">{p.name}</div>
                     </th>
                   ))}
@@ -148,13 +148,13 @@ function PricingPage() {
               </thead>
               <tbody>
                 {FEATURES.map(([label, ...vals]) => (
-                  <tr key={label as string} className="border-b border-white/10">
-                    <td className="py-5 px-4 text-sm text-white/80">{label}</td>
+                  <tr key={label as string} className="border-b border-black/10">
+                    <td className="py-5 px-4 text-sm text-black/80">{label}</td>
                     {vals.map((v, i) => (
                       <td key={i} className="py-5 px-4 text-sm">
                         {v === true ? <Check size={18} className="text-accent" /> :
-                         v === false ? <X size={18} className="text-white/25" /> :
-                         <span className="text-white/85">{v}</span>}
+                         v === false ? <X size={18} className="text-black/25" /> :
+                         <span className="text-black/85">{v}</span>}
                       </td>
                     ))}
                   </tr>
@@ -189,10 +189,10 @@ function PricingPage() {
       </section>
 
       {/* FAQ — black */}
-      <section className="bg-black text-white">
+      <section className="bg-white text-black">
         <div className="container-x py-24">
           <FadeUp className="max-w-2xl mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-white/60">
+            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
               <span className="w-8 h-px bg-accent" />FAQ
             </span>
             <h2 className="font-display text-5xl md:text-5xl mt-6">Pricing Questions.</h2>
@@ -200,11 +200,11 @@ function PricingPage() {
           <FadeUp delay={0.1}>
             <Accordion type="single" collapsible className="max-w-3xl">
               {PRICING_FAQ.map((f, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-white/15">
-                  <AccordionTrigger className="font-display text-2xl text-left text-white hover:text-accent hover:no-underline py-6">
+                <AccordionItem key={i} value={`item-${i}`} className="border-black/15">
+                  <AccordionTrigger className="font-display text-2xl text-left text-black hover:text-accent hover:no-underline py-6">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-white/70 pb-6">{f.a}</AccordionContent>
+                  <AccordionContent className="text-black/70 pb-6">{f.a}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>

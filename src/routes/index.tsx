@@ -114,10 +114,10 @@ function HomePage() {
             </p>
 
             <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-black transition-colors">
+              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white transition-colors">
                 Start Training <ArrowUpRight size={16} />
               </Link>
-              <a href="#programs" className="inline-flex items-center gap-2 px-7 py-3.5 border border-black/20 text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-black hover:text-white transition-colors">
+              <a href="#programs" className="inline-flex items-center gap-2 px-7 py-3.5 border border-black/20 text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition-colors">
                 Take the FitQuiz
               </a>
             </div>
@@ -224,7 +224,7 @@ function HomePage() {
                   </motion.p>
                   <motion.a
                     href="#method"
-                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-black rounded-full text-xs uppercase tracking-[0.25em] text-black hover:bg-black hover:text-white transition-colors"
+                    className="mt-8 inline-flex items-center gap-2 px-6 py-3 border border-black rounded-full text-xs uppercase tracking-[0.25em] text-black hover:bg-white hover:text-black transition-colors"
                     variants={{
                       hidden: { opacity: 0, y: 20 },
                       visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
@@ -241,10 +241,10 @@ function HomePage() {
 
 
       {/* ============ GOALS BANNER ============ */}
-      <section className="bg-black text-white overflow-hidden">
+      <section className="bg-white text-black overflow-hidden">
         <div className="container-x py-24 md:py-36 text-center">
           <FadeUp>
-            <span className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-white/70">
+            <span className="inline-flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-black/70">
               <span className="w-8 h-px bg-accent" />
               What We Offer
               <span className="w-8 h-px bg-accent" />
@@ -253,21 +253,21 @@ function HomePage() {
 
           <FadeUp delay={0.1}>
             <h2 className="font-display mt-10 leading-[0.95] tracking-tight text-5xl md:text-7xl lg:text-8xl">
-              <span className="block text-white">SCULPT.</span>
-              <span className="block text-white/40">STRENGTHEN.</span>
-              <span className="block text-white/15">TRANSFORM.</span>
+              <span className="block text-black">SCULPT.</span>
+              <span className="block text-black/40">STRENGTHEN.</span>
+              <span className="block text-black/15">TRANSFORM.</span>
             </h2>
           </FadeUp>
 
           <FadeUp delay={0.2}>
-            <p className="mt-12 mx-auto max-w-xl text-base md:text-lg text-white/70 leading-relaxed">
+            <p className="mt-12 mx-auto max-w-xl text-base md:text-lg text-black/70 leading-relaxed">
               Built for fast, real results in 12 weeks.<br />
               Show up — I'll handle the rest.
             </p>
           </FadeUp>
 
           <FadeUp delay={0.3}>
-            <div className="mt-10 flex items-center justify-center gap-6 text-xs uppercase tracking-[0.25em] text-white/50">
+            <div className="mt-10 flex items-center justify-center gap-6 text-xs uppercase tracking-[0.25em] text-black/50">
               <span>12 Weeks</span>
               <span className="w-1 h-1 rounded-full bg-accent" />
               <span>Real Results</span>
@@ -409,10 +409,10 @@ function HomeFooter() {
           <div className="mt-10 flex justify-center">
             <Link
               to="/book"
-              className="group inline-flex items-center gap-3 bg-black text-white pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-black/90 transition"
+              className="group inline-flex items-center gap-3 bg-white text-black pl-7 pr-2 py-2 rounded-full text-sm font-medium hover:bg-white/90 transition"
             >
               Start Transforming
-              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-white group-hover:rotate-45 transition-transform">
+              <span className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-accent text-black group-hover:rotate-45 transition-transform">
                 <ArrowUpRight size={18} />
               </span>
             </Link>
@@ -474,7 +474,7 @@ function HomeFooter() {
             <p className="text-sm text-black/60 mb-4">Weekly insights on training, nutrition, and transformation. No noise.</p>
             <form
               onSubmit={(e) => e.preventDefault()}
-              className="flex items-center gap-2 rounded-full border border-black/15 bg-black/[0.02] pl-5 pr-2 py-2"
+              className="flex items-center gap-2 rounded-full border border-black/15 bg-white/[0.02] pl-5 pr-2 py-2"
             >
               <input
                 type="email"
@@ -483,7 +483,7 @@ function HomeFooter() {
               />
               <button
                 type="submit"
-                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-white hover:rotate-45 transition-transform"
+                className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-accent text-black hover:rotate-45 transition-transform"
                 aria-label="Subscribe"
               >
                 <ArrowUpRight size={16} />
