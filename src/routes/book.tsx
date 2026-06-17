@@ -74,8 +74,8 @@ function BookPage() {
       </section>
 
       {/* TRUST STRIP — black */}
-      <section className="bg-black text-white">
-        <div className="container-x py-10 flex flex-wrap justify-center items-center gap-x-12 gap-y-3 text-xs uppercase tracking-[0.25em] text-white/60">
+      <section className="bg-white text-black">
+        <div className="container-x py-10 flex flex-wrap justify-center items-center gap-x-12 gap-y-3 text-xs uppercase tracking-[0.25em] text-black/60">
           <span className="text-accent">100% Free</span>
           <span>·</span>
           <span>No Obligation</span>

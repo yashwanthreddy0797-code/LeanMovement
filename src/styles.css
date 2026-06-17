@@ -33,15 +33,15 @@
 }
 
 :root {
-  --background: #080808;
-  --surface: #111111;
-  --card: #161616;
-  --card-foreground: #F0EDE8;
-  --foreground: #F0EDE8;
-  --border: #222222;
+  --background: #FFFFFF;
+  --surface: #FAFAFA;
+  --card: #FFFFFF;
+  --card-foreground: #0A0A0A;
+  --foreground: #0A0A0A;
+  --border: #ECECEC;
   --accent: #E11D2A;
-  --muted-foreground: #666666;
-  --radius: 4px;
+  --muted-foreground: #6B6B6B;
+  --radius: 2px;
 }
 
 /* ====== PORTAL (premium white + red + black) ====== */
@@ -106,11 +106,6 @@
     font-family: var(--font-sans);
     font-weight: 300;
     -webkit-font-smoothing: antialiased;
-    background-image:
-      radial-gradient(circle at 1px 1px, rgba(255,255,255,0.015) 1px, transparent 0);
-    background-size: 3px 3px;
-  }
-  body:has(.portal-theme) {
     background-image: none;
   }
   h1, h2, h3, h4, h5, h6, .font-display {
@@ -206,8 +201,8 @@
 
 @utility grid-overlay {
   background-image:
-    linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px);
+    linear-gradient(to right, rgba(0,0,0,0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0,0,0,0.04) 1px, transparent 1px);
   background-size: 80px 80px;
 }
 
