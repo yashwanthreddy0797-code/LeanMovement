@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { FlaskConical, Repeat, UserCog } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { CTABanner } from "@/components/site/CTABanner";
+
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -16,50 +16,74 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
 });
 
-const PILLARS = [
-  { icon: FlaskConical, title: "Science", body: "Every recommendation is rooted in peer-reviewed research. No trends, no guesswork." },
-  { icon: Repeat, title: "Consistency", body: "Sustainable habits over heroic effort. The plan you can run for a decade beats the one you abandon in 8 weeks." },
-  { icon: UserCog, title: "Personalisation", body: "Your body, your schedule, your psychology. Templates are tools, not solutions." },
+const PRINCIPLES = [
+  { t: "Train For Life", d: "Strength, capacity, longevity. Aesthetics follow." },
+  { t: "Consistency Over Intensity", d: "The plan you repeat for a decade beats the one you abandon in eight weeks." },
+  { t: "Health Creates Freedom", d: "Fitness gives back to every other corner of your life." },
+  { t: "Build An Engine", d: "Conditioning, strength, mobility — designed to compound." },
+  { t: "Educate · Empower · Execute", d: "You learn the why. You leave self-sufficient. The work decides everything." },
 ];
-const CREDENTIALS = ["NSCA-CPT", "Precision Nutrition L2", "FRC Mobility Specialist", "BSc Sports Science", "6 yrs coaching"];
 
 function AboutPage() {
   return (
     <>
-      <PageHero eyebrow="Meet Your Coach" title="LEANMOVEMENT." subtitle="" compact />
+      <PageHero
+        eyebrow="About"
+        title="LEANMOVEMENT."
+        subtitle="A simple belief: fitness should create freedom, not dependency."
+        compact
+      />
 
-      {/* STORY — premium white */}
-      <section className="bg-white text-black">
+      {/* STORY */}
+      <section className="bg-background border-t border-border">
         <div className="container-x py-24 md:py-32">
-          <div className="max-w-3xl">
-            <FadeUp>
-              <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60"><span className="w-8 h-px bg-accent" />The Story</span>
-              <h2 className="font-display text-5xl md:text-6xl text-black mt-6">A coach,</h2>
+          <div className="grid md:grid-cols-12 gap-16 md:gap-24">
+            <FadeUp className="md:col-span-5">
+              <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Story</div>
+              <h2 className="mt-8 font-display text-4xl md:text-5xl uppercase tracking-[0.01em] leading-[1.02]">
+                Built around a simple belief.
+              </h2>
             </FadeUp>
-            <FadeUp delay={0.1} className="mt-8 space-y-6 text-black/75 leading-relaxed">
-              <p>I started coaching out of a small gym in Hyderabad in 2019 with one rule: never sell anything I wouldn't use myself. That meant no fad diets, no supplement pyramids, no fear-mongering.</p>
-              <p>Six years later, the rule still stands. Over 500 clients have transformed under this method — corporate professionals, parents, students, athletes. The training shifts. The principles don't.</p>
-              <p>I believe fitness should give you energy for the rest of your life, not consume it. That means programs that fit into real schedules, nutrition that respects Indian food, and a coach who picks up the phone.</p>
-              <p>If that sounds like the kind of coaching you've been looking for — let's talk.</p>
+            <FadeUp delay={0.1} className="md:col-span-6 md:col-start-7 space-y-6 text-foreground/75 leading-relaxed text-lg">
+              <p>
+                LEANMOVEMENT was built around a simple belief — fitness should create freedom,
+                not dependency.
+              </p>
+              <p>No gimmicks. No detoxes. No unnecessary restrictions.</p>
+              <p>
+                Only systems that fit into real life. For busy professionals. Entrepreneurs.
+                Athletes. People wanting structure. People wanting longevity.
+              </p>
+              <p>
+                The training shifts. The principles don't.
+              </p>
             </FadeUp>
           </div>
         </div>
       </section>
 
-      {/* PHILOSOPHY — black */}
-      <section className="bg-white text-black">
+      {/* PRINCIPLES */}
+      <section className="bg-surface border-y border-border">
         <div className="container-x py-24 md:py-32">
           <FadeUp className="max-w-2xl mb-16">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60"><span className="w-8 h-px bg-accent" />Philosophy</span>
-            <h2 className="font-display text-5xl md:text-5xl mt-6">Three Pillars.</h2>
+            <div className="eyebrow"><span className="w-6 h-px bg-accent" />Principles</div>
+            <h2 className="mt-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
+              What we stand for.
+            </h2>
           </FadeUp>
-          <div className="grid md:grid-cols-3 gap-6">
-            {PILLARS.map((p, i) => (
-              <FadeUp key={p.title} delay={i * 0.1}>
-                <div className="p-10 border border-black/15 bg-black/[0.03] h-full hover:border-accent transition-colors">
-                  <p.icon className="text-accent" size={32} strokeWidth={1.5} />
-                  <h3 className="font-display text-4xl mt-8">{p.title}</h3>
-                  <p className="mt-4 text-black/70">{p.body}</p>
+          <div className="divide-y divide-border border-y border-border">
+            {PRINCIPLES.map((p, i) => (
+              <FadeUp key={p.t} delay={i * 0.05}>
+                <div className="grid md:grid-cols-12 gap-6 md:gap-12 py-10 md:py-12 items-baseline">
+                  <div className="md:col-span-1 font-mono text-xs text-muted-foreground tracking-widest">
+                    0{i + 1}
+                  </div>
+                  <h3 className="md:col-span-5 font-display text-2xl md:text-4xl uppercase tracking-[0.01em]">
+                    {p.t}
+                  </h3>
+                  <p className="md:col-span-6 text-foreground/70 text-base md:text-lg leading-relaxed">
+                    {p.d}
+                  </p>
                 </div>
               </FadeUp>
             ))}
@@ -67,15 +91,15 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* CREDENTIALS — white strip */}
-      <section className="bg-white text-black border-y border-black/10 py-10">
-        <div className="container-x flex flex-wrap items-center gap-x-12 gap-y-4 text-xs uppercase tracking-[0.25em] text-black/60">
-          <span className="text-accent">Credentials</span>
-          {CREDENTIALS.map((c) => <span key={c}>· {c}</span>)}
-        </div>
-      </section>
-
-      <CTABanner eyebrow="Let's Work" title="Ready to work with me?" highlight="me" />
+      <CTABanner
+        eyebrow="Apply"
+        title="Ready for LEAN?"
+        highlight="LEAN"
+        subtitle="90 days. Application only. Limited spots."
+        ctaText="Apply For Lean"
+        ctaTo="/apply"
+      />
     </>
   );
 }
+

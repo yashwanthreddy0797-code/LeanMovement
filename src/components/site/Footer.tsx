@@ -17,21 +17,24 @@ export function Footer() {
 
           <div className="md:col-span-5 md:text-right flex flex-col md:items-end gap-6">
             <Link
-              to="/contact"
+              to="/apply"
               className="inline-flex w-fit items-center px-7 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
             >
-              Get In Touch
+              Apply For Lean
             </Link>
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="inline-flex items-center gap-2 text-[11px] uppercase tracking-[0.28em] text-foreground/70 hover:text-accent transition-colors"
-            >
-              <Instagram size={16} />
-              Instagram
-            </a>
+            <div className="flex flex-col md:items-end gap-3 text-[11px] uppercase tracking-[0.28em] text-foreground/70">
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="inline-flex items-center gap-2 hover:text-accent transition-colors"
+              >
+                <Instagram size={16} />
+                Instagram
+              </a>
+              <Link to="/contact" className="hover:text-accent transition-colors">Contact</Link>
+            </div>
           </div>
         </div>
 
