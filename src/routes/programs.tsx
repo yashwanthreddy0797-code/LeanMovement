@@ -266,9 +266,11 @@ function ProgramsPage() {
                     {p.tagline}
                   </p>
                   <div className="mt-8">
-                    <div className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-foreground group-hover:text-accent">
-                      {p.price}
-                    </div>
+                    {p.price && (
+                      <div className="font-display text-4xl sm:text-5xl md:text-6xl tracking-tight text-foreground group-hover:text-accent">
+                        {p.price}
+                      </div>
+                    )}
                     {p.period && (
                       <div className="mt-2 text-[10px] uppercase tracking-[0.32em] text-muted-foreground group-hover:text-background/60">
                         {p.period}
