@@ -318,7 +318,7 @@ function ProgramsPage() {
                   )}
                 </header>
 
-                <div className="lg:col-span-8 grid sm:grid-cols-2 gap-10 lg:gap-12">
+                <div className="lg:col-span-8 grid sm:grid-cols-2 gap-8 lg:gap-12 min-w-0">
                   {p.sections.map((s) => (
                     <div key={s.title}>
                       <h3
