@@ -5,9 +5,9 @@ import { Menu, X } from "lucide-react";
 const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
-  { to: "/programs", label: "Coaching" },
-  { to: "/blog", label: "Results" },
-  { to: "/book", label: "Apply" },
+  { to: "/programs", label: "Programs" },
+  { to: "/blog", label: "Blog" },
+  { to: "/contact", label: "Contact" },
 ] as const;
 
 function Wordmark({ className = "" }: { className?: string }) {
