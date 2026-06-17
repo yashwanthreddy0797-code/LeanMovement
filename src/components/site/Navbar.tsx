@@ -68,6 +68,12 @@ export function Navbar() {
 
             <div className="flex items-center gap-3 shrink-0">
               <Link
+                to="/portal/login"
+                className="hidden lg:inline-flex items-center px-6 py-3 text-[11px] uppercase tracking-[0.28em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+              >
+                Login
+              </Link>
+              <Link
                 to="/apply"
                 className="hidden lg:inline-flex items-center px-6 py-3 text-[11px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
               >
@@ -123,7 +129,14 @@ export function Navbar() {
               </Link>
             ))}
           </nav>
-          <div className="pt-6 mt-6 border-t border-border">
+          <div className="pt-6 mt-6 border-t border-border space-y-3">
+            <Link
+              to="/portal/login"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center w-full px-6 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+            >
+              Login
+            </Link>
             <Link
               to="/apply"
               onClick={() => setOpen(false)}
