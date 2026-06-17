@@ -46,7 +46,7 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
       <div className="mt-10 flex items-end justify-between">
         <div>
           <div className="font-display text-5xl">{plan.price}</div>
-          <div className={`text-xs uppercase tracking-[0.2em] mt-1 ${isPopular ? "text-black/70" : light ? "text-black/55" : "text-muted-foreground"}`}>
+          <div className={`text-xs uppercase tracking-[0.2em] mt-1 ${isPopular ? "text-white/70" : "text-black/55"}`}>
             {plan.period ?? "per month"}
           </div>
         </div>
@@ -55,10 +55,8 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
           aria-label={`Choose ${plan.name}`}
           className={`w-12 h-12 rounded-full border grid place-items-center transition-all ${
             isPopular
-              ? "border-black hover:bg-white hover:text-black"
-              : light
-                ? "border-black/30 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
-                : "border-border group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+              ? "border-white/40 hover:bg-accent hover:border-accent text-white"
+              : "border-black/30 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
           }`}
         >
           <ArrowRight size={18} />
