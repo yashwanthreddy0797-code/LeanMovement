@@ -140,7 +140,7 @@ function ResultsPage() {
                       {t.name}
                     </div>
                   </div>
-                  <blockquote className="md:col-span-9 font-serif text-2xl md:text-3xl leading-snug text-foreground/90">
+                  <blockquote className="md:col-span-9 font-serif text-xl sm:text-2xl md:text-3xl leading-snug text-foreground/90">
                     “{t.quote}”
                   </blockquote>
                 </figure>
