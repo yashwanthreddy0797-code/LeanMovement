@@ -98,14 +98,14 @@ function HomePage() {
 
       {/* ABOUT */}
       <section className="bg-background border-t border-border">
-        <div className="container-x py-32 md:py-48">
-          <div className="grid md:grid-cols-12 gap-16 md:gap-24 items-start">
-            <FadeUp className="md:col-span-5 md:sticky md:top-32">
+        <div className="container-x py-16 md:py-24">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
+            <FadeUp className="md:col-span-5">
               <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Philosophy</div>
-              <h2 className="mt-8 font-display text-4xl md:text-5xl lg:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
+              <h2 className="mt-5 font-display text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.01em] leading-[1.02]">
                 Fitness should create freedom — not dependency.
               </h2>
-              <div className="mt-12 relative aspect-[4/5] w-full overflow-hidden bg-surface">
+              <div className="mt-8 relative aspect-[4/5] w-full overflow-hidden bg-surface">
                 <img
                   src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=80"
                   alt="Disciplined lift under controlled tension"
@@ -114,7 +114,7 @@ function HomePage() {
                 />
               </div>
             </FadeUp>
-            <FadeUp delay={0.15} className="md:col-span-6 md:col-start-7 space-y-8 text-foreground/75 text-lg leading-relaxed">
+            <FadeUp delay={0.15} className="md:col-span-7 space-y-6 text-foreground/75 text-base md:text-lg leading-relaxed pt-2 md:pt-16">
               <p>
                 LEANMOVEMENT was built around a simple belief. The work you do for your body
                 should give back to every other corner of your life — your focus, your discipline,
