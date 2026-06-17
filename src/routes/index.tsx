@@ -30,18 +30,6 @@ export const Route = createFileRoute("/")({
 
 const HERO_IMG = heroMaleTrainer.url;
 
-const HERO_POINTS = [
-  "Custom Training",
-  "Personalised Nutrition",
-  "Weekly Accountability",
-  "Data-Driven Progress",
-] as const;
-
-const TRUST_BAR = [
-  { n: "", l: "" },
-  { n: "", l: "" },
-  { n: "", l: "" },
-] as const;
 
 const CLIENT_STORIES = [
   {
