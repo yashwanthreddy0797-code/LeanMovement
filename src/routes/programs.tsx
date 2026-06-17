@@ -251,17 +251,17 @@ function ProgramsPage() {
       />
 
       <section className="bg-background">
-        <div className="container-x py-24 md:py-32 space-y-px bg-border border border-border">
+        <div className="container-x py-20 md:py-32 space-y-px bg-border border border-border">
           {PROGRAMS.map((p, i) => (
             <FadeUp key={p.name} delay={Math.min(i * 0.04, 0.12)}>
               <article
-                className={`grid lg:grid-cols-12 gap-10 lg:gap-16 p-8 md:p-12 lg:p-16 transition-colors ${
+                className={`grid lg:grid-cols-12 gap-8 lg:gap-16 p-6 sm:p-8 md:p-12 lg:p-16 transition-colors ${
                   p.highlight
                     ? "bg-foreground text-background"
                     : "bg-background text-foreground"
                 }`}
               >
-                <header className="lg:col-span-4 flex flex-col">
+                <header className="lg:col-span-4 flex flex-col min-w-0">
                   <span
                     className={`text-[10px] uppercase tracking-[0.32em] ${
                       p.highlight ? "text-accent" : "text-muted-foreground"
@@ -269,19 +269,19 @@ function ProgramsPage() {
                   >
                     {p.tag}
                   </span>
-                  <h2 className="mt-6 font-display text-5xl md:text-6xl uppercase tracking-[0.01em] leading-[0.95]">
+                  <h2 className="mt-5 font-display text-4xl sm:text-5xl md:text-6xl uppercase tracking-[0.01em] leading-[0.95] break-words">
                     {p.name}
                   </h2>
                   <p
-                    className={`mt-6 font-serif text-xl md:text-2xl ${
+                    className={`mt-5 font-serif text-lg sm:text-xl md:text-2xl ${
                       p.highlight ? "text-background/85" : "text-foreground/85"
                     }`}
                   >
                     {p.tagline}
                   </p>
-                  <div className="mt-10">
+                  <div className="mt-8">
                     <div
-                      className={`font-display text-5xl md:text-6xl tracking-tight ${
+                      className={`font-display text-4xl sm:text-5xl md:text-6xl tracking-tight ${
                         p.highlight ? "text-accent" : "text-foreground"
                       }`}
                     >
