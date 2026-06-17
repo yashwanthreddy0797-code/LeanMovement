@@ -255,16 +255,16 @@ function ProgramsPage() {
           {PROGRAMS.map((p, i) => (
             <FadeUp key={p.name} delay={Math.min(i * 0.04, 0.12)}>
               <article
-                className={`grid lg:grid-cols-12 gap-8 lg:gap-16 p-6 sm:p-8 md:p-12 lg:p-16 transition-colors ${
+                className={`grid lg:grid-cols-12 gap-8 lg:gap-16 p-6 sm:p-8 md:p-12 lg:p-16 transition-colors group ${
                   p.highlight
                     ? "bg-foreground text-background"
-                    : "bg-background text-foreground"
+                    : "bg-background text-foreground hover:bg-foreground hover:text-background"
                 }`}
               >
                 <header className="lg:col-span-4 flex flex-col min-w-0">
                   <span
                     className={`text-[10px] uppercase tracking-[0.32em] ${
-                      p.highlight ? "text-accent" : "text-muted-foreground"
+                      p.highlight ? "text-accent" : "text-muted-foreground group-hover:text-accent"
                     }`}
                   >
                     {p.tag}
@@ -274,7 +274,7 @@ function ProgramsPage() {
                   </h2>
                   <p
                     className={`mt-5 font-serif text-lg sm:text-xl md:text-2xl ${
-                      p.highlight ? "text-background/85" : "text-foreground/85"
+                      p.highlight ? "text-background/85" : "text-foreground/85 group-hover:text-background/85"
                     }`}
                   >
                     {p.tagline}
@@ -282,7 +282,7 @@ function ProgramsPage() {
                   <div className="mt-8">
                     <div
                       className={`font-display text-4xl sm:text-5xl md:text-6xl tracking-tight ${
-                        p.highlight ? "text-accent" : "text-foreground"
+                        p.highlight ? "text-accent" : "text-foreground group-hover:text-accent"
                       }`}
                     >
                       {p.price}
@@ -290,7 +290,7 @@ function ProgramsPage() {
                     {p.period && (
                       <div
                         className={`mt-2 text-[10px] uppercase tracking-[0.32em] ${
-                          p.highlight ? "text-background/60" : "text-muted-foreground"
+                          p.highlight ? "text-background/60" : "text-muted-foreground group-hover:text-background/60"
                         }`}
                       >
                         {p.period}
@@ -302,7 +302,7 @@ function ProgramsPage() {
                     className={`mt-10 inline-flex w-fit items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] transition-colors ${
                       p.highlight
                         ? "bg-accent text-background hover:bg-background hover:text-foreground"
-                        : "bg-foreground text-background hover:bg-accent"
+                        : "bg-foreground text-background hover:bg-accent group-hover:bg-accent"
                     }`}
                   >
                     {p.cta}
@@ -310,7 +310,7 @@ function ProgramsPage() {
                   {p.intro && (
                     <p
                       className={`mt-6 text-[10px] uppercase tracking-[0.28em] ${
-                        p.highlight ? "text-background/55" : "text-muted-foreground"
+                        p.highlight ? "text-background/55" : "text-muted-foreground group-hover:text-background/55"
                       }`}
                     >
                       {p.intro}
@@ -323,7 +323,7 @@ function ProgramsPage() {
                     <div key={s.title}>
                       <h3
                         className={`text-[10px] uppercase tracking-[0.32em] mb-5 ${
-                          p.highlight ? "text-accent" : "text-muted-foreground"
+                          p.highlight ? "text-accent" : "text-muted-foreground group-hover:text-accent"
                         }`}
                       >
                         {s.title}
@@ -335,7 +335,7 @@ function ProgramsPage() {
                               size={14}
                               className={`mt-1.5 shrink-0 ${p.highlight ? "text-accent" : "text-accent"}`}
                             />
-                            <span className={p.highlight ? "text-background/85" : "text-foreground/80"}>
+                            <span className={p.highlight ? "text-background/85" : "text-foreground/80 group-hover:text-background/85"}>
                               {it}
                             </span>
                           </li>
@@ -348,28 +348,28 @@ function ProgramsPage() {
                     <div className="sm:col-span-2">
                       <h3
                         className={`text-[10px] uppercase tracking-[0.32em] mb-5 ${
-                          p.highlight ? "text-accent" : "text-muted-foreground"
+                          p.highlight ? "text-accent" : "text-muted-foreground group-hover:text-accent"
                         }`}
                       >
                         Details
                       </h3>
                       <dl
                         className={`grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t ${
-                          p.highlight ? "border-background/15" : "border-border"
+                          p.highlight ? "border-background/15" : "border-border group-hover:border-background/15"
                         }`}
                       >
                         {p.meta.map((m) => (
                           <div key={m.label}>
                             <dt
                               className={`text-[10px] uppercase tracking-[0.28em] ${
-                                p.highlight ? "text-background/55" : "text-muted-foreground"
+                                p.highlight ? "text-background/55" : "text-muted-foreground group-hover:text-background/55"
                               }`}
                             >
                               {m.label}
                             </dt>
                             <dd
                               className={`mt-2 font-display text-xl ${
-                                p.highlight ? "text-background" : "text-foreground"
+                                p.highlight ? "text-background" : "text-foreground group-hover:text-background"
                               }`}
                             >
                               {m.value}
