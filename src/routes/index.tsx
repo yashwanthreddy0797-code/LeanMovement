@@ -98,7 +98,7 @@ function HomePage() {
 
       {/* ABOUT */}
       <section className="bg-background">
-        <div className="container-x py-16 md:py-24">
+        <div className="container-x py-14 md:py-20">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Philosophy</div>
             <h2 className="mt-5 font-display text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.01em] leading-[1.02] max-w-4xl">
@@ -106,7 +106,7 @@ function HomePage() {
             </h2>
           </FadeUp>
 
-          <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-stretch mt-8">
+          <div className="grid md:grid-cols-12 gap-8 md:gap-10 items-stretch mt-6">
             <FadeUp className="md:col-span-5">
               <div className="relative aspect-[4/5] w-full overflow-hidden bg-surface h-full">
                 <img
@@ -163,12 +163,12 @@ function HomePage() {
         <div className="container-x py-20 md:py-28">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />Principles</div>
-            <h2 className="mt-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] max-w-4xl leading-[1.02]">
+            <h2 className="mt-6 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] max-w-4xl leading-[1.02]">
               Seven non-negotiables that shape every programme.
             </h2>
           </FadeUp>
 
-          <div className="mt-20 md:mt-28 divide-y divide-border border-t border-border">
+          <div className="mt-14 md:mt-20 divide-y divide-border border-t border-border">
             {PRINCIPLES.map((p, i) => (
               <FadeUp key={p.n} delay={i * 0.04}>
                 <div className="grid md:grid-cols-12 gap-6 md:gap-12 py-10 md:py-12 items-baseline">
@@ -191,7 +191,7 @@ function HomePage() {
         <div className="container-x py-20 md:py-28">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />Programs</div>
-            <div className="mt-8 grid md:grid-cols-12 gap-10 items-end">
+            <div className="mt-6 grid md:grid-cols-12 gap-10 items-end">
               <h2 className="md:col-span-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
                 Five ways to begin.
               </h2>
@@ -202,7 +202,7 @@ function HomePage() {
             </div>
           </FadeUp>
 
-          <div className="mt-16 grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-border border border-border">
+          <div className="mt-12 grid sm:grid-cols-2 lg:grid-cols-5 gap-px bg-border border border-border">
             {PROGRAMS_PREVIEW.map((p, i) => (
               <FadeUp key={p.name} delay={i * 0.06}>
                 <Link
@@ -231,7 +231,7 @@ function HomePage() {
 
       {/* CINEMATIC BAND */}
       <section className="bg-background">
-        <div className="relative w-full h-[55vh] md:h-[75vh] overflow-hidden">
+        <div className="relative w-full h-[45vh] md:h-[60vh] overflow-hidden">
           <img
             src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2200&q=80"
             alt="The work is quiet — pure effort, no audience"
