@@ -14,6 +14,7 @@ import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortalRouteImport } from './routes/portal'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AboutRouteImport } from './routes/about'
@@ -60,6 +61,11 @@ const PortalRoute = PortalRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookRoute = BookRouteImport.update({
@@ -178,6 +184,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
   '/book': typeof BookRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
@@ -207,6 +214,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
   '/book': typeof BookRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
@@ -236,6 +244,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
   '/book': typeof BookRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
@@ -267,6 +276,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/book'
+    | '/checkout'
     | '/contact'
     | '/portal'
     | '/pricing'
@@ -296,6 +306,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/book'
+    | '/checkout'
     | '/contact'
     | '/pricing'
     | '/programs'
@@ -324,6 +335,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/book'
+    | '/checkout'
     | '/contact'
     | '/portal'
     | '/pricing'
@@ -354,6 +366,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ApplyRoute: typeof ApplyRoute
   BookRoute: typeof BookRoute
+  CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   PortalRoute: typeof PortalRouteWithChildren
   PricingRoute: typeof PricingRoute
@@ -398,6 +411,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/book': {
@@ -603,6 +623,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ApplyRoute: ApplyRoute,
   BookRoute: BookRoute,
+  CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   PortalRoute: PortalRouteWithChildren,
   PricingRoute: PricingRoute,

@@ -275,12 +275,22 @@ function ProgramsPage() {
                       </div>
                     )}
                   </div>
-                  <Link
-                    to={p.ctaTo}
-                    className="mt-10 inline-flex w-fit items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] transition-colors bg-foreground text-background hover:bg-accent group-hover:bg-accent"
-                  >
-                    {p.cta}
-                  </Link>
+                  {p.cta === "Buy Now" ? (
+                    <Link
+                      to="/checkout"
+                      search={{ plan: p.name }}
+                      className="mt-10 inline-flex w-fit items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] transition-colors bg-foreground text-background hover:bg-accent group-hover:bg-accent"
+                    >
+                      {p.cta}
+                    </Link>
+                  ) : (
+                    <Link
+                      to={p.ctaTo}
+                      className="mt-10 inline-flex w-fit items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] transition-colors bg-foreground text-background hover:bg-accent group-hover:bg-accent"
+                    >
+                      {p.cta}
+                    </Link>
+                  )}
                   {p.intro && (
                     <p className="mt-6 text-[10px] uppercase tracking-[0.28em] text-muted-foreground group-hover:text-background/55">
                       {p.intro}
