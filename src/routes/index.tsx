@@ -31,7 +31,7 @@ const PROGRAMS_PREVIEW = [
   { tag: "Consultation", name: "Consultation", price: "₹4,999", desc: "30-min call. Assessment, roadmap and Q&A.", to: "/programs" },
   { tag: "Self-Guided", name: "Fat Loss", price: "₹5,999", desc: "12-week program. Lifetime access.", to: "/programs" },
   { tag: "Self-Guided", name: "Muscle Gain", price: "₹5,999", desc: "Hypertrophy split for size and strength.", to: "/programs" },
-  { tag: "Best Seller", name: "Hybrid", price: "₹6,999", desc: "Strength. Engine. Longevity.", to: "/programs", featured: true },
+  { tag: "Best Seller", name: "Hybrid", price: "₹6,999", desc: "Strength. Engine. Longevity.", to: "/programs" },
   { tag: "Mentorship", name: "LEAN", price: "₹29,999", desc: "90-day 1-on-1 mentorship. Application only.", to: "/apply" },
 ];
 
