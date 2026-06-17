@@ -13,184 +13,231 @@ import {
 export const Route = createFileRoute("/programs")({
   head: () => ({
     meta: [
-      { title: "Programs — LEANMOVEMENT Coaching" },
-      { name: "description", content: "Consultation, 1-on-1 Primal coaching, and structured workout plans for every level — from beginner to advanced powerlifting." },
+      { title: "Programs — LEANMOVEMENT" },
+      { name: "description", content: "Consultation, self-guided programs and the LEAN 90-day mentorship — Fat Loss, Muscle Gain, Hybrid and more." },
       { property: "og:title", content: "Programs — LEANMOVEMENT" },
-      { property: "og:description", content: "Consultation, coaching, and workout plans built for serious training." },
+      { property: "og:description", content: "Consultation, self-guided programs and the LEAN 90-day mentorship." },
     ],
   }),
   component: ProgramsPage,
 });
 
-type Coaching = {
+type Program = {
   name: string;
   tag: string;
   price: string;
-  period: string;
-  highlight?: boolean;
-  blurb: string;
-  features: string[];
+  period?: string;
+  tagline: string;
+  intro?: string;
+  sections: { title: string; items: string[] }[];
+  meta?: { label: string; value: string }[];
   cta: string;
   ctaTo: string;
   note?: string;
+  featured?: boolean;
+  highlight?: boolean;
 };
 
-const COACHING: Coaching[] = [
+const PROGRAMS: Program[] = [
   {
     name: "Consultation",
-    tag: "30 min call",
+    tag: "30 Minute Call",
     price: "₹4,999",
     period: "one-time",
-    blurb: "An in-depth assessment of your current fitness level and a clear roadmap to your goals.",
-    features: [
-      "30-minute 1-on-1 consultation call",
-      "Assessment of your current fitness level",
-      "Personalised roadmap to your goals",
-      "Answers on fat loss, muscle gain, performance & wellness",
+    tagline: "In-depth assessment & roadmap creation.",
+    intro: "Fee deducted upon enrolling into LEAN.",
+    sections: [
+      {
+        title: "What you get",
+        items: [
+          "In-depth fitness assessment",
+          "Lifestyle review",
+          "Nutrition review",
+          "Roadmap creation",
+          "Supplement guidance",
+          "Q&A",
+        ],
+      },
+      {
+        title: "Topics include",
+        items: [
+          "Fat Loss",
+          "Muscle Gain",
+          "Hybrid Training",
+          "Sports Performance",
+          "Longevity",
+          "Recovery",
+          "Health",
+        ],
+      },
     ],
-    cta: "Book a meeting",
+    cta: "Book Consultation",
     ctaTo: "/contact",
-    note: "Consultation fee is adjusted if you opt for the Primal plan.",
   },
   {
-    name: "Primal",
-    tag: "BEST PROGRAM EVER!",
-    price: "₹15,999",
-    period: "/ monthly",
+    name: "Fat Loss",
+    tag: "Self-Guided",
+    price: "₹5,999",
+    period: "one-time payment",
+    tagline: "Lose fat. Build momentum.",
+    sections: [
+      {
+        title: "What's included",
+        items: [
+          "12 week program",
+          "Lifetime access",
+          "Progress spreadsheet",
+          "Mobility video",
+          "Exercise library",
+          "Habit scorecard",
+          "Restaurant guide",
+          "Travel guide",
+          "Fat loss nutrition guide",
+        ],
+      },
+      {
+        title: "Training style",
+        items: [
+          "Full body training",
+          "Kettlebell circuits",
+          "Zone 2",
+          "Intervals",
+          "Incline walks",
+          "Conditioning",
+          "Loaded carries",
+        ],
+      },
+    ],
+    meta: [
+      { label: "Duration", value: "12 weeks" },
+      { label: "Access", value: "Lifetime" },
+      { label: "Training Days", value: "3–5" },
+      { label: "Session", value: "45–60 min" },
+    ],
+    cta: "Buy Now",
+    ctaTo: "/contact",
+  },
+  {
+    name: "Muscle Gain",
+    tag: "Self-Guided",
+    price: "₹5,999",
+    period: "one-time payment",
+    tagline: "Build size & strength.",
+    sections: [
+      {
+        title: "What's included",
+        items: [
+          "12 week program",
+          "Lifetime access",
+          "Spreadsheet",
+          "Mobility",
+          "Exercise videos",
+          "Nutrition guide",
+          "Progressive overload framework",
+          "Warm-up protocols",
+        ],
+      },
+      {
+        title: "Training style",
+        items: [
+          "Upper Lower",
+          "Compound movements",
+          "Hypertrophy",
+          "Accessory work",
+          "Optional cardio",
+        ],
+      },
+    ],
+    meta: [
+      { label: "Duration", value: "12 weeks" },
+      { label: "Access", value: "Lifetime" },
+      { label: "Training Days", value: "3–5" },
+      { label: "Session", value: "60–75 min" },
+    ],
+    cta: "Buy Now",
+    ctaTo: "/contact",
+  },
+  {
+    name: "Hybrid",
+    tag: "Best Seller",
+    price: "₹6,999",
+    period: "one-time payment",
+    tagline: "Strength. Engine. Longevity.",
+    featured: true,
     highlight: true,
-    blurb: "PEAK HUMAN PERFORMANCE.",
-    features: [
-      "1 ON 1 COACHING WITH THE FOUNDERS",
-      "24x7 AVAILABILITY THROUGH CALL/TEXT",
-      "ALL FEATURES OF PRO PROGRAM",
-      "ACCESS TO ALL WORKOUT PROGRAMS AND VIDEOS",
+    sections: [
+      {
+        title: "What's included",
+        items: [
+          "12 week program",
+          "Lifetime access",
+          "Spreadsheet",
+          "Mobility library",
+          "Running guide",
+          "Kettlebell sessions",
+          "Recovery guide",
+          "Nutrition framework",
+          "Warm-ups",
+          "Exercise library",
+        ],
+      },
+      {
+        title: "Training styles",
+        items: [
+          "3 Days: Full Body / Full Body / Conditioning",
+          "4 Days: Upper / Lower / Conditioning / Full Body",
+          "5 Days: Upper Strength / Lower Strength / Zone 2 / Upper Hypertrophy / Lower Hypertrophy",
+        ],
+      },
     ],
-    cta: "Buy now",
+    meta: [
+      { label: "Duration", value: "12 weeks" },
+      { label: "Access", value: "Lifetime" },
+      { label: "Training Days", value: "3–5" },
+      { label: "Session", value: "45–75 min" },
+    ],
+    cta: "Buy Now",
     ctaTo: "/contact",
   },
   {
-    name: "Primal — 3 Month",
-    tag: "Extended commitment",
-    price: "₹40,000",
-    period: "/ 3 months",
-    blurb: "Exceptional value for an extended commitment to your fitness journey.",
-    features: [
-      "1-on-1 support & consultation",
-      "24×7 availability via call / text",
-      "All features of the Pro program",
-      "Access to all workout programs & videos",
+    name: "LEAN",
+    tag: "90 Day Mentorship · Application Only",
+    price: "₹29,999",
+    period: "limited spots",
+    tagline: "Peak human performance.",
+    featured: true,
+    sections: [
+      {
+        title: "What you get",
+        items: [
+          "Everything in Fat Loss",
+          "Everything in Muscle Gain",
+          "Everything in Hybrid",
+          "Lifetime access to all programs",
+          "Weekly 1-on-1 coaching call",
+          "Technique reviews",
+          "Priority support",
+          "Travel nutrition guide",
+          "Restaurant guide",
+          "Progress dashboard",
+          "Supplement guidance",
+          "Personalized adjustments",
+          "90 days mentorship",
+        ],
+      },
     ],
-    cta: "Buy now",
-    ctaTo: "/contact",
-  },
-];
-
-type WorkoutPlan = {
-  name: string;
-  tag: string;
-  price: string;
-  blurb: string;
-  included: string[];
-  meta: { label: string; value: string }[];
-  featured?: boolean;
-};
-
-const PLANS: WorkoutPlan[] = [
-  {
-    name: "Beginner",
-    tag: "ESSENTIALS",
-    price: "₹2,999",
-    blurb: "Build your base with a structured introduction to training.",
-    included: ["PDF program", "Spreadsheet for tracking", "Mobility routine"],
-    meta: [
-      { label: "Duration", value: "12 weeks" },
-      { label: "Time", value: "45 min" },
-      { label: "Goal", value: "General physical preparedness" },
-      { label: "Experience", value: "Beginner" },
-      { label: "Days / week", value: "2 / 3 / 4 / 5" },
-    ],
-  },
-  {
-    name: "Push Pull Legs",
-    tag: "HYBRID SYSTEM",
-    price: "₹2,999",
-    blurb: "A proven split for hypertrophy and strength.",
-    included: [
-      "PDF program",
-      "Spreadsheet for tracking",
-      "Mobility routine video",
-      "SBD technique videos",
-    ],
-    meta: [
-      { label: "Duration", value: "12 weeks" },
-      { label: "Time", value: "45–60 min" },
-      { label: "Goal", value: "Hypertrophy & strength" },
-      { label: "Experience", value: "Intermediate to advanced" },
-      { label: "Days / week", value: "3 / 4 / 5 / 6" },
-    ],
-  },
-  {
-    name: "Upper Lower",
-    tag: "SIZE & STRENGTH",
-    price: "₹2,999",
-    blurb: "Balanced upper/lower split for serious size and strength.",
-    included: ["PDF program", "Spreadsheet for tracking", "Mobility routine video"],
-    meta: [
-      { label: "Duration", value: "8 weeks" },
-      { label: "Time", value: "60 min" },
-      { label: "Goal", value: "Hypertrophy & strength" },
-      { label: "Experience", value: "Intermediate to advanced" },
-      { label: "Days / week", value: "2 / 4 / 6" },
-    ],
-  },
-  {
-    name: "Powerbuilding",
-    tag: "PEAK STRENGTH & CONDITIONING",
-    price: "₹3,999",
-    blurb: "Strength, size and conditioning in one disciplined program.",
-    included: [
-      "PDF program",
-      "Spreadsheet for tracking",
-      "SBD technique videos",
-      "Mobility routine videos",
-    ],
-    meta: [
-      { label: "Duration", value: "12 weeks" },
-      { label: "Time", value: "90 min" },
-      { label: "Goal", value: "Strength & conditioning" },
-      { label: "Experience", value: "Advanced" },
-      { label: "Days / week", value: "4 / 5" },
-    ],
-  },
-  {
-    name: "Powerlifting 1.0",
-    tag: "ALL ABOUT STRENGTH",
-    price: "₹4,999",
-    blurb: "Max poundage on squat, bench and deadlift in 12 weeks.",
-    included: [
-      "PDF program",
-      "Spreadsheet for tracking",
-      "Monthly follow-up",
-      "Customisation: Squat / Bench / Deadlift",
-      "SBD technique videos (in detail)",
-      "Mobility routine video",
-    ],
-    meta: [
-      { label: "Duration", value: "12 weeks" },
-      { label: "Time", value: "100–120 min" },
-      { label: "Goal", value: "Max poundage in 12 weeks" },
-      { label: "Experience", value: "Advanced" },
-      { label: "Days / week", value: "4 / 5" },
-    ],
+    cta: "Apply For Lean",
+    ctaTo: "/apply",
   },
 ];
 
 const FAQ = [
-  { q: "How is the coaching delivered?", a: "Programming, tracking and daily communication run through a private channel. Video calls happen on Zoom based on your tier." },
-  { q: "Do I need a gym membership?", a: "Most plans assume gym access, but home-based versions are available on request. We'll figure out the right setup on your consultation call." },
-  { q: "What if I travel for work?", a: "Travel weeks are planned in. We adjust training and nutrition around hotel gyms, restaurants and time zones." },
-  { q: "How quickly will I see results?", a: "Body composition shifts visibly in 6–8 weeks for most clients. Strength and performance markers improve from week one if the work is consistent." },
-  { q: "Can I switch plans later?", a: "Yes — you can upgrade or downgrade at the start of any billing cycle. No lock-ins beyond your current month." },
+  { q: "Are the programs beginner friendly?", a: "Yes. Each plan scales — Fat Loss and Hybrid both have entry tiers for 3 days a week with full progression as you grow." },
+  { q: "Do I need supplements?", a: "No. Supplement guidance is included for clients who want it, but every plan is designed to work without them." },
+  { q: "Can vegetarians join?", a: "Absolutely. Nutrition guides include vegetarian and Indian-specific frameworks." },
+  { q: "Can I train at home?", a: "Yes — home-based versions of Fat Loss and Hybrid are available on request." },
+  { q: "Can I travel?", a: "Travel weeks are planned in. Restaurant and travel guides are included with every program." },
+  { q: "How long do I have access?", a: "Lifetime access. LEAN clients get every current and future program forever." },
 ];
 
 function ProgramsPage() {
@@ -198,172 +245,165 @@ function ProgramsPage() {
     <>
       <PageHero
         eyebrow="The Programs"
-        title="Coaching & Workout Plans."
-        subtitle="Start with a consultation, commit to 1-on-1 coaching, or follow a structured program built for your level."
+        title="Five paths. One standard."
+        subtitle="Start with a consultation, follow a self-guided system, or apply for LEAN — the 90-day 1-on-1 mentorship."
         compact
       />
 
-      {/* CONSULTATION + PRIMAL */}
-      <section className="bg-white text-black">
-        <div className="container-x py-20 md:py-28">
-          <FadeUp className="mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
-              <span className="w-8 h-px bg-accent" />Coaching
-            </span>
-            <h2 className="font-display text-5xl mt-6">Direct Access.</h2>
-          </FadeUp>
-
-          <div className="grid md:grid-cols-3 gap-5">
-            {COACHING.map((p, i) => {
-              const dark = p.highlight;
-              return (
-                <FadeUp key={p.name} delay={i * 0.08}>
-                  <div
-                    className={`flex flex-col h-full p-8 border transition-all hover:-translate-y-1 duration-500 ${
-                      dark
-                        ? "bg-black text-white border-black shadow-[0_20px_60px_-20px_rgba(0,0,0,0.4)]"
-                        : "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.08)]"
+      <section className="bg-background">
+        <div className="container-x py-24 md:py-32 space-y-px bg-border border border-border">
+          {PROGRAMS.map((p, i) => (
+            <FadeUp key={p.name} delay={Math.min(i * 0.04, 0.12)}>
+              <article
+                className={`grid lg:grid-cols-12 gap-10 lg:gap-16 p-8 md:p-12 lg:p-16 transition-colors ${
+                  p.highlight
+                    ? "bg-foreground text-background"
+                    : "bg-background text-foreground"
+                }`}
+              >
+                <header className="lg:col-span-4 flex flex-col">
+                  <span
+                    className={`text-[10px] uppercase tracking-[0.32em] ${
+                      p.highlight ? "text-accent" : "text-muted-foreground"
                     }`}
                   >
-                    <span className={`text-[11px] uppercase tracking-[0.25em] ${dark ? "text-white/70" : "text-black/55"}`}>
-                      {p.tag}
-                    </span>
-                    <h3 className="font-display text-4xl mt-2">{p.name}</h3>
-                    <div className={`my-6 h-px ${dark ? "bg-white/20" : "bg-black/10"}`} />
-                    <p className={`text-sm ${dark ? "text-white/80" : "text-black/75"}`}>{p.blurb}</p>
-                    <ul className="space-y-2 text-sm mt-6 flex-1">
-                      {p.features.map((f) => (
-                        <li key={f} className="flex gap-2">
-                          <Check size={14} className="text-accent mt-1 shrink-0" />
-                          <span>{f}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="mt-8">
-                      <div className="font-display text-4xl text-accent">{p.price}</div>
-                      <div className={`text-[11px] uppercase tracking-[0.25em] mt-1 ${dark ? "text-white/70" : "text-black/55"}`}>
-                        {p.period}
-                      </div>
-                    </div>
-                    <Link
-                      to={p.ctaTo}
-                      className={`mt-6 inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
-                        dark
-                          ? "bg-accent text-white hover:bg-white hover:text-black"
-                          : "bg-accent text-white hover:bg-black"
+                    {p.tag}
+                  </span>
+                  <h2 className="mt-6 font-display text-5xl md:text-6xl uppercase tracking-[0.01em] leading-[0.95]">
+                    {p.name}
+                  </h2>
+                  <p
+                    className={`mt-6 font-serif italic text-xl md:text-2xl ${
+                      p.highlight ? "text-background/85" : "text-foreground/85"
+                    }`}
+                  >
+                    {p.tagline}
+                  </p>
+                  <div className="mt-10">
+                    <div
+                      className={`font-display text-5xl md:text-6xl tracking-tight ${
+                        p.highlight ? "text-accent" : "text-foreground"
                       }`}
                     >
-                      {p.cta}
-                    </Link>
-                    {p.note && (
-                      <p className={`mt-4 text-[11px] uppercase tracking-[0.18em] ${dark ? "text-white/55" : "text-black/50"}`}>
-                        {p.note}
-                      </p>
+                      {p.price}
+                    </div>
+                    {p.period && (
+                      <div
+                        className={`mt-2 text-[10px] uppercase tracking-[0.32em] ${
+                          p.highlight ? "text-background/60" : "text-muted-foreground"
+                        }`}
+                      >
+                        {p.period}
+                      </div>
                     )}
                   </div>
-                </FadeUp>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* WORKOUT PLANS */}
-      <section className="bg-white text-black border-t border-black/10">
-        <div className="container-x py-24">
-          <FadeUp className="mb-12 flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
-                <span className="w-8 h-px bg-accent" />Workout Plans
-              </span>
-              <h2 className="font-display text-5xl mt-6">Train With Structure.</h2>
-            </div>
-            <p className="text-sm text-black/65 max-w-sm">
-              Self-guided programs for every level. PDF + spreadsheet delivery, technique videos where it matters.
-            </p>
-          </FadeUp>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-            {PLANS.map((p, i) => {
-              const dark = p.featured;
-              return (
-                <FadeUp key={p.name} delay={i * 0.06}>
-                  <div
-                    className={`flex flex-col h-full p-8 border transition-all hover:-translate-y-1 duration-500 ${
-                      dark
-                        ? "bg-black text-white border-black shadow-[0_20px_60px_-20px_rgba(0,0,0,0.4)]"
-                        : "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.08)]"
+                  <Link
+                    to={p.ctaTo}
+                    className={`mt-10 inline-flex w-fit items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] transition-colors ${
+                      p.highlight
+                        ? "bg-accent text-background hover:bg-background hover:text-foreground"
+                        : "bg-foreground text-background hover:bg-accent"
                     }`}
                   >
-                    <span className={`text-[11px] uppercase tracking-[0.25em] ${dark ? "text-white/70" : "text-black/55"}`}>
-                      {p.tag}
-                    </span>
-                    <h3 className="font-display text-3xl mt-2">{p.name}</h3>
-                    <div className={`my-5 h-px ${dark ? "bg-white/20" : "bg-black/10"}`} />
-                    <p className={`text-sm ${dark ? "text-white/80" : "text-black/75"}`}>{p.blurb}</p>
+                    {p.cta}
+                  </Link>
+                  {p.intro && (
+                    <p
+                      className={`mt-6 text-[10px] uppercase tracking-[0.28em] ${
+                        p.highlight ? "text-background/55" : "text-muted-foreground"
+                      }`}
+                    >
+                      {p.intro}
+                    </p>
+                  )}
+                </header>
 
-                    <div className="mt-6">
-                      <div className={`text-[11px] uppercase tracking-[0.25em] mb-3 ${dark ? "text-white/55" : "text-black/55"}`}>
-                        What's included
-                      </div>
-                      <ul className="space-y-2 text-sm">
-                        {p.included.map((f) => (
-                          <li key={f} className="flex gap-2">
-                            <Check size={14} className="text-accent mt-1 shrink-0" />
-                            <span>{f}</span>
+                <div className="lg:col-span-8 grid sm:grid-cols-2 gap-10 lg:gap-12">
+                  {p.sections.map((s) => (
+                    <div key={s.title}>
+                      <h3
+                        className={`text-[10px] uppercase tracking-[0.32em] mb-5 ${
+                          p.highlight ? "text-accent" : "text-muted-foreground"
+                        }`}
+                      >
+                        {s.title}
+                      </h3>
+                      <ul className="space-y-3 text-[15px] leading-relaxed">
+                        {s.items.map((it) => (
+                          <li key={it} className="flex gap-3">
+                            <Check
+                              size={14}
+                              className={`mt-1.5 shrink-0 ${p.highlight ? "text-accent" : "text-accent"}`}
+                            />
+                            <span className={p.highlight ? "text-background/85" : "text-foreground/80"}>
+                              {it}
+                            </span>
                           </li>
                         ))}
                       </ul>
                     </div>
+                  ))}
 
-                    <dl className={`mt-6 grid grid-cols-2 gap-x-4 gap-y-3 text-sm border-t pt-6 ${dark ? "border-white/15" : "border-black/10"}`}>
-                      {p.meta.map((m) => (
-                        <div key={m.label}>
-                          <dt className={`text-[10px] uppercase tracking-[0.22em] ${dark ? "text-white/55" : "text-black/50"}`}>
-                            {m.label}
-                          </dt>
-                          <dd className={dark ? "text-white" : "text-black/85"}>{m.value}</dd>
-                        </div>
-                      ))}
-                    </dl>
-
-                    <div className="mt-8 flex-1" />
-                    <div className="font-display text-3xl text-accent">{p.price}</div>
-                    <Link
-                      to="/contact"
-                      className={`mt-5 inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
-                        dark
-                          ? "bg-accent text-white hover:bg-white hover:text-black"
-                          : "bg-accent text-white hover:bg-black"
-                      }`}
-                    >
-                      Buy now
-                    </Link>
-                  </div>
-                </FadeUp>
-              );
-            })}
-          </div>
+                  {p.meta && (
+                    <div className="sm:col-span-2">
+                      <h3
+                        className={`text-[10px] uppercase tracking-[0.32em] mb-5 ${
+                          p.highlight ? "text-accent" : "text-muted-foreground"
+                        }`}
+                      >
+                        Details
+                      </h3>
+                      <dl
+                        className={`grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6 border-t ${
+                          p.highlight ? "border-background/15" : "border-border"
+                        }`}
+                      >
+                        {p.meta.map((m) => (
+                          <div key={m.label}>
+                            <dt
+                              className={`text-[10px] uppercase tracking-[0.28em] ${
+                                p.highlight ? "text-background/55" : "text-muted-foreground"
+                              }`}
+                            >
+                              {m.label}
+                            </dt>
+                            <dd
+                              className={`mt-2 font-display text-xl ${
+                                p.highlight ? "text-background" : "text-foreground"
+                              }`}
+                            >
+                              {m.value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    </div>
+                  )}
+                </div>
+              </article>
+            </FadeUp>
+          ))}
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="bg-white text-black border-t border-black/10">
-        <div className="container-x py-24">
-          <FadeUp className="max-w-2xl mb-12">
-            <span className="inline-flex items-center gap-3 text-[11px] uppercase tracking-[0.25em] text-black/60">
-              <span className="w-8 h-px bg-accent" />FAQ
-            </span>
-            <h2 className="font-display text-5xl mt-6">Common Questions.</h2>
+      <section className="bg-surface border-t border-border">
+        <div className="container-x py-24 md:py-32">
+          <FadeUp className="max-w-2xl mb-16">
+            <div className="eyebrow"><span className="w-6 h-px bg-accent" />FAQ</div>
+            <h2 className="mt-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
+              Common questions.
+            </h2>
           </FadeUp>
           <FadeUp delay={0.1}>
             <Accordion type="single" collapsible className="max-w-3xl">
               {FAQ.map((f, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-black/10">
-                  <AccordionTrigger className="font-display text-2xl md:text-3xl text-left text-black hover:text-accent hover:no-underline py-6">
+                <AccordionItem key={i} value={`item-${i}`} className="border-border">
+                  <AccordionTrigger className="font-display text-2xl md:text-3xl text-left hover:text-accent hover:no-underline py-6 uppercase tracking-[0.01em]">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="text-black/70 text-base pb-6">{f.a}</AccordionContent>
+                  <AccordionContent className="text-foreground/70 text-base pb-6 leading-relaxed">
+                    {f.a}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -372,10 +412,12 @@ function ProgramsPage() {
       </section>
 
       <CTABanner
-        eyebrow="Not Sure Yet?"
-        title="Not sure which program?"
-        highlight="program"
-        subtitle="Book a consultation. We'll match you to the right path."
+        eyebrow="Apply"
+        title="Ready for LEAN?"
+        highlight="LEAN"
+        subtitle="LEAN is 90 days of structured, application-only mentorship. Limited spots."
+        ctaText="Apply For Lean"
+        ctaTo="/apply"
       />
     </>
   );

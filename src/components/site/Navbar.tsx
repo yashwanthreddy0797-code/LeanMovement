@@ -6,14 +6,13 @@ const links = [
   { to: "/", label: "Home" },
   { to: "/about", label: "About" },
   { to: "/programs", label: "Programs" },
-  { to: "/blog", label: "Blog" },
-  { to: "/contact", label: "Contact" },
+  { to: "/results", label: "Results" },
+  { to: "/apply", label: "Apply" },
 ] as const;
 
 function Wordmark({ className = "" }: { className?: string }) {
   return (
     <span className={`flex items-center gap-2.5 ${className}`}>
-      {/* LM monogram — thin geometric */}
       <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
         <path d="M2 2v18h6" stroke="currentColor" strokeWidth="1" />
         <path d="M12 20V2l4 9 4-9v18" stroke="currentColor" strokeWidth="1" />
@@ -67,6 +66,12 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-3">
+            <Link
+              to="/apply"
+              className="hidden lg:inline-flex items-center px-5 py-2.5 text-[10px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
+            >
+              Apply For Lean
+            </Link>
             <button
               className="lg:hidden text-foreground p-1.5"
               onClick={() => setOpen(!open)}
@@ -106,11 +111,11 @@ export function Navbar() {
           </nav>
           <div className="grid gap-3 pt-6">
             <Link
-              to="/contact"
+              to="/apply"
               onClick={() => setOpen(false)}
               className="inline-flex items-center justify-center px-6 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background"
             >
-              Get In Touch
+              Apply For Lean
             </Link>
           </div>
         </div>
