@@ -99,13 +99,13 @@ function HomePage() {
       {/* ABOUT */}
       <section className="bg-background border-t border-border">
         <div className="container-x py-16 md:py-24">
-          <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
-            <FadeUp className="md:col-span-5">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-stretch">
+            <FadeUp className="md:col-span-5 flex flex-col">
               <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Philosophy</div>
               <h2 className="mt-5 font-display text-3xl md:text-4xl lg:text-5xl uppercase tracking-[0.01em] leading-[1.02]">
                 Fitness should create freedom — not dependency.
               </h2>
-              <div className="mt-8 relative aspect-[4/5] w-full overflow-hidden bg-surface">
+              <div className="mt-8 relative aspect-[4/5] w-full overflow-hidden bg-surface flex-1">
                 <img
                   src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1400&q=80"
                   alt="Disciplined lift under controlled tension"
@@ -114,17 +114,21 @@ function HomePage() {
                 />
               </div>
             </FadeUp>
-            <FadeUp delay={0.15} className="md:col-span-7 space-y-6 text-foreground/75 text-base md:text-lg leading-relaxed pt-2 md:pt-16">
-              <p>
-                LEANMOVEMENT was built around a simple belief. The work you do for your body
-                should give back to every other corner of your life — your focus, your discipline,
-                your standards.
-              </p>
-              <p>No gimmicks. No detoxes. No unnecessary restrictions.</p>
-              <p>
-                Only systems that fit into real life. Built for busy professionals, entrepreneurs,
-                athletes — people who want structure, and people who want longevity.
-              </p>
+            <FadeUp delay={0.15} className="md:col-span-7 flex flex-col justify-center">
+              <div className="space-y-10 md:space-y-12">
+                <p className="text-foreground/85 text-xl md:text-2xl lg:text-[1.65rem] leading-[1.5]">
+                  LEANMOVEMENT was built around a simple belief. The work you do for your body
+                  should give back to every other corner of your life — your focus, your discipline,
+                  your standards.
+                </p>
+                <p className="text-foreground/85 text-xl md:text-2xl lg:text-[1.65rem] leading-[1.5]">
+                  No gimmicks. No detoxes. No unnecessary restrictions.
+                </p>
+                <p className="text-foreground/85 text-xl md:text-2xl lg:text-[1.65rem] leading-[1.5]">
+                  Only systems that fit into real life. Built for busy professionals, entrepreneurs,
+                  athletes — people who want structure, and people who want longevity.
+                </p>
+              </div>
             </FadeUp>
           </div>
         </div>
