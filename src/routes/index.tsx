@@ -160,7 +160,7 @@ function HomePage() {
 
       {/* PRINCIPLES */}
       <section className="bg-surface">
-        <div className="container-x py-32 md:py-48">
+        <div className="container-x py-20 md:py-28">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />Principles</div>
             <h2 className="mt-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] max-w-4xl leading-[1.02]">
@@ -188,7 +188,7 @@ function HomePage() {
 
       {/* PROGRAMS PREVIEW */}
       <section className="bg-background">
-        <div className="container-x py-32 md:py-48">
+        <div className="container-x py-20 md:py-28">
           <FadeUp>
             <div className="eyebrow"><span className="w-6 h-px bg-accent" />Programs</div>
             <div className="mt-8 grid md:grid-cols-12 gap-10 items-end">
@@ -253,7 +253,7 @@ function HomePage() {
 
       {/* CLOSING CTA */}
       <section className="bg-surface">
-        <div className="container-x py-32 md:py-44 text-center">
+        <div className="container-x py-20 md:py-28 text-center">
           <FadeUp>
             <div className="eyebrow justify-center"><span className="w-6 h-px bg-accent" />Apply</div>
             <h2 className="mt-8 font-display text-4xl md:text-6xl lg:text-7xl uppercase tracking-[0.01em] max-w-4xl mx-auto leading-[1.02]">
