@@ -8,6 +8,7 @@ import {
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
 import { PlanCard, CORE_PLANS } from "@/components/site/PlanCard";
+import heroMaleTrainer from "@/assets/hero-male-trainer.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -28,8 +29,7 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const HERO_IMG =
-  "https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=2000&q=90";
+const HERO_IMG = heroMaleTrainer.url;
 
 const HERO_POINTS = [
   "Custom Training",
