@@ -222,6 +222,28 @@ function HomePage() {
         </div>
       </section>
 
+      {/* CINEMATIC BAND */}
+      <section className="bg-background">
+        <div className="relative w-full h-[55vh] md:h-[75vh] overflow-hidden">
+          <img
+            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2200&q=80"
+            alt="The work is quiet — pure effort, no audience"
+            loading="lazy"
+            className="absolute inset-0 w-full h-full object-cover grayscale contrast-[1.05]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+          <div className="absolute inset-0 flex items-end">
+            <div className="container-x pb-12 md:pb-20">
+              <FadeUp>
+                <p className="font-serif text-2xl md:text-4xl text-foreground/90 max-w-2xl leading-snug">
+                  The body you build is the discipline you keep.
+                </p>
+              </FadeUp>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* CLOSING CTA */}
       <section className="bg-surface border-t border-border">
         <div className="container-x py-32 md:py-44 text-center">
