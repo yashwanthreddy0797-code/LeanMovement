@@ -51,11 +51,11 @@ function HomePage() {
               </FadeUp>
               <FadeUp delay={0.1}>
                 <h1 className="mt-4 sm:mt-6 font-display uppercase tracking-[0.02em] text-foreground text-[2.5rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] break-words">
-                  LEAN<span className="font-normal">MOVEMENT</span>
+                  LEAN<span className="font-normal text-accent">MOVEMENT</span>
                 </h1>
               </FadeUp>
               <FadeUp delay={0.2}>
-                <p className="mt-4 sm:mt-5 max-w-2xl font-serif text-xl sm:text-2xl md:text-3xl text-foreground/85 leading-snug">
+                <p className="mt-4 sm:mt-5 max-w-2xl font-serif text-xl sm:text-2xl md:text-3xl text-accent leading-snug">
                   Become the strongest version of yourself.
                 </p>
               </FadeUp>
@@ -145,7 +145,7 @@ function HomePage() {
             <div className="grid md:grid-cols-12 gap-16 items-end">
               <div className="md:col-span-8">
                 <div className="eyebrow"><span className="w-6 h-px bg-accent" />Mantra</div>
-                <p className="mt-10 font-serif text-4xl md:text-5xl lg:text-6xl leading-snug text-foreground">
+                <p className="mt-10 font-serif text-4xl md:text-5xl lg:text-6xl leading-snug text-accent">
                   Pure work in solitude.
                 </p>
               </div>
@@ -173,7 +173,7 @@ function HomePage() {
             {PRINCIPLES.map((p, i) => (
               <FadeUp key={p.n} delay={i * 0.04}>
                 <div className="grid md:grid-cols-12 gap-6 md:gap-12 py-10 md:py-12 items-baseline">
-                  <div className="md:col-span-1 font-mono text-xs text-muted-foreground tracking-widest">{p.n}</div>
+                  <div className="md:col-span-1 font-mono text-xs text-accent tracking-widest">{p.n}</div>
                   <h3 className="md:col-span-5 font-display text-2xl md:text-4xl uppercase tracking-[0.01em]">
                     {p.t}
                   </h3>
@@ -215,7 +215,7 @@ function HomePage() {
                   </div>
                   <h3 className="mt-5 font-display text-3xl uppercase tracking-[0.01em]">{p.name}</h3>
                   <p className="mt-4 text-sm flex-1 text-foreground/70 group-hover:text-background/75">{p.desc}</p>
-                  <div className="mt-8 font-display text-2xl text-foreground group-hover:text-accent">{p.price}</div>
+                  <div className="mt-8 font-display text-2xl text-accent group-hover:text-accent">{p.price}</div>
                   <span className="mt-4 text-[10px] uppercase tracking-[0.32em] inline-flex items-center gap-2 opacity-70 group-hover:opacity-100">
                     View <span aria-hidden>→</span>
                   </span>
