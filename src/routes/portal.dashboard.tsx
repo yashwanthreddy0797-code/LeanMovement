@@ -7,9 +7,6 @@ import {
 } from "@/lib/portal/data";
 import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 import { ArrowRight, Flame, Trophy, Play, Calendar, Quote, ChevronRight, Sparkles } from "lucide-react";
-import heroImg from "@/assets/dash-hero.jpg.asset.json";
-import workoutImg from "@/assets/dash-workout.jpg.asset.json";
-import mealImg from "@/assets/dash-meal.jpg.asset.json";
 
 export const Route = createFileRoute("/portal/dashboard")({
   head: () => ({ meta: [{ title: "Dashboard — LeanMovement Portal" }] }),
@@ -70,19 +67,8 @@ function Dashboard() {
             </div>
           </div>
 
-          {/* Image side */}
-          <div className="relative h-[300px] lg:h-auto min-h-[420px]">
-            <img
-              src={heroImg.url}
-              alt="Athletic training session"
-              className="absolute inset-0 w-full h-full object-cover"
-              width={1536}
-              height={1024}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-[#000000] via-[#000000]/40 to-transparent lg:block hidden" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#000000]/80 via-transparent to-transparent lg:hidden" />
-
-            {/* Floating metric chip */}
+          {/* Right side — stats */}
+          <div className="relative h-[300px] lg:h-auto min-h-[420px] bg-[#0a0a0a] flex flex-col justify-center p-8 md:p-12">
             <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl shadow-black/30 w-[180px]">
               <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Streak</div>
               <div className="mt-1 flex items-baseline gap-1.5">
@@ -92,6 +78,11 @@ function Dashboard() {
               <div className="mt-2 flex items-center gap-1 text-[11px] text-[var(--accent)] font-medium">
                 <Flame size={11} fill="currentColor" /> Personal best
               </div>
+            </div>
+            <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-3 gap-6 max-w-md">
+              <HeroStat k="Program" v={clientProfile.program.split(" — ")[0]} />
+              <HeroStat k="Coach" v={clientProfile.coach} />
+              <HeroStat k="Renews" v={clientProfile.membershipRenewsOn.split(",")[0]} />
             </div>
           </div>
         </div>
@@ -136,15 +127,13 @@ function Dashboard() {
           </div>
         </SoftCard>
 
-        {/* Workout card with image */}
+        {/* Workout card */}
         <div className="lg:col-span-2 card-soft overflow-hidden flex flex-col">
-          <div className="relative h-44 overflow-hidden">
-            <img src={workoutImg.url} alt="Workout" className="absolute inset-0 w-full h-full object-cover" loading="lazy" width={1024} height={1024} />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent" />
+          <div className="relative h-44 overflow-hidden bg-[#111] flex items-end p-4">
             <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur text-[10px] uppercase tracking-[0.18em] text-[#000000] font-medium">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" /> Today
             </div>
-            <div className="absolute bottom-3 left-4 right-4 text-white">
+            <div className="text-white">
               <div className="text-[11px] uppercase tracking-[0.18em] text-white/70">{workoutToday.duration} · {workoutToday.exercises.length} exercises</div>
               <div className="font-serif text-xl mt-0.5 leading-tight">{workoutToday.title}</div>
             </div>
@@ -170,23 +159,18 @@ function Dashboard() {
 
       {/* ===== Nutrition + Coach + Milestone row ===== */}
       <section className="grid lg:grid-cols-3 gap-5">
-        {/* Nutrition card with meal image */}
+        {/* Nutrition card */}
         <div className="card-soft overflow-hidden">
-          <div className="grid grid-cols-[1fr_120px]">
-            <div className="p-5">
-              <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Today's nutrition</div>
-              <div className="mt-1.5 font-serif text-2xl text-[#000000]">{nutritionConsumed.kcal}<span className="text-sm text-[#737373] font-sans"> / {nutritionTargets.kcal} kcal</span></div>
-              <div className="mt-3 h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
-                <div className="h-full bg-[var(--accent)]" style={{ width: `${kcalPct}%` }} />
-              </div>
-              <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
-                <Macro label="P" v={nutritionConsumed.p} t={nutritionTargets.p} />
-                <Macro label="C" v={nutritionConsumed.c} t={nutritionTargets.c} />
-                <Macro label="F" v={nutritionConsumed.f} t={nutritionTargets.f} />
-              </div>
+          <div className="p-5">
+            <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Today's nutrition</div>
+            <div className="mt-1.5 font-serif text-2xl text-[#000000]">{nutritionConsumed.kcal}<span className="text-sm text-[#737373] font-sans"> / {nutritionTargets.kcal} kcal</span></div>
+            <div className="mt-3 h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
+              <div className="h-full bg-[var(--accent)]" style={{ width: `${kcalPct}%` }} />
             </div>
-            <div className="relative">
-              <img src={mealImg.url} alt="Meal" className="absolute inset-0 w-full h-full object-cover" loading="lazy" width={1024} height={1024} />
+            <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
+              <Macro label="P" v={nutritionConsumed.p} t={nutritionTargets.p} />
+              <Macro label="C" v={nutritionConsumed.c} t={nutritionTargets.c} />
+              <Macro label="F" v={nutritionConsumed.f} t={nutritionTargets.f} />
             </div>
           </div>
           <Link to="/portal/nutrition" className="block px-5 py-3 text-xs text-[#E11D2A] font-medium hover:bg-[#FAFAFA] transition border-t border-[var(--border)]">
