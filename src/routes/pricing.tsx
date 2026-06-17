@@ -114,7 +114,7 @@ function PricingPage() {
                     >
                       Pay with Razorpay
                     </a>
-                    <a href="/book" className={`mt-3 text-center text-xs uppercase tracking-[0.2em] ${isPopular ? "text-black/60 hover:text-black" : "text-black/55 hover:text-accent"}`}>
+                    <a href="/contact" className={`mt-3 text-center text-xs uppercase tracking-[0.2em] ${isPopular ? "text-black/60 hover:text-black" : "text-black/55 hover:text-accent"}`}>
                       or book a call first
                     </a>
                   </div>
