@@ -2,7 +2,6 @@ import { createFileRoute } from "@tanstack/react-router";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { CTABanner } from "@/components/site/CTABanner";
-import founderImg from "@/assets/founder.jpg";
 
 
 export const Route = createFileRoute("/about")({
