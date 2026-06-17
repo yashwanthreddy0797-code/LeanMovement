@@ -51,7 +51,7 @@ function HomePage() {
               </FadeUp>
               <FadeUp delay={0.1}>
                 <h1 className="mt-4 sm:mt-6 font-display uppercase tracking-[0.02em] text-foreground text-[2.5rem] sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.92] break-words">
-                  LEAN<span className="font-normal text-accent">MOVEMENT</span>
+                  LEAN<span className="font-normal">MOVEMENT</span>
                 </h1>
               </FadeUp>
               <FadeUp delay={0.2}>
