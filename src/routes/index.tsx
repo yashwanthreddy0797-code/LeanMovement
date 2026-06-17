@@ -7,7 +7,12 @@ import {
 import { FadeUp } from "@/components/site/FadeUp";
 import { Ticker } from "@/components/site/Ticker";
 import { PlanCard, CORE_PLANS } from "@/components/site/PlanCard";
-import heroMaleTrainer from "@/assets/hero-male-trainer.jpg.asset.json";
+import heroTrack from "@/assets/lm-hero-track.jpg.asset.json";
+import grid1 from "@/assets/lm-grid-1.jpg.asset.json";
+import grid2 from "@/assets/lm-grid-2.jpg.asset.json";
+import grid3 from "@/assets/lm-grid-3.jpg.asset.json";
+import grid4 from "@/assets/lm-grid-4.jpg.asset.json";
+import philosophyImg from "@/assets/lm-philosophy.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -23,12 +28,12 @@ export const Route = createFileRoute("/")({
         property: "og:description",
         content: "Premium online transformation coaching for ambitious professionals.",
       },
+      { property: "og:image", content: heroTrack.url },
     ],
   }),
   component: HomePage,
 });
 
-const HERO_IMG = heroMaleTrainer.url;
 
 
 const CLIENT_STORIES = [
