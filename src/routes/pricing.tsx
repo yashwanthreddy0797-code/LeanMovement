@@ -62,7 +62,7 @@ function PricingPage() {
                   key={m}
                   onClick={() => setMode(m)}
                   className={`px-6 py-2.5 text-xs uppercase tracking-[0.2em] transition-colors ${
-                    mode === m ? "bg-white text-black" : "text-black/60 hover:text-black"
+                    mode === m ? "bg-black text-white" : "text-black/60 hover:text-black"
                   }`}
                 >
                   {m === "monthly" ? "Monthly" : "Bundle · Save 10%"}
