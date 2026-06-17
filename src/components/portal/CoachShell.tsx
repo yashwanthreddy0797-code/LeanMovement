@@ -2,7 +2,6 @@ import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { type ReactNode } from "react";
 import { LayoutDashboard, Users, ClipboardCheck, BarChart3, LogOut, Settings } from "lucide-react";
 import { setPortalUser, usePortalUser } from "@/lib/portal/auth";
-import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
 
 
 const nav = [
@@ -28,7 +27,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
         <aside className="hidden lg:flex fixed left-0 top-0 h-screen w-64 flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl">
           <div className="px-6 py-7">
             <Link to="/" className="flex items-center">
-              <span aria-label="LEANMOVEMENT" className="block h-8 w-40 bg-[#E11D2A]" style={{ WebkitMaskImage: `url(${logoAsset.url})`, maskImage: `url(${logoAsset.url})`, WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskPosition: "left center", maskPosition: "left center" }} />
+              <span className="font-display text-lg uppercase tracking-tight">LEANMOVEMENT</span>
             </Link>
             <div className="mt-2 text-[10px] uppercase tracking-[0.28em] text-[#737373]">Coach Console</div>
           </div>
@@ -68,7 +67,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
         <div className="flex-1 lg:ml-64">
           <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--background)]/70 border-b border-[var(--border)]">
             <div className="px-5 lg:px-10 py-4 flex items-center justify-between">
-              <Link to="/" className="lg:hidden flex items-center gap-2"><span aria-label="LEANMOVEMENT" className="block h-7 w-36 bg-[#E11D2A]" style={{ WebkitMaskImage: `url(${logoAsset.url})`, maskImage: `url(${logoAsset.url})`, WebkitMaskRepeat: "no-repeat", maskRepeat: "no-repeat", WebkitMaskSize: "contain", maskSize: "contain", WebkitMaskPosition: "left center", maskPosition: "left center" }} /><span className="text-[10px] tracking-[0.28em] uppercase text-[#737373]">Coach</span></Link>
+              <Link to="/" className="lg:hidden flex items-center gap-2"><span className="font-display text-base uppercase tracking-tight">LEANMOVEMENT</span><span className="text-[10px] tracking-[0.28em] uppercase text-[#737373]">Coach</span></Link>
               <div className="ml-auto flex items-center gap-3">
                 <button className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs text-[#404040] hover:bg-white/60">
                   <Settings size={13} /> Settings

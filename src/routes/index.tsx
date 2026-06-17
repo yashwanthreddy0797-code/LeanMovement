@@ -1,13 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FadeUp } from "@/components/site/FadeUp";
-import heroImg from "@/assets/coach/coach-5.jpg.asset.json";
-import aboutImg from "@/assets/coach/coach-4.jpg.asset.json";
-import g1 from "@/assets/coach/coach-1.jpg.asset.json";
-import g2 from "@/assets/coach/coach-8.jpg.asset.json";
-import g3 from "@/assets/coach/coach-3.jpg.asset.json";
-import g4 from "@/assets/coach/coach-6.jpg.asset.json";
-import g5 from "@/assets/coach/coach-2.jpg.asset.json";
-import g6 from "@/assets/coach/coach-7.jpg.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -20,7 +12,6 @@ export const Route = createFileRoute("/")({
       },
       { property: "og:title", content: "LEANMOVEMENT — Pure Work In Solitude" },
       { property: "og:description", content: "Evidence-informed coaching for the disciplined professional." },
-      { property: "og:image", content: heroImg.url },
     ],
   }),
   component: HomePage,
@@ -87,61 +78,45 @@ const PACKAGES: Pkg[] = [
 function HomePage() {
   return (
     <>
-      {/* ============ HERO — split-screen editorial ============ */}
+      {/* ============ HERO — text only ============ */}
       <section className="relative bg-background overflow-hidden">
         <div className="container-x pt-32 md:pt-36 pb-16 md:pb-24">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-end min-h-[calc(100svh-12rem)]">
-            <div className="lg:col-span-7 flex flex-col">
-              <FadeUp>
-                <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
-                  Evidence-Informed Coaching · Hyderabad
-                </div>
-              </FadeUp>
-              <FadeUp delay={0.1}>
-                <h1 className="mt-8 font-display uppercase tracking-[0.02em] text-foreground text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.92]">
-                  LEAN<span className="font-normal">MOVEMENT</span>
-                </h1>
-              </FadeUp>
-              <FadeUp delay={0.2}>
-                <p className="mt-8 max-w-xl font-serif italic text-2xl md:text-3xl text-foreground/85 leading-snug">
-                  Become the strongest version of yourself.
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.3}>
-                <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
-                  Evidence-informed coaching for busy professionals, entrepreneurs and individuals
-                  seeking sustainable fat loss, strength and performance — without sacrificing their lifestyle.
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.4}>
-                <div className="mt-10 flex flex-wrap gap-4">
-                  <Link
-                    to="/book"
-                    className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
-                  >
-                    Apply Now
-                  </Link>
-                  <Link
-                    to="/programs"
-                    className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
-                  >
-                    Explore Coaching
-                  </Link>
-                </div>
-              </FadeUp>
-            </div>
-
-            <FadeUp delay={0.25} className="lg:col-span-5">
-              <div className="relative aspect-[3/4] w-full overflow-hidden">
-                <img
-                  src={heroImg.url}
-                  alt="The coach"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute bottom-4 left-4 right-4 flex items-end justify-between text-[10px] uppercase tracking-[0.3em] text-white/90">
-                  <span>Est. 2020</span>
-                  <span>LM · 001</span>
-                </div>
+          <div className="max-w-4xl">
+            <FadeUp>
+              <div className="text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
+                Evidence-Informed Coaching · Hyderabad
+              </div>
+            </FadeUp>
+            <FadeUp delay={0.1}>
+              <h1 className="mt-8 font-display uppercase tracking-[0.02em] text-foreground text-5xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.92]">
+                LEAN<span className="font-normal">MOVEMENT</span>
+              </h1>
+            </FadeUp>
+            <FadeUp delay={0.2}>
+              <p className="mt-8 max-w-xl font-serif italic text-2xl md:text-3xl text-foreground/85 leading-snug">
+                Become the strongest version of yourself.
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.3}>
+              <p className="mt-6 max-w-lg text-[15px] leading-relaxed text-muted-foreground">
+                Evidence-informed coaching for busy professionals, entrepreneurs and individuals
+                seeking sustainable fat loss, strength and performance — without sacrificing their lifestyle.
+              </p>
+            </FadeUp>
+            <FadeUp delay={0.4}>
+              <div className="mt-10 flex flex-wrap gap-4">
+                <Link
+                  to="/book"
+                  className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+                >
+                  Apply Now
+                </Link>
+                <Link
+                  to="/programs"
+                  className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                >
+                  Explore Coaching
+                </Link>
               </div>
             </FadeUp>
           </div>
@@ -174,51 +149,24 @@ function HomePage() {
         </div>
       </section>
 
-      {/* ============ EDITORIAL IMAGE ============ */}
-      <section className="bg-background">
-        <div className="container-x pb-24 md:pb-32">
+      {/* ============ MANTRA ============ */}
+      <section className="bg-background border-t border-border">
+        <div className="container-x py-32 md:py-48">
           <FadeUp>
-            <div className="grid md:grid-cols-12 gap-8 items-end">
-              <div className="md:col-span-8 aspect-[4/5] md:aspect-[16/11] overflow-hidden">
-                <img src={aboutImg.url} alt="Quiet morning" loading="lazy" className="w-full h-full object-cover" />
-              </div>
-              <div className="md:col-span-3 md:col-start-10">
+            <div className="grid md:grid-cols-12 gap-16 items-end">
+              <div className="md:col-span-8">
                 <div className="eyebrow"><span className="w-6 h-px bg-accent" />Mantra</div>
-                <p className="mt-6 font-serif italic text-2xl md:text-3xl leading-snug text-foreground">
+                <p className="mt-10 font-serif italic text-4xl md:text-5xl lg:text-6xl leading-snug text-foreground">
                   Pure work in solitude.
                 </p>
-                <p className="mt-6 text-sm text-muted-foreground leading-relaxed">
+              </div>
+              <div className="md:col-span-4">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Discipline doesn't need an audience. The work speaks — louder, and for longer.
                 </p>
               </div>
             </div>
           </FadeUp>
-        </div>
-      </section>
-
-      {/* ============ EDITORIAL GRID ============ */}
-      <section className="bg-background">
-        <div className="container-x pb-32 md:pb-48">
-          <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-6">
-            <FadeUp className="col-span-1 md:col-span-5 aspect-[3/4] overflow-hidden">
-              <img src={g1.url} alt="Training" loading="lazy" className="w-full h-full object-cover" />
-            </FadeUp>
-            <FadeUp delay={0.05} className="col-span-1 md:col-span-4 aspect-[3/4] overflow-hidden">
-              <img src={g2.url} alt="Standard" loading="lazy" className="w-full h-full object-cover" />
-            </FadeUp>
-            <FadeUp delay={0.1} className="col-span-2 md:col-span-3 aspect-[3/4] overflow-hidden">
-              <img src={g3.url} alt="Back" loading="lazy" className="w-full h-full object-cover" />
-            </FadeUp>
-            <FadeUp delay={0.05} className="col-span-2 md:col-span-7 aspect-[5/3] overflow-hidden">
-              <img src={g4.url} alt="Valley" loading="lazy" className="w-full h-full object-cover" />
-            </FadeUp>
-            <FadeUp delay={0.1} className="col-span-1 md:col-span-3 aspect-square overflow-hidden">
-              <img src={g5.url} alt="Form" loading="lazy" className="w-full h-full object-cover" />
-            </FadeUp>
-            <FadeUp delay={0.15} className="col-span-1 md:col-span-2 aspect-square overflow-hidden">
-              <img src={g6.url} alt="Sunset" loading="lazy" className="w-full h-full object-cover" />
-            </FadeUp>
-          </div>
         </div>
       </section>
 

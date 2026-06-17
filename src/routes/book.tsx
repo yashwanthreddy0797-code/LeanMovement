@@ -15,9 +15,6 @@ export const Route = createFileRoute("/book")({
   component: BookPage,
 });
 
-import bookCoachAsset from "@/assets/book-coach.png.asset.json";
-const COACH_IMG = bookCoachAsset.url;
-
 function BookPage() {
   return (
     <>
@@ -40,9 +37,6 @@ function BookPage() {
                     <p className="text-black/75">{b}</p>
                   </div>
                 ))}
-              </div>
-              <div className="mt-10 max-w-md">
-                <img src={COACH_IMG} alt="Coach" loading="lazy" className="w-full h-auto object-contain grayscale" />
               </div>
             </FadeUp>
 

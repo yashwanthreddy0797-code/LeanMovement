@@ -2,8 +2,6 @@ import { createFileRoute, Link, useRouter } from "@tanstack/react-router";
 import { useState } from "react";
 import { setPortalUser } from "@/lib/portal/auth";
 import { ArrowRight } from "lucide-react";
-import loginHero from "@/assets/login-hero-men.jpg.asset.json";
-import logoAsset from "@/assets/leanmovement-logo.png.asset.json";
 
 export const Route = createFileRoute("/portal/login")({
   head: () => ({ meta: [{ title: "Client Login — LEANMOVEMENT" }] }),
@@ -26,21 +24,13 @@ function LoginPage() {
   return (
     <div className="min-h-screen grid lg:grid-cols-2 bg-white text-black font-sans">
       {/* Left visual panel */}
-      <div className="relative hidden lg:block overflow-hidden bg-black">
-        <img
-          src={loginHero.url}
-          alt="LEANMOVEMENT training"
-          className="absolute inset-0 w-full h-full object-cover opacity-80"
-        />
-        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/30 to-black/80" />
-        {/* red accent bar */}
+      <div className="relative hidden lg:block overflow-hidden bg-[#0a0a0a]">
         <div className="absolute top-0 left-0 h-full w-[6px] bg-[#E11D2A]" />
 
         <div className="relative z-10 flex flex-col justify-between h-full p-12 text-white">
           <Link to="/" className="flex items-center">
-            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-9 w-auto object-contain brightness-0 invert" />
+            <span className="font-display text-xl uppercase tracking-tight">LEANMOVEMENT</span>
           </Link>
-
 
           <div>
             <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-[#E11D2A] mb-5">
@@ -71,7 +61,7 @@ function LoginPage() {
 
         <div className="w-full max-w-sm">
           <Link to="/" className="lg:hidden flex items-center mb-10">
-            <img src={logoAsset.url} alt="LEANMOVEMENT" className="h-8 w-auto object-contain" />
+            <span className="font-display text-lg uppercase tracking-tight">LEANMOVEMENT</span>
           </Link>
 
 
