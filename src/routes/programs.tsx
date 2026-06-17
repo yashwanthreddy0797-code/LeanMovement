@@ -97,25 +97,8 @@ type WorkoutPlan = {
 
 const PLANS: WorkoutPlan[] = [
   {
-    name: "Primal",
-    tag: "1-on-1 Coaching",
-    price: "₹15,999 / month",
-    featured: true,
-    blurb: "Peak human performance. Direct coaching with the founders.",
-    included: [
-      "1-on-1 coaching with the founders",
-      "24×7 availability via call / text",
-      "All features of the Pro program",
-      "Access to all workout programs & videos",
-    ],
-    meta: [
-      { label: "Format", value: "Ongoing" },
-      { label: "Experience", value: "All levels" },
-    ],
-  },
-  {
     name: "Beginner",
-    tag: "Essentials",
+    tag: "ESSENTIALS",
     price: "₹2,999",
     blurb: "Build your base with a structured introduction to training.",
     included: ["PDF program", "Spreadsheet for tracking", "Mobility routine"],
@@ -129,7 +112,7 @@ const PLANS: WorkoutPlan[] = [
   },
   {
     name: "Push Pull Legs",
-    tag: "Hybrid System",
+    tag: "HYBRID SYSTEM",
     price: "₹2,999",
     blurb: "A proven split for hypertrophy and strength.",
     included: [
@@ -148,7 +131,7 @@ const PLANS: WorkoutPlan[] = [
   },
   {
     name: "Upper Lower",
-    tag: "Size & Strength",
+    tag: "SIZE & STRENGTH",
     price: "₹2,999",
     blurb: "Balanced upper/lower split for serious size and strength.",
     included: ["PDF program", "Spreadsheet for tracking", "Mobility routine video"],
@@ -162,7 +145,7 @@ const PLANS: WorkoutPlan[] = [
   },
   {
     name: "Powerbuilding",
-    tag: "Peak Strength & Conditioning",
+    tag: "PEAK STRENGTH & CONDITIONING",
     price: "₹3,999",
     blurb: "Strength, size and conditioning in one disciplined program.",
     included: [
@@ -181,7 +164,7 @@ const PLANS: WorkoutPlan[] = [
   },
   {
     name: "Powerlifting 1.0",
-    tag: "All About Strength",
+    tag: "ALL ABOUT STRENGTH",
     price: "₹4,999",
     blurb: "Max poundage on squat, bench and deadlift in 12 weeks.",
     included: [
