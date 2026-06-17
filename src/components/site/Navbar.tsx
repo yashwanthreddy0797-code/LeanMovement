@@ -12,12 +12,12 @@ const links = [
 
 function Wordmark({ className = "" }: { className?: string }) {
   return (
-    <span className={`flex items-center gap-2.5 ${className}`}>
-      <svg width="22" height="22" viewBox="0 0 22 22" fill="none" aria-hidden>
+    <span className={`flex items-center gap-2 sm:gap-2.5 ${className}`}>
+      <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden className="shrink-0 sm:w-[22px] sm:h-[22px]">
         <path d="M2 2v18h6" stroke="currentColor" strokeWidth="1" />
         <path d="M12 20V2l4 9 4-9v18" stroke="currentColor" strokeWidth="1" />
       </svg>
-      <span className="font-display text-[15px] tracking-[0.32em] uppercase font-medium">
+      <span className="font-display text-[12px] sm:text-[15px] tracking-[0.28em] sm:tracking-[0.32em] uppercase font-medium truncate">
         LEAN<span className="font-normal">MOVEMENT</span>
       </span>
     </span>
