@@ -106,44 +106,144 @@ const PROBLEMS = [
 function HomePage() {
   return (
     <>
-      {/* ============ HERO ============ */}
-      <section className="bg-white text-black pt-32 md:pt-40 pb-16 md:pb-24 overflow-hidden">
-        <div className="container-x">
-          <FadeUp>
-            <h1 className="font-display text-6xl sm:text-7xl md:text-8xl lg:text-[7.5rem] leading-[0.88] tracking-tight max-w-5xl">
-              FIND YOUR<br />
-              STRENGTH
-            </h1>
-            <p className="mt-6 max-w-xl text-base md:text-lg text-black/65 leading-relaxed font-sans normal-case">
-              Science-backed coaching from certified professionals, tailored to your level and designed around your life.
-            </p>
+      {/* ============ HERO — full-bleed editorial ============ */}
+      <section className="relative h-[100svh] min-h-[640px] w-full overflow-hidden bg-black">
+        <img
+          src={heroTrack.url}
+          alt="Empty running track at dawn"
+          className="absolute inset-0 w-full h-full object-cover opacity-90"
+          loading="eager"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-black/40" />
 
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Link to="/book" className="inline-flex items-center gap-2 px-7 py-3.5 bg-accent text-white text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-black transition-colors">
-                Start Training <ArrowUpRight size={16} />
-              </Link>
-              <a href="#programs" className="inline-flex items-center gap-2 px-7 py-3.5 border border-black/20 text-black text-xs font-semibold uppercase tracking-[0.2em] rounded-full hover:bg-white hover:text-black transition-colors">
-                Take the FitQuiz
-              </a>
-            </div>
-          </FadeUp>
+        <div className="absolute inset-0 flex flex-col justify-end">
+          <div className="container-x pb-12 md:pb-16">
+            <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-8">
+              <FadeUp>
+                <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-white/70">
+                  <span className="w-8 h-px bg-accent" />
+                  Online Coaching · Hyderabad
+                </span>
+                <h1 className="font-display mt-6 text-white text-6xl sm:text-7xl md:text-8xl lg:text-[8.5rem] leading-[0.88] tracking-tight max-w-5xl">
+                  TRAIN ON<br />YOUR OWN TIME.
+                </h1>
+              </FadeUp>
 
-          <FadeUp delay={0.15}>
-            <div className="mt-12 md:mt-16 relative">
-              <div className="rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-[0_40px_100px_-30px_rgba(0,0,0,0.35)]">
-                <img
-                  src={HERO_IMG}
-                  alt="Male personal trainer performing deadlift in gym"
-                  className="w-full h-auto object-cover"
-                  loading="eager"
-                />
-              </div>
+              <FadeUp delay={0.2}>
+                <Link
+                  to="/book"
+                  className="group inline-flex items-center gap-4 pl-7 pr-2 py-2 rounded-full border border-white/40 text-white text-xs uppercase tracking-[0.25em] hover:bg-white hover:text-black transition-colors"
+                >
+                  Join Now
+                  <span className="w-10 h-10 grid place-items-center rounded-full bg-accent text-white group-hover:rotate-45 transition-transform">
+                    <ArrowUpRight size={16} />
+                  </span>
+                </Link>
+              </FadeUp>
             </div>
-          </FadeUp>
+          </div>
         </div>
       </section>
 
       <Ticker />
+
+      {/* ============ MISSION ============ */}
+      <section className="bg-white text-black">
+        <div className="container-x py-24 md:py-36">
+          <div className="grid md:grid-cols-12 gap-10 md:gap-16 items-start">
+            <FadeUp className="md:col-span-5">
+              <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-black/60">
+                <span className="w-8 h-px bg-accent" />
+                Our Aim
+              </span>
+              <h2 className="font-display mt-6 text-4xl md:text-5xl lg:text-6xl leading-[0.95] tracking-tight">
+                Coaching dedicated to lasting, science-backed transformation.
+              </h2>
+            </FadeUp>
+            <FadeUp delay={0.15} className="md:col-span-6 md:col-start-7">
+              <p className="text-lg leading-relaxed text-black/70 font-sans normal-case">
+                LEANMOVEMENT is built for the ambitious professional who refuses average. We blend
+                evidence-based training, personalised nutrition, and daily accountability into one
+                programme — engineered to fit a real life of meetings, travel, and family. No fads,
+                no shortcuts. Just measurable progress, week after week.
+              </p>
+              <p className="mt-6 text-base leading-relaxed text-black/60 font-sans normal-case">
+                Every plan is built around your body, your schedule, and your goals — then refined
+                with data from over 50 tracked metrics. The result is a system you can sustain long
+                after the programme ends.
+              </p>
+            </FadeUp>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ EDITORIAL PHOTO GRID ============ */}
+      <section className="bg-white">
+        <div className="container-x pb-24 md:pb-36">
+          <div className="grid grid-cols-2 md:grid-cols-12 gap-4 md:gap-6">
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              className="col-span-2 md:col-span-7 aspect-[4/5] md:aspect-[5/6] overflow-hidden"
+            >
+              <img src={grid1.url} alt="Strength training" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              className="md:col-span-5 aspect-[4/5] overflow-hidden"
+            >
+              <img src={grid2.url} alt="Grip and chalk" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+              className="md:col-span-5 aspect-[4/5] overflow-hidden"
+            >
+              <img src={grid3.url} alt="Conditioning" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              className="col-span-2 md:col-span-7 aspect-[5/4] overflow-hidden"
+            >
+              <img src={grid4.url} alt="Tools of the trade" loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-[1.2s]" />
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* ============ PHILOSOPHY — full-bleed dark moment ============ */}
+      <section className="relative w-full overflow-hidden bg-black">
+        <img
+          src={philosophyImg.url}
+          alt="Empty premium gym at dawn"
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover opacity-50"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/70" />
+        <div className="relative container-x py-32 md:py-48">
+          <FadeUp>
+            <span className="inline-flex items-center gap-3 text-[10px] uppercase tracking-[0.3em] text-white/70">
+              <span className="w-8 h-px bg-accent" />
+              Philosophy
+            </span>
+            <p className="font-serif italic mt-8 text-white text-3xl md:text-5xl lg:text-6xl leading-[1.1] max-w-4xl">
+              One disciplined repetition, practised ten thousand times, will outwork ten thousand half-measures every time.
+            </p>
+            <p className="mt-8 text-xs uppercase tracking-[0.3em] text-white/60">— The LEANMOVEMENT way</p>
+          </FadeUp>
+        </div>
+      </section>
+
 
       {/* ============ PILLARS ============ */}
       <section className="bg-white text-black">
