@@ -40,59 +40,61 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header
-      className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
-        scrolled || open ? "bg-background/90 backdrop-blur-xl border-b border-border" : "bg-transparent"
-      }`}
-    >
-      <div className="container-x">
-        <div className="flex items-center justify-between h-16 md:h-24">
-          <Link to="/" aria-label="LEANMOVEMENT home" className="text-foreground min-w-0">
-            <Wordmark />
-          </Link>
-
-          <nav className="hidden lg:flex items-center gap-10">
-            {links.map((l) => (
-              <Link
-                key={l.to}
-                to={l.to}
-                className="text-[13px] uppercase tracking-[0.28em] text-foreground/65 hover:text-foreground transition-colors"
-                activeProps={{ className: "text-foreground" }}
-                activeOptions={{ exact: l.to === "/" }}
-              >
-                {l.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center gap-3 shrink-0">
-            <Link
-              to="/apply"
-              className="hidden lg:inline-flex items-center px-6 py-3 text-[11px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
-            >
-              Apply For Lean
+    <>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${
+          scrolled || open ? "bg-background/90 backdrop-blur-xl border-b border-border" : "bg-transparent"
+        }`}
+      >
+        <div className="container-x">
+          <div className="flex items-center justify-between h-16 md:h-24">
+            <Link to="/" aria-label="LEANMOVEMENT home" className="text-foreground min-w-0">
+              <Wordmark />
             </Link>
-            <button
-              className="lg:hidden text-foreground p-2 -mr-2 relative z-[60]"
-              onClick={() => setOpen(!open)}
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-            >
-              {open ? <X size={22} /> : <Menu size={22} />}
-            </button>
+
+            <nav className="hidden lg:flex items-center gap-10">
+              {links.map((l) => (
+                <Link
+                  key={l.to}
+                  to={l.to}
+                  className="text-[13px] uppercase tracking-[0.28em] text-foreground/65 hover:text-foreground transition-colors"
+                  activeProps={{ className: "text-foreground" }}
+                  activeOptions={{ exact: l.to === "/" }}
+                >
+                  {l.label}
+                </Link>
+              ))}
+            </nav>
+
+            <div className="flex items-center gap-3 shrink-0">
+              <Link
+                to="/apply"
+                className="hidden lg:inline-flex items-center px-6 py-3 text-[11px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
+              >
+                Apply For Lean
+              </Link>
+              <button
+                className="lg:hidden text-foreground p-2 -mr-2"
+                onClick={() => setOpen(!open)}
+                aria-label={open ? "Close menu" : "Open menu"}
+                aria-expanded={open}
+              >
+                {open ? <X size={22} /> : <Menu size={22} />}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </header>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — rendered outside header so backdrop-blur doesn't trap fixed positioning */}
       <div
-        className={`lg:hidden fixed inset-0 z-40 transition-opacity duration-300 ${
+        className={`lg:hidden fixed inset-0 z-[55] transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         aria-hidden={!open}
       >
         <div className="absolute inset-0 bg-background" onClick={() => setOpen(false)} />
-        <div className="relative h-full flex flex-col pt-20 pb-8 px-6 overflow-y-auto">
+        <div className="relative h-full w-full flex flex-col pt-20 pb-8 px-6 overflow-y-auto">
           <nav className="flex flex-col flex-1">
             {links.map((l, i) => (
               <Link
@@ -106,7 +108,7 @@ export function Navbar() {
                 <span className="text-[10px] font-mono tracking-[0.25em] text-foreground/35 w-6 shrink-0">
                   0{i + 1}
                 </span>
-                <span className="font-display text-2xl xs:text-3xl tracking-tight uppercase">{l.label}</span>
+                <span className="font-display text-3xl tracking-tight uppercase">{l.label}</span>
               </Link>
             ))}
           </nav>
@@ -124,6 +126,6 @@ export function Navbar() {
           </div>
         </div>
       </div>
-    </header>
+    </>
   );
 }
