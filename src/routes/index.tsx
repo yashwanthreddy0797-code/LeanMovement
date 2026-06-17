@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FadeUp } from "@/components/site/FadeUp";
+import gymEquipmentDark from "@/assets/gym-equipment-dark.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -229,7 +230,7 @@ function HomePage() {
       <section className="bg-background">
         <div className="relative w-full h-[45vh] md:h-[60vh] overflow-hidden">
           <img
-            src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=2200&q=80"
+            src={gymEquipmentDark}
             alt="The work is quiet — pure effort, no audience"
             loading="lazy"
             className="absolute inset-0 w-full h-full object-cover grayscale contrast-[1.05]"
