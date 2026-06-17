@@ -84,13 +84,13 @@ function PricingPage() {
                   <div
                     className={`flex flex-col h-full p-8 border transition-all hover:-translate-y-1 duration-500 ${
                       isPopular
-                        ? "bg-white text-black border-black shadow-[0_20px_60px_-20px_rgba(0,0,0,0.4)]"
-                        : "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.15)]"
+                        ? "bg-black text-white border-black shadow-[0_20px_60px_-20px_rgba(0,0,0,0.4)]"
+                        : "bg-white text-black border-black/10 hover:border-accent shadow-[0_8px_40px_-20px_rgba(0,0,0,0.08)]"
                     } ${p.vip && !isPopular ? "shadow-[0_0_40px_-15px_var(--accent)]" : ""}`}
                   >
-                    <span className={`text-[11px] uppercase tracking-[0.25em] ${isPopular ? "text-black/70" : "text-black/55"}`}>{p.tag}</span>
+                    <span className={`text-[11px] uppercase tracking-[0.25em] ${isPopular ? "text-white/70" : "text-black/55"}`}>{p.tag}</span>
                     <h3 className="font-display text-4xl mt-2">{p.name}</h3>
-                    <div className={`my-6 h-px ${isPopular ? "bg-black/20" : "bg-black/10"}`} />
+                    <div className={`my-6 h-px ${isPopular ? "bg-white/20" : "bg-black/10"}`} />
                     <ul className="space-y-2 text-sm flex-1">
                       {p.features.slice(0, 4).map((f) => (
                         <li key={f} className="flex gap-2">
@@ -100,15 +100,15 @@ function PricingPage() {
                       ))}
                     </ul>
                     <div className="mt-8">
-                      <div className={`font-display text-4xl ${isPopular ? "text-black" : "text-accent"}`}>{display}</div>
-                      <div className={`text-[11px] uppercase tracking-[0.25em] mt-1 ${isPopular ? "text-black/70" : "text-black/55"}`}>{period}</div>
+                      <div className={`font-display text-4xl ${isPopular ? "text-accent" : "text-accent"}`}>{display}</div>
+                      <div className={`text-[11px] uppercase tracking-[0.25em] mt-1 ${isPopular ? "text-white/70" : "text-black/55"}`}>{period}</div>
                     </div>
                     <a
                       href="#"
                       aria-label={`Pay with Razorpay for ${p.name}`}
                       className={`mt-6 inline-flex items-center justify-center px-5 py-3 text-xs font-semibold uppercase tracking-[0.2em] transition-colors ${
                         isPopular
-                          ? "bg-white text-black hover:bg-accent hover:text-white"
+                          ? "bg-accent text-white hover:bg-white hover:text-black"
                           : "bg-accent text-white hover:bg-black"
                       }`}
                     >
