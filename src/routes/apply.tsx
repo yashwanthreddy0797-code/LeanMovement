@@ -97,7 +97,7 @@ function ApplyPage() {
             <FadeUp delay={0.15} className="lg:col-span-7">
               <form
                 onSubmit={onSubmit}
-                className="p-8 md:p-12 border border-border bg-card space-y-7"
+                className="p-6 sm:p-8 md:p-12 border border-border bg-card space-y-7"
               >
                 <div>
                   <div className="eyebrow"><span className="w-6 h-px bg-accent" />Application</div>
