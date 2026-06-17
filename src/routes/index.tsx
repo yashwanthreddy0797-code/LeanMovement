@@ -64,16 +64,16 @@ function HomePage() {
               </p>
             </FadeUp>
             <FadeUp delay={0.4}>
-              <div className="mt-10 flex flex-wrap gap-4">
+              <div className="mt-10 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
                 <Link
                   to="/apply"
-                  className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
                 >
                   Apply For Lean
                 </Link>
                 <Link
                   to="/programs"
-                  className="inline-flex items-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
+                  className="inline-flex items-center justify-center px-8 py-4 text-[11px] uppercase tracking-[0.32em] border border-foreground text-foreground hover:bg-foreground hover:text-background transition-colors"
                 >
                   Explore Programs
                 </Link>
