@@ -79,8 +79,8 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "twitter:card", content: "summary_large_image" },
       { name: "twitter:title", content: "LEANMOVEMENT — Train On Your Own Terms" },
       { name: "twitter:description", content: "Science-backed online fitness coaching for the modern Indian professional. No fluff, no fads — just results that last." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/1173a295-6ce5-4f9a-8916-558a16d500d5" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/1173a295-6ce5-4f9a-8916-558a16d500d5" },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e664b439-c27d-4e46-b348-8d15fc91219f" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e664b439-c27d-4e46-b348-8d15fc91219f" },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
