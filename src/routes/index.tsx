@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { FadeUp } from "@/components/site/FadeUp";
-import gymEquipmentDark from "@/assets/gym-equipment-dark.jpg";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -227,26 +227,16 @@ function HomePage() {
       </section>
 
       {/* CINEMATIC BAND */}
-      <section className="bg-background">
-        <div className="relative w-full h-[45vh] md:h-[60vh] overflow-hidden">
-          <img
-            src={gymEquipmentDark}
-            alt="The work is quiet — pure effort, no audience"
-            loading="lazy"
-            className="absolute inset-0 w-full h-full object-cover grayscale contrast-[1.05]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
-          <div className="absolute inset-0 flex items-end">
-            <div className="container-x pb-12 md:pb-20">
-              <FadeUp>
-                <p className="font-serif text-2xl md:text-4xl text-foreground/90 max-w-2xl leading-snug">
-                  The body you build is the discipline you keep.
-                </p>
-              </FadeUp>
-            </div>
-          </div>
+      <section className="border-y border-border bg-background">
+        <div className="container-x py-16 md:py-24">
+          <FadeUp>
+            <p className="mx-auto max-w-3xl text-center font-serif text-2xl md:text-4xl text-foreground/90 leading-snug">
+              The body you build is the discipline you keep.
+            </p>
+          </FadeUp>
         </div>
       </section>
+
 
       {/* CLOSING CTA */}
       <section className="bg-surface">
