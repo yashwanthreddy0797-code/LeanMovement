@@ -19,8 +19,8 @@ import process from "node:process";
 export function getServerConfig() {
   return {
     nodeEnv: process.env.NODE_ENV,
-    // Add server-only values here, e.g.:
-    //   databaseUrl: process.env.DATABASE_URL,
-    //   stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    supabaseUrl: process.env.VITE_SUPABASE_URL ?? process.env.SUPABASE_URL,
+    razorpayKeyId: process.env.RAZORPAY_KEY_ID,
+    appUrl: process.env.APP_URL ?? "http://localhost:8080",
   };
 }

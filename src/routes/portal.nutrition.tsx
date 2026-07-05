@@ -1,64 +1,54 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ClientShell } from "@/components/portal/ClientShell";
-import { ProgressRing, SectionTitle, SoftCard } from "@/components/portal/ui";
-import { meals, nutritionConsumed, nutritionTargets } from "@/lib/portal/data";
+import { SectionTitle, SoftCard } from "@/components/portal/ui";
+import { nutritionFramework } from "@/lib/portal/member-data";
 
 export const Route = createFileRoute("/portal/nutrition")({
-  head: () => ({ meta: [{ title: "Nutrition — LEANMOVEMENT Portal" }] }),
-  component: () => <ClientShell><Nutrition /></ClientShell>,
+  head: () => ({ meta: [{ title: "Nutrition Framework — LEANMOVEMENT Portal" }] }),
+  component: Nutrition,
 });
 
 function Nutrition() {
   return (
     <div className="space-y-10">
       <div>
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Today's nutrition</div>
-        <h1 className="text-4xl md:text-5xl">Fuel with intent.</h1>
+        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Not meal plans</div>
+        <h1 className="text-4xl md:text-5xl font-serif">Nutrition framework</h1>
+        <p className="mt-2 text-[#737373] max-w-xl">
+          How lean people eat — calorie and protein targets, flexible dieting, and real-life guides.
+        </p>
       </div>
 
-      <SoftCard>
-        <div className="flex flex-wrap items-center justify-around gap-8 py-3">
-          <ProgressRing label="Calories" unit="" value={nutritionConsumed.kcal} target={nutritionTargets.kcal} />
-          <ProgressRing label="Protein (g)" unit="" value={nutritionConsumed.p} target={nutritionTargets.p} />
-          <ProgressRing label="Carbs (g)" unit="" value={nutritionConsumed.c} target={nutritionTargets.c} />
-          <ProgressRing label="Fat (g)" unit="" value={nutritionConsumed.f} target={nutritionTargets.f} />
+      <SoftCard className="bg-gradient-to-br from-[#000000] to-[#1a1a1a] text-white border-0">
+        <div className="grid sm:grid-cols-3 gap-8">
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">Calorie target</div>
+            <div className="mt-2 font-serif text-4xl">{nutritionFramework.calorieTarget}</div>
+            <div className="text-sm text-white/60">kcal / day</div>
+          </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">Protein target</div>
+            <div className="mt-2 font-serif text-4xl">{nutritionFramework.proteinTarget}g</div>
+            <div className="text-sm text-white/60">{nutritionFramework.proteinPerKg}</div>
+          </div>
+          <div>
+            <div className="text-[10px] uppercase tracking-[0.2em] text-white/50">Approach</div>
+            <div className="mt-2 font-serif text-2xl">Flexible</div>
+            <div className="text-sm text-white/60">No banned foods</div>
+          </div>
         </div>
       </SoftCard>
 
       <div>
-        <SectionTitle eyebrow="Today's plan" title="Your meals" />
-        <div className="grid sm:grid-cols-2 gap-5">
-          {meals.map((m) => (
-            <div key={m.type} className="card-soft overflow-hidden">
-              <div className="aspect-[16/9] bg-[#F5F5F5] overflow-hidden">
-                <img src={m.img} alt={m.title} loading="lazy" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-              </div>
-              <div className="p-5">
-                <div className="flex items-center justify-between">
-                  <span className="chip">{m.type}</span>
-                  <span className="text-xs text-[#737373]">{m.kcal} kcal</span>
-                </div>
-                <div className="mt-3 text-[15px] font-medium text-[#000000]">{m.title}</div>
-                <div className="mt-3 flex gap-4 text-xs text-[#404040]">
-                  <span><b className="text-[#000000]">{m.p}g</b> protein</span>
-                  <span><b className="text-[#000000]">{m.c}g</b> carbs</span>
-                  <span><b className="text-[#000000]">{m.f}g</b> fat</span>
-                </div>
-              </div>
+        <SectionTitle eyebrow="Your playbook" title="Framework guides" />
+        <div className="grid md:grid-cols-2 gap-5 mt-2">
+          {nutritionFramework.sections.map((s) => (
+            <div key={s.title} className="card-soft p-6 md:p-8">
+              <h3 className="font-display text-xl uppercase tracking-tight">{s.title}</h3>
+              <p className="mt-3 text-sm text-[#737373] leading-relaxed">{s.body}</p>
             </div>
           ))}
         </div>
       </div>
-
-      <SoftCard>
-        <SectionTitle eyebrow="Hydration" title="Water intake" />
-        <div className="flex gap-2">
-          {Array.from({ length: 8 }).map((_, i) => (
-            <div key={i} className={`flex-1 h-16 rounded-xl border ${i < 6 ? "bg-[#DCE7D5] border-[#FCA5A5]" : "bg-white border-[var(--border)]"}`} />
-          ))}
-        </div>
-        <div className="mt-3 text-xs text-[#737373]">6 of 8 glasses · 1.5L to go</div>
-      </SoftCard>
     </div>
   );
 }

@@ -22,7 +22,7 @@ function ForgotPage() {
           <div className="mt-8 card-soft p-6 text-sm">
             <div className="chip mb-3">Email sent</div>
             <p className="text-[#404040]">If that email exists in our system, you'll receive a reset link within a minute.</p>
-            <Link to="/portal/login" className="inline-block mt-5 text-sm text-[#E11D2A] font-medium hover:underline">← Back to sign in</Link>
+            <Link to="/login" className="inline-block mt-5 text-sm text-[#E11D2A] font-medium hover:underline">← Back to sign in</Link>
           </div>
         ) : (
           <form onSubmit={(e) => { e.preventDefault(); setSent(true); }} className="mt-8 space-y-4">
@@ -31,7 +31,7 @@ function ForgotPage() {
             <button className="w-full py-3 rounded-2xl bg-[#000000] text-white text-sm font-medium hover:bg-[#111111] transition">
               Send reset link
             </button>
-            <Link to="/portal/login" className="block text-center text-sm text-[#E11D2A] font-medium hover:underline">← Back to sign in</Link>
+            <Link to="/login" className="block text-center text-sm text-[#E11D2A] font-medium hover:underline">← Back to sign in</Link>
           </form>
         )}
       </div>

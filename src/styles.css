@@ -93,6 +93,20 @@
   text-transform: uppercase;
 }
 
+.brand-logo {
+  font-family: var(--font-display);
+  font-weight: 700;
+  text-transform: uppercase;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+.portal-theme .brand-logo {
+  font-family: "Space Grotesk", "Inter", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
 
 @layer base {
   * { border-color: var(--color-border); }

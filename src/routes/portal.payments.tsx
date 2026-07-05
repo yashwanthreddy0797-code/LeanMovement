@@ -1,98 +1,164 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ClientShell } from "@/components/portal/ClientShell";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { SectionTitle, SoftCard } from "@/components/portal/ui";
-import { invoices, clientProfile } from "@/lib/portal/data";
-import { Download, CreditCard, CheckCircle2 } from "lucide-react";
+import { usePortalSession } from "@/lib/portal/session";
+import { formatInr, formatPortalDate, membershipSummary } from "@/lib/portal/member-format";
+import { CheckCircle2, CreditCard, ExternalLink } from "lucide-react";
 
 export const Route = createFileRoute("/portal/payments")({
   head: () => ({ meta: [{ title: "Payments — LEANMOVEMENT Portal" }] }),
-  component: () => <ClientShell><Payments /></ClientShell>,
+  component: Payments,
 });
 
 function Payments() {
+  const session = usePortalSession();
+  const billing = membershipSummary(session.membership);
+  const membership = session.membership;
+
+  const invoices = membership?.started_at
+    ? [
+        {
+          id: membership.razorpay_payment_id ?? `LK-${membership.id.slice(0, 8).toUpperCase()}`,
+          date: formatPortalDate(membership.started_at),
+          amount: formatInr(membership.amount_inr),
+          status: billing.isActive ? "Paid" : billing.statusLabel,
+        },
+      ]
+    : [];
+
   return (
     <div className="space-y-10">
       <div>
         <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Billing</div>
-        <h1 className="text-4xl md:text-5xl">Membership & payments</h1>
+        <h1 className="text-4xl md:text-5xl font-serif">Membership & payments</h1>
+        <p className="mt-2 text-[#737373] max-w-xl">
+          Your Lean Kettlebell™ plan, renewal date, and payment history.
+        </p>
       </div>
 
       <div className="grid lg:grid-cols-3 gap-5">
         <SoftCard className="lg:col-span-2 bg-gradient-to-br from-[#000000] to-[#2D3A2A] text-white">
-          <div className="flex items-start justify-between">
+          <div className="flex items-start justify-between gap-4">
             <div>
               <div className="text-[11px] uppercase tracking-[0.2em] text-white/60">Current plan</div>
-              <div className="mt-2 text-3xl font-serif">{clientProfile.membership}</div>
-              <div className="mt-1 text-white/70 text-sm">{clientProfile.program}</div>
+              <div className="mt-2 text-3xl font-serif">Lean Kettlebell™</div>
+              <div className="mt-1 text-white/70 text-sm">
+                {billing.planLabel} · {billing.price}
+                {membership?.plan === "monthly" && "/month"}
+                {membership?.plan === "quarterly" && "/quarter"}
+              </div>
             </div>
-            <span className="chip" style={{ background: "rgba(111,143,106,0.25)", color: "#D7E5D2" }}>Active</span>
+            <span
+              className={`chip shrink-0 ${
+                billing.isActive
+                  ? "bg-[#E8F5E9] text-[#2E7D32]"
+                  : "bg-[#FEE2E2] text-[var(--accent)]"
+              }`}
+            >
+              {billing.statusLabel}
+            </span>
           </div>
           <div className="mt-8 flex flex-wrap gap-8 text-sm">
             <div>
               <div className="text-white/60 text-xs uppercase tracking-widest">Renews on</div>
-              <div className="mt-1 font-medium">{clientProfile.membershipRenewsOn}</div>
+              <div className="mt-1 font-medium">{billing.renewsOn}</div>
             </div>
             <div>
-              <div className="text-white/60 text-xs uppercase tracking-widest">Amount</div>
-              <div className="mt-1 font-medium">₹14,999 / month</div>
+              <div className="text-white/60 text-xs uppercase tracking-widest">Member since</div>
+              <div className="mt-1 font-medium">{billing.memberSince}</div>
             </div>
             <div>
-              <div className="text-white/60 text-xs uppercase tracking-widest">Next charge</div>
-              <div className="mt-1 font-medium">In 12 days</div>
+              <div className="text-white/60 text-xs uppercase tracking-widest">Product</div>
+              <div className="mt-1 font-medium">12 live sessions / month</div>
             </div>
           </div>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <button className="px-5 py-2.5 rounded-2xl bg-white text-[#000000] text-sm font-medium hover:bg-white/90">Upgrade plan</button>
-            <button className="px-5 py-2.5 rounded-2xl border border-white/20 text-sm hover:bg-white/10">Manage subscription</button>
-          </div>
+          {!billing.isActive && (
+            <div className="mt-8">
+              <Link
+                to="/portal/checkout"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white text-[#000000] text-sm font-medium hover:bg-white/90"
+              >
+                Complete payment <ExternalLink size={14} />
+              </Link>
+            </div>
+          )}
         </SoftCard>
 
         <SoftCard>
-          <SectionTitle eyebrow="Payment method" title="Card on file" />
+          <SectionTitle eyebrow="Payment method" title="Razorpay" />
           <div className="flex items-center gap-3">
-            <div className="w-12 h-9 rounded-md bg-gradient-to-br from-[#E11D2A] to-[#E11D2A] grid place-items-center text-white text-xs font-semibold">VISA</div>
+            <div className="w-12 h-9 rounded-md bg-gradient-to-br from-[#E11D2A] to-[#B91C1C] grid place-items-center text-white text-xs font-semibold">
+              RZP
+            </div>
             <div className="text-sm">
-              <div className="font-medium">•••• 4242</div>
-              <div className="text-[11px] text-[#737373]">Expires 09/27</div>
+              <div className="font-medium">
+                {membership?.razorpay_subscription_id ? "Auto-pay enabled" : "Not linked yet"}
+              </div>
+              <div className="text-[11px] text-[#737373]">
+                {membership?.razorpay_payment_id
+                  ? `Payment ID · ${membership.razorpay_payment_id.slice(0, 12)}…`
+                  : "Via Razorpay at checkout"}
+              </div>
             </div>
           </div>
-          <button className="mt-5 w-full py-2.5 rounded-2xl border border-[var(--border)] text-sm hover:bg-white inline-flex items-center justify-center gap-2">
-            <CreditCard size={15} /> Update card
-          </button>
+          <p className="mt-5 text-xs text-[#737373] leading-relaxed">
+            Subscription management will be available once Razorpay checkout is connected.
+          </p>
         </SoftCard>
       </div>
 
       <div>
         <SectionTitle eyebrow="History" title="Invoices" />
         <SoftCard className="!p-0 overflow-hidden">
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-[#737373] bg-[#FAFAF6]">
-                <th className="px-6 py-3 font-medium">Invoice</th>
-                <th className="px-6 py-3 font-medium">Date</th>
-                <th className="px-6 py-3 font-medium">Amount</th>
-                <th className="px-6 py-3 font-medium">Status</th>
-                <th className="px-6 py-3 font-medium text-right">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {invoices.map((inv) => (
-                <tr key={inv.id} className="border-t border-[var(--border)]">
-                  <td className="px-6 py-4 font-mono text-xs text-[#000000]">{inv.id}</td>
-                  <td className="px-6 py-4 text-[#404040]">{inv.date}</td>
-                  <td className="px-6 py-4 text-[#000000] font-medium">{inv.amount}</td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex items-center gap-1 text-xs text-[#E11D2A]"><CheckCircle2 size={13} /> {inv.status}</span>
-                  </td>
-                  <td className="px-6 py-4 text-right">
-                    <button className="inline-flex items-center gap-1 text-xs text-[#E11D2A] hover:underline"><Download size={13} /> Download</button>
-                  </td>
+          {invoices.length === 0 ? (
+            <div className="p-10 text-center text-sm text-[#737373]">
+              No payments recorded yet. Complete enrollment to see your first invoice.
+            </div>
+          ) : (
+            <table className="w-full text-sm">
+              <thead>
+                <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-[#737373] bg-[#FAFAF6]">
+                  <th className="px-6 py-3 font-medium">Reference</th>
+                  <th className="px-6 py-3 font-medium">Date</th>
+                  <th className="px-6 py-3 font-medium">Amount</th>
+                  <th className="px-6 py-3 font-medium">Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {invoices.map((inv) => (
+                  <tr key={inv.id} className="border-t border-[var(--border)]">
+                    <td className="px-6 py-4 font-mono text-xs text-[#000000]">{inv.id}</td>
+                    <td className="px-6 py-4 text-[#404040]">{inv.date}</td>
+                    <td className="px-6 py-4 text-[#000000] font-medium">{inv.amount}</td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex items-center gap-1 text-xs text-[#2E7D32]">
+                        <CheckCircle2 size={13} /> {inv.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </SoftCard>
       </div>
+
+      <SoftCard className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <CreditCard size={20} className="text-[var(--accent)] shrink-0 mt-0.5" />
+          <div>
+            <h3 className="font-medium">Need help with billing?</h3>
+            <p className="mt-1 text-sm text-[#737373]">
+              Contact support for plan changes, refunds, or payment issues.
+            </p>
+          </div>
+        </div>
+        <Link
+          to="/contact"
+          className="shrink-0 px-5 py-2.5 rounded-full border border-[var(--border)] text-sm hover:bg-[#FAFAFA]"
+        >
+          Contact support
+        </Link>
+      </SoftCard>
     </div>
   );
 }

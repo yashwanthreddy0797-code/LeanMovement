@@ -11,6 +11,7 @@ import {
 import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
+import { heroImageUrl } from "@/lib/lean-kettlebell";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 import { Navbar } from "@/components/site/Navbar";
 import { Footer } from "@/components/site/Footer";
@@ -70,22 +71,25 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "LEANMOVEMENT — Train On Your Own Terms" },
-      { name: "description", content: "Science-backed online fitness coaching for the modern Indian professional. No fluff, no fads — just results that last." },
+      { title: "Lean Movement — Live Coaching Membership | LEANMOVEMENT" },
+      { name: "description", content: "Live kettlebell coaching for busy professionals. 12 coached sessions per month, nutrition framework, and private community." },
       { name: "author", content: "LEANMOVEMENT" },
-      { property: "og:title", content: "LEANMOVEMENT — Train On Your Own Terms" },
-      { property: "og:description", content: "Science-backed online fitness coaching for the modern Indian professional. No fluff, no fads — just results that last." },
+      { property: "og:title", content: "Lean Movement — LEANMOVEMENT" },
+      { property: "og:description", content: "Train live three times a week. Short, effective kettlebell sessions for visible abs, muscle, and athletic fitness." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "LEANMOVEMENT — Train On Your Own Terms" },
-      { name: "twitter:description", content: "Science-backed online fitness coaching for the modern Indian professional. No fluff, no fads — just results that last." },
-      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e664b439-c27d-4e46-b348-8d15fc91219f" },
-      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/e664b439-c27d-4e46-b348-8d15fc91219f" },
+      { name: "twitter:title", content: "Lean Movement — LEANMOVEMENT" },
+      { name: "twitter:description", content: "Live kettlebell coaching for busy professionals. 12 coached sessions per month." },
+      { property: "og:image", content: heroImageUrl(1200) },
+      { name: "twitter:image", content: heroImageUrl(1200) },
     ],
     links: [
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
-      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap",
+      },
       { rel: "stylesheet", href: appCss },
     ],
   }),
@@ -113,15 +117,19 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const isPortal = pathname.startsWith("/portal");
+  const isStandaloneAuth =
+    pathname === "/signup" || pathname === "/login" || pathname.startsWith("/join");
+
+  const showMarketingChrome = !isPortal && !isStandaloneAuth;
 
   return (
     <QueryClientProvider client={queryClient}>
-      {!isPortal && <Navbar />}
+      {showMarketingChrome && <Navbar />}
       <main className="min-h-screen">
         <Outlet />
       </main>
-      {!isPortal && <Footer />}
-      {!isPortal && <WhatsAppButton />}
+      {showMarketingChrome && <Footer />}
+      {showMarketingChrome && <WhatsAppButton />}
       <Toaster />
     </QueryClientProvider>
   );

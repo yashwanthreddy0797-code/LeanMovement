@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { ClientShell } from "@/components/portal/ClientShell";
 import { SectionTitle, SoftCard } from "@/components/portal/ui";
 import { weightTrend, waistTrend } from "@/lib/portal/data";
 import { Area, AreaChart, Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
 export const Route = createFileRoute("/portal/progress")({
   head: () => ({ meta: [{ title: "Progress — LEANMOVEMENT Portal" }] }),
-  component: () => <ClientShell><Progress /></ClientShell>,
+  component: Progress,
 });
 
 const photos = [

@@ -1,12 +1,14 @@
 // Mock data for the portal scaffold. Replace with Lovable Cloud queries later.
 
+import { COACH } from "@/lib/lean-kettlebell";
+
 export const clientProfile = {
   name: "Rahul",
   fullName: "Rahul Mehta",
   email: "rahul@example.com",
   program: "Lean Transformation — 12 Week",
   goal: "Lose 8kg, build lean muscle",
-  coach: "Arjun Kapoor",
+  coach: COACH.name,
   dayNumber: 23,
   totalDays: 90,
   membership: "Premium 1:1",
@@ -82,7 +84,7 @@ export const invoices = [
 ];
 
 export const communityFeed = [
-  { user: "Priya S.", program: "Fat Loss", time: "2h", text: "Down 12kg and finally fitting back into my wedding lehenga. Thank you Arjun 🙏", likes: 84, comments: 12, img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&q=70&auto=format&fit=crop" },
+  { user: "Priya S.", program: "Fat Loss", time: "2h", text: `Down 12kg and finally fitting back into my wedding lehenga. Thank you ${COACH.name.split(" ")[0]} 🙏`, likes: 84, comments: 12, img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&q=70&auto=format&fit=crop" },
   { user: "Karan M.", program: "Muscle Gain", time: "5h", text: "First time deadlifting 180kg. Slow and steady wins.", likes: 142, comments: 22, img: null },
   { user: "Neha A.", program: "Lean & Strong", time: "1d", text: "30 days of consistency. Energy levels are unreal.", likes: 56, comments: 8, img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=70&auto=format&fit=crop" },
 ];

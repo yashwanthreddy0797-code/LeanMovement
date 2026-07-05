@@ -152,11 +152,11 @@ function ResultsPage() {
 
       <CTABanner
         eyebrow="Your Turn"
-        title="Add your name to this list."
-        highlight="name"
-        subtitle="Apply for LEAN. 90 days of structured mentorship. Application only. Limited spots."
-        ctaText="Apply For Lean"
-        ctaTo="/apply"
+        title="Train live with us."
+        highlight="live"
+        subtitle="12 coached sessions per month, foundations onboarding, and a community that keeps you showing up."
+        ctaText="Join Now"
+        ctaTo="/join"
       />
     </>
   );

@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Instagram } from "lucide-react";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 export function Footer() {
   return (
@@ -7,22 +8,23 @@ export function Footer() {
       <div className="container-x py-20 md:py-28">
         <div className="grid md:grid-cols-12 gap-12 items-start">
           <div className="md:col-span-7">
-            <div className="font-display text-5xl md:text-7xl tracking-[0.04em] uppercase leading-[0.95]">
-              LEAN<span className="font-normal">MOVEMENT</span>
-            </div>
+            <BrandLogo className="text-5xl md:text-7xl tracking-[0.04em]" />
             <p className="mt-6 font-serif text-2xl md:text-3xl text-foreground/70">
-              Pure work in solitude.
+              Get lean. Get strong. Stay athletic.
             </p>
           </div>
 
           <div className="md:col-span-5 md:text-right flex flex-col md:items-end gap-6">
             <Link
-              to="/apply"
+              to="/join"
               className="inline-flex w-fit items-center px-7 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
             >
-              Apply For Lean
+              Join Now
             </Link>
             <div className="flex flex-col md:items-end gap-3 text-[11px] uppercase tracking-[0.28em] text-foreground/70">
+              <Link to="/programs" className="hover:text-accent transition-colors">
+                Membership
+              </Link>
               <a
                 href="https://instagram.com"
                 target="_blank"
@@ -33,7 +35,9 @@ export function Footer() {
                 <Instagram size={16} />
                 Instagram
               </a>
-              <Link to="/contact" className="hover:text-accent transition-colors">Contact</Link>
+              <Link to="/contact" className="hover:text-accent transition-colors">
+                Contact
+              </Link>
             </div>
           </div>
         </div>

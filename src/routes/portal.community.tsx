@@ -1,65 +1,86 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { ClientShell } from "@/components/portal/ClientShell";
-import { communityFeed } from "@/lib/portal/data";
-import { Heart, MessageCircle, Share2 } from "lucide-react";
+import { OnboardingChecklist } from "@/components/portal/OnboardingChecklist";
+import { SectionTitle, SoftCard } from "@/components/portal/ui";
+import { useMarkWhatsAppJoined, useMemberOnboarding } from "@/hooks/useMemberOnboarding";
+import { usePortalPageContent } from "@/lib/portal/portal-content";
+import { whatsAppCommunity } from "@/lib/portal/member-data";
+import { usePortalSession } from "@/lib/portal/session";
+import { COACH } from "@/lib/lean-kettlebell";
+import { Check, CheckCircle2, MessageCircle, Users } from "lucide-react";
 
 export const Route = createFileRoute("/portal/community")({
-  head: () => ({ meta: [{ title: "Community — LEANMOVEMENT Portal" }] }),
-  component: () => <ClientShell><Community /></ClientShell>,
+  head: () => ({ meta: [{ title: "Community — Lean Kettlebell Portal" }] }),
+  component: Community,
 });
 
 function Community() {
-  const [draft, setDraft] = useState("");
+  const session = usePortalSession();
+  const { siteConfig } = usePortalPageContent();
+  const { data: onboarding } = useMemberOnboarding(session.user?.id);
+  const markJoined = useMarkWhatsAppJoined(session.user?.id);
+
+  const whatsappUrl = siteConfig.whatsappInviteUrl || whatsAppCommunity.inviteUrl;
+  const calendlyUrl = siteConfig.foundationsCalendlyUrl;
+  const hasJoined = onboarding?.whatsapp_joined;
+
   return (
     <div className="space-y-10 max-w-2xl mx-auto">
-      <div>
+      <div className="text-center">
         <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Members only</div>
-        <h1 className="text-4xl md:text-5xl">The LeanMovement circle</h1>
-        <p className="mt-2 text-[#737373]">A private space for clients to share wins, ask questions, and lift each other up.</p>
+        <h1 className="text-4xl md:text-5xl font-serif">Community</h1>
+        <p className="mt-2 text-[#737373]">Private WhatsApp group — accountability, questions, progress sharing.</p>
       </div>
 
-      <div className="card-soft p-5">
-        <div className="flex gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#F5F5F5] grid place-items-center text-sm font-semibold text-[#E11D2A]">R</div>
-          <div className="flex-1">
-            <textarea value={draft} onChange={(e) => setDraft(e.target.value)} rows={2}
-              placeholder="Share a win, a question, or a moment of clarity…"
-              className="w-full px-4 py-2.5 rounded-xl bg-[#FAFAF6] border border-transparent focus:bg-white focus:border-[var(--border)] text-sm outline-none resize-none" />
-            <div className="flex items-center justify-between mt-3">
-              <button className="text-xs text-[#737373]">📷 Add photo</button>
-              <button disabled={!draft.trim()} className="px-4 py-1.5 rounded-full bg-[#000000] text-white text-xs font-medium disabled:opacity-40">Post</button>
-            </div>
-          </div>
+      <SoftCard className="text-center p-10 md:p-14 bg-gradient-to-br from-[#E8F5E9] to-white">
+        <div className="w-20 h-20 rounded-full bg-[#25D366] grid place-items-center text-white mx-auto">
+          <MessageCircle size={36} />
         </div>
-      </div>
+        <h2 className="mt-6 font-serif text-3xl">{whatsAppCommunity.groupName}</h2>
+        <p className="mt-3 text-[#737373]">{whatsAppCommunity.description}</p>
+        <div className="mt-4 inline-flex items-center gap-2 text-sm text-[#404040]">
+          <Users size={16} /> Members-only group
+        </div>
 
-      <div className="space-y-5">
-        {communityFeed.map((post, i) => (
-          <article key={i} className="card-soft overflow-hidden">
-            <header className="p-5 flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#000000] text-white grid place-items-center text-sm font-semibold">{post.user[0]}</div>
-              <div className="flex-1">
-                <div className="text-sm font-medium">{post.user}</div>
-                <div className="text-[11px] text-[#737373]">{post.program} · {post.time} ago</div>
-              </div>
-            </header>
-            {post.img && (
-              <div className="aspect-[4/3] bg-[#F5F5F5] overflow-hidden">
-                <img src={post.img} alt="" loading="lazy" className="w-full h-full object-cover" />
-              </div>
-            )}
-            <div className="p-5">
-              <p className="text-[15px] text-[#000000] leading-relaxed">{post.text}</p>
-              <div className="mt-4 flex items-center gap-6 text-xs text-[#737373]">
-                <button className="inline-flex items-center gap-1.5 hover:text-[#E11D2A]"><Heart size={15} /> {post.likes}</button>
-                <button className="inline-flex items-center gap-1.5 hover:text-[#E11D2A]"><MessageCircle size={15} /> {post.comments}</button>
-                <button className="inline-flex items-center gap-1.5 hover:text-[#E11D2A] ml-auto"><Share2 size={15} /> Share</button>
-              </div>
-            </div>
-          </article>
-        ))}
-      </div>
+        {hasJoined && (
+          <div className="mt-6 inline-flex items-center gap-2 text-sm text-[#2E7D32] font-medium">
+            <CheckCircle2 size={16} /> You&apos;ve joined the community
+          </div>
+        )}
+
+        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => {
+              if (!hasJoined) void markJoined.mutate();
+            }}
+            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#25D366] text-white font-medium hover:opacity-90 w-full sm:w-auto"
+          >
+            <MessageCircle size={18} /> {hasJoined ? "Open WhatsApp group" : "Join WhatsApp group"}
+          </a>
+        </div>
+      </SoftCard>
+
+      <OnboardingChecklist onboarding={onboarding} calendlyUrl={calendlyUrl} whatsappUrl={whatsappUrl} />
+
+      <SoftCard>
+        <SectionTitle eyebrow="In the group" title="What happens here" />
+        <ul className="space-y-4 mt-2">
+          {[
+            `Questions answered by ${COACH.name.split(" ")[0]} and the community`,
+            "Progress photos and wins shared",
+            "Session reminders and schedule updates",
+            "Accountability between live classes",
+            "Travel and restaurant tips from other members",
+          ].map((item) => (
+            <li key={item} className="flex gap-3 text-sm text-[#404040]">
+              <Check size={16} className="text-[var(--accent)] shrink-0 mt-0.5" />
+              {item}
+            </li>
+          ))}
+        </ul>
+      </SoftCard>
     </div>
   );
 }

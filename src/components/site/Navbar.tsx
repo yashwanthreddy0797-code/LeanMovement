@@ -1,28 +1,15 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
+import { BrandLogo } from "@/components/brand/BrandLogo";
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/about", label: "About" },
-  { to: "/programs", label: "Programs" },
+  { to: "/programs", label: "Membership" },
   { to: "/results", label: "Results" },
-  { to: "/apply", label: "Apply" },
+  { to: "/about", label: "About" },
+  { to: "/contact", label: "Contact" },
 ] as const;
-
-function Wordmark({ className = "" }: { className?: string }) {
-  return (
-    <span className={`flex items-center gap-2 sm:gap-2.5 ${className}`}>
-      <svg width="20" height="20" viewBox="0 0 22 22" fill="none" aria-hidden className="shrink-0 sm:w-[22px] sm:h-[22px]">
-        <path d="M2 2v18h6" stroke="currentColor" strokeWidth="1" />
-        <path d="M12 20V2l4 9 4-9v18" stroke="currentColor" strokeWidth="1" />
-      </svg>
-      <span className="font-display text-[12px] sm:text-[15px] tracking-[0.28em] sm:tracking-[0.32em] uppercase font-medium truncate">
-        LEAN<span className="font-normal">MOVEMENT</span>
-      </span>
-    </span>
-  );
-}
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -49,7 +36,7 @@ export function Navbar() {
         <div className="container-x">
           <div className="flex items-center justify-between h-16 md:h-24">
             <Link to="/" aria-label="LEANMOVEMENT home" className="text-foreground min-w-0">
-              <Wordmark />
+              <BrandLogo variant="navbar" />
             </Link>
 
             <nav className="hidden lg:flex items-center gap-10">
@@ -68,10 +55,11 @@ export function Navbar() {
 
             <div className="flex items-center gap-3 shrink-0">
               <Link
-                to="/apply"
+                to="/join"
+                search={{ plan: "standard" }}
                 className="hidden lg:inline-flex items-center px-6 py-3 text-[11px] uppercase tracking-[0.28em] bg-foreground text-background hover:bg-accent transition-colors"
               >
-                Apply For Lean
+                Join Now
               </Link>
               <button
                 className="lg:hidden text-foreground p-2 -mr-2"
@@ -86,7 +74,6 @@ export function Navbar() {
         </div>
       </header>
 
-      {/* Mobile menu — rendered outside header so backdrop-blur doesn't trap fixed positioning */}
       <div
         className={`lg:hidden fixed inset-0 z-[55] transition-opacity duration-300 ${
           open ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
@@ -95,7 +82,6 @@ export function Navbar() {
       >
         <div className="absolute inset-0 bg-background" onClick={() => setOpen(false)} />
         <div className="relative h-full w-full flex flex-col pt-6 pb-8 px-6 overflow-y-auto">
-          {/* Close button */}
           <div className="flex items-center justify-end mb-8">
             <button
               onClick={() => setOpen(false)}
@@ -125,14 +111,15 @@ export function Navbar() {
           </nav>
           <div className="pt-6 mt-6 border-t border-border">
             <Link
-              to="/apply"
+              to="/join"
+              search={{ plan: "standard" }}
               onClick={() => setOpen(false)}
               className="flex items-center justify-center w-full px-6 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background"
             >
-              Apply For Lean
+              Join Now
             </Link>
             <p className="mt-4 text-center text-[10px] uppercase tracking-[0.32em] text-muted-foreground">
-              Pure work in solitude.
+              Live coached training · 3× per week
             </p>
           </div>
         </div>

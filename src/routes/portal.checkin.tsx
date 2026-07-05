@@ -1,12 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ClientShell } from "@/components/portal/ClientShell";
 import { SectionTitle, SoftCard } from "@/components/portal/ui";
 import { Upload, Check } from "lucide-react";
 
 export const Route = createFileRoute("/portal/checkin")({
   head: () => ({ meta: [{ title: "Weekly Check-in — LEANMOVEMENT Portal" }] }),
-  component: () => <ClientShell><CheckIn /></ClientShell>,
+  component: CheckIn,
 });
 
 function CheckIn() {

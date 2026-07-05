@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export type PortalRole = "client" | "coach";
 export type PortalUser = {
+  id?: string;
   email: string;
   name: string;
   role: PortalRole;
@@ -26,6 +27,7 @@ export function setPortalUser(u: PortalUser | null) {
   window.dispatchEvent(new Event("portal-auth"));
 }
 
+/** @deprecated Use usePortalSession() instead */
 export function usePortalUser() {
   const [user, setUser] = useState<PortalUser | null>(null);
   useEffect(() => {

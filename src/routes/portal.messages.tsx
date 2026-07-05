@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ClientShell } from "@/components/portal/ClientShell";
+import { COACH } from "@/lib/lean-kettlebell";
 import { messages as initialMessages } from "@/lib/portal/data";
 import { Mic, Paperclip, Send } from "lucide-react";
 
 export const Route = createFileRoute("/portal/messages")({
   head: () => ({ meta: [{ title: "Messages — LEANMOVEMENT Portal" }] }),
-  component: () => <ClientShell><Messages /></ClientShell>,
+  component: Messages,
 });
 
 function Messages() {
@@ -28,7 +28,7 @@ function Messages() {
         </div>
         <div className="flex-1 overflow-y-auto">
           {[
-            { name: "Arjun Kapoor", role: "Head Coach", last: "Don't forget your check-in 🙌", time: "10:40 AM", active: true, unread: 1 },
+            { name: COACH.name, role: "Head Coach", last: "Don't forget your check-in 🙌", time: "10:40 AM", active: true, unread: 1 },
             { name: "LeanMovement Community", role: "Group", last: "Karan: Just hit 180kg deadlift!", time: "Yest", active: false },
             { name: "Nutrition Team", role: "Support", last: "Your new meal plan is ready", time: "Mon", active: false },
           ].map((c) => (
@@ -51,9 +51,9 @@ function Messages() {
       {/* Chat */}
       <section className="card-soft flex flex-col overflow-hidden">
         <header className="p-4 border-b border-[var(--border)] flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold">A</div>
+          <div className="w-10 h-10 rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold">{COACH.name[0]}</div>
           <div>
-            <div className="text-sm font-medium">Arjun Kapoor</div>
+            <div className="text-sm font-medium">{COACH.name}</div>
             <div className="text-[11px] text-[#E11D2A] flex items-center gap-1.5"><span className="w-1.5 h-1.5 rounded-full bg-[#E11D2A]" /> Online</div>
           </div>
         </header>
@@ -73,7 +73,7 @@ function Messages() {
           <button className="p-2.5 rounded-full hover:bg-[#F5F5F5] text-[#737373]"><Paperclip size={18} /></button>
           <input value={text} onChange={(e) => setText(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send()}
-            placeholder="Message Arjun…"
+            placeholder={`Message ${COACH.name.split(" ")[0]}…`}
             className="flex-1 px-4 py-2.5 rounded-full bg-[#F4F2EC] border border-transparent focus:bg-white focus:border-[var(--border)] text-sm outline-none" />
           <button className="p-2.5 rounded-full hover:bg-[#F5F5F5] text-[#737373]"><Mic size={18} /></button>
           <button onClick={send} className="p-2.5 rounded-full bg-[#000000] text-white hover:bg-[#111111]"><Send size={16} /></button>

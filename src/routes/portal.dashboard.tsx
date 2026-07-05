@@ -1,226 +1,310 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ClientShell } from "@/components/portal/ClientShell";
-import { KPICard, SectionTitle, SoftCard, ProgressRing } from "@/components/portal/ui";
+import { LiveJoinButton, LiveSessionBadge } from "@/components/portal/LiveSessionBanner";
+import { OnboardingChecklist } from "@/components/portal/OnboardingChecklist";
+import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
+import { SectionTitle, SoftCard } from "@/components/portal/ui";
+import { useMemberOnboarding } from "@/hooks/useMemberOnboarding";
+import { usePortalPageContent } from "@/lib/portal/portal-content";
+import { memberProfile, whatsAppCommunity } from "@/lib/portal/member-data";
+import { formatPortalDate, membershipSummary } from "@/lib/portal/member-format";
+import { usePortalSession } from "@/lib/portal/session";
+import { COACH } from "@/lib/lean-kettlebell";
 import {
-  clientProfile, kpis, weightTrend, workoutToday, meals,
-  nutritionTargets, nutritionConsumed, messages,
-} from "@/lib/portal/data";
-import { Area, AreaChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
-import { ArrowRight, Flame, Trophy, Play, Calendar, Quote, ChevronRight, Sparkles } from "lucide-react";
+  ArrowRight,
+  Calendar,
+  Play,
+  Radio,
+  Video,
+  MessageCircle,
+  Dumbbell,
+} from "lucide-react";
 
 export const Route = createFileRoute("/portal/dashboard")({
-  head: () => ({ meta: [{ title: "Dashboard — LeanMovement Portal" }] }),
-  component: () => <ClientShell><Dashboard /></ClientShell>,
+  head: () => ({ meta: [{ title: "Dashboard — LEANMOVEMENT Portal" }] }),
+  component: Dashboard,
 });
 
 function Dashboard() {
+  const session = usePortalSession();
+  const { content, isLoading, isError, nextLiveSession, weeklySchedule, recordings, circuits, siteConfig } =
+    usePortalPageContent();
+  const { data: onboarding, isLoading: onboardingLoading } = useMemberOnboarding(session.user?.id);
+
+  if (isLoading || !content) {
+    return <PortalPageSkeleton lines={4} />;
+  }
+
+  if (isError || !nextLiveSession) {
+    return (
+      <div className="card-soft p-8 text-center max-w-md mx-auto">
+        <p className="text-sm text-[#737373]">We couldn&apos;t load your schedule. Try refreshing.</p>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="mt-4 px-5 py-2.5 rounded-full bg-[#000000] text-white text-sm"
+        >
+          Refresh
+        </button>
+      </div>
+    );
+  }
+
+  const live = {
+    liveState: "later" as const,
+    minutesUntilStart: 0,
+    joinUrl: "#",
+    title: "Live session",
+    day: "",
+    date: "",
+    time: "",
+    type: "",
+    coach: COACH.name,
+    duration: "45 min",
+    ...nextLiveSession,
+  };
+
+  const whatsappUrl = siteConfig.whatsappInviteUrl || whatsAppCommunity.inviteUrl;
+  const calendlyUrl = siteConfig.foundationsCalendlyUrl;
+  const billing = membershipSummary(session.membership);
+  const displayName = session.user?.name ?? memberProfile.name;
+  const sessionPct = Math.min(
+    100,
+    Math.round(((content.sessionsThisMonth ?? 0) / (content.totalSessionsPerMonth || 12)) * 100),
+  );
+
   const hours = new Date().getHours();
   const greet = hours < 12 ? "Good morning" : hours < 18 ? "Good afternoon" : "Good evening";
-  const pct = Math.round((clientProfile.dayNumber / clientProfile.totalDays) * 100);
-  const today = new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "long" });
-  const kcalPct = Math.round((nutritionConsumed.kcal / nutritionTargets.kcal) * 100);
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
 
   return (
-    <div className="space-y-12">
-      {/* ===== Editorial hero ===== */}
+    <div className="space-y-10">
       <section className="relative overflow-hidden rounded-[28px] border border-[var(--border)] bg-[#000000]">
-        <div className="grid lg:grid-cols-[1.05fr_1fr]">
-          {/* Copy side */}
-          <div className="relative z-10 p-8 md:p-12 lg:p-14 text-white">
+        <div className="p-8 md:p-12 lg:p-14 text-white">
+          <div className="flex flex-wrap items-center gap-3">
             <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.28em] text-white/60">
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
               {today} · {greet}
             </div>
+            <LiveSessionBadge liveState={live.liveState} minutesUntilStart={live.minutesUntilStart} />
+          </div>
 
-            <h1 className="mt-5 font-serif text-[42px] md:text-[58px] leading-[1.02] tracking-[-0.01em]">
-              Welcome back,<br />
-              <span className="text-white/85">{clientProfile.name}.</span>
-            </h1>
+          <h1 className="mt-5 font-serif text-[42px] md:text-[52px] leading-[1.02] tracking-[-0.01em]">
+            Welcome back,
+            <br />
+            <span className="text-white/85">{displayName}.</span>
+          </h1>
 
-            <p className="mt-5 text-white/70 text-[15px] leading-relaxed max-w-md">
-              Day {clientProfile.dayNumber} of {clientProfile.totalDays} — you've shown up {pct}% of the way to your transformation. Discipline is becoming identity.
-            </p>
+          <p className="mt-5 text-white/70 text-[15px] leading-relaxed max-w-lg">
+            Lean Kettlebell™ · {billing.planLabel} · {billing.statusLabel}
+          </p>
 
-            <div className="mt-8 max-w-md">
-              <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-white/50 mb-2">
-                <span>Program progress</span>
-                <span className="text-white/80 font-medium">{pct}%</span>
-              </div>
-              <div className="h-[5px] bg-white/10 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-[var(--accent)] to-white/80 rounded-full transition-all duration-700" style={{ width: `${pct}%` }} />
-              </div>
+          <div className="mt-8 max-w-md">
+            <div className="flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-white/50 mb-2">
+              <span>Sessions this month</span>
+              <span className="text-white/80 font-medium">
+                {content.sessionsThisMonth ?? 0}/{content.totalSessionsPerMonth ?? 12}
+              </span>
             </div>
-
-            <div className="mt-9 flex flex-wrap gap-3">
-              <Link to="/portal/workouts" className="inline-flex items-center gap-2 bg-[var(--accent)] text-white px-5 py-3 rounded-full text-sm font-medium hover:opacity-90 transition shadow-lg shadow-black/20">
-                <Play size={14} fill="currentColor" /> Start today's session
-              </Link>
-              <Link to="/portal/checkin" className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-white/15 transition border border-white/15">
-                <Calendar size={14} /> Weekly check-in
-              </Link>
-            </div>
-
-            <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-3 gap-6 max-w-md">
-              <HeroStat k="Program" v={clientProfile.program.split(" — ")[0]} />
-              <HeroStat k="Coach" v={clientProfile.coach} />
-              <HeroStat k="Renews" v={clientProfile.membershipRenewsOn.split(",")[0]} />
+            <div className="h-[5px] bg-white/10 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-gradient-to-r from-[var(--accent)] to-white/80 rounded-full transition-all duration-500"
+                style={{ width: `${sessionPct}%` }}
+              />
             </div>
           </div>
 
-          {/* Right side — stats */}
-          <div className="relative h-[300px] lg:h-auto min-h-[420px] bg-[#0a0a0a] flex flex-col justify-center p-8 md:p-12">
-            <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur-xl rounded-2xl p-4 shadow-2xl shadow-black/30 w-[180px]">
-              <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Streak</div>
-              <div className="mt-1 flex items-baseline gap-1.5">
-                <span className="font-serif text-3xl text-[#000000]">14</span>
-                <span className="text-xs text-[#737373]">days</span>
-              </div>
-              <div className="mt-2 flex items-center gap-1 text-[11px] text-[var(--accent)] font-medium">
-                <Flame size={11} fill="currentColor" /> Personal best
-              </div>
-            </div>
-            <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-3 gap-6 max-w-md">
-              <HeroStat k="Program" v={clientProfile.program.split(" — ")[0]} />
-              <HeroStat k="Coach" v={clientProfile.coach} />
-              <HeroStat k="Renews" v={clientProfile.membershipRenewsOn.split(",")[0]} />
-            </div>
+          <div className="mt-9 flex flex-wrap gap-3">
+            <a
+              href={live.joinUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex items-center gap-2 px-5 py-3 rounded-full text-sm font-medium transition shadow-lg shadow-black/20 ${
+                live.liveState !== "later"
+                  ? "bg-[var(--accent)] text-white hover:opacity-90"
+                  : "bg-white/10 backdrop-blur text-white hover:bg-white/15 border border-white/15"
+              }`}
+            >
+              <Radio size={14} />
+              {live.liveState === "live" ? "Join live now" : "Next live session"}
+            </a>
+            <Link
+              to="/portal/recordings"
+              className="inline-flex items-center gap-2 bg-white/10 backdrop-blur text-white px-5 py-3 rounded-full text-sm font-medium hover:bg-white/15 transition border border-white/15"
+            >
+              <Video size={14} /> Watch recordings
+            </Link>
+          </div>
+
+          <div className="mt-10 pt-8 border-t border-white/10 grid grid-cols-2 md:grid-cols-4 gap-6">
+            <HeroStat k="Membership" v="Lean Kettlebell™" />
+            <HeroStat k="Plan" v={billing.planLabel} />
+            <HeroStat k="Renews" v={billing.renewsOn} />
+            <HeroStat k="Member since" v={billing.memberSince} />
           </div>
         </div>
       </section>
 
-      {/* ===== KPIs ===== */}
-      <section>
-        <SectionTitle
-          eyebrow="Today's snapshot"
-          title="Your numbers"
-          action={<Link to="/portal/progress" className="text-xs text-[#E11D2A] font-medium hover:underline inline-flex items-center gap-1">View progress <ArrowRight size={14} /></Link>}
-        />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {kpis.map((k) => <KPICard key={k.label} {...k} />)}
-        </div>
-      </section>
+      <OnboardingChecklist
+        onboarding={onboarding}
+        calendlyUrl={calendlyUrl}
+        whatsappUrl={whatsappUrl}
+        loading={onboardingLoading}
+      />
 
-      {/* ===== Trend + Today's workout ===== */}
       <section className="grid lg:grid-cols-5 gap-5">
-        <SoftCard className="lg:col-span-3">
-          <SectionTitle eyebrow="10-week trend" title="Weight journey" />
-          <div className="h-64 -mx-2">
-            <ResponsiveContainer>
-              <AreaChart data={weightTrend}>
-                <defs>
-                  <linearGradient id="w" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0%" stopColor="#E11D2A" stopOpacity={0.4} />
-                    <stop offset="100%" stopColor="#E11D2A" stopOpacity={0} />
-                  </linearGradient>
-                </defs>
-                <XAxis dataKey="d" stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} />
-                <YAxis stroke="#A3A3A3" fontSize={11} tickLine={false} axisLine={false} width={32} />
-                <Tooltip contentStyle={{ borderRadius: 12, border: "1px solid #E5E5E5", background: "#fff", fontSize: 12 }} />
-                <Area type="monotone" dataKey="w" stroke="#E11D2A" strokeWidth={2.5} fill="url(#w)" />
-              </AreaChart>
-            </ResponsiveContainer>
+        <SoftCard className="lg:col-span-3 border-2 border-[#FEE2E2]">
+          <div className="flex items-start justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+                <Radio size={12} className="animate-pulse" /> Next live session
+              </div>
+              <h2 className="mt-3 font-serif text-3xl text-[#000000]">{live.title}</h2>
+              <p className="mt-2 text-sm text-[#737373]">
+                {live.day} · {live.date} · {live.time}
+              </p>
+            </div>
+            <span className="chip">{live.type}</span>
           </div>
-          <div className="mt-4 pt-4 border-t border-[var(--border)] flex items-center justify-between text-xs">
-            <span className="text-[#737373]">Starting <span className="text-[#000000] font-medium">87.0kg</span></span>
-            <span className="text-[#737373]">Current <span className="text-[#000000] font-medium">78.4kg</span></span>
-            <span className="text-[var(--accent)] font-medium">−8.6kg</span>
+          <div className="mt-6 flex flex-wrap items-end justify-between gap-4">
+            <LiveJoinButton
+              joinUrl={live.joinUrl}
+              liveState={live.liveState}
+              minutesUntilStart={live.minutesUntilStart}
+              size="sm"
+            />
+            <Link
+              to="/portal/live"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[var(--border)] text-sm hover:bg-[#FAFAFA]"
+            >
+              View schedule <ArrowRight size={14} />
+            </Link>
           </div>
         </SoftCard>
 
-        {/* Workout card */}
-        <div className="lg:col-span-2 card-soft overflow-hidden flex flex-col">
-          <div className="relative h-44 overflow-hidden bg-[#111] flex items-end p-4">
-            <div className="absolute top-3 left-3 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/90 backdrop-blur text-[10px] uppercase tracking-[0.18em] text-[#000000] font-medium">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)]" /> Today
-            </div>
-            <div className="text-white">
-              <div className="text-[11px] uppercase tracking-[0.18em] text-white/70">{workoutToday.duration} · {workoutToday.exercises.length} exercises</div>
-              <div className="font-serif text-xl mt-0.5 leading-tight">{workoutToday.title}</div>
-            </div>
-          </div>
-          <div className="p-5 flex-1 flex flex-col">
-            <div className="space-y-2.5 flex-1">
-              {workoutToday.exercises.slice(0, 4).map((e) => (
-                <div key={e.name} className="flex items-center justify-between text-sm">
-                  <span className={`flex items-center gap-2 ${e.done ? "text-[#A3A3A3] line-through" : "text-[#000000]"}`}>
-                    <span className={`w-4 h-4 rounded-full border ${e.done ? "bg-[var(--accent)] border-[var(--accent)]" : "border-[#E5E5E5]"}`} />
-                    {e.name}
-                  </span>
-                  <span className="text-[11px] text-[#737373] font-medium">{e.sets}×{e.reps}</span>
-                </div>
-              ))}
-            </div>
-            <Link to="/portal/workouts" className="mt-5 inline-flex items-center justify-between w-full px-4 py-3 rounded-xl bg-[#000000] text-white text-xs font-medium hover:bg-[#111111] transition">
-              Open today's session <ChevronRight size={14} />
+        <div className="lg:col-span-2 card-soft p-6 flex flex-col">
+          <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Foundations</div>
+          <h3 className="mt-3 font-serif text-2xl">Book Foundations</h3>
+          <p className="mt-2 text-sm text-[#737373] flex-1">
+            60-min technique session before your first live class.
+          </p>
+          {onboarding?.foundations_completed_at ? (
+            <p className="mt-4 text-xs text-[#2E7D32] font-medium">
+              Completed {formatPortalDate(onboarding.foundations_completed_at)}
+            </p>
+          ) : calendlyUrl ? (
+            <a
+              href={calendlyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="mt-4 text-xs text-[var(--accent)] font-medium hover:underline inline-flex items-center gap-1"
+            >
+              Book on Calendly <ArrowRight size={13} />
+            </a>
+          ) : null}
+        </div>
+      </section>
+
+      <section>
+        <SectionTitle
+          eyebrow="This week"
+          title="Live schedule"
+          action={
+            <Link to="/portal/live" className="text-xs text-[#E11D2A] font-medium hover:underline inline-flex items-center gap-1">
+              Full schedule <ArrowRight size={14} />
             </Link>
-          </div>
+          }
+        />
+        <div className="grid md:grid-cols-3 gap-4">
+          {weeklySchedule.map((s) => (
+            <div
+              key={s.day}
+              className={`card-soft p-5 ${s.isToday ? "ring-2 ring-[#FEE2E2] bg-[#FFFBFB]" : ""}`}
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">{s.day}</span>
+                {s.isToday && <LiveSessionBadge liveState={s.liveState ?? "later"} className="!text-[9px]" />}
+              </div>
+              <h3 className="mt-2 font-display text-xl uppercase">{s.title}</h3>
+              <p className="mt-2 text-xs text-[#737373]">{s.focus}</p>
+              <div className="mt-4 flex items-center gap-1.5 text-xs text-[#404040]">
+                <Calendar size={12} /> {s.time} · {s.date}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
-      {/* ===== Nutrition + Coach + Milestone row ===== */}
-      <section className="grid lg:grid-cols-3 gap-5">
-        {/* Nutrition card */}
-        <div className="card-soft overflow-hidden">
-          <div className="p-5">
-            <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">Today's nutrition</div>
-            <div className="mt-1.5 font-serif text-2xl text-[#000000]">{nutritionConsumed.kcal}<span className="text-sm text-[#737373] font-sans"> / {nutritionTargets.kcal} kcal</span></div>
-            <div className="mt-3 h-1.5 bg-[#F5F5F5] rounded-full overflow-hidden">
-              <div className="h-full bg-[var(--accent)]" style={{ width: `${kcalPct}%` }} />
-            </div>
-            <div className="mt-4 grid grid-cols-3 gap-2 text-[11px]">
-              <Macro label="P" v={nutritionConsumed.p} t={nutritionTargets.p} />
-              <Macro label="C" v={nutritionConsumed.c} t={nutritionTargets.c} />
-              <Macro label="F" v={nutritionConsumed.f} t={nutritionTargets.f} />
-            </div>
+      <section className="grid lg:grid-cols-2 gap-5">
+        <SoftCard>
+          <SectionTitle eyebrow="Library" title="Recent recordings" />
+          <div className="space-y-3">
+            {recordings.slice(0, 3).map((r) => (
+              <Link
+                key={r.id}
+                to="/portal/recordings"
+                className="flex items-center gap-4 p-3 rounded-xl hover:bg-[#FAFAFA] transition"
+              >
+                <div className="w-16 h-12 rounded-lg bg-[#111] overflow-hidden shrink-0">
+                  <img src={r.thumbnail} alt="" className="w-full h-full object-cover opacity-80" />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <div className="text-sm font-medium truncate">{r.title}</div>
+                  <div className="text-[11px] text-[#737373]">
+                    {r.date} · {r.duration}
+                  </div>
+                </div>
+                <Play size={16} className="text-[#737373] shrink-0" />
+              </Link>
+            ))}
           </div>
-          <Link to="/portal/nutrition" className="block px-5 py-3 text-xs text-[#E11D2A] font-medium hover:bg-[#FAFAFA] transition border-t border-[var(--border)]">
-            Log meals →
-          </Link>
-        </div>
+        </SoftCard>
 
-        {/* Coach message */}
-        <div className="card-soft p-6 bg-gradient-to-br from-white to-[#FAFAFA]">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-full bg-gradient-to-br from-[#E11D2A] to-[#E11D2A] grid place-items-center text-white text-sm font-semibold">AK</div>
+        <SoftCard>
+          <SectionTitle eyebrow="On-demand" title="Kettlebell circuits" />
+          <div className="space-y-3">
+            {circuits.slice(0, 3).map((c) => (
+              <Link
+                key={c.id}
+                to="/portal/workouts"
+                className="flex items-center justify-between p-3 rounded-xl hover:bg-[#FAFAFA] transition"
+              >
+                <div>
+                  <div className="text-sm font-medium">{c.name}</div>
+                  <div className="text-[11px] text-[#737373]">
+                    {c.duration} · {c.difficulty}
+                  </div>
+                </div>
+                <Dumbbell size={16} className="text-[#737373]" />
+              </Link>
+            ))}
+          </div>
+        </SoftCard>
+      </section>
+
+      <section className="card-soft p-6 bg-gradient-to-br from-[#E8F5E9] to-white border-[#C8E6C9]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div className="flex items-start gap-4">
+            <div className="w-12 h-12 rounded-full bg-[#25D366] grid place-items-center text-white shrink-0">
+              <MessageCircle size={22} />
+            </div>
             <div>
-              <div className="text-sm font-medium text-[#000000]">{clientProfile.coach}</div>
-              <div className="text-[11px] text-[#737373]">Your coach · online</div>
+              <h3 className="font-serif text-xl">{whatsAppCommunity.groupName}</h3>
+              <p className="mt-1 text-sm text-[#737373]">
+                Questions, accountability, progress sharing
+                {onboarding?.whatsapp_joined && " · You're in the group"}
+              </p>
             </div>
           </div>
-          <Quote size={22} className="mt-5 text-[#FCA5A5]" />
-          <p className="mt-2 text-[15px] text-[#000000] leading-relaxed">{messages[2].text}</p>
-          <div className="mt-4 text-[11px] text-[#737373]">{messages[2].time} today</div>
-          <Link to="/portal/messages" className="mt-5 inline-flex items-center gap-1 text-xs text-[#E11D2A] font-medium hover:underline">
-            Open conversation <ArrowRight size={13} />
+          <Link
+            to="/portal/community"
+            className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-[#25D366] text-white text-sm font-medium hover:opacity-90 shrink-0"
+          >
+            Open community
           </Link>
-        </div>
-
-        {/* Milestone */}
-        <div className="card-soft p-6 bg-[#000000] text-white relative overflow-hidden">
-          <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-[var(--accent)]/20 blur-2xl" />
-          <div className="relative">
-            <div className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
-              <Sparkles size={12} /> Milestone unlocked
-            </div>
-            <div className="mt-4 font-serif text-5xl leading-none">8.6<span className="text-2xl text-white/60"> kg</span></div>
-            <div className="mt-2 text-sm text-white/70">down since you started</div>
-
-            <div className="mt-7 pt-5 border-t border-white/10 flex items-center gap-3">
-              <Trophy size={16} className="text-[var(--accent)]" />
-              <div className="text-[13px] text-white/80">Top 8% of {clientProfile.program.split(" — ")[0]} clients this month.</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== Hydration / sleep mini progress ===== */}
-      <section className="card-soft p-7">
-        <SectionTitle eyebrow="Daily targets" title="Today's rings" />
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <ProgressRing value={2.8} target={3.5} label="Hydration" unit="L" />
-          <ProgressRing value={7.4} target={8} label="Sleep" unit="h" />
-          <ProgressRing value={9200} target={10000} label="Steps" />
-          <ProgressRing value={55} target={60} label="Training" unit="m" />
         </div>
       </section>
     </div>
@@ -232,21 +316,6 @@ function HeroStat({ k, v }: { k: string; v: string }) {
     <div>
       <div className="text-[10px] uppercase tracking-[0.18em] text-white/45">{k}</div>
       <div className="mt-1.5 text-sm text-white/95 font-medium leading-snug">{v}</div>
-    </div>
-  );
-}
-
-function Macro({ label, v, t }: { label: string; v: number; t: number }) {
-  const pct = Math.min(100, Math.round((v / t) * 100));
-  return (
-    <div>
-      <div className="flex items-baseline justify-between">
-        <span className="text-[#737373] font-medium">{label}</span>
-        <span className="text-[#000000]">{v}<span className="text-[#A3A3A3]">g</span></span>
-      </div>
-      <div className="mt-1 h-1 bg-[#F5F5F5] rounded-full overflow-hidden">
-        <div className="h-full bg-[#E11D2A]" style={{ width: `${pct}%` }} />
-      </div>
     </div>
   );
 }
