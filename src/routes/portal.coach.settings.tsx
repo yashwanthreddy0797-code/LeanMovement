@@ -23,6 +23,9 @@ function SettingsPage() {
   const [saving, setSaving] = useState(false);
 
   const coachId = session.user?.id;
+  const [whatsapp, setWhatsapp] = useState("");
+  const [calendly, setCalendly] = useState("");
+  const [cohort, setCohort] = useState("");
 
   useEffect(() => {
     if (!data) return;
