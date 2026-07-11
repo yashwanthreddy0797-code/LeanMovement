@@ -11,7 +11,7 @@ export const Route = createFileRoute("/about")({
       { title: `About — ${COACH.name} | LEANMOVEMENT` },
       {
         name: "description",
-        content: `Meet ${COACH.name}, ${COACH.title.toLowerCase()} at LEANMOVEMENT. Live kettlebell coaching for busy professionals who want structure, technique, and real results.`,
+        content: `Meet ${COACH.name}, ${COACH.title.toLowerCase()} at LEANMOVEMENT. Live kettlebell coaching for busy professionals.`,
       },
       { property: "og:title", content: `About — ${COACH.name} | LEANMOVEMENT` },
       {
@@ -25,11 +25,9 @@ export const Route = createFileRoute("/about")({
 });
 
 const PRINCIPLES = [
-  { t: "Train For Life", d: "Strength, capacity, longevity. Aesthetics follow." },
-  { t: "Consistency Over Intensity", d: "The plan you repeat for a decade beats the one you abandon in eight weeks." },
-  { t: "Health Creates Freedom", d: "Fitness gives back to every other corner of your life." },
-  { t: "Build An Engine", d: "Conditioning, strength, mobility — designed to compound." },
-  { t: "Educate · Empower · Execute", d: "You learn the why. You leave self-sufficient. The work decides everything." },
+  { t: "Consistency over intensity", d: "The plan you repeat beats the one you abandon." },
+  { t: "Technique before load", d: "Foundations first. Progression follows." },
+  { t: "Fitness creates freedom", d: "Training should give back to every part of your life." },
 ];
 
 function AboutPage() {
@@ -38,102 +36,71 @@ function AboutPage() {
       <PageHero
         eyebrow="About"
         title="LEANMOVEMENT."
-        subtitle="A simple belief: fitness should create freedom, not dependency."
+        subtitle="Fitness should create freedom — not dependency."
         compact
       />
 
-      {/* STORY */}
-      <section className="bg-background border-t border-border">
-        <div className="container-x py-24 md:py-32">
-          <div className="grid md:grid-cols-12 gap-16 md:gap-24">
+      <section className="border-b border-border">
+        <div className="container-x section-y-sm">
+          <div className="grid md:grid-cols-12 gap-12 lg:gap-16 items-start max-w-5xl">
             <FadeUp className="md:col-span-5">
-              <div className="eyebrow"><span className="w-6 h-px bg-accent" />The Story</div>
-              <h2 className="mt-8 font-display text-4xl md:text-5xl uppercase tracking-[0.01em] leading-[1.02]">
-                Built around a simple belief.
-              </h2>
+              <p className="eyebrow">
+                <span className="w-6 h-px bg-accent" />
+                The story
+              </p>
+              <h2 className="type-h2 stack-head">Built for real schedules.</h2>
             </FadeUp>
-            <FadeUp delay={0.1} className="md:col-span-6 md:col-start-7 space-y-6 text-foreground/75 leading-relaxed text-lg">
+            <FadeUp delay={0.08} className="md:col-span-7 space-y-5 type-lead !max-w-none">
               <p>
-                LEANMOVEMENT was built around a simple belief — fitness should create freedom,
-                not dependency.
+                LEANMOVEMENT is a live coaching membership for busy professionals — no gimmicks,
+                no detoxes, no unnecessary restrictions.
               </p>
-              <p>No gimmicks. No detoxes. No unnecessary restrictions.</p>
-              <p>
-                Only systems that fit into real life. For busy professionals. Entrepreneurs.
-                Athletes. People wanting structure. People wanting longevity.
-              </p>
-              <p>
-                The training shifts. The principles don't.
-              </p>
+              <p>Only systems that fit into real life. The training shifts. The principles don&apos;t.</p>
             </FadeUp>
           </div>
         </div>
       </section>
 
-      {/* COACH */}
-      <section className="bg-foreground text-background border-t border-border">
-        <div className="container-x py-16 md:py-28">
+      <section className="bg-foreground text-background border-b border-border">
+        <div className="container-x section-y">
           <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
             <FadeUp className="lg:col-span-5">
-              <div className="relative lg:pr-3 lg:pb-3">
-                <div
-                  className="absolute bottom-0 right-0 left-3 top-3 border border-accent/30 pointer-events-none hidden lg:block"
-                  aria-hidden
+              <div className="relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]">
+                <img
+                  src={COACH_IMAGE_DEFAULT}
+                  srcSet={`${coachImageUrl(640)} 640w, ${coachImageUrl(960)} 960w, ${coachImageUrl(1280)} 1280w`}
+                  sizes="(min-width: 1024px) 38vw, 100vw"
+                  alt={COACH.image.alt}
+                  width={1200}
+                  height={1500}
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover object-center"
                 />
-                <div className="relative aspect-[4/5] overflow-hidden bg-[#1a1a1a]">
-                  <img
-                    src={COACH_IMAGE_DEFAULT}
-                    srcSet={`${coachImageUrl(640)} 640w, ${coachImageUrl(960)} 960w, ${coachImageUrl(1280)} 1280w, ${coachImageUrl(1600)} 1600w`}
-                    sizes="(min-width: 1024px) 38vw, 100vw"
-                    alt={COACH.image.alt}
-                    width={1200}
-                    height={1500}
-                    loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover object-center scale-[1.02] saturate-[0.92] contrast-[1.06] brightness-[0.94]"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                    <p className="text-[10px] uppercase tracking-[0.28em] text-white/70">{COACH.location}</p>
-                    <p className="mt-1 font-display text-2xl uppercase tracking-[0.02em]">{COACH.name}</p>
-                  </div>
-                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-transparent" />
               </div>
             </FadeUp>
 
             <FadeUp delay={0.08} className="lg:col-span-7">
-              <div className="eyebrow text-background/45">
+              <p className="eyebrow text-background/45">
                 <span className="w-6 h-px bg-accent" />
-                Your Coach
-              </div>
-              <h2 className="mt-6 font-display text-4xl md:text-5xl uppercase tracking-[0.01em] leading-[0.95]">
-                {COACH.name.split(" ")[0]}
-                <br />
-                <span className="text-accent">{COACH.name.split(" ").slice(1).join(" ")}</span>
-              </h2>
-              <p className="mt-4 text-sm uppercase tracking-[0.24em] text-background/50">{COACH.title}</p>
+                Your coach
+              </p>
+              <h2 className="type-h2 text-background stack-head">{COACH.name}</h2>
+              <p className="mt-3 text-sm text-background/50">{COACH.title}</p>
 
-              <div className="mt-8 space-y-5 text-background/75 leading-relaxed text-base md:text-lg">
+              <div className="mt-8 space-y-5 text-[1.0625rem] leading-relaxed text-background/75">
                 {COACH.bio.map((paragraph) => (
                   <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                 ))}
               </div>
 
-              <ul className="mt-8 grid sm:grid-cols-2 gap-3">
-                {COACH.credentials.map((item) => (
-                  <li
-                    key={item}
-                    className="text-xs text-background/60 border border-background/10 px-4 py-3 leading-relaxed"
-                  >
-                    {item}
-                  </li>
-                ))}
-              </ul>
+              <p className="mt-8 text-sm text-background/50">{COACH.credentials.join(" · ")}</p>
 
               <Link
                 to="/join"
                 search={{ plan: "standard", email: "", name: "" }}
-                className="mt-10 inline-flex items-center gap-2 px-8 py-4 text-[11px] uppercase tracking-[0.32em] bg-accent text-white hover:bg-background hover:text-foreground transition-colors"
+                className="btn-primary bg-accent hover:bg-background hover:text-foreground stack-head"
               >
                 Train with {COACH.name.split(" ")[0]} <ArrowRight size={14} />
               </Link>
@@ -142,41 +109,31 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* PRINCIPLES */}
-      <section className="bg-surface border-y border-border">
-        <div className="container-x py-24 md:py-32">
-          <FadeUp className="max-w-2xl mb-16">
-            <div className="eyebrow"><span className="w-6 h-px bg-accent" />Principles</div>
-            <h2 className="mt-8 font-display text-4xl md:text-6xl uppercase tracking-[0.01em] leading-[1.02]">
-              What we stand for.
-            </h2>
+      <section className="bg-surface border-b border-border">
+        <div className="container-x section-y-sm">
+          <FadeUp className="section-head mb-10">
+            <p className="eyebrow">
+              <span className="w-6 h-px bg-accent" />
+              Principles
+            </p>
+            <h2 className="type-h2 stack-head">What we stand for.</h2>
           </FadeUp>
-          <div className="divide-y divide-border border-y border-border">
-            {PRINCIPLES.map((p, i) => (
-              <FadeUp key={p.t} delay={i * 0.05}>
-                <div className="grid md:grid-cols-12 gap-6 md:gap-12 py-10 md:py-12 items-baseline">
-                  <div className="md:col-span-1 font-mono text-xs text-muted-foreground tracking-widest">
-                    0{i + 1}
-                  </div>
-                  <h3 className="md:col-span-5 font-display text-2xl md:text-4xl uppercase tracking-[0.01em]">
-                    {p.t}
-                  </h3>
-                  <p className="md:col-span-6 text-foreground/70 text-base md:text-lg leading-relaxed">
-                    {p.d}
-                  </p>
-                </div>
-              </FadeUp>
+          <div className="divide-y divide-border max-w-2xl">
+            {PRINCIPLES.map((p) => (
+              <div key={p.t} className="py-7 first:pt-0 last:pb-0">
+                <h3 className="type-h3 !text-[1.25rem]">{p.t}</h3>
+                <p className="mt-3 type-body">{p.d}</p>
+              </div>
             ))}
           </div>
         </div>
       </section>
 
       <CTABanner
-        eyebrow="Apply"
-        title="Ready for LEAN?"
-        highlight="LEAN"
-        subtitle="Live kettlebell coaching · 3× per week · Limited spots."
-        ctaText="Join Now"
+        title="Ready to train?"
+        highlight="train"
+        subtitle="Live kettlebell coaching · 3× per week."
+        ctaText="Join now"
         ctaTo="/join"
       />
     </>

@@ -101,7 +101,7 @@ function Payments() {
             </div>
           </div>
           <p className="mt-5 text-xs text-[#737373] leading-relaxed">
-            Subscription management will be available once Razorpay checkout is connected.
+            Payments are processed securely via Razorpay at checkout.
           </p>
         </SoftCard>
       </div>

@@ -1,9 +1,10 @@
 import { MessageCircle } from "lucide-react";
+import { CONTACT } from "@/lib/lean-kettlebell";
 
 export function WhatsAppButton() {
   return (
     <a
-      href="https://wa.me/919999999999"
+      href={CONTACT.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"

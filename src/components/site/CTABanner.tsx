@@ -1,14 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { FadeUp } from "./FadeUp";
 
 export function CTABanner({
-  eyebrow = "Take the first step",
-  title = "Ready to Start?",
-  highlight = "Start",
-  subtitle = "A coach. No sales pitch. We figure out if we're the right fit — then build the plan.",
-  ctaText = "Book a Free Call",
-  ctaTo = "/contact",
+  title = "Ready to start?",
+  highlight = "start",
+  subtitle = "Live kettlebell coaching · 3× per week.",
+  ctaText = "Join now",
+  ctaTo = "/join",
 }: {
   eyebrow?: string;
   title?: string;
@@ -17,27 +16,22 @@ export function CTABanner({
   ctaText?: string;
   ctaTo?: string;
 }) {
-  const [before, after] = title.split(highlight);
+  const parts = title.split(highlight);
+  const before = parts[0] ?? "";
+  const after = parts.slice(1).join(highlight);
+
   return (
-    <section className="border-y border-border bg-surface relative overflow-hidden">
-      <div className="absolute inset-0 grid-overlay opacity-50" />
-      <div className="container-x py-24 md:py-32 relative">
-        <FadeUp className="max-w-4xl">
-          <span className="eyebrow">
-            <span className="w-8 h-px bg-accent" />
-            {eyebrow}
-          </span>
-          <h2 className="font-display text-4xl sm:text-5xl md:text-6xl mt-6 leading-[0.95] break-words">
+    <section className="border-t border-border bg-surface">
+      <div className="container-x section-y-sm">
+        <FadeUp className="section-head-wide">
+          <h2 className="type-h2">
             {before}
             <span className="text-accent">{highlight}</span>
             {after}
           </h2>
-          <p className="mt-6 max-w-xl text-foreground/70">{subtitle}</p>
-          <Link
-            to={ctaTo}
-            className="mt-10 btn-pill-accent"
-          >
-            {ctaText} <ArrowUpRight size={18} />
+          <p className="type-lead stack-head">{subtitle}</p>
+          <Link to={ctaTo} className="btn-primary inline-flex stack-head">
+            {ctaText} <ArrowRight size={14} />
           </Link>
         </FadeUp>
       </div>

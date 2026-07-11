@@ -64,7 +64,6 @@ function CheckoutPage() {
       }
 
       toast.success("Welcome — complete payment to unlock access");
-      // Full navigation so portal picks up the new auth session immediately
       window.location.href = result.destination;
     } catch (err) {
       console.error("[checkout] failed", err);
@@ -75,8 +74,8 @@ function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAFAF6]">
-      <header className="border-b border-[var(--border)] bg-white">
+    <div className="min-h-screen bg-background">
+      <header className="border-b border-border">
         <div className="container-x py-5 flex items-center justify-between">
           <Link to="/">
             <BrandLogo />
@@ -84,36 +83,34 @@ function CheckoutPage() {
           <Link
             to="/login"
             search={{ redirect: "/portal/dashboard" }}
-            className="text-xs uppercase tracking-[0.2em] text-[#737373] hover:text-[#000000]"
+            className="text-sm text-muted-foreground hover:text-foreground"
           >
-            Already a member? Sign in
+            Sign in
           </Link>
         </div>
       </header>
 
-      <div className="container-x py-10 md:py-16">
-        <div className="max-w-5xl mx-auto grid lg:grid-cols-5 gap-10 lg:gap-14">
-          {/* Plan summary — compact, no scroll wall */}
+      <div className="container-x py-10 md:py-14">
+        <div className="max-w-4xl mx-auto grid lg:grid-cols-5 gap-12 lg:gap-16">
           <aside className="lg:col-span-2">
             <div className="lg:sticky lg:top-10 space-y-6">
               <div>
-                <div className="text-[10px] uppercase tracking-[0.28em] text-[var(--accent)]">
+                <p className="eyebrow">
+                  <span className="w-5 h-px bg-accent" />
                   Lean Kettlebell™
+                </p>
+                <h1 className="type-h3 stack-head">{activePlan.name}</h1>
+                <div className="mt-4 flex items-baseline gap-2">
+                  <span className="font-display text-[2rem] leading-none">{activePlan.price}</span>
+                  <span className="text-sm text-muted-foreground">{activePlan.period}</span>
                 </div>
-                <h1 className="mt-2 font-serif text-3xl md:text-4xl text-[#000000]">
-                  {activePlan.name}
-                </h1>
-                <div className="mt-3 flex items-baseline gap-2">
-                  <span className="font-display text-4xl text-[#000000]">{activePlan.price}</span>
-                  <span className="text-sm text-[#737373]">{activePlan.period}</span>
-                </div>
-                <p className="mt-3 text-sm text-[#737373] leading-relaxed">{activePlan.description}</p>
+                <p className="mt-4 type-body !max-w-none">{activePlan.description}</p>
               </div>
 
               <ul className="space-y-2.5">
-                {INCLUDED_SUMMARY.slice(0, 5).map((item) => (
-                  <li key={item} className="flex gap-2.5 text-sm text-[#404040]">
-                    <Check size={14} className="mt-0.5 shrink-0 text-[var(--accent)]" />
+                {INCLUDED_SUMMARY.slice(0, 4).map((item) => (
+                  <li key={item} className="flex gap-2.5 text-sm text-foreground/70">
+                    <Check size={14} className="mt-0.5 shrink-0 text-accent" />
                     {item}
                   </li>
                 ))}
@@ -121,30 +118,28 @@ function CheckoutPage() {
             </div>
           </aside>
 
-          {/* Checkout form */}
           <div className="lg:col-span-3">
-            <div className="bg-white border border-[var(--border)] rounded-2xl p-6 md:p-8 shadow-sm">
-              <h2 className="font-serif text-2xl text-[#000000]">Checkout</h2>
-              <p className="mt-1 text-sm text-[#737373]">
-                Create your account and pay — portal access unlocks after payment.
+            <div className="border border-border bg-card p-7 md:p-8">
+              <h2 className="type-h3">Checkout</h2>
+              <p className="type-body stack-head !max-w-none">
+                Create your account — portal unlocks after payment.
               </p>
 
-              {/* Plan picker — compact */}
               <div className="mt-6 grid grid-cols-3 gap-2">
                 {PRICING_PLANS.map((plan) => (
                   <button
                     key={plan.id}
                     type="button"
                     onClick={() => setSelectedPlan(plan.id)}
-                    className={`rounded-xl border px-3 py-3 text-left transition ${
+                    className={`border px-3 py-3 text-left transition ${
                       selectedPlan === plan.id
-                        ? "border-[#000000] bg-[#000000] text-white"
-                        : "border-[var(--border)] hover:border-[#000000]/30"
+                        ? "border-foreground bg-foreground text-background"
+                        : "border-border hover:border-foreground/30"
                     }`}
                   >
                     <div
-                      className={`text-[9px] uppercase tracking-[0.2em] ${
-                        selectedPlan === plan.id ? "text-white/60" : "text-[#737373]"
+                      className={`text-[9px] uppercase tracking-[0.16em] ${
+                        selectedPlan === plan.id ? "text-background/50" : "text-muted-foreground"
                       }`}
                     >
                       {plan.tag}
@@ -204,23 +199,22 @@ function CheckoutPage() {
                     type="checkbox"
                     checked={agreed}
                     onChange={(e) => setAgreed(e.target.checked)}
-                    className="mt-1 accent-[#E11D2A]"
+                    className="mt-1 accent-[var(--accent)]"
                   />
-                  <span className="text-xs text-[#737373] leading-relaxed">
-                    I agree to the terms and consent to sharing my details with LEANMOVEMENT for
-                    membership and coaching.
+                  <span className="text-xs text-muted-foreground leading-relaxed">
+                    I agree to the terms and consent to sharing my details with LEANMOVEMENT.
                   </span>
                 </label>
 
-                <div className="pt-2 flex items-start gap-3 text-xs text-[#737373] bg-[#FAFAFA] rounded-xl p-4">
-                  <ShieldCheck size={16} className="shrink-0 mt-0.5 text-[var(--accent)]" />
-                  <p>One click — account created, then pay to unlock your portal.</p>
+                <div className="flex items-start gap-3 text-xs text-muted-foreground bg-surface p-4">
+                  <ShieldCheck size={16} className="shrink-0 mt-0.5 text-accent" />
+                  <p>Account created in one step — then pay to unlock your portal.</p>
                 </div>
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full mt-2 py-4 rounded-xl bg-[#000000] text-white text-sm font-medium hover:bg-[#111111] transition disabled:opacity-60"
+                  className="w-full btn-primary disabled:opacity-60"
                 >
                   {loading ? "Processing…" : `Pay ${activePlan.price} & enter portal`}
                 </button>
@@ -235,15 +229,13 @@ function CheckoutPage() {
           width: 100%;
           padding: 0.85rem 1rem;
           border: 1px solid var(--border);
-          border-radius: 12px;
-          background: #fff;
+          background: var(--background);
           font-size: 0.875rem;
-          color: #000;
+          color: var(--foreground);
           outline: none;
         }
         .checkout-input:focus {
-          border-color: #FCA5A5;
-          box-shadow: 0 0 0 3px rgba(225, 29, 42, 0.08);
+          border-color: var(--accent);
         }
       `}</style>
     </div>
@@ -253,9 +245,7 @@ function CheckoutPage() {
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <label className="block">
-      <span className="block text-[10px] uppercase tracking-[0.24em] text-[#737373] mb-1.5">
-        {label}
-      </span>
+      <span className="block text-xs text-muted-foreground mb-1.5">{label}</span>
       {children}
     </label>
   );

@@ -4,20 +4,25 @@ export const BRAND = {
   tagline: "Get Lean. Get Strong. Stay Athletic.",
 } as const;
 
+export const CONTACT = {
+  email: "hello@leanmovement.in",
+  phone: "+91 99999 99999",
+  whatsapp: "https://wa.me/919999999999",
+  instagram: "https://instagram.com/leanmovement",
+  location: "Hyderabad, India",
+} as const;
+
 export const COACH = {
   name: "Mohith Thotakura",
   title: "Strength & Kettlebell Coach",
   location: "Hyderabad",
   bio: [
-    "Mohith Thotakura built Lean Kettlebell™ around one idea: busy professionals deserve real coaching — not another PDF program. He leads live sessions three times a week, teaches proper kettlebell technique from the ground up, and keeps every member accountable inside a small, focused group.",
-    "His approach is technique-first, progression-driven, and built for people who have 45 minutes — not two hours. Foundations before load. Consistency before intensity. Every session is coached, recorded, and designed to make you stronger, leaner, and more athletic without living in the gym.",
-    "When you join, you train with Mohith live — on camera, in real time — with corrections, cues, and a plan that actually fits your schedule.",
+    "Mohith built Lean Kettlebell™ for busy professionals who want real coaching — not another PDF program. He leads live sessions three times a week with technique-first progressions built for 45-minute training blocks.",
+    "When you join, you train with Mohith live — on camera, with corrections, cues, and a plan that fits your schedule.",
   ],
   credentials: [
     "Strength & kettlebell specialist",
-    "Live small-group coaching",
-    "Foundations & technique onboarding",
-    "Based in Hyderabad · trains members across India",
+    "Live small-group coaching · Hyderabad",
   ],
   image: {
     unsplashId: "photo-1570440828762-ab7a993dbde8",
@@ -36,7 +41,7 @@ export const LEAN_KETTLEBELL = {
   name: "Live Coaching Membership",
   tagline: BRAND.tagline,
   positioning:
-    "A live kettlebell coaching membership for busy professionals who want visible abs, muscle, and athletic fitness through short, effective workouts.",
+    "Live kettlebell coaching for busy professionals — three coached sessions a week, all recorded, with a nutrition framework and private community.",
   liveNote: "All sessions happen live — train with your coach three times a week.",
 } as const;
 
@@ -63,7 +68,7 @@ export const MEMBERSHIP_OVERVIEW = {
   title: "What is Lean Kettlebell™?",
   subtitle: "A live coaching membership — not a PDF program.",
   description:
-    "You join coached kettlebell sessions three times a week with a real coach on video. Every session is recorded. You get a foundations onboarding, a simple nutrition framework, on-demand circuits, and a private WhatsApp community. Built for busy professionals who want visible abs, muscle, and athletic fitness without living in the gym.",
+    "Coached kettlebell sessions three times a week with a real coach on video. Foundations onboarding, nutrition framework, recordings, and a private community — built for people with 45 minutes, not two hours.",
   idealFor: [
     "Busy professionals with 45–60 minutes, three days a week",
     "Beginners who want proper technique before going heavy",

@@ -17,22 +17,25 @@ export function PageHero({
   compact?: boolean;
 }) {
   return (
-    <section className={`relative ${compact ? "pt-40 pb-20" : "min-h-[80vh] flex items-end pb-20 pt-40"} overflow-hidden`}>
+    <section
+      className={`relative overflow-hidden border-b border-border ${
+        compact ? "hero-y" : "min-h-[68vh] flex items-end hero-y"
+      }`}
+    >
       {image && (
         <>
-          <img src={image} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-background/40" />
+          <img src={image} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover opacity-25" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/55" />
         </>
       )}
-      <div className="absolute inset-0 grid-overlay opacity-30" />
-      <div className="container-x relative">
-        <FadeUp>
+      <div className="container-x relative w-full">
+        <FadeUp className="section-head-wide">
           <span className="eyebrow">
-            <span className="w-8 h-px bg-accent" />
+            <span className="w-6 h-px bg-accent" />
             {eyebrow}
           </span>
-          <h1 className="font-display text-[2.5rem] sm:text-5xl md:text-6xl lg:text-7xl mt-6 max-w-5xl leading-[0.92] break-words">{title}</h1>
-          {subtitle && <p className="mt-6 max-w-2xl text-base text-foreground/70">{subtitle}</p>}
+          <h1 className="type-h1 stack-head">{title}</h1>
+          {subtitle && <p className="type-lead stack-head">{subtitle}</p>}
           {children}
         </FadeUp>
       </div>

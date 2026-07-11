@@ -356,7 +356,7 @@ function CoachDashboard() {
                     {stats.pendingMembers} member{stats.pendingMembers > 1 ? "s" : ""} waiting
                   </div>
                   <p className="text-xs text-[#737373] mt-1">
-                    Activate after payment until Razorpay webhooks go live.
+                    Activate manually if a member paid offline.
                   </p>
                 </div>
               </div>

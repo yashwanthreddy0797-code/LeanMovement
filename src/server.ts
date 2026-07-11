@@ -18,8 +18,6 @@ async function getServerEntry(): Promise<ServerEntry> {
   return serverEntryPromise;
 }
 
-// h3 swallows in-handler throws into a normal 500 Response with body
-// {"unhandled":true,"message":"HTTPError"} — try/catch alone never fires for those.
 async function normalizeCatastrophicSsrResponse(response: Response): Promise<Response> {
   if (response.status < 500) return response;
   const contentType = response.headers.get("content-type") ?? "";
@@ -37,9 +35,29 @@ async function normalizeCatastrophicSsrResponse(response: Response): Promise<Res
   });
 }
 
+async function handleRazorpayWebhookRequest(request: Request): Promise<Response> {
+  if (request.method === "GET" || request.method === "HEAD") {
+    return Response.json({ ok: true, message: "Razorpay webhook endpoint" });
+  }
+  if (request.method !== "POST") {
+    return Response.json({ ok: false, message: "Method not allowed" }, { status: 405 });
+  }
+
+  const rawBody = await request.text();
+  const signature = request.headers.get("x-razorpay-signature");
+  const { processRazorpayWebhook } = await import("./lib/razorpay-webhook");
+  const result = await processRazorpayWebhook(rawBody, signature);
+  return Response.json(result.body, { status: result.status });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
+      const url = new URL(request.url);
+      if (url.pathname === "/api/razorpay/webhook") {
+        return await handleRazorpayWebhookRequest(request);
+      }
+
       const handler = await getServerEntry();
       const response = await handler.fetch(request, env, ctx);
       return await normalizeCatastrophicSsrResponse(response);

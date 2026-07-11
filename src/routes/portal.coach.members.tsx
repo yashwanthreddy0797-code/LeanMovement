@@ -53,7 +53,7 @@ function MembersPage() {
             <span className="text-[#A3A3A3] text-2xl">· {members.length}</span>
           </h1>
           <p className="mt-2 text-[#737373] max-w-xl">
-            Activate members after payment, track plans and renewals. Razorpay will automate this
+            Activate members after offline payment, track plans and renewals. Razorpay auto-activates online payments
             later.
           </p>
         </div>

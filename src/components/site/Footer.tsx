@@ -1,50 +1,45 @@
 import { Link } from "@tanstack/react-router";
-import { Instagram } from "lucide-react";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { CONTACT } from "@/lib/lean-kettlebell";
 
 export function Footer() {
   return (
     <footer className="border-t border-border bg-background">
-      <div className="container-x py-20 md:py-28">
-        <div className="grid md:grid-cols-12 gap-12 items-start">
-          <div className="md:col-span-7">
-            <BrandLogo className="text-5xl md:text-7xl tracking-[0.04em]" />
-            <p className="mt-6 font-serif text-2xl md:text-3xl text-foreground/70">
-              Get lean. Get strong. Stay athletic.
+      <div className="container-x section-y-sm">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-12">
+          <div className="section-head">
+            <BrandLogo className="text-3xl md:text-[2.125rem]" />
+            <p className="type-body stack-head">
+              Live kettlebell coaching for busy professionals.
             </p>
           </div>
 
-          <div className="md:col-span-5 md:text-right flex flex-col md:items-end gap-6">
-            <Link
-              to="/join"
-              className="inline-flex w-fit items-center px-7 py-4 text-[11px] uppercase tracking-[0.32em] bg-foreground text-background hover:bg-accent transition-colors"
-            >
-              Join Now
-            </Link>
-            <div className="flex flex-col md:items-end gap-3 text-[11px] uppercase tracking-[0.28em] text-foreground/70">
-              <Link to="/programs" className="hover:text-accent transition-colors">
+          <div className="flex flex-col sm:flex-row gap-10 sm:gap-14 text-sm">
+            <div className="flex flex-col gap-3">
+              <Link to="/programs" className="text-foreground/70 hover:text-foreground transition-colors">
                 Membership
               </Link>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
-                className="inline-flex items-center gap-2 hover:text-accent transition-colors"
-              >
-                <Instagram size={16} />
-                Instagram
-              </a>
-              <Link to="/contact" className="hover:text-accent transition-colors">
+              <Link to="/about" className="text-foreground/70 hover:text-foreground transition-colors">
+                About
+              </Link>
+              <Link to="/contact" className="text-foreground/70 hover:text-foreground transition-colors">
                 Contact
               </Link>
+            </div>
+            <div className="flex flex-col gap-3 text-foreground/70">
+              <a href={`mailto:${CONTACT.email}`} className="hover:text-foreground transition-colors">
+                {CONTACT.email}
+              </a>
+              <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-foreground transition-colors">
+                WhatsApp
+              </a>
             </div>
           </div>
         </div>
 
-        <div className="mt-20 pt-8 border-t border-border flex flex-col md:flex-row justify-between gap-4 text-[10px] uppercase tracking-[0.28em] text-muted-foreground">
+        <div className="mt-14 pt-6 border-t border-border flex flex-col sm:flex-row justify-between gap-2 text-xs text-muted-foreground">
           <p>© {new Date().getFullYear()} LEANMOVEMENT</p>
-          <p>Hyderabad · India</p>
+          <p>{CONTACT.location}</p>
         </div>
       </div>
     </footer>

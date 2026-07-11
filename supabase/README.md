@@ -146,12 +146,20 @@ Edit in Supabase **Table Editor**:
 
 ## When Razorpay is ready
 
-Add to `.env`:
+Add to `.env` (never commit):
 
 ```
 RAZORPAY_KEY_ID=rzp_live_...
 RAZORPAY_KEY_SECRET=...
-RAZORPAY_WEBHOOK_SECRET=...
+RAZORPAY_WEBHOOK_SECRET=...   # optional — from Razorpay → Webhooks
 ```
 
-Webhook handler stub lives in `src/lib/api/membership.functions.ts`.
+Flow: `/join` → `/portal/checkout` → **Pay with Razorpay** → membership auto-activates.
+
+Optional webhook in Razorpay dashboard:
+- URL: `https://www.leanmovement.in/api/razorpay/webhook` (or your Vercel domain)
+- Events: `payment.captured`
+- Secret → `RAZORPAY_WEBHOOK_SECRET` in `.env` / Vercel
+
+Checkout verification still activates membership without the webhook.
+Server handlers: `src/lib/razorpay.server.ts`, `src/lib/razorpay-webhook.ts`, `src/server.ts`.
