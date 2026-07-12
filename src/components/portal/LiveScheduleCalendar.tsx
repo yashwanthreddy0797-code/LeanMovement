@@ -42,8 +42,8 @@ const VIEWS: { id: CalendarView; label: string }[] = [
   { id: "day", label: "Day" },
 ];
 
-const HOUR_START = 5;
-const HOUR_END = 11;
+const HOUR_START = 6;
+const HOUR_END = 21;
 
 type Props = {
   sessions?: LiveSessionRow[];

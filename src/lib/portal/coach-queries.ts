@@ -33,15 +33,15 @@ export type CoachDashboardData = {
 };
 
 const PLAN_MONTHLY_INR: Record<MembershipPlan, number> = {
-  monthly: 7999,
-  quarterly: 7333,
-  founding: 5999,
+  monthly: 6999,
+  quarterly: 6999,
+  founding: 6999,
 };
 
 export const PLAN_LABELS: Record<MembershipPlan, string> = {
-  monthly: "Monthly · ₹7,999",
-  quarterly: "Quarterly · ₹21,999",
-  founding: "Founding · ₹5,999",
+  monthly: "Lean Program · ₹6,999",
+  quarterly: "Lean Program · ₹6,999",
+  founding: "Lean Program · ₹6,999",
 };
 
 export function formatSessionTime(t: string | null | undefined) {
@@ -126,7 +126,7 @@ const MOCK_MEMBERS: CoachMember[] = [
       product: "lean_kettlebell",
       plan: "monthly",
       status: "active",
-      amount_inr: 7999,
+      amount_inr: 6999,
       razorpay_subscription_id: null,
       razorpay_payment_id: null,
       started_at: "2026-02-01T00:00:00Z",

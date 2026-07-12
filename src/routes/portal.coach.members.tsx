@@ -3,6 +3,7 @@ import { useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { MemberActionButtons } from "@/components/portal/ActivateMemberButton";
 import { PendingEnrollmentsPanel } from "@/components/portal/PendingEnrollmentsPanel";
+import { CoachRegistrationAlerts } from "@/components/portal/CoachRegistrationAlerts";
 import { SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
@@ -68,6 +69,7 @@ function MembersPage() {
         </div>
       </div>
 
+      <CoachRegistrationAlerts coachId={coachId} />
       <PendingEnrollmentsPanel coachId={coachId} />
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">

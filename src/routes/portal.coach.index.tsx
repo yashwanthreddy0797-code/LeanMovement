@@ -4,6 +4,7 @@ import { SectionTitle, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import { ActivateMemberButton } from "@/components/portal/ActivateMemberButton";
+import { CoachRegistrationAlerts } from "@/components/portal/CoachRegistrationAlerts";
 import {
   formatDate,
   formatInr,
@@ -69,9 +70,9 @@ function CoachDashboard() {
           <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">
             {greet}, {coachName.split(" ")[0]}
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif">Lean Kettlebell™</h1>
+          <h1 className="text-4xl md:text-5xl font-serif">Lean Program</h1>
           <p className="mt-2 text-[#737373] max-w-xl">
-            Manage members, live sessions, and onboarding for your kettlebell membership.
+            Manage registrations, session picks, and live calendar for your members.
           </p>
         </div>
         <Link
@@ -81,6 +82,8 @@ function CoachDashboard() {
           <UserPlus size={15} /> Manage members
         </Link>
       </div>
+
+      <CoachRegistrationAlerts coachId={coachId} />
 
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {[

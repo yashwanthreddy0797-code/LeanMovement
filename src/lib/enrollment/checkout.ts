@@ -10,6 +10,7 @@ export type CheckoutInput = {
   planSlug: string;
   phone?: string;
   password: string;
+  sessionIds: string[];
 };
 
 /** One-step checkout: enroll → create account → sign in */
@@ -22,11 +23,16 @@ export async function completeCheckout(input: CheckoutInput) {
     return { ok: false as const, message: "Name, email, and password (8+ chars) required" };
   }
 
+  if (!input.sessionIds || input.sessionIds.length !== 3) {
+    return { ok: false as const, message: "Please choose exactly 3 sessions" };
+  }
+
   const enrollment = await submitEnrollment({
     email,
     fullName,
     planSlug: input.planSlug,
     phone: input.phone,
+    sessionIds: input.sessionIds,
   });
 
   if (!enrollment.ok) {

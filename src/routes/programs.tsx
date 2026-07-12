@@ -10,7 +10,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
-  COHORT,
   FAQ,
   INCLUDED_SUMMARY,
   MEMBERSHIP_JOURNEY,
@@ -85,27 +84,27 @@ function ProgramsPage() {
         <div className="container-x section-y">
           <FadeUp>
             <SectionHeader
-              eyebrow="Pricing"
-              title="Choose your plan."
-              description={`Same full membership on every plan. ${COHORT.label}: ${COHORT.date}.`}
+              eyebrow="Program"
+              title="One program. ₹6,999/mo."
+              description="Strength and endurance — live with your coach. Choose 3 sessions at signup."
             />
           </FadeUp>
 
-          <div className="section-content-gap grid md:grid-cols-3 gap-5 lg:gap-6">
-            {PRICING_PLANS.map((plan, i) => (
-              <FadeUp key={plan.id} delay={i * 0.05}>
-                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
+          <div className="section-content-gap max-w-xl">
+            {PRICING_PLANS.map((plan) => (
+              <FadeUp key={plan.id}>
+                <div className="group flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
                   <span className="type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.tag}
                   </span>
                   <h3 className="type-h3 stack-head">{plan.name}</h3>
-                  <div className="mt-6 font-display text-[2.125rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
+                  <div className="mt-6 font-display text-[2.5rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
                     {plan.price}
                   </div>
                   <p className="mt-3 type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.period}
                   </p>
-                  <p className="mt-5 type-body flex-1 transition-colors duration-300 group-hover:!text-background/70">
+                  <p className="mt-5 type-body transition-colors duration-300 group-hover:!text-background/70">
                     {plan.description}
                   </p>
                   <Link
@@ -113,7 +112,7 @@ function ProgramsPage() {
                     search={{ plan: plan.id, email: "", name: "" }}
                     className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                   >
-                    Enroll <ArrowRight size={12} />
+                    Join now <ArrowRight size={12} />
                   </Link>
                 </div>
               </FadeUp>
@@ -136,9 +135,9 @@ function ProgramsPage() {
       <section className="border-b border-border">
         <div className="container-x section-y-sm">
           <FadeUp>
-            <SectionHeader eyebrow="How it works" title="Checkout to first live class." />
+            <SectionHeader eyebrow="How it works" title="Register to first live class." />
           </FadeUp>
-          <div className="section-content-gap grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-4xl">
+          <div className="section-content-gap grid sm:grid-cols-3 gap-8 max-w-3xl">
             {MEMBERSHIP_JOURNEY.map((step) => (
               <div key={step.step}>
                 <span className="font-mono text-xs text-accent">{step.step}</span>
@@ -150,7 +149,7 @@ function ProgramsPage() {
         </div>
       </section>
 
-      <section className="bg-surface border-b border-border">
+      <section className="bg-white border-b border-border">
         <div className="container-x section-y-sm">
           <FadeUp>
             <SectionHeader
@@ -162,12 +161,13 @@ function ProgramsPage() {
           <FadeUp delay={0.06}>
             <div className="section-content-gap max-w-xl divide-y divide-border border border-border">
               {SESSION_SCHEDULE.batches.map((batch) => (
-                <div key={batch.day} className="flex items-center justify-between gap-6 px-5 py-4 bg-background">
+                <div key={batch.day} className="flex items-center justify-between gap-6 px-5 py-4 bg-white">
                   <div>
                     <span className="text-sm font-medium">{batch.day}</span>
                     <span className="ml-3 text-sm text-muted-foreground">{batch.name}</span>
+                    <p className="mt-1 text-xs text-muted-foreground">{batch.type}</p>
                   </div>
-                  <span className="text-xs text-muted-foreground flex items-center gap-1.5">
+                  <span className="text-xs text-muted-foreground flex items-center gap-1.5 shrink-0">
                     <Clock size={12} className="text-accent" />
                     {batch.time}
                   </span>

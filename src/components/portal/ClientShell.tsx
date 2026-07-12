@@ -11,10 +11,6 @@ import { useSidebarCollapse } from "@/hooks/useSidebarCollapse";
 import {
   LayoutDashboard,
   Radio,
-  Dumbbell,
-  Video,
-  Salad,
-  Users,
   CreditCard,
   LogOut,
   Sparkles,
@@ -23,11 +19,7 @@ import {
 
 const nav = [
   { to: "/portal/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { to: "/portal/live", label: "Live Sessions", icon: Radio },
-  { to: "/portal/recordings", label: "Recordings", icon: Video },
-  { to: "/portal/workouts", label: "Circuits", icon: Dumbbell },
-  { to: "/portal/nutrition", label: "Nutrition", icon: Salad },
-  { to: "/portal/community", label: "Community", icon: Users },
+  { to: "/portal/live", label: "Calendar", icon: Radio },
   { to: "/portal/payments", label: "Payments", icon: CreditCard },
 ] as const;
 

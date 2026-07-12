@@ -30,7 +30,7 @@ const DEMO_MEMBERSHIP: Membership = {
   product: "lean_kettlebell",
   plan: "monthly",
   status: "active",
-  amount_inr: 7999,
+  amount_inr: 6999,
   razorpay_subscription_id: null,
   razorpay_payment_id: null,
   started_at: new Date().toISOString(),

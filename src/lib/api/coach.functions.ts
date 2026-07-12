@@ -21,10 +21,8 @@ async function verifyCoach(coachId: string) {
   return admin;
 }
 
-function planAmount(plan: MembershipPlan) {
-  if (plan === "founding") return 5999;
-  if (plan === "quarterly") return 21999;
-  return 7999;
+function planAmount(_plan: MembershipPlan) {
+  return 6999;
 }
 
 function renewalDate(plan: MembershipPlan) {

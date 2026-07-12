@@ -9,6 +9,7 @@ export type EnrollmentRecord = {
   phone: string | null;
   plan: MembershipPlan;
   amount_inr: number;
+  session_ids: string[];
   status: "pending_payment" | "account_created";
   payment_method: "manual";
   created_at: string;

@@ -158,35 +158,50 @@ function HomePage() {
       <section id="pricing" className="bg-white border-b border-border scroll-mt-24">
         <div className="container-x section-y">
           <FadeUp className="flex flex-wrap items-end justify-between gap-8">
-            <SectionHeader eyebrow="Pricing" title="Choose your plan." />
+            <SectionHeader
+              eyebrow="Program"
+              title="One program. ₹6,999/mo."
+              description="Strength and endurance — live with your coach. Pick 3 sessions at signup."
+            />
             <p className="type-meta pb-1">
               {COHORT.label}: {COHORT.date}
             </p>
           </FadeUp>
 
-          <div className="section-content-gap grid md:grid-cols-3 gap-5 lg:gap-6">
-            {PRICING_PLANS.map((plan, i) => (
-              <FadeUp key={plan.id} delay={i * 0.05}>
-                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
+          <div className="section-content-gap max-w-xl">
+            {PRICING_PLANS.map((plan) => (
+              <FadeUp key={plan.id}>
+                <div className="group flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
                   <span className="type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.tag}
                   </span>
                   <h3 className="type-h3 stack-head">{plan.name}</h3>
-                  <div className="mt-6 font-display text-[2.125rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
+                  <div className="mt-6 font-display text-[2.5rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
                     {plan.price}
                   </div>
                   <p className="mt-3 type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.period}
                   </p>
-                  <p className="mt-5 type-body flex-1 transition-colors duration-300 group-hover:!text-background/70">
+                  <p className="mt-5 type-body transition-colors duration-300 group-hover:!text-background/70">
                     {plan.description}
                   </p>
+                  <ul className="mt-6 space-y-2.5">
+                    {INCLUDED_SUMMARY.slice(0, 4).map((item) => (
+                      <li
+                        key={item}
+                        className="flex gap-2.5 text-sm text-foreground/70 transition-colors duration-300 group-hover:text-background/70"
+                      >
+                        <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
                   <Link
                     to="/join"
                     search={{ plan: plan.id, email: "", name: "" }}
                     className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                   >
-                    Enroll <ArrowRight size={12} />
+                    Join now <ArrowRight size={12} />
                   </Link>
                 </div>
               </FadeUp>

@@ -140,7 +140,7 @@ function PortalCheckout() {
           email: order.email,
           name: order.fullName ?? undefined,
         },
-        theme: { color: "#C9A45C" },
+        theme: { color: "#E11D2A" },
         onSuccess: async (response) => {
           const verified = await verifyMemberRazorpayPayment({
             data: {

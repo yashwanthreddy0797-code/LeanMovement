@@ -38,11 +38,11 @@ export function coachImageUrl(width: number) {
 export const COACH_IMAGE_DEFAULT = coachImageUrl(1200);
 
 export const LEAN_KETTLEBELL = {
-  name: "Live Coaching Membership",
+  name: "Lean Program",
   tagline: BRAND.tagline,
   positioning:
-    "Live kettlebell coaching for busy professionals — three coached sessions a week, all recorded, with a nutrition framework and private community.",
-  liveNote: "All sessions happen live — train with your coach three times a week.",
+    "One live coaching program — strength and endurance, three sessions a week with your coach. Built for busy professionals.",
+  liveNote: "Train live with your coach — pick three sessions that fit your week.",
 } as const;
 
 /** Homepage hero — free Unsplash, kettlebell swing in gym. */
@@ -65,33 +65,30 @@ export function heroImageSrcSet() {
 export const HERO_IMAGE_DEFAULT = heroImageUrl(1920);
 
 export const MEMBERSHIP_OVERVIEW = {
-  title: "What is Lean Kettlebell™?",
-  subtitle: "A live coaching membership — not a PDF program.",
+  title: "One program. Strength + endurance.",
+  subtitle: "Live coaching with your coach — not a PDF plan.",
   description:
-    "Coached kettlebell sessions three times a week with a real coach on video. Foundations onboarding, nutrition framework, recordings, and a private community — built for people with 45 minutes, not two hours.",
+    "A single Lean Program at ₹6,999/month. You train live three times a week across strength and endurance sessions (45–60 minutes). Choose morning or evening slots that fit your life. All sessions recorded.",
   idealFor: [
-    "Busy professionals with 45–60 minutes, three days a week",
-    "Beginners who want proper technique before going heavy",
-    "Intermediate lifters who want structure and accountability",
-    "Anyone tired of random YouTube workouts with no progression",
+    "Busy professionals who can commit to 3 sessions per week",
+    "Beginners who want coached strength and endurance progressions",
+    "Anyone who wants accountability with a real coach on camera",
   ],
   notFor: [
-    "Custom 1:1 programming spreadsheets",
-    "Rigid meal plans or calorie-counting apps",
-    "Bodybuilding split routines or bro-science",
+    "Self-led PDF programs with no live coaching",
+    "People who cannot commit to three sessions weekly",
   ],
 } as const;
 
 export const SESSION_SCHEDULE = {
   title: "Weekly Schedule",
-  subtitle: "3 live sessions · 45 minutes each · All recorded",
+  subtitle: "2 time windows · Pick any 3 sessions · 60 minutes each",
   timezone: "IST (India Standard Time)",
   batches: [
-    { day: "Monday", time: "7:00 AM", name: "Strength", type: "Heavy & structural" },
-    { day: "Wednesday", time: "7:00 AM", name: "Conditioning", type: "Engine & intervals" },
-    { day: "Saturday", time: "8:00 AM", name: "Hybrid Athlete", type: "Power, core & flow" },
+    { day: "Mon / Wed / Fri", time: "7:00 – 8:00 AM", name: "Morning", type: "Strength & endurance" },
+    { day: "Tue / Thu / Sat", time: "7:00 – 8:00 PM", name: "Evening", type: "Strength & endurance" },
   ],
-  note: "Miss a session? Recordings are in your portal within hours — catch up anytime.",
+  note: "Choose 3 sessions at signup. Miss a class? Recordings land in your portal.",
 } as const;
 
 export const REQUIREMENTS = {
@@ -126,24 +123,20 @@ export const FOUNDATIONS = {
 } as const;
 
 export const LIVE_SESSIONS = {
-  title: "12 Live Sessions Per Month",
-  schedule: "3 sessions per week · 45 minutes each",
-  description: "Train live with your coach. All sessions recorded — members can catch up anytime.",
+  title: "Live Sessions",
+  schedule: "3 sessions per week · 60 minutes · Morning or evening",
+  description:
+    "Two coaching windows every week. Pick any three sessions when you join — strength, endurance, and hybrid work with your coach.",
   days: [
     {
-      day: "Monday",
-      name: "Strength",
-      focus: "Heavy KB work, carries, presses, squats, deadlifts",
+      day: "Mon / Wed / Fri",
+      name: "Morning",
+      focus: "7:00 – 8:00 AM IST · Strength & endurance",
     },
     {
-      day: "Wednesday",
-      name: "Conditioning",
-      focus: "EMOMs, intervals, complexes, heart rate work",
-    },
-    {
-      day: "Saturday",
-      name: "Hybrid Athlete",
-      focus: "Mixed sessions — power, core, mobility, KB flow",
+      day: "Tue / Thu / Sat",
+      name: "Evening",
+      focus: "7:00 – 8:00 PM IST · Strength & endurance",
     },
   ] as const,
 } as const;
@@ -247,85 +240,59 @@ export const MEMBERSHIP_PILLARS = [
 ] as const;
 
 export const MEMBERSHIP_JOURNEY = [
-  { step: "01", title: "Enroll & pay", detail: "Pick your plan and checkout in under 2 minutes." },
-  { step: "02", title: "Portal access", detail: "Sign in with your email — dashboard, schedule, and onboarding unlock." },
-  { step: "03", title: "Book Foundations", detail: "60-min technique session before your first live class." },
-  { step: "04", title: "Join live sessions", detail: "Mon · Wed · Sat — train with your coach three times a week." },
+  { step: "01", title: "Enroll & pick sessions", detail: "One program · ₹6,999/mo · choose 3 live slots." },
+  { step: "02", title: "Pay & get access", detail: "Portal unlocks after payment — calendar with your sessions." },
+  { step: "03", title: "Train with your coach", detail: "Morning or evening batches · strength + endurance." },
 ] as const;
 
 export const PRICING_PLANS = [
   {
     id: "standard",
-    name: "Standard Membership",
-    tag: "Monthly",
-    price: "₹7,999",
+    name: "Lean Program",
+    tag: "One program",
+    price: "₹6,999",
     period: "per month",
-    description: "Full membership — live sessions, recordings, nutrition framework, and community.",
+    description:
+      "Live strength and endurance coaching. Three sessions per week with your coach — morning or evening slots. All recorded.",
     featured: true,
-  },
-  {
-    id: "quarterly",
-    name: "Quarterly",
-    tag: "3-Month Commitment",
-    price: "₹21,999",
-    period: "every 3 months",
-    description: "Same membership, billed quarterly. Best for members ready to commit.",
-    featured: false,
-  },
-  {
-    id: "founding",
-    name: "Founding Members",
-    tag: "Limited Slots",
-    price: "₹5,999",
-    period: "per month",
-    description: "Early supporter pricing. Same access — limited availability.",
-    featured: false,
   },
 ] as const;
 
 export const INCLUDED_SUMMARY = [
-  "Initial 60-min Foundations session (recorded)",
-  "12 live coached sessions per month",
-  "Session recordings — catch up anytime",
-  "Nutrition framework (not meal plans)",
-  "Private WhatsApp community",
-  "5 kettlebell circuits library",
+  "Live coaching — strength & endurance",
+  "3 sessions per week (you choose which 3)",
+  "Morning: Mon / Wed / Fri · 7–8 AM",
+  "Evening: Tue / Thu / Sat · 7–8 PM",
+  "Session recordings in your portal",
+  "Direct access to your coach",
 ] as const;
 
 export const COHORT = {
-  label: "Next cohort starts",
-  date: "April 2026",
-  note: "Foundations session scheduled before your first live class.",
+  label: "Program",
+  date: "Open enrollment",
+  note: "Pick your 3 sessions at signup. Your coach is notified when you register.",
 } as const;
 
 export const FAQ = [
   {
-    q: "Is this online coaching or live training?",
-    a: "Live training. You join coached kettlebell sessions three times a week — not a PDF program or spreadsheet. This is a small-group virtual studio experience.",
+    q: "What is the Lean Program?",
+    a: "One live coaching program at ₹6,999/month covering strength and endurance. You train with your coach three times a week — not a PDF or self-led plan.",
+  },
+  {
+    q: "When are the sessions?",
+    a: "Two windows: Mon/Wed/Fri 7–8 AM, and Tue/Thu/Sat 7–8 PM (IST). At signup you choose any 3 of these six slots.",
+  },
+  {
+    q: "Can I mix morning and evening?",
+    a: "Yes. Pick any three sessions across both windows so the week fits your schedule.",
   },
   {
     q: "What if I miss a live session?",
-    a: "Every session is recorded. Catch up on your schedule — you never fall behind because life got busy.",
+    a: "Every session is recorded. Catch up from your portal when life gets busy.",
   },
   {
-    q: "Do I need kettlebells?",
-    a: "Yes. At minimum one kettlebell to start; two or three weights as you progress is ideal. We'll cover setup and recommendations in your Foundations session.",
-  },
-  {
-    q: "Is this suitable for beginners?",
-    a: "Yes — with the Foundations session first. Every member completes a 60-minute technique session before joining regular classes.",
-  },
-  {
-    q: "How much time do I need per week?",
-    a: "Three 45-minute live sessions per week. Short, effective, and built for busy professionals.",
-  },
-  {
-    q: "What about nutrition — do I get meal plans?",
-    a: "No rigid meal plans. You get a practical framework: calorie and protein targets, flexible dieting, restaurant and travel guides — how lean people eat, not chicken at 2 pm.",
-  },
-  {
-    q: "What if I travel often?",
-    a: "Recordings are always available. The nutrition framework includes a travel eating guide. Many members train from hotel rooms with a single kettlebell.",
+    q: "Do I train with the coach directly?",
+    a: "Yes. This is live coached training. Your portal connects you to your coach — calendar, sessions, and support.",
   },
   {
     q: "What payment methods do you accept?",
@@ -356,3 +323,4 @@ export const TESTIMONIALS = [
     since: "2025",
   },
 ] as const;
+

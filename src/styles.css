@@ -40,7 +40,7 @@
   --card-foreground: #111111;
   --foreground: #111111;
   --border: #E8E8E8;
-  --accent: #C9A45C;
+  --accent: #E11D2A;
   --forest: #234B3A;
   --muted-foreground: #5C5C5C;
   --radius: 0px;
@@ -67,7 +67,7 @@
   --card-foreground: #000000;
   --foreground: #000000;
   --border: #EAEAEA;
-  --accent: #C9A45C;
+  --accent: #E11D2A;
   --muted-foreground: #737373;
   --radius: 4px;
 
@@ -100,8 +100,8 @@
   border-radius: 999px;
   font-size: 0.7rem;
   font-weight: 600;
-  background: #F3EDDF;
-  color: #8B6E2F;
+  background: #FEE2E2;
+  color: #E11D2A;
   letter-spacing: 0.04em;
   text-transform: uppercase;
 }

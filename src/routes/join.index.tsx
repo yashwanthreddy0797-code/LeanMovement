@@ -8,6 +8,12 @@ import { INCLUDED_SUMMARY, PRICING_PLANS } from "@/lib/lean-kettlebell";
 import { completeCheckout } from "@/lib/enrollment/checkout";
 import { planSlugFromSearch } from "@/lib/enrollment/plans";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
+import {
+  SESSION_SLOTS,
+  SESSION_WINDOWS,
+  SESSIONS_TO_PICK,
+  slotsForWindow,
+} from "@/lib/sessions";
 
 export const Route = createFileRoute("/join/")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -16,26 +22,41 @@ export const Route = createFileRoute("/join/")({
     name: typeof search.name === "string" ? search.name : "",
   }),
   head: () => ({
-    meta: [{ title: "Checkout — LEANMOVEMENT" }],
+    meta: [{ title: "Join — LEANMOVEMENT" }],
   }),
   component: CheckoutPage,
 });
 
 function CheckoutPage() {
   const navigate = Route.useNavigate();
-  const { plan: initialPlan, email: emailFromSearch, name: nameFromSearch } = Route.useSearch();
-  const [selectedPlan, setSelectedPlan] = useState(initialPlan);
+  const { email: emailFromSearch, name: nameFromSearch } = Route.useSearch();
+  const activePlan = PRICING_PLANS[0];
   const [fullName, setFullName] = useState(nameFromSearch);
   const [email, setEmail] = useState(emailFromSearch);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
+  const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const activePlan = PRICING_PLANS.find((p) => p.id === selectedPlan) ?? PRICING_PLANS[0];
+  const toggleSession = (id: string) => {
+    setSelectedSessions((prev) => {
+      if (prev.includes(id)) return prev.filter((s) => s !== id);
+      if (prev.length >= SESSIONS_TO_PICK) {
+        toast.message(`Pick exactly ${SESSIONS_TO_PICK} sessions`);
+        return prev;
+      }
+      return [...prev, id];
+    });
+  };
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (selectedSessions.length !== SESSIONS_TO_PICK) {
+      toast.error(`Choose ${SESSIONS_TO_PICK} sessions to continue`);
+      return;
+    }
 
     if (!agreed) {
       toast.error("Please accept the terms to continue");
@@ -50,6 +71,7 @@ function CheckoutPage() {
         planSlug: activePlan.id,
         phone: phone || undefined,
         password: password || (isSupabaseConfigured() ? "" : "demo123456"),
+        sessionIds: selectedSessions,
       });
 
       if (!result.ok) {
@@ -63,7 +85,7 @@ function CheckoutPage() {
         return;
       }
 
-      toast.success("Welcome — complete payment to unlock access");
+      toast.success("Registered — your coach has been notified. Complete payment next.");
       window.location.href = result.destination;
     } catch (err) {
       console.error("[checkout] failed", err);
@@ -97,7 +119,7 @@ function CheckoutPage() {
               <div>
                 <p className="eyebrow">
                   <span className="w-5 h-px bg-accent" />
-                  Lean Kettlebell™
+                  One program
                 </p>
                 <h1 className="type-h3 stack-head">{activePlan.name}</h1>
                 <div className="mt-4 flex items-baseline gap-2">
@@ -108,7 +130,7 @@ function CheckoutPage() {
               </div>
 
               <ul className="space-y-2.5">
-                {INCLUDED_SUMMARY.slice(0, 4).map((item) => (
+                {INCLUDED_SUMMARY.map((item) => (
                   <li key={item} className="flex gap-2.5 text-sm text-foreground/70">
                     <Check size={14} className="mt-0.5 shrink-0 text-accent" />
                     {item}
@@ -120,36 +142,75 @@ function CheckoutPage() {
 
           <div className="lg:col-span-3">
             <div className="border border-border bg-card p-7 md:p-8">
-              <h2 className="type-h3">Checkout</h2>
+              <h2 className="type-h3">Join</h2>
               <p className="type-body stack-head !max-w-none">
-                Create your account — portal unlocks after payment.
+                Create your account, pick 3 sessions, then pay. Your coach is notified on registration.
               </p>
 
-              <div className="mt-6 grid grid-cols-3 gap-2">
-                {PRICING_PLANS.map((plan) => (
-                  <button
-                    key={plan.id}
-                    type="button"
-                    onClick={() => setSelectedPlan(plan.id)}
-                    className={`border px-3 py-3 text-left transition ${
-                      selectedPlan === plan.id
-                        ? "border-foreground bg-foreground text-background"
-                        : "border-border hover:border-foreground/30"
-                    }`}
-                  >
-                    <div
-                      className={`text-[9px] uppercase tracking-[0.16em] ${
-                        selectedPlan === plan.id ? "text-background/50" : "text-muted-foreground"
-                      }`}
-                    >
-                      {plan.tag}
-                    </div>
-                    <div className="mt-1 text-sm font-medium">{plan.price}</div>
-                  </button>
-                ))}
-              </div>
+              <form onSubmit={(e) => void submit(e)} className="mt-8 space-y-5">
+                <div>
+                  <div className="flex items-end justify-between gap-4 mb-3">
+                    <span className="block text-xs text-muted-foreground">
+                      Choose {SESSIONS_TO_PICK} sessions
+                    </span>
+                    <span className="text-xs font-medium text-accent">
+                      {selectedSessions.length}/{SESSIONS_TO_PICK}
+                    </span>
+                  </div>
 
-              <form onSubmit={(e) => void submit(e)} className="mt-8 space-y-4">
+                  <div className="space-y-5">
+                    {SESSION_WINDOWS.map((window) => (
+                      <div key={window.id}>
+                        <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground mb-2">
+                          {window.label} · {window.days} · {window.time}
+                        </p>
+                        <div className="grid gap-2">
+                          {slotsForWindow(window.id).map((slot) => {
+                            const on = selectedSessions.includes(slot.id);
+                            return (
+                              <button
+                                key={slot.id}
+                                type="button"
+                                onClick={() => toggleSession(slot.id)}
+                                className={`border px-4 py-3 text-left transition ${
+                                  on
+                                    ? "border-foreground bg-foreground text-background"
+                                    : "border-border hover:border-foreground/40"
+                                }`}
+                              >
+                                <div className="flex items-center justify-between gap-3">
+                                  <div>
+                                    <div className="text-sm font-medium">
+                                      {slot.day} · {slot.focus}
+                                    </div>
+                                    <div
+                                      className={`mt-0.5 text-xs ${
+                                        on ? "text-background/60" : "text-muted-foreground"
+                                      }`}
+                                    >
+                                      {slot.timeLabel} · {slot.brief}
+                                    </div>
+                                  </div>
+                                  <div
+                                    className={`w-4 h-4 border shrink-0 grid place-items-center ${
+                                      on ? "border-accent bg-accent" : "border-current/30"
+                                    }`}
+                                  >
+                                    {on && <Check size={10} className="text-white" />}
+                                  </div>
+                                </div>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="mt-2 text-[11px] text-muted-foreground">
+                    {SESSION_SLOTS.length} slots available · mix morning and evening if you want
+                  </p>
+                </div>
+
                 <Field label="Full name">
                   <input
                     className="checkout-input"
@@ -202,13 +263,13 @@ function CheckoutPage() {
                     className="mt-1 accent-[var(--accent)]"
                   />
                   <span className="text-xs text-muted-foreground leading-relaxed">
-                    I agree to the terms and consent to sharing my details with LEANMOVEMENT.
+                    I agree to the terms and consent to sharing my details with LEANMOVEMENT and my coach.
                   </span>
                 </label>
 
-                <div className="flex items-start gap-3 text-xs text-muted-foreground bg-surface p-4">
+                <div className="flex items-start gap-3 text-xs text-muted-foreground bg-white border border-border p-4">
                   <ShieldCheck size={16} className="shrink-0 mt-0.5 text-accent" />
-                  <p>Account created in one step — then pay to unlock your portal.</p>
+                  <p>Your coach is notified as soon as you register. Portal unlocks after payment.</p>
                 </div>
 
                 <button
@@ -216,7 +277,7 @@ function CheckoutPage() {
                   disabled={loading}
                   className="w-full btn-primary disabled:opacity-60"
                 >
-                  {loading ? "Processing…" : `Pay ${activePlan.price} & enter portal`}
+                  {loading ? "Processing…" : `Continue · ${activePlan.price}/mo`}
                 </button>
               </form>
             </div>

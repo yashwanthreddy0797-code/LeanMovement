@@ -1,9 +1,9 @@
 import type { Membership, MembershipPlan, MembershipStatus } from "@/lib/supabase/types";
 
 const PLAN_LABELS: Record<MembershipPlan, string> = {
-  monthly: "Monthly",
-  quarterly: "Quarterly",
-  founding: "Founding member",
+  monthly: "Lean Program",
+  quarterly: "Lean Program",
+  founding: "Lean Program",
 };
 
 const STATUS_LABELS: Record<MembershipStatus, string> = {
@@ -42,10 +42,8 @@ export function formatInr(amount?: number | null) {
   }).format(amount);
 }
 
-export function planPriceInr(plan?: MembershipPlan | string | null) {
-  if (plan === "founding") return 5999;
-  if (plan === "quarterly") return 21999;
-  return 7999;
+export function planPriceInr(_plan?: MembershipPlan | string | null) {
+  return 6999;
 }
 
 export function membershipSummary(membership: Membership | null) {

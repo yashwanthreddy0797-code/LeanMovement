@@ -3,6 +3,7 @@ import { coachListPendingEnrollments, type EnrollmentIntentRow } from "@/lib/api
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { formatInr, formatPlanLabel } from "@/lib/portal/member-format";
 import { formatDate } from "@/lib/portal/coach-queries";
+import { formatSelectedSessions } from "@/lib/sessions";
 import { SoftCard } from "@/components/portal/ui";
 import { Mail, UserPlus } from "lucide-react";
 
@@ -29,14 +30,13 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">
-            Pre-signup enrollments
+            Pending enrollments
           </div>
           <h2 className="mt-2 text-2xl font-serif">
-            Waiting for account · {rows.length}
+            Awaiting account / payment · {rows.length}
           </h2>
           <p className="mt-2 text-sm text-[#737373] max-w-xl">
-            These people submitted the join form but haven't created a portal account yet. They
-            should sign up with the same email — then activate from the list below.
+            New registrations appear here with their chosen 3 sessions. Activate from the member list after payment.
           </p>
         </div>
         <UserPlus size={20} className="text-[#A3A3A3] shrink-0" />
@@ -47,8 +47,8 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
           <thead>
             <tr className="text-left text-[10px] uppercase tracking-[0.2em] text-[#737373] border-b border-[var(--border)]">
               <th className="pb-3 pr-4 font-medium">Name</th>
-              <th className="pb-3 pr-4 font-medium">Email</th>
-              <th className="pb-3 pr-4 font-medium">Plan</th>
+              <th className="pb-3 pr-4 font-medium">Contact</th>
+              <th className="pb-3 pr-4 font-medium">Sessions</th>
               <th className="pb-3 font-medium">Submitted</th>
             </tr>
           </thead>
@@ -61,9 +61,12 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
                     <Mail size={12} />
                     {row.email}
                   </span>
+                  <div className="mt-1 text-xs text-[#737373]">
+                    {formatPlanLabel(row.plan)} · {formatInr(row.amount_inr)}
+                  </div>
                 </td>
-                <td className="py-3 pr-4">
-                  {formatPlanLabel(row.plan)} · {formatInr(row.amount_inr)}
+                <td className="py-3 pr-4 text-[#404040] max-w-xs">
+                  {formatSelectedSessions(row.session_ids ?? []) || "—"}
                 </td>
                 <td className="py-3 text-[#737373]">{formatDate(row.created_at)}</td>
               </tr>
