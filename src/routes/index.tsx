@@ -68,7 +68,7 @@ function HomePage() {
 
   return (
     <>
-      <section className="border-b border-border min-h-[100svh] flex flex-col justify-center">
+      <section className="bg-white border-b border-border min-h-[100svh] flex flex-col justify-center">
         <div className="container-x w-full pt-20 pb-6 md:pt-22 md:pb-8 lg:pt-[5.5rem] lg:pb-6">
           <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
             <div className="lg:col-span-5 flex flex-col justify-center">
@@ -137,7 +137,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-surface border-b border-border">
+      <section className="bg-white border-b border-border">
         <div className="container-x section-y">
           <FadeUp>
             <SectionHeader
@@ -159,7 +159,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="pricing" className="border-b border-border scroll-mt-24">
+      <section id="pricing" className="bg-white border-b border-border scroll-mt-24">
         <div className="container-x section-y">
           <FadeUp className="flex flex-wrap items-end justify-between gap-8">
             <SectionHeader eyebrow="Pricing" title="Choose your plan." />
@@ -199,7 +199,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-surface border-b border-border">
+      <section className="bg-white border-b border-border">
         <div className="container-x section-y">
           <FadeUp className="section-head-wide">
             <p className="eyebrow">
@@ -223,7 +223,7 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="faq" className="border-b border-border scroll-mt-24">
+      <section id="faq" className="bg-white border-b border-border scroll-mt-24">
         <div className="container-x section-y">
           <FadeUp>
             <SectionHeader eyebrow="FAQ" title="Common questions." />
@@ -251,15 +251,15 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-foreground text-background">
+      <section className="bg-white border-b border-border">
         <div className="container-x section-y-sm">
           <FadeUp className="section-head">
-            <h2 className="type-h2 text-background">Start with {featuredPlan.price}/mo.</h2>
-            <p className="mt-5 text-[0.9375rem] leading-relaxed text-background/60">{COHORT.note}</p>
+            <h2 className="type-h2">Start with {featuredPlan.price}/mo.</h2>
+            <p className="mt-5 text-[0.9375rem] leading-relaxed text-muted-foreground">{COHORT.note}</p>
             <Link
               to="/join"
               search={{ plan: "standard", email: "", name: "" }}
-              className="btn-primary bg-accent hover:bg-background hover:text-foreground stack-head"
+              className="btn-primary stack-head"
             >
               Join now <ArrowRight size={14} />
             </Link>
