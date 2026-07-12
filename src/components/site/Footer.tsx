@@ -33,6 +33,9 @@ export function Footer() {
               <a href={CONTACT.whatsapp} target="_blank" rel="noopener noreferrer" className="type-link">
                 WhatsApp
               </a>
+              <a href={CONTACT.instagram} target="_blank" rel="noopener noreferrer" className="type-link normal-case tracking-[0.04em]">
+                @{CONTACT.instagramHandle}
+              </a>
             </div>
           </div>
         </div>

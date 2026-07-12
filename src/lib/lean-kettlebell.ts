@@ -6,9 +6,10 @@ export const BRAND = {
 
 export const CONTACT = {
   email: "hello@leanmovement.in",
-  phone: "+91 99999 99999",
-  whatsapp: "https://wa.me/919999999999",
-  instagram: "https://instagram.com/leanmovement",
+  phone: "+91 89779 35936",
+  whatsapp: "https://wa.me/918977935936",
+  instagram: "https://www.instagram.com/natty.finesse/",
+  instagramHandle: "natty.finesse",
   location: "Hyderabad, India",
 } as const;
 

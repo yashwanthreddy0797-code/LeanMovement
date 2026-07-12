@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Mail, MessageCircle } from "lucide-react";
+import { Mail, MessageCircle, Instagram } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { toast } from "sonner";
@@ -10,7 +10,7 @@ export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
       { title: "Contact — LEANMOVEMENT" },
-      { name: "description", content: "Get in touch with LEANMOVEMENT. Email or WhatsApp — we reply within 2 hours." },
+      { name: "description", content: "Get in touch with LEANMOVEMENT. Email, WhatsApp, or Instagram." },
       { property: "og:title", content: "Contact — LEANMOVEMENT" },
       { property: "og:description", content: "Get in touch with LEANMOVEMENT." },
     ],
@@ -21,6 +21,12 @@ export const Route = createFileRoute("/contact")({
 const CHANNELS = [
   { icon: Mail, label: "Email", value: CONTACT.email, href: `mailto:${CONTACT.email}` },
   { icon: MessageCircle, label: "WhatsApp", value: CONTACT.phone, href: CONTACT.whatsapp },
+  {
+    icon: Instagram,
+    label: "Instagram",
+    value: `@${CONTACT.instagramHandle}`,
+    href: CONTACT.instagram,
+  },
 ];
 
 function ContactPage() {
