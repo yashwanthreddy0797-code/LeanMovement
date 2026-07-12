@@ -17,7 +17,6 @@ import {
   INCLUDED_SUMMARY,
   LEAN_KETTLEBELL,
   PRICING_PLANS,
-  TESTIMONIALS,
 } from "@/lib/lean-kettlebell";
 
 export const Route = createFileRoute("/")({
@@ -196,27 +195,6 @@ function HomePage() {
         </div>
       </section>
 
-      <section className="bg-white border-b border-border">
-        <div className="container-x section-y">
-          <FadeUp className="section-head-wide">
-            <p className="eyebrow">
-              <span className="w-6 h-px bg-accent" />
-              Members
-            </p>
-            <blockquote className="type-quote stack-head max-w-3xl border-l-2 border-accent pl-6 md:pl-8">
-              {TESTIMONIALS[0].quote}
-            </blockquote>
-            <figcaption className="mt-7 type-meta">
-              <span className="text-foreground">{TESTIMONIALS[0].name}</span>
-              <span> · {TESTIMONIALS[0].detail}</span>
-            </figcaption>
-            <Link to="/results" className="mt-8 inline-block type-link">
-              More results →
-            </Link>
-          </FadeUp>
-        </div>
-      </section>
-
       <section id="faq" className="bg-white border-b border-border scroll-mt-24">
         <div className="container-x section-y">
           <FadeUp>
@@ -226,10 +204,12 @@ function HomePage() {
             <Accordion type="single" collapsible className="section-content-gap max-w-2xl">
               {HOME_FAQ.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                  <AccordionTrigger className="text-left text-[0.9375rem] font-medium tracking-[-0.011em] hover:text-foreground hover:no-underline py-5">
+                  <AccordionTrigger className="text-left text-base md:text-lg font-medium tracking-[-0.014em] hover:text-foreground hover:no-underline py-6">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="type-body pb-5">{f.a}</AccordionContent>
+                  <AccordionContent className="type-lead max-w-none pb-6">
+                    {f.a}
+                  </AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>

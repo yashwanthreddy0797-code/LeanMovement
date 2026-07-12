@@ -190,10 +190,10 @@ function ProgramsPage() {
             <Accordion type="single" collapsible className="section-content-gap max-w-2xl">
               {FAQ.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                  <AccordionTrigger className="text-left text-[0.9375rem] font-medium hover:text-accent hover:no-underline py-5">
+                  <AccordionTrigger className="text-left text-base md:text-lg font-medium tracking-[-0.014em] hover:text-foreground hover:no-underline py-6">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="type-body pb-5">{f.a}</AccordionContent>
+                  <AccordionContent className="type-lead max-w-none pb-6">{f.a}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
