@@ -68,10 +68,10 @@ function HomePage() {
 
   return (
     <>
-      <section className="border-b border-border">
-        <div className="container-x hero-y">
-          <div className="grid lg:grid-cols-12 gap-10 lg:gap-14 xl:gap-16 items-center">
-            <div className="lg:col-span-6">
+      <section className="border-b border-border min-h-[100svh] flex flex-col justify-center">
+        <div className="container-x w-full pt-20 pb-8 md:pt-24 md:pb-10 lg:pt-20 lg:pb-8">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-14 items-center">
+            <div className="lg:col-span-6 flex flex-col justify-center">
               <FadeUp>
                 <p className="eyebrow">
                   <span className="w-6 h-px bg-accent" />
@@ -79,7 +79,7 @@ function HomePage() {
                 </p>
               </FadeUp>
               <FadeUp delay={0.06}>
-                <h1 className="type-h1 stack-head">
+                <h1 className="mt-4 font-display uppercase text-[2.5rem] sm:text-5xl md:text-[3.5rem] lg:text-[3.75rem] leading-[0.92] tracking-[0.03em]">
                   Get lean.
                   <br />
                   Get strong.
@@ -88,10 +88,12 @@ function HomePage() {
                 </h1>
               </FadeUp>
               <FadeUp delay={0.1}>
-                <p className="type-lead stack-head">{LEAN_KETTLEBELL.positioning}</p>
+                <p className="mt-4 max-w-md text-[0.9375rem] md:text-base leading-relaxed text-foreground/70">
+                  {LEAN_KETTLEBELL.positioning}
+                </p>
               </FadeUp>
               <FadeUp delay={0.14}>
-                <div className="flex flex-wrap items-center gap-6 stack-head">
+                <div className="mt-6 flex flex-wrap items-center gap-5">
                   <Link
                     to="/join"
                     search={{ plan: "standard", email: "", name: "" }}
@@ -108,18 +110,18 @@ function HomePage() {
                 </div>
               </FadeUp>
               <FadeUp delay={0.18}>
-                <p className="text-sm text-muted-foreground stack-head">
+                <p className="mt-5 text-sm text-muted-foreground">
                   3 live sessions per week · 45 minutes · All recorded
                 </p>
               </FadeUp>
             </div>
 
-            <FadeUp delay={0.08} className="lg:col-span-6">
-              <div className="relative aspect-[4/5] overflow-hidden bg-surface">
+            <FadeUp delay={0.08} className="lg:col-span-6 flex items-center justify-center lg:justify-end">
+              <div className="relative h-[min(58svh,480px)] md:h-[min(64svh,520px)] aspect-[4/5] overflow-hidden bg-surface">
                 <img
                   src={HERO_IMAGE_DEFAULT}
                   srcSet={heroImageSrcSet()}
-                  sizes="(min-width: 1280px) 42vw, 100vw"
+                  sizes="(min-width: 1024px) 36vw, 80vw"
                   alt={HERO_IMAGE.alt}
                   width={1920}
                   height={2400}
