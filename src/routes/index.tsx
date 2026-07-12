@@ -169,38 +169,24 @@ function HomePage() {
           <div className="section-content-gap grid md:grid-cols-3 gap-6 lg:gap-8">
             {PRICING_PLANS.map((plan, i) => (
               <FadeUp key={plan.id} delay={i * 0.05}>
-                <div
-                  className={`h-full flex flex-col p-7 md:p-8 border transition-colors ${
-                    plan.featured
-                      ? "border-foreground bg-foreground text-background"
-                      : "border-border bg-background"
-                  }`}
-                >
-                  <span
-                    className={`text-[10px] uppercase tracking-[0.14em] ${
-                      plan.featured ? "text-background/50" : "text-muted-foreground"
-                    }`}
-                  >
+                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-background text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
+                  <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-300 group-hover:text-background/50">
                     {plan.tag}
                   </span>
                   <h3 className="type-h3 stack-head">{plan.name}</h3>
-                  <div className={`mt-5 font-display text-[2rem] leading-none ${plan.featured ? "text-accent" : ""}`}>
+                  <div className="mt-5 font-display text-[2rem] leading-none transition-colors duration-300 group-hover:text-accent">
                     {plan.price}
                   </div>
-                  <p className={`mt-2 text-xs ${plan.featured ? "text-background/50" : "text-muted-foreground"}`}>
+                  <p className="mt-2 text-xs text-muted-foreground transition-colors duration-300 group-hover:text-background/50">
                     {plan.period}
                   </p>
-                  <p className={`mt-5 type-body flex-1 ${plan.featured ? "!text-background/70" : ""}`}>
+                  <p className="mt-5 type-body flex-1 transition-colors duration-300 group-hover:!text-background/70">
                     {plan.description}
                   </p>
                   <Link
                     to="/join"
                     search={{ plan: plan.id, email: "", name: "" }}
-                    className={`mt-8 inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] uppercase tracking-[0.14em] transition-colors ${
-                      plan.featured
-                        ? "bg-accent text-white hover:bg-background hover:text-foreground"
-                        : "border border-border hover:border-foreground"
-                    }`}
+                    className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] uppercase tracking-[0.14em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                   >
                     Enroll <ArrowRight size={12} />
                   </Link>
