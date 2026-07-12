@@ -79,7 +79,7 @@ function HomePage() {
                 </p>
               </FadeUp>
               <FadeUp delay={0.06}>
-                <h1 className="mt-5 font-display uppercase text-[3rem] sm:text-[3.75rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.25rem] leading-[0.9] tracking-[0.02em]">
+                <h1 className="mt-5 font-display uppercase text-[3rem] sm:text-[3.75rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.25rem] leading-[0.9] tracking-[0.04em]">
                   Get lean.
                   <br />
                   Get strong.
@@ -88,12 +88,12 @@ function HomePage() {
                 </h1>
               </FadeUp>
               <FadeUp delay={0.1}>
-                <p className="mt-5 max-w-md text-base md:text-[1.0625rem] leading-relaxed text-foreground/70">
+                <p className="type-lead stack-head">
                   {LEAN_KETTLEBELL.positioning}
                 </p>
               </FadeUp>
               <FadeUp delay={0.14}>
-                <div className="mt-7 flex flex-wrap items-center gap-5">
+                <div className="mt-8 flex flex-wrap items-center gap-6">
                   <Link
                     to="/join"
                     search={{ plan: "standard", email: "", name: "" }}
@@ -101,23 +101,20 @@ function HomePage() {
                   >
                     Join now <ArrowRight size={14} />
                   </Link>
-                  <Link
-                    to="/programs"
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-                  >
+                  <Link to="/programs" className="type-link">
                     View membership →
                   </Link>
                 </div>
               </FadeUp>
               <FadeUp delay={0.18}>
-                <p className="mt-5 text-sm text-muted-foreground">
+                <p className="mt-6 type-meta">
                   3 live sessions per week · 45 minutes · All recorded
                 </p>
               </FadeUp>
             </div>
 
             <FadeUp delay={0.08} className="lg:col-span-7 flex items-center justify-center lg:justify-end">
-              <div className="relative w-full max-w-[420px] sm:max-w-[460px] lg:max-w-none h-[min(62svh,540px)] md:h-[min(70svh,620px)] lg:h-[min(74svh,680px)] aspect-[4/5] lg:aspect-auto lg:w-[min(100%,calc(min(74svh,680px)*0.8))] overflow-hidden bg-surface">
+              <div className="relative w-full max-w-[420px] sm:max-w-[460px] lg:max-w-none h-[min(62svh,540px)] md:h-[min(70svh,620px)] lg:h-[min(74svh,680px)] aspect-[4/5] lg:aspect-auto lg:w-[min(100%,calc(min(74svh,680px)*0.8))] overflow-hidden bg-white">
                 <img
                   src={HERO_IMAGE_DEFAULT}
                   srcSet={heroImageSrcSet()}
@@ -130,7 +127,7 @@ function HomePage() {
                   decoding="async"
                   className="absolute inset-0 w-full h-full object-cover object-[center_32%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
               </div>
             </FadeUp>
           </div>
@@ -147,10 +144,10 @@ function HomePage() {
             />
           </FadeUp>
           <FadeUp delay={0.08}>
-            <ul className="section-content-gap grid sm:grid-cols-2 gap-x-12 gap-y-4 max-w-2xl">
+            <ul className="section-content-gap grid sm:grid-cols-2 gap-x-14 gap-y-5 max-w-2xl">
               {INCLUDED_SUMMARY.map((item) => (
                 <li key={item} className="flex gap-3 type-body">
-                  <Check size={15} className="mt-1 shrink-0 text-accent" />
+                  <Check size={15} strokeWidth={2} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
@@ -163,23 +160,23 @@ function HomePage() {
         <div className="container-x section-y">
           <FadeUp className="flex flex-wrap items-end justify-between gap-8">
             <SectionHeader eyebrow="Pricing" title="Choose your plan." />
-            <p className="text-sm text-muted-foreground pb-1">
+            <p className="type-meta pb-1">
               {COHORT.label}: {COHORT.date}
             </p>
           </FadeUp>
 
-          <div className="section-content-gap grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="section-content-gap grid md:grid-cols-3 gap-5 lg:gap-6">
             {PRICING_PLANS.map((plan, i) => (
               <FadeUp key={plan.id} delay={i * 0.05}>
-                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-background text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-300 group-hover:text-background/50">
+                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
+                  <span className="type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.tag}
                   </span>
                   <h3 className="type-h3 stack-head">{plan.name}</h3>
-                  <div className="mt-5 font-display text-[2rem] leading-none transition-colors duration-300 group-hover:text-accent">
+                  <div className="mt-6 font-display text-[2.125rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
                     {plan.price}
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground transition-colors duration-300 group-hover:text-background/50">
+                  <p className="mt-3 type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.period}
                   </p>
                   <p className="mt-5 type-body flex-1 transition-colors duration-300 group-hover:!text-background/70">
@@ -188,7 +185,7 @@ function HomePage() {
                   <Link
                     to="/join"
                     search={{ plan: plan.id, email: "", name: "" }}
-                    className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] uppercase tracking-[0.14em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                    className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                   >
                     Enroll <ArrowRight size={12} />
                   </Link>
@@ -206,17 +203,14 @@ function HomePage() {
               <span className="w-6 h-px bg-accent" />
               Members
             </p>
-            <blockquote className="type-quote stack-head max-w-3xl">
-              &ldquo;{TESTIMONIALS[0].quote}&rdquo;
+            <blockquote className="type-quote stack-head max-w-3xl border-l-2 border-accent pl-6 md:pl-8">
+              {TESTIMONIALS[0].quote}
             </blockquote>
-            <figcaption className="mt-6 text-sm">
-              <span className="font-medium">{TESTIMONIALS[0].name}</span>
-              <span className="text-muted-foreground"> · {TESTIMONIALS[0].detail}</span>
+            <figcaption className="mt-7 type-meta">
+              <span className="text-foreground">{TESTIMONIALS[0].name}</span>
+              <span> · {TESTIMONIALS[0].detail}</span>
             </figcaption>
-            <Link
-              to="/results"
-              className="mt-6 inline-block text-sm text-muted-foreground hover:text-foreground"
-            >
+            <Link to="/results" className="mt-8 inline-block type-link">
               More results →
             </Link>
           </FadeUp>
@@ -232,7 +226,7 @@ function HomePage() {
             <Accordion type="single" collapsible className="section-content-gap max-w-2xl">
               {HOME_FAQ.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                  <AccordionTrigger className="text-left text-[0.9375rem] font-medium hover:text-accent hover:no-underline py-5">
+                  <AccordionTrigger className="text-left text-[0.9375rem] font-medium tracking-[-0.011em] hover:text-foreground hover:no-underline py-5">
                     {f.q}
                   </AccordionTrigger>
                   <AccordionContent className="type-body pb-5">{f.a}</AccordionContent>
@@ -241,10 +235,7 @@ function HomePage() {
             </Accordion>
           </FadeUp>
           <FadeUp delay={0.1}>
-            <Link
-              to="/programs"
-              className="mt-8 inline-block text-sm text-muted-foreground hover:text-foreground"
-            >
+            <Link to="/programs" className="mt-10 inline-block type-link">
               Full membership details →
             </Link>
           </FadeUp>
@@ -255,7 +246,7 @@ function HomePage() {
         <div className="container-x section-y-sm">
           <FadeUp className="section-head">
             <h2 className="type-h2">Start with {featuredPlan.price}/mo.</h2>
-            <p className="mt-5 text-[0.9375rem] leading-relaxed text-muted-foreground">{COHORT.note}</p>
+            <p className="type-lead stack-head">{COHORT.note}</p>
             <Link
               to="/join"
               search={{ plan: "standard", email: "", name: "" }}

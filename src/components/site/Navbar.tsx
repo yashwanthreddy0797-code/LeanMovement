@@ -44,7 +44,7 @@ export function Navbar() {
                 <Link
                   key={l.to}
                   to={l.to}
-                  className="font-display text-[1.125rem] uppercase tracking-[0.06em] text-foreground/50 hover:text-foreground transition-colors"
+                  className="font-display text-[1.125rem] uppercase tracking-[0.08em] text-foreground/45 hover:text-foreground transition-colors"
                   activeProps={{ className: "text-foreground" }}
                   activeOptions={{ exact: l.to === "/" }}
                 >

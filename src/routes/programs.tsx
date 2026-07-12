@@ -74,14 +74,14 @@ function ProgramsPage() {
           <FadeUp className="section-head-wide">
             <h2 className="type-h2">{MEMBERSHIP_OVERVIEW.title}</h2>
             <p className="type-lead stack-head">{MEMBERSHIP_OVERVIEW.description}</p>
-            <p className="text-sm text-muted-foreground stack-head">
+            <p className="type-meta stack-head">
               12 sessions · 45 min · 3× per week · Live + recordings
             </p>
           </FadeUp>
         </div>
       </section>
 
-      <section id="pricing" className="bg-surface border-b border-border">
+      <section id="pricing" className="bg-white border-b border-border">
         <div className="container-x section-y">
           <FadeUp>
             <SectionHeader
@@ -91,18 +91,18 @@ function ProgramsPage() {
             />
           </FadeUp>
 
-          <div className="section-content-gap grid md:grid-cols-3 gap-6 lg:gap-8">
+          <div className="section-content-gap grid md:grid-cols-3 gap-5 lg:gap-6">
             {PRICING_PLANS.map((plan, i) => (
               <FadeUp key={plan.id} delay={i * 0.05}>
-                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-background text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
-                  <span className="text-[10px] uppercase tracking-[0.14em] text-muted-foreground transition-colors duration-300 group-hover:text-background/50">
+                <div className="group h-full flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
+                  <span className="type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.tag}
                   </span>
                   <h3 className="type-h3 stack-head">{plan.name}</h3>
-                  <div className="mt-5 font-display text-[2rem] leading-none transition-colors duration-300 group-hover:text-accent">
+                  <div className="mt-6 font-display text-[2.125rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
                     {plan.price}
                   </div>
-                  <p className="mt-2 text-xs text-muted-foreground transition-colors duration-300 group-hover:text-background/50">
+                  <p className="mt-3 type-meta transition-colors duration-300 group-hover:text-background/50">
                     {plan.period}
                   </p>
                   <p className="mt-5 type-body flex-1 transition-colors duration-300 group-hover:!text-background/70">
@@ -111,7 +111,7 @@ function ProgramsPage() {
                   <Link
                     to="/join"
                     search={{ plan: plan.id, email: "", name: "" }}
-                    className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3 text-[10px] uppercase tracking-[0.14em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
+                    className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
                   >
                     Enroll <ArrowRight size={12} />
                   </Link>

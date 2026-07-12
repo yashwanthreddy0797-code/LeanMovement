@@ -21,7 +21,7 @@ export function CTABanner({
   const after = parts.slice(1).join(highlight);
 
   return (
-    <section className="border-t border-border bg-surface">
+    <section className="border-t border-border bg-white">
       <div className="container-x section-y-sm">
         <FadeUp className="section-head-wide">
           <h2 className="type-h2">

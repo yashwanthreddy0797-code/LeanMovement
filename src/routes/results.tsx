@@ -37,8 +37,8 @@ function ResultsPage() {
           <div className="grid grid-cols-3 gap-10 lg:gap-14 max-w-2xl">
             {METRICS.map((m) => (
               <FadeUp key={m.l}>
-                <div className="font-display text-3xl md:text-[2.5rem] leading-none">{m.v}</div>
-                <div className="mt-3 text-xs text-muted-foreground">{m.l}</div>
+                <div className="font-display text-3xl md:text-[2.5rem] leading-none tracking-[0.04em]">{m.v}</div>
+                <div className="mt-3 type-meta">{m.l}</div>
               </FadeUp>
             ))}
           </div>
@@ -59,10 +59,12 @@ function ResultsPage() {
             {TESTIMONIALS.map((t) => (
               <FadeUp key={t.name}>
                 <figure>
-                  <blockquote className="type-quote max-w-none">&ldquo;{t.quote}&rdquo;</blockquote>
-                  <figcaption className="mt-5 text-sm">
-                    <span className="font-medium">{t.name}</span>
-                    <span className="text-muted-foreground"> · {t.detail}</span>
+                  <blockquote className="type-quote max-w-none border-l-2 border-accent pl-6 md:pl-8">
+                    {t.quote}
+                  </blockquote>
+                  <figcaption className="mt-6 type-meta">
+                    <span className="text-foreground">{t.name}</span>
+                    <span> · {t.detail}</span>
                   </figcaption>
                 </figure>
               </FadeUp>
