@@ -39,12 +39,12 @@ export function Navbar() {
               <BrandLogo variant="navbar" />
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-9">
+            <nav className="hidden lg:flex items-center gap-8">
               {links.map((l) => (
                 <Link
                   key={l.to}
                   to={l.to}
-                  className="text-[0.9375rem] text-foreground/55 hover:text-foreground transition-colors"
+                  className="font-display text-[1.125rem] uppercase tracking-[0.06em] text-foreground/50 hover:text-foreground transition-colors"
                   activeProps={{ className: "text-foreground" }}
                   activeOptions={{ exact: l.to === "/" }}
                 >

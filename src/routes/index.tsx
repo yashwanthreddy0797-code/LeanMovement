@@ -69,9 +69,9 @@ function HomePage() {
   return (
     <>
       <section className="border-b border-border min-h-[100svh] flex flex-col justify-center">
-        <div className="container-x w-full pt-20 pb-8 md:pt-24 md:pb-10 lg:pt-20 lg:pb-8">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 xl:gap-14 items-center">
-            <div className="lg:col-span-6 flex flex-col justify-center">
+        <div className="container-x w-full pt-20 pb-6 md:pt-22 md:pb-8 lg:pt-[5.5rem] lg:pb-6">
+          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+            <div className="lg:col-span-5 flex flex-col justify-center">
               <FadeUp>
                 <p className="eyebrow">
                   <span className="w-6 h-px bg-accent" />
@@ -79,7 +79,7 @@ function HomePage() {
                 </p>
               </FadeUp>
               <FadeUp delay={0.06}>
-                <h1 className="mt-4 font-display uppercase text-[2.5rem] sm:text-5xl md:text-[3.5rem] lg:text-[3.75rem] leading-[0.92] tracking-[0.03em]">
+                <h1 className="mt-5 font-display uppercase text-[3rem] sm:text-[3.75rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.25rem] leading-[0.9] tracking-[0.02em]">
                   Get lean.
                   <br />
                   Get strong.
@@ -88,12 +88,12 @@ function HomePage() {
                 </h1>
               </FadeUp>
               <FadeUp delay={0.1}>
-                <p className="mt-4 max-w-md text-[0.9375rem] md:text-base leading-relaxed text-foreground/70">
+                <p className="mt-5 max-w-md text-base md:text-[1.0625rem] leading-relaxed text-foreground/70">
                   {LEAN_KETTLEBELL.positioning}
                 </p>
               </FadeUp>
               <FadeUp delay={0.14}>
-                <div className="mt-6 flex flex-wrap items-center gap-5">
+                <div className="mt-7 flex flex-wrap items-center gap-5">
                   <Link
                     to="/join"
                     search={{ plan: "standard", email: "", name: "" }}
@@ -116,21 +116,21 @@ function HomePage() {
               </FadeUp>
             </div>
 
-            <FadeUp delay={0.08} className="lg:col-span-6 flex items-center justify-center lg:justify-end">
-              <div className="relative h-[min(58svh,480px)] md:h-[min(64svh,520px)] aspect-[4/5] overflow-hidden bg-surface">
+            <FadeUp delay={0.08} className="lg:col-span-7 flex items-center justify-center lg:justify-end">
+              <div className="relative w-full max-w-[420px] sm:max-w-[460px] lg:max-w-none h-[min(62svh,540px)] md:h-[min(70svh,620px)] lg:h-[min(74svh,680px)] aspect-[4/5] lg:aspect-auto lg:w-[min(100%,calc(min(74svh,680px)*0.8))] overflow-hidden bg-surface">
                 <img
                   src={HERO_IMAGE_DEFAULT}
                   srcSet={heroImageSrcSet()}
-                  sizes="(min-width: 1024px) 36vw, 80vw"
+                  sizes="(min-width: 1024px) 48vw, 90vw"
                   alt={HERO_IMAGE.alt}
                   width={1920}
                   height={2400}
                   loading="eager"
                   fetchPriority="high"
                   decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover object-[center_35%]"
+                  className="absolute inset-0 w-full h-full object-cover object-[center_32%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
               </div>
             </FadeUp>
           </div>
