@@ -7,81 +7,10 @@ import {
   verifyMemberRazorpayPayment,
 } from "@/lib/api/membership.functions";
 import { formatInr, formatPlanLabel } from "@/lib/portal/member-format";
+import { getMembershipAccess } from "@/lib/membership/access";
 import { usePortalSession } from "@/lib/portal/session";
+import { openRazorpayCheckout } from "@/lib/razorpay/checkout-client";
 import { toast } from "sonner";
-
-type RazorpayHandlerResponse = {
-  razorpay_payment_id: string;
-  razorpay_order_id: string;
-  razorpay_signature: string;
-};
-
-async function loadRazorpayScript() {
-  if (typeof window === "undefined") return false;
-  if (window.Razorpay) return true;
-  await new Promise<void>((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = "https://checkout.razorpay.com/v1/checkout.js";
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Could not load Razorpay"));
-    document.body.appendChild(script);
-  });
-  return Boolean(window.Razorpay);
-}
-
-declare global {
-  interface Window {
-    Razorpay?: new (options: Record<string, unknown>) => {
-      open: () => void;
-      on: (event: string, handler: (response: { error: { description: string } }) => void) => void;
-    };
-  }
-}
-
-async function openRazorpayCheckout(options: {
-  key: string;
-  amount: number;
-  currency: string;
-  name: string;
-  description: string;
-  order_id: string;
-  prefill?: { email?: string; name?: string };
-  theme?: { color?: string };
-  onSuccess: (response: RazorpayHandlerResponse) => void | Promise<void>;
-  onDismiss?: () => void;
-}) {
-  const loaded = await loadRazorpayScript();
-  if (!loaded || !window.Razorpay) throw new Error("Could not load Razorpay checkout");
-
-  const { onSuccess, onDismiss, ...rest } = options;
-
-  return new Promise<void>((resolve, reject) => {
-    const rzp = new window.Razorpay!({
-      ...rest,
-      handler: async (response: RazorpayHandlerResponse) => {
-        try {
-          await onSuccess(response);
-          resolve();
-        } catch (err) {
-          reject(err);
-        }
-      },
-      modal: {
-        ondismiss: () => {
-          onDismiss?.();
-          reject(new Error("Payment cancelled"));
-        },
-      },
-    });
-
-    rzp.on("payment.failed", (response) => {
-      reject(new Error(response.error.description || "Payment failed"));
-    });
-
-    rzp.open();
-  });
-}
 
 export const Route = createFileRoute("/portal/checkout")({
   head: () => ({ meta: [{ title: "Pay — LEANMOVEMENT Portal" }] }),
@@ -98,13 +27,20 @@ function PortalCheckout() {
   const [paying, setPaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const access = getMembershipAccess(session.membership);
+  const needsPay =
+    !session.hasActiveMembership || access.needsRenewal || access.inGrace ||
+    session.membership?.status === "past_due" ||
+    session.membership?.status === "expired";
+
   useEffect(() => {
     if (session.loading) return;
     if (!session.user?.id) {
       setLoading(false);
       return;
     }
-    if (session.hasActiveMembership) {
+    // Fully paid & not near renewal → dashboard
+    if (session.hasActiveMembership && !access.needsRenewal && !access.inGrace) {
       window.location.replace("/portal/dashboard");
       return;
     }
@@ -116,14 +52,25 @@ function PortalCheckout() {
       })
       .catch(() => setError("Could not load checkout"))
       .finally(() => setLoading(false));
-  }, [session.loading, session.user?.id, session.hasActiveMembership]);
+  }, [
+    session.loading,
+    session.user?.id,
+    session.hasActiveMembership,
+    access.needsRenewal,
+    access.inGrace,
+  ]);
 
   const payWithRazorpay = async () => {
     if (!session.user?.id || !checkout) return;
 
     setPaying(true);
+    const kind =
+      checkout.status === "pending" ? "initial" : ("renewal" as const);
+
     try {
-      const order = await createMemberRazorpayOrder({ data: { userId: session.user.id } });
+      const order = await createMemberRazorpayOrder({
+        data: { userId: session.user.id, kind },
+      });
       if (!order.ok) {
         toast.error(order.message ?? "Could not start payment");
         return;
@@ -134,8 +81,9 @@ function PortalCheckout() {
         amount: order.amountPaise,
         currency: order.currency,
         name: "LEANMOVEMENT",
-        description: `Lean Kettlebell™ · ${formatPlanLabel(order.plan)}`,
-        order_id: order.orderId,
+        description: `Lean Program · ${formatPlanLabel(order.plan)}`,
+        order_id: order.orderId ?? undefined,
+        subscription_id: order.subscriptionId ?? undefined,
         prefill: {
           email: order.email,
           name: order.fullName ?? undefined,
@@ -146,8 +94,10 @@ function PortalCheckout() {
             data: {
               userId: session.user!.id,
               razorpay_order_id: response.razorpay_order_id,
+              razorpay_subscription_id: response.razorpay_subscription_id,
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_signature: response.razorpay_signature,
+              kind,
             },
           });
 
@@ -156,7 +106,7 @@ function PortalCheckout() {
             return;
           }
 
-          toast.success("Payment successful — welcome to the portal");
+          toast.success(kind === "renewal" ? "Renewal successful" : "Payment successful — welcome");
           await router.navigate({ to: "/portal/dashboard" });
           window.location.reload();
         },
@@ -177,7 +127,7 @@ function PortalCheckout() {
     return <p className="text-sm text-[#737373]">Loading…</p>;
   }
 
-  if (session.hasActiveMembership) return null;
+  if (!needsPay && session.hasActiveMembership) return null;
 
   if (error || !checkout) {
     return (
@@ -190,6 +140,8 @@ function PortalCheckout() {
     );
   }
 
+  const isRenewal = checkout.status !== "pending";
+
   return (
     <div className="max-w-lg mx-auto space-y-6 pb-20 lg:pb-0">
       <Link
@@ -200,11 +152,18 @@ function PortalCheckout() {
       </Link>
 
       <div className="card-soft p-8 text-center">
-        <div className="text-[10px] uppercase tracking-[0.24em] text-[#737373]">Amount due</div>
+        <div className="text-[10px] uppercase tracking-[0.24em] text-[#737373]">
+          {isRenewal ? "Renewal due" : "Amount due"}
+        </div>
         <div className="mt-2 font-display text-5xl text-[#000000]">{formatInr(checkout.amountInr)}</div>
         <div className="mt-1 text-sm text-[#737373]">
-          Lean Kettlebell™ · {formatPlanLabel(checkout.plan)}
+          Lean Program · {formatPlanLabel(checkout.plan)} / month
         </div>
+        {access.inGrace && access.graceEndsAt && (
+          <p className="mt-3 text-xs text-[#E11D2A]">
+            Grace period ends {access.graceEndsAt.toLocaleDateString("en-IN")}
+          </p>
+        )}
         <p className="mt-4 text-xs text-[#737373]">{checkout.email}</p>
       </div>
 
@@ -222,12 +181,12 @@ function PortalCheckout() {
               </>
             ) : (
               <>
-                <CreditCard size={16} /> Pay with Razorpay
+                <CreditCard size={16} /> {isRenewal ? "Renew with Razorpay" : "Pay with Razorpay"}
               </>
             )}
           </button>
           <p className="text-xs text-center text-[#737373]">
-            UPI, cards, and net banking · Secured by Razorpay
+            UPI, cards, net banking · Auto-pay when Razorpay subscription is available
           </p>
         </div>
       ) : (
@@ -239,9 +198,6 @@ function PortalCheckout() {
               <div className="mt-1 font-mono text-lg">{checkout.paymentUpi}</div>
             </div>
           )}
-          <p className="text-xs text-[#737373] text-center">
-            Send payment screenshot on WhatsApp — your coach activates access within a few hours.
-          </p>
         </div>
       )}
 

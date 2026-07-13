@@ -1,5 +1,7 @@
 import { planAmountInr } from "@/lib/enrollment/plans";
-import { membershipRenewalIso } from "@/lib/razorpay.server";
+import { recordVerifiedPayment, extendMembershipRenewal } from "@/lib/membership/renewal";
+import { pushCoachRegistrationAlert } from "@/lib/coach-notify";
+import { getEnrollmentFromSiteConfig } from "@/lib/enrollment/store";
 import type { MembershipPlan } from "@/lib/supabase/types";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
@@ -14,25 +16,40 @@ export async function activateMembershipForUser(
     plan: MembershipPlan;
     paymentId: string;
     amountInr?: number;
+    subscriptionId?: string | null;
+    kind?: "initial" | "renewal";
   },
 ) {
   const amountInr = input.amountInr ?? planAmountInr(input.plan);
+  const kind = input.kind ?? "initial";
+
+  const ledger = await recordVerifiedPayment(admin, {
+    paymentId: input.paymentId,
+    userId: input.userId,
+    email: input.email,
+    amountInr,
+    subscriptionId: input.subscriptionId,
+    kind,
+  });
+
+  if (ledger.duplicate && kind === "initial") {
+    const { data: m } = await admin
+      .from("memberships")
+      .select("status")
+      .eq("user_id", input.userId)
+      .maybeSingle();
+    if (m?.status === "active") return { alreadyProcessed: true as const };
+  }
+
+  await extendMembershipRenewal(admin, {
+    userId: input.userId,
+    plan: input.plan,
+    paymentId: input.paymentId,
+    amountInr,
+    subscriptionId: input.subscriptionId,
+  });
+
   const now = new Date().toISOString();
-
-  const { error: membershipError } = await admin
-    .from("memberships")
-    .update({
-      status: "active",
-      plan: input.plan,
-      amount_inr: amountInr,
-      started_at: now,
-      renews_at: membershipRenewalIso(input.plan),
-      razorpay_payment_id: input.paymentId,
-    })
-    .eq("user_id", input.userId);
-
-  if (membershipError) throw new Error(membershipError.message);
-
   const { error: intentError } = await admin
     .from("enrollment_intents")
     .update({
@@ -46,9 +63,31 @@ export async function activateMembershipForUser(
     .in("status", ["pending_payment", "account_created"]);
 
   if (intentError) {
-    // enrollment_intents table may not exist on older DBs — membership activation still counts
     console.warn("[activateMembership] enrollment_intents update:", intentError.message);
   }
 
   await admin.from("onboarding").upsert({ user_id: input.userId });
+
+  if (kind === "initial" && !ledger.duplicate) {
+    const config = await getEnrollmentFromSiteConfig(admin, input.email);
+    const { data: profile } = await admin
+      .from("profiles")
+      .select("full_name")
+      .eq("id", input.userId)
+      .maybeSingle();
+
+    try {
+      await pushCoachRegistrationAlert(admin, {
+        email: input.email,
+        full_name: profile?.full_name ?? config?.full_name ?? input.email,
+        phone: config?.phone ?? null,
+        amount_inr: amountInr,
+        session_ids: config?.session_ids ?? [],
+      });
+    } catch (err) {
+      console.warn("[activateMembership] coach alert failed", err);
+    }
+  }
+
+  return { alreadyProcessed: false as const };
 }

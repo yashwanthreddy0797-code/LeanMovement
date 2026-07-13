@@ -5,7 +5,7 @@ import { MembershipPaywall } from "./MembershipPaywall";
 
 const PUBLIC_PATHS = ["/portal/login", "/portal/signup", "/portal/forgot"];
 
-/** Logged-in members without active membership can still open these routes */
+/** Unpaid / expired members may only reach renewal checkout */
 const PENDING_MEMBER_PATHS = ["/portal/checkout", "/portal/payments"];
 
 export function PortalGate({
@@ -21,13 +21,35 @@ export function PortalGate({
 
   const isPublic = PUBLIC_PATHS.some((p) => pathname.startsWith(p));
   const isAdmin = pathname.startsWith("/portal/admin");
+  const isCoachArea = pathname.startsWith("/portal/coach");
 
   useEffect(() => {
     if (session.loading || isPublic) return;
     if (!session.user) {
       router.navigate({ to: "/login", search: { redirect: pathname } });
+      return;
     }
-  }, [session.loading, session.user, isPublic, pathname, router]);
+    // Brand-new unpaid members: send back to public join to pay
+    if (
+      requireActive &&
+      !session.hasActiveMembership &&
+      !session.isCoach &&
+      session.membership?.status === "pending" &&
+      !PENDING_MEMBER_PATHS.some((p) => pathname.startsWith(p))
+    ) {
+      router.navigate({ to: "/join", search: { plan: "standard", email: session.user.email, name: "" } });
+    }
+  }, [
+    session.loading,
+    session.user,
+    session.hasActiveMembership,
+    session.isCoach,
+    session.membership?.status,
+    isPublic,
+    pathname,
+    requireActive,
+    router,
+  ]);
 
   if (isPublic) return <>{children}</>;
 
@@ -41,7 +63,7 @@ export function PortalGate({
 
   if (!session.user) return null;
 
-  if (isAdmin && !session.isCoach) {
+  if ((isAdmin || isCoachArea) && !session.isCoach) {
     return (
       <div className="min-h-[50vh] grid place-items-center p-6">
         <p className="text-sm text-[#737373]">Coach access only.</p>
@@ -49,9 +71,13 @@ export function PortalGate({
     );
   }
 
+  if (session.isCoach && isCoachArea) {
+    return <>{children}</>;
+  }
+
   const pendingAllowed = PENDING_MEMBER_PATHS.some((p) => pathname.startsWith(p));
 
-  if (requireActive && !session.hasActiveMembership && !isAdmin && !pendingAllowed) {
+  if (requireActive && !session.hasActiveMembership && !pendingAllowed) {
     return (
       <MembershipPaywall
         membership={session.membership}

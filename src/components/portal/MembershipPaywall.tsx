@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { CreditCard, Mail } from "lucide-react";
 import type { Membership } from "@/lib/supabase/types";
 import { formatPlanLabel, membershipSummary } from "@/lib/portal/member-format";
+import { getMembershipAccess } from "@/lib/membership/access";
 
 export function MembershipPaywall({
   membership,
@@ -12,6 +13,9 @@ export function MembershipPaywall({
   userEmail?: string | null;
 }) {
   const summary = membershipSummary(membership);
+  const access = getMembershipAccess(membership);
+  const isPending = membership?.status === "pending" || !membership;
+  const payTo = isPending ? "/join" : "/portal/checkout";
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6">
@@ -20,10 +24,16 @@ export function MembershipPaywall({
           <CreditCard size={24} className="text-[var(--accent)]" />
         </div>
 
-        <h2 className="mt-6 font-serif text-3xl text-[#000000]">One step left</h2>
+        <h2 className="mt-6 font-serif text-3xl text-[#000000]">
+          {isPending ? "Payment required" : "Renew membership"}
+        </h2>
 
         <p className="mt-3 text-sm text-[#737373] leading-relaxed">
-          Your account is ready. Complete payment to unlock live sessions, recordings, and community.
+          {isPending
+            ? "Complete secure payment on the join page to unlock live sessions and your calendar."
+            : access.inGrace
+              ? "Your 30-day cycle ended. You have a few grace days — renew now to keep coaching uninterrupted."
+              : "Your membership has ended. Renew to continue live coaching with your coach."}
         </p>
 
         {userEmail && (
@@ -33,17 +43,18 @@ export function MembershipPaywall({
             {membership && (
               <span className="text-[#737373]">
                 {" "}
-                · {formatPlanLabel(membership.plan)} · {summary.price}
+                · {formatPlanLabel(membership.plan)} · {summary.price}/mo
               </span>
             )}
           </div>
         )}
 
         <Link
-          to="/portal/checkout"
+          to={payTo}
+          search={isPending ? { plan: "standard", email: userEmail ?? "", name: "" } : undefined}
           className="mt-8 inline-flex w-full items-center justify-center px-6 py-3.5 rounded-full bg-[#000000] text-white text-sm font-medium hover:bg-[#111]"
         >
-          Pay {summary.price}
+          {isPending ? `Pay ${summary.price}` : `Renew ${summary.price}`}
         </Link>
 
         <Link

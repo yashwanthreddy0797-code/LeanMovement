@@ -14,7 +14,6 @@ import {
 import {
   listCoachAlerts,
   markCoachAlertsRead,
-  pushCoachRegistrationAlert,
 } from "@/lib/coach-notify";
 import { SESSIONS_TO_PICK, SESSION_SLOTS } from "@/lib/sessions";
 
@@ -168,14 +167,6 @@ export const createEnrollment = createServerFn({ method: "POST" })
         full_name: data.fullName.trim(),
         phone: data.phone?.trim() || null,
         plan,
-        amount_inr: amount,
-        session_ids: sessionIds,
-      });
-
-      await pushCoachRegistrationAlert(admin, {
-        email,
-        full_name: data.fullName.trim(),
-        phone: data.phone?.trim() || null,
         amount_inr: amount,
         session_ids: sessionIds,
       });

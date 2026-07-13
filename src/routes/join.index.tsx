@@ -1,12 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Check, ShieldCheck } from "lucide-react";
+import { Check, ShieldCheck, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { PasswordInput } from "@/components/portal/PasswordInput";
 import { INCLUDED_SUMMARY, PRICING_PLANS } from "@/lib/lean-kettlebell";
-import { completeCheckout } from "@/lib/enrollment/checkout";
-import { planSlugFromSearch } from "@/lib/enrollment/plans";
+import { abandonUnpaidRegistration, completeCheckout } from "@/lib/enrollment/checkout";
+import { planSlugFromSearch, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import {
   SESSION_SLOTS,
@@ -14,6 +14,13 @@ import {
   SESSIONS_TO_PICK,
   slotsForWindow,
 } from "@/lib/sessions";
+import {
+  createMemberRazorpayOrder,
+  getPaymentConfig,
+  verifyMemberRazorpayPayment,
+} from "@/lib/api/membership.functions";
+import { openRazorpayCheckout } from "@/lib/razorpay/checkout-client";
+import { formatInr } from "@/lib/portal/member-format";
 
 export const Route = createFileRoute("/join/")({
   validateSearch: (search: Record<string, unknown>) => ({
@@ -38,6 +45,7 @@ function CheckoutPage() {
   const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [payStep, setPayStep] = useState<"form" | "paying" | "verifying">("form");
 
   const toggleSession = (id: string) => {
     setSelectedSessions((prev) => {
@@ -48,6 +56,80 @@ function CheckoutPage() {
       }
       return [...prev, id];
     });
+  };
+
+  const runPayment = async (userId: string, prefill: { email: string; name: string; phone?: string | null }) => {
+    setPayStep("paying");
+    const config = await getPaymentConfig();
+    if (!config.razorpayEnabled) {
+      await abandonUnpaidRegistration();
+      toast.error("Online payment is not configured yet. Contact the coach on WhatsApp.");
+      setPayStep("form");
+      return;
+    }
+
+    const order = await createMemberRazorpayOrder({
+      data: { userId, kind: "initial" },
+    });
+    if (!order.ok) {
+      await abandonUnpaidRegistration();
+      toast.error(order.message ?? "Could not start payment");
+      setPayStep("form");
+      return;
+    }
+
+    try {
+      await openRazorpayCheckout({
+        key: order.keyId,
+        amount: order.amountPaise,
+        currency: order.currency,
+        name: "LEANMOVEMENT",
+        description: `Lean Program · ${formatInr(order.amountInr)}/mo`,
+        order_id: order.orderId ?? undefined,
+        subscription_id: order.subscriptionId ?? undefined,
+        prefill: {
+          email: prefill.email,
+          name: prefill.name,
+          contact: prefill.phone?.replace(/\s/g, "") || undefined,
+        },
+        theme: { color: "#E11D2A" },
+        onSuccess: async (response) => {
+          setPayStep("verifying");
+          const verified = await verifyMemberRazorpayPayment({
+            data: {
+              userId,
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_subscription_id: response.razorpay_subscription_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              kind: "initial",
+            },
+          });
+
+          if (!verified.ok) {
+            await abandonUnpaidRegistration();
+            toast.error(verified.message ?? "Payment verification failed");
+            setPayStep("form");
+            return;
+          }
+
+          toast.success("Payment confirmed — welcome to your portal");
+          window.location.href = "/portal/dashboard";
+        },
+        onDismiss: () => {
+          void abandonUnpaidRegistration().then(() => {
+            toast.message("Payment required to join. Your account is saved — sign in and pay to continue.");
+            setPayStep("form");
+          });
+        },
+      });
+    } catch (err) {
+      await abandonUnpaidRegistration();
+      if (err instanceof Error && err.message !== "Payment cancelled") {
+        toast.error(err.message || "Payment failed");
+      }
+      setPayStep("form");
+    }
   };
 
   const submit = async (e: React.FormEvent) => {
@@ -75,25 +157,40 @@ function CheckoutPage() {
       });
 
       if (!result.ok) {
-        toast.error(result.message ?? "Checkout failed");
+        toast.error(result.message ?? "Registration failed");
         if ("redirectToLogin" in result && result.redirectToLogin) {
           await navigate({
             to: "/login",
-            search: { redirect: "/portal/checkout", email: email.trim().toLowerCase() },
+            search: { redirect: "/join", email: email.trim().toLowerCase() },
           });
         }
         return;
       }
 
-      toast.success("Registered — your coach has been notified. Complete payment next.");
-      window.location.href = result.destination;
+      if ("demo" in result && result.demo) {
+        toast.success("Demo mode — entering portal");
+        window.location.href = result.destination;
+        return;
+      }
+
+      if (result.needsPayment && result.userId) {
+        toast.message("Complete payment to unlock your portal");
+        await runPayment(result.userId, {
+          email: result.email,
+          name: result.fullName,
+          phone: result.phone,
+        });
+        return;
+      }
     } catch (err) {
-      console.error("[checkout] failed", err);
+      console.error("[join] failed", err);
       toast.error("Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
+
+  const busy = loading || payStep === "paying" || payStep === "verifying";
 
   return (
     <div className="min-h-screen bg-background">
@@ -104,7 +201,7 @@ function CheckoutPage() {
           </Link>
           <Link
             to="/login"
-            search={{ redirect: "/portal/dashboard" }}
+            search={{ redirect: "/join" }}
             className="text-sm text-muted-foreground hover:text-foreground"
           >
             Sign in
@@ -137,15 +234,31 @@ function CheckoutPage() {
                   </li>
                 ))}
               </ul>
+
+              <div className="border border-border p-4 text-xs text-muted-foreground space-y-2">
+                <p className="font-medium text-foreground">Secure checkout</p>
+                <p>Pay {formatInr(PROGRAM_AMOUNT_INR)} on this page. Portal access unlocks only after payment is verified.</p>
+                <p>Auto-renewal via Razorpay when available · 4-day grace after each 30-day cycle.</p>
+              </div>
             </div>
           </aside>
 
           <div className="lg:col-span-3">
             <div className="border border-border bg-card p-7 md:p-8">
-              <h2 className="type-h3">Join</h2>
+              <h2 className="type-h3">Join & pay</h2>
               <p className="type-body stack-head !max-w-none">
-                Create your account, pick 3 sessions, then pay. Your coach is notified on registration.
+                Pick 3 sessions, create your account, then pay securely — portal opens after payment.
               </p>
+
+              {payStep !== "form" && (
+                <div className="mt-6 flex items-center gap-3 border border-border p-4 text-sm">
+                  <Loader2 className="animate-spin text-accent shrink-0" size={18} />
+                  <span>
+                    {payStep === "paying" && "Opening secure Razorpay checkout…"}
+                    {payStep === "verifying" && "Verifying payment with Razorpay…"}
+                  </span>
+                </div>
+              )}
 
               <form onSubmit={(e) => void submit(e)} className="mt-8 space-y-5">
                 <div>
@@ -171,6 +284,7 @@ function CheckoutPage() {
                               <button
                                 key={slot.id}
                                 type="button"
+                                disabled={busy}
                                 onClick={() => toggleSession(slot.id)}
                                 className={`border px-4 py-3 text-left transition ${
                                   on
@@ -207,7 +321,7 @@ function CheckoutPage() {
                     ))}
                   </div>
                   <p className="mt-2 text-[11px] text-muted-foreground">
-                    {SESSION_SLOTS.length} slots available · mix morning and evening if you want
+                    {SESSION_SLOTS.length} slots · mix morning and evening if you want
                   </p>
                 </div>
 
@@ -215,6 +329,7 @@ function CheckoutPage() {
                   <input
                     className="checkout-input"
                     required
+                    disabled={busy}
                     value={fullName}
                     onChange={(e) => setFullName(e.target.value)}
                     placeholder="Rahul Mehta"
@@ -226,6 +341,7 @@ function CheckoutPage() {
                     type="email"
                     className="checkout-input"
                     required
+                    disabled={busy}
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
@@ -236,6 +352,7 @@ function CheckoutPage() {
                   <input
                     type="tel"
                     className="checkout-input"
+                    disabled={busy}
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+91 98765 43210"
@@ -259,25 +376,33 @@ function CheckoutPage() {
                   <input
                     type="checkbox"
                     checked={agreed}
+                    disabled={busy}
                     onChange={(e) => setAgreed(e.target.checked)}
                     className="mt-1 accent-[var(--accent)]"
                   />
                   <span className="text-xs text-muted-foreground leading-relaxed">
                     I agree to the terms and consent to sharing my details with LEANMOVEMENT and my coach.
+                    Membership renews monthly; cancel anytime before the next billing cycle.
                   </span>
                 </label>
 
                 <div className="flex items-start gap-3 text-xs text-muted-foreground bg-white border border-border p-4">
                   <ShieldCheck size={16} className="shrink-0 mt-0.5 text-accent" />
-                  <p>Your coach is notified as soon as you register. Portal unlocks after payment.</p>
+                  <p>
+                    Razorpay secure checkout opens next. Your coach is notified after payment succeeds.
+                    Portal login unlocks only when payment is verified on our server.
+                  </p>
                 </div>
 
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className="w-full btn-primary disabled:opacity-60"
-                >
-                  {loading ? "Processing…" : `Continue · ${activePlan.price}/mo`}
+                <button type="submit" disabled={busy} className="w-full btn-primary disabled:opacity-60">
+                  {busy ? (
+                    <span className="inline-flex items-center gap-2">
+                      <Loader2 size={14} className="animate-spin" />
+                      Processing…
+                    </span>
+                  ) : (
+                    `Pay ${activePlan.price} & join`
+                  )}
                 </button>
               </form>
             </div>
@@ -297,6 +422,9 @@ function CheckoutPage() {
         }
         .checkout-input:focus {
           border-color: var(--accent);
+        }
+        .checkout-input:disabled {
+          opacity: 0.6;
         }
       `}</style>
     </div>

@@ -71,13 +71,22 @@ function Payments() {
               <div className="mt-1 font-medium">12 live sessions / month</div>
             </div>
           </div>
-          {!billing.isActive && (
+          {!billing.isActive || membership?.status === "past_due" ? (
             <div className="mt-8">
               <Link
                 to="/portal/checkout"
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white text-[#000000] text-sm font-medium hover:bg-white/90"
               >
-                Complete payment <ExternalLink size={14} />
+                Renew membership <ExternalLink size={14} />
+              </Link>
+            </div>
+          ) : (
+            <div className="mt-8">
+              <Link
+                to="/portal/checkout"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-white/10 text-white text-sm font-medium hover:bg-white/15 border border-white/20"
+              >
+                Manage / renew early <ExternalLink size={14} />
               </Link>
             </div>
           )}
@@ -91,17 +100,19 @@ function Payments() {
             </div>
             <div className="text-sm">
               <div className="font-medium">
-                {membership?.razorpay_subscription_id ? "Auto-pay enabled" : "Not linked yet"}
+                {membership?.razorpay_subscription_id ? "Auto-pay enabled" : "Card / UPI at checkout"}
               </div>
               <div className="text-[11px] text-[#737373]">
-                {membership?.razorpay_payment_id
-                  ? `Payment ID · ${membership.razorpay_payment_id.slice(0, 12)}…`
-                  : "Via Razorpay at checkout"}
+                {membership?.razorpay_subscription_id
+                  ? "Razorpay will charge monthly · cancel anytime"
+                  : membership?.razorpay_payment_id
+                    ? `Last payment · ${membership.razorpay_payment_id.slice(0, 12)}…`
+                    : "Pay on join · renew each month"}
               </div>
             </div>
           </div>
           <p className="mt-5 text-xs text-[#737373] leading-relaxed">
-            Payments are processed securely via Razorpay at checkout.
+            30-day cycles with a 4-day grace window after renews_at. You&apos;ll be reminded ~3 days before renewal.
           </p>
         </SoftCard>
       </div>

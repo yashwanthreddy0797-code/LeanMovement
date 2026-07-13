@@ -50,12 +50,39 @@ async function handleRazorpayWebhookRequest(request: Request): Promise<Response>
   return Response.json(result.body, { status: result.status });
 }
 
+async function handleMembershipCronRequest(request: Request): Promise<Response> {
+  if (request.method !== "POST" && request.method !== "GET") {
+    return Response.json({ ok: false, message: "Method not allowed" }, { status: 405 });
+  }
+  const url = new URL(request.url);
+  const secret =
+    request.headers.get("x-cron-secret") ||
+    url.searchParams.get("secret") ||
+    "";
+  const expected = process.env.CRON_SECRET;
+  if (!expected || secret !== expected) {
+    return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
+  }
+
+  const { getSupabaseAdmin } = await import("./lib/supabase/server");
+  const { runMembershipLifecycleJob } = await import("./lib/membership/renewal");
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    return Response.json({ ok: false, message: "Server not configured" }, { status: 503 });
+  }
+  const result = await runMembershipLifecycleJob(admin);
+  return Response.json({ ok: true, ...result });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
       const url = new URL(request.url);
       if (url.pathname === "/api/razorpay/webhook") {
         return await handleRazorpayWebhookRequest(request);
+      }
+      if (url.pathname === "/api/cron/membership") {
+        return await handleMembershipCronRequest(request);
       }
 
       const handler = await getServerEntry();

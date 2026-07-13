@@ -10,6 +10,7 @@ import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import type { Membership, Profile } from "@/lib/supabase/types";
 import { getPortalUser, setPortalUser, type PortalUser } from "./auth";
 import { signInWithEmail, signOutPortal, signUpWithEmail } from "./auth-api";
+import { hasPortalMembershipAccess } from "@/lib/membership/access";
 
 export { signInWithEmail, signOutPortal, signUpWithEmail };
 
@@ -158,7 +159,7 @@ function usePortalSessionState(): PortalSession {
   }, [loadDemo, loadSupabase, refresh]);
 
   const isCoach = profile?.role === "coach" || profile?.role === "admin" || user?.role === "coach";
-  const hasActiveMembership = isCoach || membership?.status === "active";
+  const hasActiveMembership = isCoach || hasPortalMembershipAccess(membership);
 
   return {
     mode: isSupabaseConfigured() ? "supabase" : "demo",

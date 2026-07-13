@@ -28,6 +28,14 @@ export async function processRazorpayWebhook(rawBody: string, signature: string 
           id?: string;
           order_id?: string;
           status?: string;
+          amount?: number;
+          notes?: Record<string, string>;
+        };
+      };
+      subscription?: {
+        entity?: {
+          id?: string;
+          status?: string;
           notes?: Record<string, string>;
         };
       };
@@ -40,42 +48,81 @@ export async function processRazorpayWebhook(rawBody: string, signature: string 
     return { status: 400 as const, body: { ok: false, message: "Invalid JSON" } };
   }
 
-  if (payload.event !== "payment.captured") {
-    return {
-      status: 200 as const,
-      body: { ok: true, message: `Ignored event: ${payload.event}` },
-    };
+  const event = payload.event ?? "";
+
+  // Recurring charge / first subscription payment
+  if (
+    event === "payment.captured" ||
+    event === "subscription.charged" ||
+    event === "subscription.activated"
+  ) {
+    const payment = payload.payload?.payment?.entity;
+    const subscription = payload.payload?.subscription?.entity;
+
+    const notes = payment?.notes ?? subscription?.notes ?? {};
+    const userId = notes.user_id;
+    const email = notes.email;
+    const plan = toMembershipPlan(notes.plan ?? "monthly");
+    const paymentId = payment?.id ?? `sub_${subscription?.id ?? Date.now()}`;
+    const kind = notes.kind === "renewal" ? "renewal" : "initial";
+
+    if (!userId || !email) {
+      if (subscription?.id) {
+        const { data: m } = await admin
+          .from("memberships")
+          .select("user_id")
+          .eq("razorpay_subscription_id", subscription.id)
+          .maybeSingle();
+        if (m?.user_id) {
+          const { data: profile } = await admin
+            .from("profiles")
+            .select("email")
+            .eq("id", m.user_id)
+            .maybeSingle();
+          if (profile?.email) {
+            await activateMembershipForUser(admin, {
+              userId: m.user_id,
+              email: profile.email,
+              plan,
+              paymentId,
+              amountInr: payment?.amount ? Math.round(payment.amount / 100) : undefined,
+              subscriptionId: subscription.id,
+              kind: "renewal",
+            });
+            return { status: 200 as const, body: { ok: true, message: "Renewal activated via subscription" } };
+          }
+        }
+      }
+      return { status: 400 as const, body: { ok: false, message: "Missing user notes on payment" } };
+    }
+
+    await activateMembershipForUser(admin, {
+      userId,
+      email,
+      plan,
+      paymentId,
+      amountInr: payment?.amount ? Math.round(payment.amount / 100) : undefined,
+      subscriptionId: subscription?.id ?? notes.subscription_id,
+      kind,
+    });
+
+    return { status: 200 as const, body: { ok: true, message: "Membership activated" } };
   }
 
-  const payment = payload.payload?.payment?.entity;
-  if (!payment?.id || !payment.order_id) {
-    return { status: 400 as const, body: { ok: false, message: "Missing payment data" } };
+  if (event === "subscription.halted" || event === "subscription.cancelled") {
+    const subscription = payload.payload?.subscription?.entity;
+    if (subscription?.id) {
+      await admin
+        .from("memberships")
+        .update({ status: "past_due" })
+        .eq("razorpay_subscription_id", subscription.id)
+        .eq("status", "active");
+    }
+    return { status: 200 as const, body: { ok: true, message: "Subscription marked past_due" } };
   }
 
-  const userId = payment.notes?.user_id;
-  const email = payment.notes?.email;
-  const plan = toMembershipPlan(payment.notes?.plan ?? "monthly");
-
-  if (!userId || !email) {
-    return { status: 400 as const, body: { ok: false, message: "Missing user notes on payment" } };
-  }
-
-  const { data: membership } = await admin
-    .from("memberships")
-    .select("status")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  if (membership?.status === "active") {
-    return { status: 200 as const, body: { ok: true, message: "Already active" } };
-  }
-
-  await activateMembershipForUser(admin, {
-    userId,
-    email,
-    plan,
-    paymentId: payment.id,
-  });
-
-  return { status: 200 as const, body: { ok: true, message: "Membership activated" } };
+  return {
+    status: 200 as const,
+    body: { ok: true, message: `Ignored event: ${event}` },
+  };
 }
