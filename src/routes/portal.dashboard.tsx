@@ -218,20 +218,29 @@ function Dashboard() {
             </Link>
           }
         />
-        <div className="grid md:grid-cols-3 gap-4">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
           {weeklySchedule.map((s) => (
             <div
-              key={s.day}
+              key={`${s.day}-${s.time}`}
               className={`card-soft p-5 ${s.isToday ? "ring-2 ring-[#FEE2E2] bg-[#FFFBFB]" : ""}`}
             >
               <div className="flex items-center justify-between gap-2">
                 <span className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">{s.day}</span>
                 {s.isToday && <LiveSessionBadge liveState={s.liveState ?? "later"} className="!text-[9px]" />}
               </div>
-              <h3 className="mt-2 font-display text-xl uppercase">{s.title}</h3>
-              <p className="mt-2 text-xs text-[#737373]">{s.focus}</p>
-              <div className="mt-4 flex items-center gap-1.5 text-xs text-[#404040]">
-                <Calendar size={12} /> {s.time} · {s.date}
+              <h3 className="mt-2 font-serif text-lg">{s.title}</h3>
+              <div className="mt-4 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 text-xs text-[#404040]">
+                  <Calendar size={12} /> {s.time}
+                </div>
+                <a
+                  href={s.joinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs font-medium text-[#E11D2A] hover:underline"
+                >
+                  Join Zoom
+                </a>
               </div>
             </div>
           ))}

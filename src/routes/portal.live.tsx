@@ -81,7 +81,7 @@ function LiveSessions() {
         <div className="space-y-4">
           {weeklySchedule.map((s) => (
             <div
-              key={s.day}
+              key={`${s.day}-${s.time}`}
               className={`card-soft p-6 md:p-8 flex flex-col md:flex-row md:items-center justify-between gap-4 ${
                 s.isToday ? "ring-2 ring-[#FEE2E2]" : ""
               }`}
@@ -99,28 +99,25 @@ function LiveSessions() {
                       <LiveSessionBadge liveState={s.liveState ?? "later"} minutesUntilStart={live.minutesUntilStart} />
                     )}
                   </div>
-                  <h3 className="mt-1 font-display text-2xl uppercase">{s.title}</h3>
-                  <p className="mt-2 text-sm text-[#737373]">{s.focus}</p>
+                  <h3 className="mt-1 font-serif text-2xl">{s.title}</h3>
                 </div>
               </div>
               <div className="flex items-center gap-4 shrink-0">
                 <div className="flex items-center gap-1.5 text-sm text-[#404040]">
                   <Clock size={14} /> {s.time}
                 </div>
-                {s.isToday ? (
-                  <a
-                    href={s.joinUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-5 py-2.5 rounded-full bg-[#000000] text-white text-sm font-medium hover:bg-[#111]"
-                  >
-                    {s.liveState === "live" || s.liveState === "soon" ? "Join now" : "Open link"}
-                  </a>
-                ) : (
-                  <span className="px-5 py-2.5 rounded-full bg-[#F5F5F5] text-[#737373] text-sm">
-                    Scheduled
-                  </span>
-                )}
+                <a
+                  href={s.joinUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`px-5 py-2.5 rounded-full text-sm font-medium ${
+                    s.liveState === "live" || s.liveState === "soon"
+                      ? "bg-[#E11D2A] text-white hover:opacity-90"
+                      : "bg-[#000000] text-white hover:bg-[#111]"
+                  }`}
+                >
+                  {s.liveState === "live" || s.liveState === "soon" ? "Join now" : "Join Zoom"}
+                </a>
               </div>
             </div>
           ))}

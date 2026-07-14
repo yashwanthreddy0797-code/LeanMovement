@@ -36,6 +36,9 @@ drop policy if exists "recordings_active_members" on public.recordings;
 drop policy if exists "circuits_active_members" on public.circuits;
 drop policy if exists "site_config_active_members" on public.site_config;
 drop policy if exists "live_sessions_coach_write" on public.live_sessions;
+drop policy if exists "live_sessions_coach_insert" on public.live_sessions;
+drop policy if exists "live_sessions_coach_update" on public.live_sessions;
+drop policy if exists "live_sessions_coach_delete" on public.live_sessions;
 drop policy if exists "recordings_coach_write" on public.recordings;
 drop policy if exists "circuits_coach_write" on public.circuits;
 drop policy if exists "site_config_coach_write" on public.site_config;
@@ -61,7 +64,9 @@ create policy "site_config_active_members" on public.site_config for select usin
   public.has_active_membership() or public.is_coach_or_admin()
 );
 
-create policy "live_sessions_coach_write" on public.live_sessions for all using (public.is_coach_or_admin());
+create policy "live_sessions_coach_insert" on public.live_sessions for insert with check (public.is_coach_or_admin());
+create policy "live_sessions_coach_update" on public.live_sessions for update using (public.is_coach_or_admin()) with check (public.is_coach_or_admin());
+create policy "live_sessions_coach_delete" on public.live_sessions for delete using (public.is_coach_or_admin());
 create policy "recordings_coach_write" on public.recordings for all using (public.is_coach_or_admin());
 create policy "circuits_coach_write" on public.circuits for all using (public.is_coach_or_admin());
 create policy "site_config_coach_write" on public.site_config for all using (public.is_coach_or_admin());

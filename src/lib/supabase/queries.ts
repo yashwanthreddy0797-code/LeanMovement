@@ -114,7 +114,7 @@ function mapNextLive(rows: LiveSessionRow[]): PortalNextLive {
 
   const { row, startsAt, timing } = pick;
   return {
-    title: `${row.title} — ${row.session_type}`,
+    title: row.title,
     day: row.day_of_week,
     date: startsAt.toLocaleDateString("en-IN", {
       day: "numeric",
@@ -176,28 +176,29 @@ function mapCircuit(row: CircuitRow): PortalCircuit {
 }
 
 function mockContent(): PortalContent {
-  const sessionDays = mockSchedule.map((s) => s.day);
-  const mockRows: LiveSessionRow[] = mockSchedule.map((s, i) => ({
-    id: `mock-${i}`,
-    day_of_week: s.day,
-    title: s.title,
-    session_type: s.title,
-    focus: s.focus,
-    start_time: s.time.includes("8") ? "08:00" : "07:00",
-    timezone: "Asia/Kolkata",
-    duration_minutes: 45,
-    join_url: mockNextLive.joinUrl,
-    sort_order: i + 1,
-  }));
+  const mockRows: LiveSessionRow[] = mockSchedule.map((s, i) => {
+    const isEvening = s.title.includes("Evening");
+    return {
+      id: `mock-${i}`,
+      day_of_week: s.day,
+      title: s.title,
+      session_type: isEvening ? "Evening" : "Morning",
+      focus: null,
+      start_time: isEvening ? "19:00" : "07:00",
+      timezone: "Asia/Kolkata",
+      duration_minutes: 60,
+      join_url: isEvening
+        ? "https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1"
+        : mockNextLive.joinUrl,
+      sort_order: i + 1,
+    };
+  });
+  const sessionDays = mockRows.map((s) => s.day_of_week);
 
   return {
     source: "mock",
     liveSessions: mockRows,
-    weeklySchedule: mockSchedule.map((s) => ({
-      ...s,
-      joinUrl: mockNextLive.joinUrl,
-      liveState: s.isToday ? enrichMockNext(mockNextLive).liveState : ("later" as const),
-    })),
+    weeklySchedule: mockRows.map(mapLiveSession),
     nextLiveSession: enrichMockNext(mockNextLive),
     recordings: mockRecordings.map((r) => ({
       id: r.id,

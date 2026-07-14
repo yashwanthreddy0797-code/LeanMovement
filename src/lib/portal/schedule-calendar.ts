@@ -113,17 +113,28 @@ export function yearMonths(anchor: Date) {
   });
 }
 
-export function sessionTypeColor(type: string) {
-  switch (type.toLowerCase()) {
-    case "strength":
-      return "bg-[#000000] text-white";
-    case "conditioning":
-      return "bg-[#E11D2A] text-white";
-    case "hybrid":
-      return "bg-[#737373] text-white";
-    default:
-      return "bg-[#FEE2E2] text-[#000000]";
-  }
+/** Morning vs Evening batch helpers for calendar colouring. */
+export function isEveningSession(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
+  const label = `${session.title ?? ""} ${session.session_type ?? ""}`.toLowerCase();
+  if (label.includes("evening")) return true;
+  if (label.includes("morning")) return false;
+  const hour = parseInt(String(session.start_time ?? "07:00").split(":")[0] ?? "7", 10);
+  return hour >= 12;
+}
+
+export function sessionBatchLabel(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
+  return isEveningSession(session) ? "Evening" : "Morning";
+}
+
+/** Morning = black, Evening = red — keep calendar readable at a glance. */
+export function sessionBatchColor(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
+  return isEveningSession(session)
+    ? "bg-[#E11D2A] text-white"
+    : "bg-[#111111] text-white";
+}
+
+export function sessionBatchDotColor(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
+  return isEveningSession(session) ? "bg-[#E11D2A] text-[#E11D2A]" : "bg-[#111111] text-[#111111]";
 }
 
 export { WEEKDAYS, formatSessionTime, isSameDay, isSameMonth, isToday, format, getHours, getMinutes };

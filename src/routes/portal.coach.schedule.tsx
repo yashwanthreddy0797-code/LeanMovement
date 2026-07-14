@@ -58,12 +58,13 @@ function SchedulePage() {
     <div className="space-y-8 pb-20 lg:pb-0">
       <div>
         <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">
-          Mon · Wed · Sat
+          Morning Mon · Wed · Fri · Evening Tue · Thu · Sat
         </div>
         <h1 className="text-4xl md:text-5xl font-serif">Live schedule</h1>
         <p className="mt-2 text-[#737373] max-w-2xl">
-          Set your Google Meet or Zoom links for each session. Changes save to Supabase and appear
-          on every member&apos;s dashboard and Live Sessions page automatically.
+          Set your Zoom links for each session. Morning and evening batches share one recurring
+          link each. Changes save to Supabase and appear on every active member&apos;s dashboard
+          automatically.
         </p>
       </div>
 
@@ -93,11 +94,9 @@ function SchedulePage() {
                     {s.day_of_week}
                     {isToday && <span className="ml-2 text-[#E11D2A]">· Today</span>}
                   </div>
-                  <h2 className="mt-1 font-serif text-2xl">
-                    {s.title} — {s.session_type}
-                  </h2>
+                  <h2 className="mt-1 font-serif text-2xl">{s.title}</h2>
                   <p className="text-sm text-[#737373] mt-1">
-                    {formatSessionTime(s.start_time)} · {s.duration_minutes} min · {s.focus}
+                    {formatSessionTime(s.start_time)} · {s.duration_minutes} min · IST
                   </p>
                 </div>
                 <div className="flex gap-2">

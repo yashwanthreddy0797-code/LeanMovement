@@ -111,7 +111,7 @@ function CoachDashboard() {
                 {isToday ? "Today's session" : "Next live session"}
               </div>
               <h2 className="mt-3 font-serif text-3xl md:text-4xl">
-                {nextSession.title} — {nextSession.session_type}
+                {nextSession.title}
               </h2>
               <p className="mt-2 text-white/70 text-sm">
                 {nextSession.day_of_week} · {formatSessionTime(nextSession.start_time)} ·{" "}
@@ -180,7 +180,7 @@ function CoachDashboard() {
 
         <SoftCard>
           <SectionTitle
-            eyebrow="Mon · Wed · Sat"
+            eyebrow="Morning · Evening"
             title="Weekly schedule"
             action={
               <Link to="/portal/coach/schedule" className="text-xs text-[#E11D2A] hover:underline">
@@ -207,9 +207,7 @@ function CoachDashboard() {
                         <span className="ml-2 text-[#E11D2A]">· Today</span>
                       )}
                     </div>
-                    <div className="text-sm font-medium mt-0.5">
-                      {s.title} — {s.session_type}
-                    </div>
+                    <div className="text-sm font-medium mt-0.5">{s.title}</div>
                     <div className="text-[11px] text-[#737373]">
                       {formatSessionTime(s.start_time)} · {s.duration_minutes} min
                     </div>

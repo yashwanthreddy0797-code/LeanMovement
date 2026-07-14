@@ -55,7 +55,7 @@ create table if not exists public.enrollment_intents (
 create index if not exists enrollment_intents_email_idx on public.enrollment_intents (lower(email));
 create index if not exists enrollment_intents_status_idx on public.enrollment_intents (status);
 
--- Live session config (Mon / Wed / Sat)
+-- Live session config (Morning Mon/Wed/Fri · Evening Tue/Thu/Sat)
 create table if not exists public.live_sessions (
   id uuid primary key default gen_random_uuid(),
   day_of_week text not null,
@@ -64,10 +64,13 @@ create table if not exists public.live_sessions (
   focus text,
   start_time text not null,
   timezone text not null default 'Asia/Kolkata',
-  duration_minutes integer not null default 45,
+  duration_minutes integer not null default 60,
   join_url text not null,
   sort_order integer not null default 0
 );
+
+create unique index if not exists live_sessions_day_of_week_uidx
+  on public.live_sessions (day_of_week);
 
 -- Recordings library
 create table if not exists public.recordings (
@@ -226,7 +229,9 @@ create policy "site_config_active_members" on public.site_config for select usin
 );
 
 -- Coach write on content tables
-create policy "live_sessions_coach_write" on public.live_sessions for all using (public.is_coach_or_admin());
+create policy "live_sessions_coach_insert" on public.live_sessions for insert with check (public.is_coach_or_admin());
+create policy "live_sessions_coach_update" on public.live_sessions for update using (public.is_coach_or_admin()) with check (public.is_coach_or_admin());
+create policy "live_sessions_coach_delete" on public.live_sessions for delete using (public.is_coach_or_admin());
 
 create policy "recordings_coach_write" on public.recordings for all using (public.is_coach_or_admin());
 
@@ -235,10 +240,13 @@ create policy "circuits_coach_write" on public.circuits for all using (public.is
 create policy "site_config_coach_write" on public.site_config for all using (public.is_coach_or_admin());
 
 -- Seed content (safe to re-run with on conflict)
-insert into public.live_sessions (day_of_week, title, session_type, focus, start_time, join_url, sort_order) values
-  ('Monday', 'Strength', 'Strength', 'Heavy KB · Carries · Presses · Squats', '07:00', 'https://meet.google.com/demo-lean-kettlebell', 1),
-  ('Wednesday', 'Conditioning', 'Conditioning', 'EMOMs · Intervals · Complexes · HR work', '07:00', 'https://meet.google.com/demo-lean-kettlebell', 2),
-  ('Saturday', 'Hybrid Athlete', 'Hybrid', 'Power · Core · Mobility · KB flow', '08:00', 'https://meet.google.com/demo-lean-kettlebell', 3)
+insert into public.live_sessions (day_of_week, title, session_type, focus, start_time, duration_minutes, join_url, sort_order) values
+  ('Monday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 1),
+  ('Tuesday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 2),
+  ('Wednesday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 3),
+  ('Thursday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 4),
+  ('Friday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 5),
+  ('Saturday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 6)
 on conflict do nothing;
 
 insert into public.site_config (key, value) values

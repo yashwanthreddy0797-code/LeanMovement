@@ -13,7 +13,10 @@
     "supabase:verify": "node scripts/verify-supabase.mjs",
     "supabase:fix-rls": "node scripts/apply-fix-rls.mjs",
     "supabase:enrollment": "node scripts/apply-enrollment-intents.mjs",
-    "supabase:create-coach": "node scripts/create-coach.mjs"
+    "supabase:create-coach": "node scripts/create-coach.mjs",
+    "supabase:update-sessions": "node scripts/update-live-sessions.mjs",
+    "supabase:verify-sessions": "node scripts/verify-live-sessions.mjs",
+    "supabase:harden-sessions": "node scripts/apply-harden-live-sessions.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

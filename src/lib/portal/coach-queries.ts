@@ -1,4 +1,5 @@
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
+import { pickNextLiveSession } from "@/lib/portal/live-session";
 import type {
   LiveSessionRow,
   Membership,
@@ -59,15 +60,7 @@ export function todayWeekday() {
 }
 
 export function getNextLiveSession(sessions: LiveSessionRow[]) {
-  const today = todayWeekday();
-  const order = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-  const sorted = [...sessions].sort(
-    (a, b) => order.indexOf(a.day_of_week) - order.indexOf(b.day_of_week),
-  );
-  const todayIdx = order.indexOf(today);
-  const upcoming =
-    sorted.find((s) => order.indexOf(s.day_of_week) >= todayIdx) ?? sorted[0];
-  return upcoming ?? null;
+  return pickNextLiveSession(sessions)?.row ?? null;
 }
 
 function monthlyEquivalent(m: Membership): number {
@@ -170,42 +163,83 @@ const MOCK_MEMBERS: CoachMember[] = [
   },
 ];
 
+const MORNING_ZOOM =
+  "https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1";
+const EVENING_ZOOM =
+  "https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1";
+
 const MOCK_SESSIONS: LiveSessionRow[] = [
   {
     id: "s1",
     day_of_week: "Monday",
-    title: "Strength",
-    session_type: "Strength",
-    focus: "Heavy KB · Carries · Presses · Squats",
+    title: "Lean Kettlebell - Morning",
+    session_type: "Morning",
+    focus: null,
     start_time: "07:00",
     timezone: "Asia/Kolkata",
-    duration_minutes: 45,
-    join_url: "https://meet.google.com/demo-monday",
+    duration_minutes: 60,
+    join_url: MORNING_ZOOM,
     sort_order: 1,
   },
   {
     id: "s2",
-    day_of_week: "Wednesday",
-    title: "Conditioning",
-    session_type: "Conditioning",
-    focus: "EMOMs · Intervals · Complexes",
-    start_time: "07:00",
+    day_of_week: "Tuesday",
+    title: "Lean Kettlebell - Evening",
+    session_type: "Evening",
+    focus: null,
+    start_time: "19:00",
     timezone: "Asia/Kolkata",
-    duration_minutes: 45,
-    join_url: "https://meet.google.com/demo-wednesday",
+    duration_minutes: 60,
+    join_url: EVENING_ZOOM,
     sort_order: 2,
   },
   {
     id: "s3",
-    day_of_week: "Saturday",
-    title: "Hybrid Athlete",
-    session_type: "Hybrid",
-    focus: "Power · Core · Mobility · KB flow",
-    start_time: "08:00",
+    day_of_week: "Wednesday",
+    title: "Lean Kettlebell - Morning",
+    session_type: "Morning",
+    focus: null,
+    start_time: "07:00",
     timezone: "Asia/Kolkata",
-    duration_minutes: 45,
-    join_url: "https://meet.google.com/demo-saturday",
+    duration_minutes: 60,
+    join_url: MORNING_ZOOM,
     sort_order: 3,
+  },
+  {
+    id: "s4",
+    day_of_week: "Thursday",
+    title: "Lean Kettlebell - Evening",
+    session_type: "Evening",
+    focus: null,
+    start_time: "19:00",
+    timezone: "Asia/Kolkata",
+    duration_minutes: 60,
+    join_url: EVENING_ZOOM,
+    sort_order: 4,
+  },
+  {
+    id: "s5",
+    day_of_week: "Friday",
+    title: "Lean Kettlebell - Morning",
+    session_type: "Morning",
+    focus: null,
+    start_time: "07:00",
+    timezone: "Asia/Kolkata",
+    duration_minutes: 60,
+    join_url: MORNING_ZOOM,
+    sort_order: 5,
+  },
+  {
+    id: "s6",
+    day_of_week: "Saturday",
+    title: "Lean Kettlebell - Evening",
+    session_type: "Evening",
+    focus: null,
+    start_time: "19:00",
+    timezone: "Asia/Kolkata",
+    duration_minutes: 60,
+    join_url: EVENING_ZOOM,
+    sort_order: 6,
   },
 ];
 

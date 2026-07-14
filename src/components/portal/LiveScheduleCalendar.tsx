@@ -19,7 +19,9 @@ import {
   navigateDate,
   occurrencesInRange,
   periodLabel,
-  sessionTypeColor,
+  sessionBatchColor,
+  sessionBatchLabel,
+  isEveningSession,
   sessionsOnDate,
   toOccurrence,
   weekDays,
@@ -158,9 +160,9 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
 
       {/* Legend */}
       <div className="flex flex-wrap gap-4 px-5 md:px-6 py-4 border-t border-[var(--border)] bg-[#FAFAF6]/50 text-[11px] uppercase tracking-[0.12em] text-[#737373]">
-        <LegendDot className="bg-[#000000]" label="Strength · Mon" />
-        <LegendDot className="bg-[#E11D2A]" label="Conditioning · Wed" />
-        <LegendDot className="bg-[#737373]" label="Hybrid · Sat" />
+        <LegendDot className="bg-[#111111]" label="Morning · 7 AM" />
+        <LegendDot className="bg-[#E11D2A]" label="Evening · 7 PM" />
+        <span className="text-[#A3A3A3]">IST</span>
       </div>
     </SoftCard>
   );
@@ -195,17 +197,15 @@ function SessionPill({
   occ: CalendarOccurrence;
   compact?: boolean;
 }) {
+  const batch = sessionBatchLabel(occ.session);
   return (
     <div
-      className={`rounded-md px-2 py-1 text-[10px] font-medium truncate ${sessionTypeColor(occ.session.session_type)} ${
+      className={`rounded-md px-2 py-1 text-[10px] font-semibold truncate ${sessionBatchColor(occ.session)} ${
         compact ? "leading-tight" : ""
       }`}
-      title={`${occ.session.title} · ${formatSessionTime(occ.session.start_time)}`}
+      title={`${batch} · ${formatSessionTime(occ.session.start_time)}`}
     >
-      {compact ? occ.session.title.split(" ")[0] : occ.session.title}
-      {!compact && (
-        <span className="opacity-80 ml-1">{formatSessionTime(occ.session.start_time)}</span>
-      )}
+      {compact ? batch : `${batch} · ${formatSessionTime(occ.session.start_time)}`}
     </div>
   );
 }
@@ -253,7 +253,9 @@ function YearView({
               ))}
               {days.map((day) => {
                 const inMonth = isSameMonth(day, monthStart);
-                const hasSession = inMonth && sessionsOnDate(day, sessions).length > 0;
+                const daySessions = inMonth ? sessionsOnDate(day, sessions) : [];
+                const hasSession = daySessions.length > 0;
+                const evening = hasSession && daySessions.some(isEveningSession);
                 return (
                   <div
                     key={day.toISOString()}
@@ -261,7 +263,9 @@ function YearView({
                       !inMonth
                         ? "opacity-0"
                         : hasSession
-                          ? "bg-[#E11D2A]/15 text-[#E11D2A] font-semibold"
+                          ? evening
+                            ? "bg-[#E11D2A]/20 text-[#E11D2A] font-semibold"
+                            : "bg-[#111111]/15 text-[#111111] font-semibold"
                           : isToday(day)
                             ? "ring-1 ring-[#E11D2A]/40"
                             : "text-[#A3A3A3]"
@@ -409,11 +413,11 @@ function WeekView({
                   return (
                     <div
                       key={`${occ.session.id}-${day.toISOString()}`}
-                      className={`absolute left-1 right-1 rounded-lg px-2 py-1.5 text-[10px] leading-snug overflow-hidden shadow-sm ${sessionTypeColor(occ.session.session_type)}`}
+                      className={`absolute left-1 right-1 rounded-lg px-2 py-1.5 text-[10px] leading-snug overflow-hidden shadow-sm ${sessionBatchColor(occ.session)}`}
                       style={{ top: `${top}px`, height: `${Math.max(height, 40)}px` }}
                     >
-                      <div className="font-semibold truncate">{occ.session.title}</div>
-                      <div className="opacity-80 truncate">
+                      <div className="font-semibold truncate">{sessionBatchLabel(occ.session)}</div>
+                      <div className="opacity-90 truncate">
                         {formatSessionTime(occ.session.start_time)}
                       </div>
                     </div>
@@ -468,7 +472,9 @@ function DayView({
         <div className="rounded-xl border border-dashed border-[var(--border)] p-12 text-center text-[#737373] text-sm">
           No live sessions scheduled this day.
           <br />
-          <span className="text-xs mt-2 block">Lean Kettlebell runs Mon · Wed · Sat</span>
+          <span className="text-xs mt-2 block">
+            Morning Mon · Wed · Fri · Evening Tue · Thu · Sat
+          </span>
         </div>
       ) : (
         <div className="space-y-4">
@@ -480,18 +486,17 @@ function DayView({
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <span
-                    className={`inline-block text-[10px] uppercase tracking-[0.14em] px-2 py-0.5 rounded-full mb-2 ${sessionTypeColor(occ.session.session_type)}`}
+                    className={`inline-block text-[10px] uppercase tracking-[0.14em] px-2 py-0.5 rounded-full mb-2 ${sessionBatchColor(occ.session)}`}
                   >
-                    {occ.session.session_type}
+                    {sessionBatchLabel(occ.session)}
                   </span>
-                  <h3 className="font-serif text-2xl">{occ.session.title}</h3>
+                  <h3 className="font-serif text-2xl">
+                    Lean Kettlebell — {sessionBatchLabel(occ.session)}
+                  </h3>
                   <p className="text-sm text-[#737373] mt-1">
-                    {formatSessionTime(occ.session.start_time)} · {occ.session.duration_minutes}{" "}
-                    min · IST
+                    {formatSessionTime(occ.session.start_time)} · {occ.session.duration_minutes} min ·
+                    IST
                   </p>
-                  {occ.session.focus && (
-                    <p className="text-xs text-[#737373] mt-1">{occ.session.focus}</p>
-                  )}
                 </div>
                 <div className="flex gap-2">
                   <a

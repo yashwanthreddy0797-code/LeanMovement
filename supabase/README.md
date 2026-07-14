@@ -41,15 +41,31 @@ Default signup emails are sent from `noreply@mail.app.supabase.io` as **Supabase
 
 3. **Dev shortcut:** keep **Confirm email** OFF so signups work instantly without waiting for email.
 
+## Live Zoom schedule
+
+Morning (Mon/Wed/Fri 7 AM) + Evening (Tue/Thu/Sat 7 PM) live in `live_sessions`.
+
+```bash
+npm run supabase:update-sessions   # write Zoom links
+npm run supabase:verify-sessions   # audit data + RLS smoke
+```
+
+One-time harden (unique day, explicit coach policies, realtime):
+
+1. Open Supabase → **SQL Editor**
+2. Paste [`harden-live-sessions.sql`](./harden-live-sessions.sql) → **Run**
+
+Or set `SUPABASE_DB_URL` in `.env` and run `npm run supabase:harden-sessions`.
+
 ### Coach schedule → member dashboard sync
 
 Coach and members share one table: **`live_sessions`**.
 
 1. Coach edits links at **Coach → Live Schedule** → saves to `live_sessions`
-2. Members read the same table on **Dashboard** and **Live Sessions**
-3. Run [`realtime.sql`](./realtime.sql) once so member pages refresh instantly when the coach saves (no manual reload)
+2. Members with **active** membership read the same rows on **Dashboard** / **Live Sessions**
+3. Anonymous users get **0 rows** (RLS)
+4. Run [`realtime.sql`](./realtime.sql) (or harden script) so member pages refresh when coach saves
 
-Members must have **active** membership (RLS) to see sessions.
 
 ## 4. Environment variables
 
@@ -130,7 +146,7 @@ Then log in at `/portal/login` → you’ll be redirected to `/portal/coach`.
 | `profiles` | User info + role (member/coach) |
 | `memberships` | Payment status, plan, renewals |
 | `onboarding` | Foundations + WhatsApp progress |
-| `live_sessions` | Mon/Wed/Sat schedule + Meet links |
+| `live_sessions` | Morning Mon/Wed/Fri + Evening Tue/Thu/Sat Zoom links |
 | `recordings` | Session video URLs |
 | `circuits` | 5 kettlebell circuits |
 | `site_config` | WhatsApp, Calendly, cohort date |
@@ -139,7 +155,7 @@ Then log in at `/portal/login` → you’ll be redirected to `/portal/coach`.
 
 Edit in Supabase **Table Editor**:
 
-- **live_sessions** → change `join_url` for Google Meet links
+- **live_sessions** → change `join_url` for Zoom / Meet links (or run `npm run supabase:update-sessions`)
 - **recordings** → add rows with YouTube embed URLs (`https://www.youtube.com/embed/VIDEO_ID`)
 - **circuits** → edit exercises JSON array
 - **site_config** → update WhatsApp invite, Calendly URL

@@ -32,7 +32,7 @@ const steps = [
   {
     key: "first_live",
     label: "Attend your first live session",
-    hint: "Mon · Wed · Sat — join from Live Sessions",
+    hint: "Morning Mon/Wed/Fri · Evening Tue/Thu/Sat — join from Live Sessions",
     hrefKey: "live" as const,
   },
 ] as const;
