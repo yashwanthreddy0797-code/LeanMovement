@@ -111,13 +111,13 @@ function ContactPage() {
                 <a key={c.label} href={c.href} className="flex items-center gap-4 group">
                   <c.icon className="text-accent shrink-0" size={20} strokeWidth={1.5} />
                   <div>
-                    <div className="text-xs text-muted-foreground">{c.label}</div>
-                    <div className="mt-1 text-sm group-hover:text-accent transition-colors">{c.value}</div>
+                    <div className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{c.label}</div>
+                    <div className="mt-1 text-base group-hover:text-accent transition-colors md:text-lg">{c.value}</div>
                   </div>
                 </a>
               ))}
             </div>
-            <p className="mt-10 text-sm text-muted-foreground">{CONTACT.location}</p>
+            <p className="mt-10 text-base text-muted-foreground md:text-lg">{CONTACT.location}</p>
           </FadeUp>
 
           <FadeUp delay={0.1}>
@@ -132,7 +132,7 @@ function ContactPage() {
                   rows={5}
                   required
                   disabled={sending}
-                  className="w-full border border-border bg-background px-4 py-3 text-sm focus:border-accent focus:outline-none resize-none disabled:opacity-60"
+                  className="w-full border border-border bg-background px-4 py-3 text-base focus:border-accent focus:outline-none resize-none disabled:opacity-60"
                 />
               </div>
               <button type="submit" className="btn-primary inline-flex items-center gap-2" disabled={sending}>
@@ -176,7 +176,7 @@ function Field({
         type={type}
         required={required}
         disabled={disabled}
-        className="w-full border border-border bg-background px-4 py-3 h-11 text-sm focus:border-accent focus:outline-none disabled:opacity-60"
+        className="w-full border border-border bg-background px-4 py-3 h-12 text-base focus:border-accent focus:outline-none disabled:opacity-60"
       />
     </div>
   );

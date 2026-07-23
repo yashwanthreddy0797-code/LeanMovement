@@ -146,17 +146,17 @@ function AboutPage() {
               <h2 className="mt-3 font-display text-4xl uppercase tracking-[0.06em] text-white md:text-5xl">
                 {COACH.name}
               </h2>
-              <p className="mt-3 text-sm text-white/50">
+              <p className="mt-3 text-base text-white/55 md:text-lg">
                 {COACH.title} · {CONTACT.location}
               </p>
 
-              <div className="mt-8 space-y-5 text-[1.0625rem] leading-relaxed text-white/75">
+              <div className="mt-8 space-y-5 text-lg leading-relaxed text-white/75 md:text-xl md:leading-[1.65]">
                 {COACH.bio.map((paragraph) => (
                   <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                 ))}
               </div>
 
-              <p className="mt-8 text-sm text-white/45">{COACH.credentials.join(" · ")}</p>
+              <p className="mt-8 text-base text-white/50">{COACH.credentials.join(" · ")}</p>
 
               <Link
                 to="/join"
@@ -208,7 +208,7 @@ function AboutPage() {
                   <h3 className="font-display text-2xl uppercase tracking-[0.06em] md:text-[1.75rem]">
                     {p.t}
                   </h3>
-                  <p className="mt-2 max-w-lg text-sm leading-relaxed text-white/65">{p.d}</p>
+                  <p className="mt-2 max-w-lg text-base leading-relaxed text-white/70 md:text-lg">{p.d}</p>
                 </div>
               </FadeUp>
             ))}

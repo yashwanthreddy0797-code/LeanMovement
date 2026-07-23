@@ -100,7 +100,7 @@ function ProgramsPage() {
             <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
               {MEMBERSHIP_STATEMENT.title}
             </h2>
-            <div className="mt-8 space-y-4 text-base leading-relaxed text-white/65 md:text-[1.0625rem]">
+            <div className="mt-8 space-y-5 text-lg leading-relaxed text-white/70 md:text-xl md:leading-[1.65]">
               {MEMBERSHIP_STATEMENT.paragraphs.map((p) => (
                 <p key={p}>{p}</p>
               ))}
@@ -119,8 +119,8 @@ function ProgramsPage() {
             </p>
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {MEMBERSHIP_INCLUDED.map((item) => (
-                <li key={item} className="flex gap-2.5 border-t border-border pt-4 text-sm text-foreground/80">
-                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                <li key={item} className="flex gap-3 border-t border-border pt-5 text-base leading-relaxed text-foreground/85 md:text-lg">
+                  <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
@@ -146,11 +146,11 @@ function ProgramsPage() {
                 {schedule.time} IST
               </p>
             </div>
-            <p className="mt-2 inline-flex items-center justify-center gap-1.5 text-sm text-white/55">
-              <Clock size={13} />
+            <p className="mt-2 inline-flex items-center justify-center gap-1.5 text-base text-white/60">
+              <Clock size={14} />
               {schedule.type}
             </p>
-            <p className="mt-6 text-sm leading-relaxed text-white/55">
+            <p className="mt-6 text-base leading-relaxed text-white/65 md:text-lg">
               Train before work. Finish before the world wakes up. Start every day stronger than yesterday.
             </p>
           </FadeUp>
@@ -166,11 +166,11 @@ function ProgramsPage() {
                 <span className="w-6 h-px bg-accent" />
                 {FOUNDATIONS.title}
               </p>
-              <p className="mt-4 type-body">{FOUNDATIONS.description}</p>
-              <ul className="mt-6 space-y-2">
+              <p className="mt-4 type-lead">{FOUNDATIONS.description}</p>
+              <ul className="mt-6 space-y-3">
                 {FOUNDATIONS.items.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-foreground/75">
-                    <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                  <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
+                    <Check size={16} className="mt-1 shrink-0 text-accent" />
                     {item}
                   </li>
                 ))}
@@ -183,11 +183,11 @@ function ProgramsPage() {
                 {REQUIREMENTS.title}
               </p>
               <p className="mt-4 type-lead">{REQUIREMENTS.subtitle}</p>
-              <ul className="mt-6 space-y-4">
+              <ul className="mt-6 space-y-5">
                 {REQUIREMENTS.items.map((item) => (
                   <li key={item.label}>
-                    <p className="text-sm font-medium">{item.label}</p>
-                    <p className="mt-1 type-body">{item.detail}</p>
+                    <p className="text-base font-medium md:text-lg">{item.label}</p>
+                    <p className="mt-1.5 type-body">{item.detail}</p>
                   </li>
                 ))}
               </ul>
@@ -202,10 +202,10 @@ function ProgramsPage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <FadeUp>
               <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-6 space-y-3.5">
                 {WHO_ITS_FOR.items.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-white/70">
-                    <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                  <li key={item} className="flex gap-3 text-base leading-relaxed text-white/75 md:text-[1.0625rem]">
+                    <Check size={16} className="mt-1 shrink-0 text-accent" />
                     {item}
                   </li>
                 ))}
@@ -213,9 +213,13 @@ function ProgramsPage() {
             </FadeUp>
             <FadeUp delay={0.06}>
               <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHY_KETTLEBELLS.title}</h2>
-              <p className="mt-4 text-white/65">{WHY_KETTLEBELLS.lead}</p>
-              <p className="mt-4 text-sm text-white/55">{WHY_KETTLEBELLS.items.join(" · ")}</p>
-              <p className="mt-4 text-sm text-white/55">{WHY_KETTLEBELLS.closing}</p>
+              <p className="mt-4 text-lg leading-relaxed text-white/70 md:text-xl">{WHY_KETTLEBELLS.lead}</p>
+              <p className="mt-4 text-base leading-relaxed text-white/60 md:text-[1.0625rem]">
+                {WHY_KETTLEBELLS.items.join(" · ")}
+              </p>
+              <p className="mt-4 text-base leading-relaxed text-white/60 md:text-[1.0625rem]">
+                {WHY_KETTLEBELLS.closing}
+              </p>
             </FadeUp>
           </div>
         </div>
@@ -238,16 +242,16 @@ function ProgramsPage() {
         <div className="container-x py-14 md:py-16">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
-            <p className="mt-4 text-white/65">{NUTRITION.description}</p>
-            <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+            <p className="mt-4 text-lg leading-relaxed text-white/70 md:text-xl">{NUTRITION.description}</p>
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {NUTRITION.items.map((item) => (
-                <li key={item} className="flex gap-2 text-sm text-white/70">
-                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                <li key={item} className="flex gap-3 text-base leading-relaxed text-white/75 md:text-[1.0625rem]">
+                  <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-sm text-white/55">{NUTRITION.closing}</p>
+            <p className="mt-6 text-base leading-relaxed text-white/60 md:text-lg">{NUTRITION.closing}</p>
           </FadeUp>
         </div>
       </section>
@@ -283,10 +287,10 @@ function ProgramsPage() {
             <Accordion type="single" collapsible className="mt-10">
               {faqShort.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-white/15">
-                  <AccordionTrigger className="py-4 text-left text-base font-medium text-white hover:no-underline">
+                  <AccordionTrigger className="py-5 text-left text-lg font-medium text-white hover:no-underline md:text-xl">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="pb-4 text-sm leading-relaxed text-white/60">
+                  <AccordionContent className="pb-5 text-base leading-relaxed text-white/65 md:text-[1.0625rem]">
                     {f.a}
                   </AccordionContent>
                 </AccordionItem>
@@ -304,7 +308,7 @@ function ProgramsPage() {
             <h2 className="mt-4 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
               {MEMBERSHIP_CLOSING.headline}
             </h2>
-            <div className="mt-4 space-y-1 text-sm text-foreground/65">
+            <div className="mt-4 space-y-1.5 text-base leading-relaxed text-foreground/70 md:text-lg">
               {MEMBERSHIP_CLOSING.sublines.map((line) => (
                 <p key={line}>{line}</p>
               ))}

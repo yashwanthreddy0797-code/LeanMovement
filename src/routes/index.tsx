@@ -115,7 +115,7 @@ function HomePage() {
             <h2 className="font-display text-[2.25rem] uppercase leading-[0.95] tracking-[0.04em] sm:text-4xl md:text-5xl">
               {HOME_STATEMENT.title}
             </h2>
-            <div className="mt-8 space-y-4 text-base leading-relaxed text-white/65 md:text-[1.0625rem]">
+            <div className="mt-8 space-y-5 text-lg leading-relaxed text-white/70 md:text-xl md:leading-[1.65]">
               {HOME_STATEMENT.paragraphs.map((p) => (
                 <p key={p}>{p}</p>
               ))}
@@ -134,8 +134,8 @@ function HomePage() {
             </p>
             <ul className="mt-10 grid gap-3 text-left sm:grid-cols-2">
               {HOME_INCLUDED.map((item) => (
-                <li key={item} className="flex gap-2.5 border-t border-border pt-4 text-sm text-foreground/80">
-                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                <li key={item} className="flex gap-3 border-t border-border pt-5 text-base leading-relaxed text-foreground/85 md:text-lg">
+                  <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
@@ -156,7 +156,7 @@ function HomePage() {
               {schedule.day}
             </h2>
             <p className="mt-4 font-display text-2xl text-accent md:text-3xl">{schedule.time} IST</p>
-            <p className="mt-6 text-sm leading-relaxed text-white/60">
+            <p className="mt-6 text-base leading-relaxed text-white/65 md:text-lg">
               Train before work. Start your day with intent.
             </p>
           </FadeUp>
@@ -172,10 +172,10 @@ function HomePage() {
               {FOUNDATIONS.title}
             </p>
             <p className="mt-4 type-lead">{FOUNDATIONS.description}</p>
-            <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {FOUNDATIONS.items.map((item) => (
-                <li key={item} className="flex gap-2 text-sm text-foreground/75">
-                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
+                  <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
@@ -192,12 +192,12 @@ function HomePage() {
               <span className="w-6 h-px bg-accent" />
               {REQUIREMENTS.title}
             </p>
-            <p className="mt-4 text-lg text-white/70">{REQUIREMENTS.subtitle}</p>
-            <ul className="mt-10 space-y-6">
+            <p className="mt-4 text-xl leading-relaxed text-white/75 md:text-2xl">{REQUIREMENTS.subtitle}</p>
+            <ul className="mt-10 space-y-7">
               {REQUIREMENTS.items.map((item) => (
                 <li key={item.label}>
-                  <p className="font-display text-xl uppercase tracking-[0.06em] text-white">{item.label}</p>
-                  <p className="mt-2 text-sm leading-relaxed text-white/60">{item.detail}</p>
+                  <p className="font-display text-xl uppercase tracking-[0.06em] text-white md:text-2xl">{item.label}</p>
+                  <p className="mt-2 text-base leading-relaxed text-white/65 md:text-lg">{item.detail}</p>
                 </li>
               ))}
             </ul>
@@ -211,10 +211,10 @@ function HomePage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <FadeUp>
               <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
-              <ul className="mt-6 space-y-3">
+              <ul className="mt-6 space-y-3.5">
                 {WHO_ITS_FOR.items.map((item) => (
-                  <li key={item} className="flex gap-2 text-sm text-foreground/75">
-                    <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                  <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
+                    <Check size={16} className="mt-1 shrink-0 text-accent" />
                     {item}
                   </li>
                 ))}
@@ -223,7 +223,9 @@ function HomePage() {
             <FadeUp delay={0.06}>
               <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHY_KETTLEBELLS.title}</h2>
               <p className="mt-4 type-lead">{WHY_KETTLEBELLS.lead}</p>
-              <p className="mt-4 text-sm text-foreground/70">{WHY_KETTLEBELLS.items.join(" · ")}</p>
+              <p className="mt-4 text-base leading-relaxed text-foreground/75 md:text-[1.0625rem]">
+                {WHY_KETTLEBELLS.items.join(" · ")}
+              </p>
               <p className="mt-4 type-body">{WHY_KETTLEBELLS.closing}</p>
             </FadeUp>
           </div>
@@ -248,10 +250,10 @@ function HomePage() {
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
             <p className="mt-4 type-lead">{NUTRITION.description}</p>
-            <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {NUTRITION.items.map((item) => (
-                <li key={item} className="flex gap-2 text-sm text-foreground/75">
-                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
+                  <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
@@ -271,7 +273,7 @@ function HomePage() {
             </p>
             <p className="mt-6 font-display text-5xl text-accent md:text-6xl">{plan.price}</p>
             <p className="mt-2 text-xs uppercase tracking-[0.14em] text-white/45">{plan.period}</p>
-            <p className="mt-6 text-sm leading-relaxed text-white/65">{plan.description}</p>
+            <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">{plan.description}</p>
             <p className="mt-4 text-xs uppercase tracking-[0.12em] text-white/40">Cancel anytime</p>
             <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
               <Link
@@ -311,10 +313,10 @@ function HomePage() {
             <Accordion type="single" collapsible className="mt-10">
               {HOME_FAQ.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                  <AccordionTrigger className="py-4 text-left text-base font-medium hover:no-underline">
+                  <AccordionTrigger className="py-5 text-left text-lg font-medium hover:no-underline md:text-xl">
                     {f.q}
                   </AccordionTrigger>
-                  <AccordionContent className="type-body pb-4">{f.a}</AccordionContent>
+                  <AccordionContent className="type-body pb-5">{f.a}</AccordionContent>
                 </AccordionItem>
               ))}
             </Accordion>
@@ -330,7 +332,7 @@ function HomePage() {
             <h2 className="mt-4 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
               {HOME_CLOSING.headline}
             </h2>
-            <p className="mt-4 text-sm text-white/55">{HOME_CLOSING.subline}</p>
+            <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">{HOME_CLOSING.subline}</p>
             <Link
               to="/join"
               search={{ plan: "standard", email: "", name: "" }}

@@ -214,10 +214,10 @@ function CheckoutPage() {
                 </div>
               </div>
 
-              <ul className="space-y-2.5">
+              <ul className="space-y-3">
                 {INCLUDED_SUMMARY.map((item) => (
-                  <li key={item} className="flex gap-2.5 text-sm text-foreground/70">
-                    <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                  <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80">
+                    <Check size={16} className="mt-1 shrink-0 text-accent" />
                     {item}
                   </li>
                 ))}
