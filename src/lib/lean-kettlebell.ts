@@ -87,7 +87,6 @@ export const HOME_STATEMENT = {
     "You don't need more exercises. You don't need another PDF. You need a coach.",
     "At LEANMOVEMENT, we train together three mornings a week. Mohith coaches every session live, fixes your technique, pushes your intensity, and makes sure you're progressing week after week.",
     "You show up. He'll take care of the rest.",
-    "Miss a session? The recording is uploaded to your portal and remains available for 7 days before it expires.",
   ],
 } as const;
 
@@ -240,17 +239,33 @@ export const COMMUNITY = {
   ],
 } as const;
 
+/** Short homepage teaser — full list lives on Membership. */
 export const HOME_INCLUDED = [
   "Three live coaching sessions every week",
-  "Strength, conditioning and mobility training",
-  "Progressive programming",
   "One-on-one Foundations Session",
-  "Session recordings available for 7 days",
-  "Direct access to your coach",
+  "Session recordings for 7 days",
+  "Direct coach access",
   "Nutrition guidance",
-  "Personal calorie, protein and macronutrient targets",
-  "Restaurant and travel nutrition guide",
   "Private member community",
+] as const;
+
+/** Compact homepage journey — detail expands on Membership. */
+export const HOME_JOURNEY = [
+  {
+    n: "01",
+    title: "Foundations",
+    detail: "One-on-one technique session before your first live class.",
+  },
+  {
+    n: "02",
+    title: "Live coaching",
+    detail: "Tue / Thu / Sat · 6–7 AM IST. Strength, conditioning, mobility.",
+  },
+  {
+    n: "03",
+    title: "Stay lean",
+    detail: "Simple nutrition targets and habits you can actually follow.",
+  },
 ] as const;
 
 export const MEMBERSHIP_INCLUDED = [

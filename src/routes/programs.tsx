@@ -22,7 +22,6 @@ import {
   PROGRAM_HERO,
   REQUIREMENTS,
   SESSION_SCHEDULE,
-  WHO_ITS_FOR,
   WHY_KETTLEBELLS,
 } from "@/lib/lean-kettlebell";
 
@@ -47,7 +46,6 @@ export const Route = createFileRoute("/programs")({
 
 function ProgramsPage() {
   const plan = PRICING_PLANS[0];
-  const faqShort = FAQ.slice(0, 5);
   const schedule = SESSION_SCHEDULE.batches[0];
 
   return (
@@ -93,7 +91,7 @@ function ProgramsPage() {
         </div>
       </header>
 
-      {/* Train with me */}
+      {/* Program story — membership-specific */}
       <section className="border-b border-border bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
@@ -109,7 +107,7 @@ function ProgramsPage() {
         </div>
       </section>
 
-      {/* What's included */}
+      {/* Full included list */}
       <section className="border-b border-border">
         <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl">
@@ -117,9 +115,15 @@ function ProgramsPage() {
               <span className="w-6 h-px bg-accent" />
               What&apos;s included
             </p>
+            <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              Everything in the Lean Program
+            </h2>
             <ul className="mt-10 grid gap-3 sm:grid-cols-2">
               {MEMBERSHIP_INCLUDED.map((item) => (
-                <li key={item} className="flex gap-3 border-t border-border pt-5 text-base leading-relaxed text-foreground/85 md:text-lg">
+                <li
+                  key={item}
+                  className="flex gap-3 border-t border-border pt-5 text-base leading-relaxed text-foreground/85 md:text-lg"
+                >
                   <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
@@ -129,7 +133,7 @@ function ProgramsPage() {
         </div>
       </section>
 
-      {/* Schedule */}
+      {/* Schedule detail */}
       <section className="border-b border-border bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-2xl text-center">
@@ -151,13 +155,13 @@ function ProgramsPage() {
               {schedule.type}
             </p>
             <p className="mt-6 text-base leading-relaxed text-white/65 md:text-lg">
-              Train before work. Finish before the world wakes up. Start every day stronger than yesterday.
+              {SESSION_SCHEDULE.note}
             </p>
           </FadeUp>
         </div>
       </section>
 
-      {/* Foundations + What you need */}
+      {/* Foundations + equipment — detail only on Membership */}
       <section className="border-b border-border">
         <div className="container-x section-y-sm">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
@@ -169,7 +173,10 @@ function ProgramsPage() {
               <p className="mt-4 type-lead">{FOUNDATIONS.description}</p>
               <ul className="mt-6 space-y-3">
                 {FOUNDATIONS.items.map((item) => (
-                  <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
+                  <li
+                    key={item}
+                    className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]"
+                  >
                     <Check size={16} className="mt-1 shrink-0 text-accent" />
                     {item}
                   </li>
@@ -196,62 +203,58 @@ function ProgramsPage() {
         </div>
       </section>
 
-      {/* Who + Why */}
+      {/* Why kettlebells — detail only on Membership */}
       <section className="border-b border-border bg-black text-white">
         <div className="container-x section-y">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <FadeUp>
-              <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
-              <ul className="mt-6 space-y-3.5">
-                {WHO_ITS_FOR.items.map((item) => (
-                  <li key={item} className="flex gap-3 text-base leading-relaxed text-white/75 md:text-[1.0625rem]">
-                    <Check size={16} className="mt-1 shrink-0 text-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </FadeUp>
-            <FadeUp delay={0.06}>
-              <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHY_KETTLEBELLS.title}</h2>
-              <p className="mt-4 text-lg leading-relaxed text-white/70 md:text-xl">{WHY_KETTLEBELLS.lead}</p>
-              <p className="mt-4 text-base leading-relaxed text-white/60 md:text-[1.0625rem]">
-                {WHY_KETTLEBELLS.items.join(" · ")}
-              </p>
-              <p className="mt-4 text-base leading-relaxed text-white/60 md:text-[1.0625rem]">
-                {WHY_KETTLEBELLS.closing}
-              </p>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
-      {/* Quote */}
-      <section className="border-b border-border">
-        <div className="container-x section-y">
-          <FadeUp className="mx-auto max-w-3xl text-center">
-            <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] md:text-3xl">
-              &ldquo;{MEMBERSHIP_QUOTE.text}&rdquo;
-            </blockquote>
-            <p className="mt-8 type-meta">— {MEMBERSHIP_QUOTE.author}</p>
+          <FadeUp className="mx-auto max-w-3xl">
+            <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              {WHY_KETTLEBELLS.title}
+            </h2>
+            <p className="mt-4 text-lg leading-relaxed text-white/70 md:text-xl">{WHY_KETTLEBELLS.lead}</p>
+            <p className="mt-6 text-base leading-relaxed text-white/60 md:text-lg">
+              {WHY_KETTLEBELLS.items.join(" · ")}
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
+              {WHY_KETTLEBELLS.closing}
+            </p>
           </FadeUp>
         </div>
       </section>
 
-      {/* Nutrition */}
-      <section className="border-b border-border bg-black text-white">
+      {/* Nutrition — detail only on Membership */}
+      <section className="border-b border-border">
         <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl">
-            <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
-            <p className="mt-4 text-lg leading-relaxed text-white/70 md:text-xl">{NUTRITION.description}</p>
+            <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              {NUTRITION.title}
+            </h2>
+            <p className="mt-4 type-lead">{NUTRITION.description}</p>
             <ul className="mt-8 grid gap-3 sm:grid-cols-2">
               {NUTRITION.items.map((item) => (
-                <li key={item} className="flex gap-3 text-base leading-relaxed text-white/75 md:text-[1.0625rem]">
+                <li
+                  key={item}
+                  className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]"
+                >
                   <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
             </ul>
-            <p className="mt-6 text-base leading-relaxed text-white/60 md:text-lg">{NUTRITION.closing}</p>
+            <p className="mt-6 type-body">{NUTRITION.closing}</p>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Coach quote — membership only */}
+      <section className="border-b border-border bg-black text-white">
+        <div className="container-x section-y">
+          <FadeUp className="mx-auto max-w-3xl text-center">
+            <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] md:text-3xl">
+              &ldquo;{MEMBERSHIP_QUOTE.text}&rdquo;
+            </blockquote>
+            <p className="mt-8 text-xs uppercase tracking-[0.16em] text-white/45">
+              — {MEMBERSHIP_QUOTE.author}
+            </p>
           </FadeUp>
         </div>
       </section>
@@ -279,13 +282,13 @@ function ProgramsPage() {
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ — membership only */}
       <section className="border-b border-border bg-black text-white">
         <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-2xl">
             <h2 className="text-center font-display text-3xl uppercase tracking-[0.06em]">FAQ</h2>
             <Accordion type="single" collapsible className="mt-10">
-              {faqShort.map((f, i) => (
+              {FAQ.map((f, i) => (
                 <AccordionItem key={i} value={`item-${i}`} className="border-white/15">
                   <AccordionTrigger className="py-5 text-left text-lg font-medium text-white hover:no-underline md:text-xl">
                     {f.q}

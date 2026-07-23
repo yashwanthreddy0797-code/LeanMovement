@@ -3,28 +3,18 @@ import { ArrowRight, Check } from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
 import { ZoomMark } from "@/components/brand/ZoomMark";
 import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import {
   BRAND,
   COHORT,
-  FAQ,
-  FOUNDATIONS,
   HOME_CLOSING,
   HOME_HERO,
   HOME_INCLUDED,
+  HOME_JOURNEY,
   HOME_QUOTE,
   HOME_STATEMENT,
-  NUTRITION,
   PRICING_PLANS,
   PROGRAM_GALLERY,
-  REQUIREMENTS,
   SESSION_SCHEDULE,
   WHO_ITS_FOR,
-  WHY_KETTLEBELLS,
 } from "@/lib/lean-kettlebell";
 
 export const Route = createFileRoute("/")({
@@ -48,7 +38,6 @@ export const Route = createFileRoute("/")({
   component: HomePage,
 });
 
-const HOME_FAQ = FAQ.slice(0, 5);
 const HOME_GALLERY = [
   PROGRAM_GALLERY[0],
   PROGRAM_GALLERY[1],
@@ -108,7 +97,7 @@ function HomePage() {
         </div>
       </header>
 
-      {/* Statement */}
+      {/* Statement — brand pitch only */}
       <section className="border-b border-border bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
@@ -124,27 +113,39 @@ function HomePage() {
         </div>
       </section>
 
-      {/* What's included */}
+      {/* Included teaser — short; full list on Membership */}
       <section className="border-b border-border">
         <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <p className="eyebrow justify-center">
               <span className="w-6 h-px bg-accent" />
-              What&apos;s included
+              At a glance
             </p>
+            <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              What you get
+            </h2>
             <ul className="mt-10 grid gap-3 text-left sm:grid-cols-2">
               {HOME_INCLUDED.map((item) => (
-                <li key={item} className="flex gap-3 border-t border-border pt-5 text-base leading-relaxed text-foreground/85 md:text-lg">
+                <li
+                  key={item}
+                  className="flex gap-3 border-t border-border pt-5 text-base leading-relaxed text-foreground/85 md:text-lg"
+                >
                   <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
             </ul>
+            <Link
+              to="/programs"
+              className="mt-10 inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-accent hover:text-foreground"
+            >
+              Full membership details <ArrowRight size={13} />
+            </Link>
           </FadeUp>
         </div>
       </section>
 
-      {/* Schedule */}
+      {/* Schedule teaser */}
       <section className="border-b border-border bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-2xl text-center">
@@ -163,18 +164,51 @@ function HomePage() {
         </div>
       </section>
 
-      {/* Foundations */}
+      {/* Journey teaser — unique to home; detail on Membership */}
       <section className="border-b border-border">
         <div className="container-x section-y-sm">
-          <FadeUp className="mx-auto max-w-3xl">
-            <p className="eyebrow">
+          <FadeUp className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow justify-center">
               <span className="w-6 h-px bg-accent" />
-              {FOUNDATIONS.title}
+              How it works
             </p>
-            <p className="mt-4 type-lead">{FOUNDATIONS.description}</p>
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {FOUNDATIONS.items.map((item) => (
-                <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
+            <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              Simple path. Real coaching.
+            </h2>
+          </FadeUp>
+          <div className="mx-auto mt-12 grid max-w-4xl gap-8 md:grid-cols-3 md:gap-10">
+            {HOME_JOURNEY.map((step, i) => (
+              <FadeUp key={step.n} delay={i * 0.05}>
+                <p className="font-mono text-xs text-accent">{step.n}</p>
+                <h3 className="mt-3 font-display text-2xl uppercase tracking-[0.06em]">{step.title}</h3>
+                <p className="mt-3 text-base leading-relaxed text-foreground/70">{step.detail}</p>
+              </FadeUp>
+            ))}
+          </div>
+          <FadeUp className="mt-10 text-center">
+            <Link
+              to="/programs"
+              className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-accent hover:text-foreground"
+            >
+              See foundations, nutrition &amp; gear <ArrowRight size={13} />
+            </Link>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Who it's for — audience lives on home only */}
+      <section className="border-b border-border bg-black text-white">
+        <div className="container-x section-y">
+          <FadeUp className="mx-auto max-w-3xl">
+            <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              {WHO_ITS_FOR.title}
+            </h2>
+            <ul className="mt-8 grid gap-3.5 sm:grid-cols-2">
+              {WHO_ITS_FOR.items.map((item) => (
+                <li
+                  key={item}
+                  className="flex gap-3 text-base leading-relaxed text-white/75 md:text-[1.0625rem]"
+                >
                   <Check size={16} className="mt-1 shrink-0 text-accent" />
                   {item}
                 </li>
@@ -184,86 +218,21 @@ function HomePage() {
         </div>
       </section>
 
-      {/* What you'll need */}
-      <section className="border-b border-border bg-black text-white">
-        <div className="container-x section-y">
-          <FadeUp className="mx-auto max-w-3xl">
-            <p className="eyebrow !text-white/45">
-              <span className="w-6 h-px bg-accent" />
-              {REQUIREMENTS.title}
-            </p>
-            <p className="mt-4 text-xl leading-relaxed text-white/75 md:text-2xl">{REQUIREMENTS.subtitle}</p>
-            <ul className="mt-10 space-y-7">
-              {REQUIREMENTS.items.map((item) => (
-                <li key={item.label}>
-                  <p className="font-display text-xl uppercase tracking-[0.06em] text-white md:text-2xl">{item.label}</p>
-                  <p className="mt-2 text-base leading-relaxed text-white/65 md:text-lg">{item.detail}</p>
-                </li>
-              ))}
-            </ul>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* Who it's for + Why kettlebells */}
-      <section className="border-b border-border">
-        <div className="container-x section-y-sm">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
-            <FadeUp>
-              <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
-              <ul className="mt-6 space-y-3.5">
-                {WHO_ITS_FOR.items.map((item) => (
-                  <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
-                    <Check size={16} className="mt-1 shrink-0 text-accent" />
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </FadeUp>
-            <FadeUp delay={0.06}>
-              <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHY_KETTLEBELLS.title}</h2>
-              <p className="mt-4 type-lead">{WHY_KETTLEBELLS.lead}</p>
-              <p className="mt-4 text-base leading-relaxed text-foreground/75 md:text-[1.0625rem]">
-                {WHY_KETTLEBELLS.items.join(" · ")}
-              </p>
-              <p className="mt-4 type-body">{WHY_KETTLEBELLS.closing}</p>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
-
       {/* Quote */}
-      <section className="border-b border-border bg-black text-white">
+      <section className="border-b border-border">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] md:text-3xl">
               &ldquo;{HOME_QUOTE.text}&rdquo;
             </blockquote>
-            <p className="mt-8 text-xs uppercase tracking-[0.16em] text-white/45">— {HOME_QUOTE.author}</p>
+            <p className="mt-8 text-xs uppercase tracking-[0.16em] text-muted-foreground">
+              — {HOME_QUOTE.author}
+            </p>
           </FadeUp>
         </div>
       </section>
 
-      {/* Nutrition */}
-      <section className="border-b border-border">
-        <div className="container-x section-y-sm">
-          <FadeUp className="mx-auto max-w-3xl">
-            <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
-            <p className="mt-4 type-lead">{NUTRITION.description}</p>
-            <ul className="mt-8 grid gap-3 sm:grid-cols-2">
-              {NUTRITION.items.map((item) => (
-                <li key={item} className="flex gap-3 text-base leading-relaxed text-foreground/80 md:text-[1.0625rem]">
-                  <Check size={16} className="mt-1 shrink-0 text-accent" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <p className="mt-6 type-body">{NUTRITION.closing}</p>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* Pricing */}
+      {/* Pricing teaser */}
       <section id="pricing" className="border-b border-border scroll-mt-24 bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
@@ -283,7 +252,10 @@ function HomePage() {
               >
                 Join now <ArrowRight size={13} />
               </Link>
-              <Link to="/programs" className="text-xs uppercase tracking-[0.12em] text-white/50 hover:text-white">
+              <Link
+                to="/programs"
+                className="text-xs uppercase tracking-[0.12em] text-white/50 hover:text-white"
+              >
                 View program details →
               </Link>
             </div>
@@ -304,25 +276,6 @@ function HomePage() {
           </div>
         ))}
       </div>
-
-      {/* FAQ */}
-      <section id="faq" className="border-b border-border scroll-mt-24">
-        <div className="container-x section-y-sm">
-          <FadeUp className="mx-auto max-w-2xl">
-            <h2 className="text-center font-display text-3xl uppercase tracking-[0.06em]">FAQ</h2>
-            <Accordion type="single" collapsible className="mt-10">
-              {HOME_FAQ.map((f, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                  <AccordionTrigger className="py-5 text-left text-lg font-medium hover:no-underline md:text-xl">
-                    {f.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="type-body pb-5">{f.a}</AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </FadeUp>
-        </div>
-      </section>
 
       {/* Close */}
       <section className="bg-black text-white">
