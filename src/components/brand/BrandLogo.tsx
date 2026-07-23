@@ -28,7 +28,7 @@ export function BrandLogo({
 
   if (variant === "navbar") {
     return (
-      <span className={cn("flex items-center gap-2 sm:gap-2.5", className)} {...props}>
+      <span className={cn("flex items-center gap-2 sm:gap-2.5 text-current", className)} {...props}>
         <BrandMonogram className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
         <span className="brand-logo text-[12px] sm:text-[15px] tracking-[0.28em] sm:tracking-[0.32em] truncate">
           LEANMOVEMENT

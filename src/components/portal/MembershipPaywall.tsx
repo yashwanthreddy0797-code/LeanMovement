@@ -20,15 +20,15 @@ export function MembershipPaywall({
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6">
       <div className="max-w-md w-full card-soft p-8 md:p-10 text-center">
-        <div className="w-14 h-14 rounded-full bg-[#FEE2E2] grid place-items-center mx-auto">
-          <CreditCard size={24} className="text-[var(--accent)]" />
+        <div className="w-14 h-14 bg-surface border border-border grid place-items-center mx-auto">
+          <CreditCard size={24} className="text-accent" />
         </div>
 
-        <h2 className="mt-6 font-serif text-3xl text-[#000000]">
+        <h2 className="mt-6 font-display text-3xl uppercase tracking-[0.04em] text-foreground">
           {isPending ? "Payment required" : "Renew membership"}
         </h2>
 
-        <p className="mt-3 text-sm text-[#737373] leading-relaxed">
+        <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
           {isPending
             ? "Complete secure payment on the join page to unlock live sessions and your calendar."
             : access.inGrace
@@ -37,11 +37,11 @@ export function MembershipPaywall({
         </p>
 
         {userEmail && (
-          <div className="mt-5 rounded-xl bg-[#FAFAFA] px-4 py-3 text-sm">
-            <span className="text-[#737373]">Signed in as </span>
-            <span className="font-medium text-[#000000]">{userEmail}</span>
+          <div className="mt-5 bg-surface border border-border px-4 py-3 text-sm">
+            <span className="text-muted-foreground">Signed in as </span>
+            <span className="font-medium text-foreground">{userEmail}</span>
             {membership && (
-              <span className="text-[#737373]">
+              <span className="text-muted-foreground">
                 {" "}
                 · {formatPlanLabel(membership.plan)} · {summary.price}/mo
               </span>
@@ -52,14 +52,14 @@ export function MembershipPaywall({
         <Link
           to={payTo}
           search={isPending ? { plan: "standard", email: userEmail ?? "", name: "" } : undefined}
-          className="mt-8 inline-flex w-full items-center justify-center px-6 py-3.5 rounded-full bg-[#000000] text-white text-sm font-medium hover:bg-[#111]"
+          className="portal-btn mt-8 w-full"
         >
           {isPending ? `Pay ${summary.price}` : `Renew ${summary.price}`}
         </Link>
 
         <Link
           to="/contact"
-          className="mt-3 inline-flex w-full items-center justify-center gap-2 px-6 py-3.5 rounded-full border border-[var(--border)] text-sm hover:bg-[#FAFAFA]"
+          className="portal-btn-ghost portal-btn mt-3 w-full"
         >
           <Mail size={14} /> Contact support
         </Link>

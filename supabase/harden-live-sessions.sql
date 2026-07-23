@@ -85,16 +85,16 @@ begin
   end if;
 end $$;
 
--- Ensure the six Zoom sessions exist (idempotent upsert by day)
+-- Ensure the three morning Zoom sessions exist (idempotent upsert by day)
+delete from public.live_sessions
+where day_of_week in ('Monday', 'Wednesday', 'Friday');
+
 insert into public.live_sessions
   (day_of_week, title, session_type, focus, start_time, timezone, duration_minutes, join_url, sort_order)
 values
-  ('Monday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 1),
-  ('Tuesday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 2),
-  ('Wednesday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 3),
-  ('Thursday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 4),
-  ('Friday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 5),
-  ('Saturday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 6)
+  ('Tuesday', 'Lean Kettlebell - Morning', 'Morning', 'Strength', '06:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 1),
+  ('Thursday', 'Lean Kettlebell - Morning', 'Morning', 'Endurance', '06:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 2),
+  ('Saturday', 'Lean Kettlebell - Morning', 'Morning', 'Hybrid', '06:00', 'Asia/Kolkata', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 3)
 on conflict (day_of_week) do update set
   title = excluded.title,
   session_type = excluded.session_type,

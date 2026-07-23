@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { LiveScheduleCalendar } from "@/components/portal/LiveScheduleCalendar";
-import { SectionTitle, SoftCard } from "@/components/portal/ui";
+import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
+import { PortalPageHeader, SectionTitle, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import {
@@ -30,7 +31,7 @@ function SchedulePage() {
   const [saving, setSaving] = useState<string | null>(null);
 
   if (loading || !data) {
-    return <p className="text-sm text-[#737373]">Loading schedule…</p>;
+    return <PortalPageSkeleton />;
   }
 
   const save = async (id: string) => {
@@ -56,23 +57,17 @@ function SchedulePage() {
 
   return (
     <div className="space-y-8 pb-20 lg:pb-0">
-      <div>
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">
-          Morning Mon · Wed · Fri · Evening Tue · Thu · Sat
-        </div>
-        <h1 className="text-4xl md:text-5xl font-serif">Live schedule</h1>
-        <p className="mt-2 text-[#737373] max-w-2xl">
-          Set your Zoom links for each session. Morning and evening batches share one recurring
-          link each. Changes save to Supabase and appear on every active member&apos;s dashboard
-          automatically.
-        </p>
-      </div>
+      <PortalPageHeader
+        eyebrow="Morning Mon · Wed · Fri · Evening Tue · Thu · Sat"
+        title="Live schedule"
+        description="Set your Zoom link for each live session. Changes save to Supabase and appear on every active member's dashboard automatically."
+      />
 
       <LiveScheduleCalendar sessions={data.liveSessions} />
 
       <div>
         <SectionTitle eyebrow="Meeting links" title="Edit session URLs" />
-        <p className="text-sm text-[#737373] mb-5 max-w-2xl">
+        <p className="mb-5 max-w-2xl text-sm text-muted-foreground">
           Update Google Meet or Zoom links for each recurring session below.
         </p>
       </div>
@@ -86,16 +81,16 @@ function SchedulePage() {
           return (
             <SoftCard
               key={s.id}
-              className={isToday ? "border-[var(--accent)] ring-1 ring-[var(--accent)]/20" : ""}
+              className={isToday ? "border-accent ring-1 ring-accent/20" : ""}
             >
-              <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
+              <div className="mb-5 flex flex-wrap items-start justify-between gap-4">
                 <div>
-                  <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">
+                  <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
                     {s.day_of_week}
-                    {isToday && <span className="ml-2 text-[#E11D2A]">· Today</span>}
+                    {isToday && <span className="ml-2 text-accent">· Today</span>}
                   </div>
-                  <h2 className="mt-1 font-serif text-2xl">{s.title}</h2>
-                  <p className="text-sm text-[#737373] mt-1">
+                  <h2 className="mt-1 font-display text-2xl uppercase tracking-[0.04em]">{s.title}</h2>
+                  <p className="mt-1 text-sm text-muted-foreground">
                     {formatSessionTime(s.start_time)} · {s.duration_minutes} min · IST
                   </p>
                 </div>
@@ -104,7 +99,7 @@ function SchedulePage() {
                     href={s.join_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#000000] text-white text-xs font-medium hover:bg-[#111111]"
+                    className="portal-btn"
                   >
                     <Play size={14} /> Host now
                   </a>
@@ -112,7 +107,7 @@ function SchedulePage() {
                     href={s.join_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[var(--border)] text-xs hover:bg-[#FAFAF6]"
+                    className="portal-btn portal-btn-ghost"
                   >
                     <ExternalLink size={14} /> Test link
                   </a>
@@ -120,18 +115,18 @@ function SchedulePage() {
               </div>
 
               <SectionTitle eyebrow="Join URL" title="Meeting link" />
-              <div className="flex flex-col sm:flex-row gap-3">
+              <div className="flex flex-col gap-3 sm:flex-row">
                 <input
                   value={draft}
                   onChange={(e) => setEdits((prev) => ({ ...prev, [s.id]: e.target.value }))}
                   placeholder="https://meet.google.com/... or https://zoom.us/j/..."
-                  className="flex-1 px-4 py-3 rounded-xl border border-[var(--border)] text-sm outline-none focus:border-[#FCA5A5]"
+                  className="flex-1 border border-border px-4 py-3 text-sm outline-none focus:border-accent"
                 />
                 <button
                   type="button"
                   disabled={!dirty || saving === s.id}
                   onClick={() => void save(s.id)}
-                  className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl bg-[#E11D2A] text-white text-sm font-medium hover:opacity-90 disabled:opacity-40"
+                  className="portal-btn portal-btn-accent disabled:opacity-40"
                 >
                   <Save size={15} />
                   {saving === s.id ? "Saving…" : "Save"}

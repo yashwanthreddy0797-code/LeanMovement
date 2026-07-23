@@ -16,18 +16,48 @@ declare global {
   }
 }
 
+let scriptPromise: Promise<boolean> | null = null;
+
+/** Prefetch Checkout.js as soon as the join/pay page mounts. */
+export function preloadRazorpayScript() {
+  if (typeof window === "undefined") return;
+  void loadRazorpayScript();
+}
+
 export async function loadRazorpayScript() {
   if (typeof window === "undefined") return false;
   if (window.Razorpay) return true;
-  await new Promise<void>((resolve, reject) => {
+  if (scriptPromise) return scriptPromise;
+
+  scriptPromise = new Promise<boolean>((resolve) => {
+    const existing = document.querySelector<HTMLScriptElement>(
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
+    );
+    if (existing) {
+      if (window.Razorpay) {
+        resolve(true);
+        return;
+      }
+      existing.addEventListener("load", () => resolve(Boolean(window.Razorpay)));
+      existing.addEventListener("error", () => {
+        scriptPromise = null;
+        resolve(false);
+      });
+      return;
+    }
+
     const script = document.createElement("script");
     script.src = "https://checkout.razorpay.com/v1/checkout.js";
     script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Could not load Razorpay"));
+    script.onload = () => resolve(Boolean(window.Razorpay));
+    script.onerror = () => {
+      scriptPromise = null;
+      resolve(false);
+    };
     document.body.appendChild(script);
   });
-  return Boolean(window.Razorpay);
+
+  return scriptPromise;
 }
 
 export async function openRazorpayCheckout(options: {

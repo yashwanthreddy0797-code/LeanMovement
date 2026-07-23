@@ -15,7 +15,7 @@ import {
   listCoachAlerts,
   markCoachAlertsRead,
 } from "@/lib/coach-notify";
-import { SESSIONS_TO_PICK, SESSION_SLOTS } from "@/lib/sessions";
+import { SESSIONS_TO_PICK, SESSION_SLOTS, DEFAULT_SESSION_IDS } from "@/lib/sessions";
 
 const sessionIdSchema = z.string().refine(
   (id) => SESSION_SLOTS.some((s) => s.id === id),
@@ -27,7 +27,7 @@ const enrollmentInput = z.object({
   fullName: z.string().min(2).max(120),
   planSlug: z.string(),
   phone: z.string().max(20).optional(),
-  sessionIds: z.array(sessionIdSchema).length(SESSIONS_TO_PICK),
+  sessionIds: z.array(sessionIdSchema).max(SESSIONS_TO_PICK).optional().default([]),
 });
 
 async function verifyCoach(coachId: string) {
@@ -160,7 +160,8 @@ export const createEnrollment = createServerFn({ method: "POST" })
       }
 
       const amount = planAmountInr(plan);
-      const sessionIds = [...new Set(data.sessionIds)];
+      const sessionIds =
+        data.sessionIds?.length ? [...new Set(data.sessionIds)] : [...DEFAULT_SESSION_IDS];
 
       const saved = await saveEnrollmentIntent(admin, {
         email,
@@ -183,6 +184,73 @@ export const createEnrollment = createServerFn({ method: "POST" })
         message: err instanceof Error ? err.message : "Could not submit enrollment",
       };
     }
+  });
+
+/**
+ * Create (or unlock) a member account for /join checkout.
+ * Uses the service role so email confirmation never blocks Razorpay —
+ * members pay on the join page, then enter the portal.
+ */
+export const provisionMemberForCheckout = createServerFn({ method: "POST" })
+  .inputValidator(
+    z.object({
+      email: z.string().email(),
+      password: z.string().min(8),
+      fullName: z.string().min(2).max(120),
+    }),
+  )
+  .handler(async ({ data }) => {
+    const admin = getSupabaseAdmin();
+    if (!admin) return { ok: false as const, message: "Server not configured" };
+
+    const email = data.email.trim().toLowerCase();
+    const fullName = data.fullName.trim();
+
+    const { data: created, error: createError } = await admin.auth.admin.createUser({
+      email,
+      password: data.password,
+      email_confirm: true,
+      user_metadata: { full_name: fullName, role: "member" },
+    });
+
+    if (!createError && created.user) {
+      return { ok: true as const, userId: created.user.id, created: true as const };
+    }
+
+    const alreadyExists = Boolean(
+      createError && /already|registered|exists/i.test(createError.message),
+    );
+    if (!alreadyExists) {
+      return {
+        ok: false as const,
+        message: createError?.message ?? "Could not create account",
+      };
+    }
+
+    const { data: profile } = await admin
+      .from("profiles")
+      .select("id")
+      .eq("email", email)
+      .maybeSingle();
+
+    if (!profile) {
+      return {
+        ok: false as const,
+        message: "Account exists — sign in with your password to complete payment",
+        needsSignIn: true as const,
+      };
+    }
+
+    // Confirm email so an unfinished signup can still pay immediately.
+    const { error: confirmError } = await admin.auth.admin.updateUserById(profile.id, {
+      email_confirm: true,
+      user_metadata: { full_name: fullName, role: "member" },
+    });
+    if (confirmError) {
+      return { ok: false as const, message: confirmError.message };
+    }
+
+    return { ok: true as const, userId: profile.id, created: false as const };
   });
 
 /** After signup — apply chosen plan from enrollment */
@@ -334,3 +402,5 @@ export type EnrollmentIntentRow = {
   created_at: string;
   session_ids?: string[];
 };
+
+export { saveMemberSessionPicks } from "@/lib/api/weekly-sessions.functions";

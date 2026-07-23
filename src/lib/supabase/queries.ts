@@ -133,7 +133,7 @@ function mapNextLive(rows: LiveSessionRow[]): PortalNextLive {
 }
 
 function enrichMockNext(session: typeof mockNextLive): PortalNextLive {
-  const startsAt = getNextOccurrence(session.day, "07:00");
+  const startsAt = getNextOccurrence(session.day, "06:00");
   const timing = getSessionTiming(startsAt, 45);
   return {
     ...session,
@@ -141,6 +141,11 @@ function enrichMockNext(session: typeof mockNextLive): PortalNextLive {
     liveState: timing.liveState,
     minutesUntilStart: timing.minutesUntilStart,
   };
+}
+
+function isRecordingActive(row: RecordingRow, now = new Date()) {
+  if (!row.expires_at) return true;
+  return new Date(row.expires_at) > now;
 }
 
 function mapRecording(row: RecordingRow): PortalRecording {
@@ -176,23 +181,18 @@ function mapCircuit(row: CircuitRow): PortalCircuit {
 }
 
 function mockContent(): PortalContent {
-  const mockRows: LiveSessionRow[] = mockSchedule.map((s, i) => {
-    const isEvening = s.title.includes("Evening");
-    return {
-      id: `mock-${i}`,
-      day_of_week: s.day,
-      title: s.title,
-      session_type: isEvening ? "Evening" : "Morning",
-      focus: null,
-      start_time: isEvening ? "19:00" : "07:00",
-      timezone: "Asia/Kolkata",
-      duration_minutes: 60,
-      join_url: isEvening
-        ? "https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1"
-        : mockNextLive.joinUrl,
-      sort_order: i + 1,
-    };
-  });
+  const mockRows: LiveSessionRow[] = mockSchedule.map((s, i) => ({
+    id: `mock-${i}`,
+    day_of_week: s.day,
+    title: s.title,
+    session_type: "Morning",
+    focus: s.focus || null,
+    start_time: "06:00",
+    timezone: "Asia/Kolkata",
+    duration_minutes: 60,
+    join_url: mockNextLive.joinUrl,
+    sort_order: i + 1,
+  }));
   const sessionDays = mockRows.map((s) => s.day_of_week);
 
   return {
@@ -263,7 +263,9 @@ export async function fetchPortalContent(): Promise<PortalContent> {
       liveSessions: liveRows,
       weeklySchedule: liveRows.map(mapLiveSession),
       nextLiveSession: mapNextLive(liveRows),
-      recordings: (recRes.data as RecordingRow[] | null)?.map(mapRecording) ?? fallback.recordings,
+      recordings: recRes.data
+        ? (recRes.data as RecordingRow[]).filter(isRecordingActive).map(mapRecording)
+        : fallback.recordings,
       circuits: (cirRes.data as CircuitRow[] | null)?.map(mapCircuit) ?? fallback.circuits,
       siteConfig: {
         whatsappInviteUrl: configMap.whatsapp_invite_url ?? mockWhatsApp.inviteUrl,

@@ -2,6 +2,7 @@ import { planAmountInr } from "@/lib/enrollment/plans";
 import { recordVerifiedPayment, extendMembershipRenewal } from "@/lib/membership/renewal";
 import { pushCoachRegistrationAlert } from "@/lib/coach-notify";
 import { getEnrollmentFromSiteConfig } from "@/lib/enrollment/store";
+import { DEFAULT_SESSION_IDS, getWeekStartDate } from "@/lib/sessions";
 import type { MembershipPlan } from "@/lib/supabase/types";
 import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/lib/supabase/types";
@@ -66,7 +67,22 @@ export async function activateMembershipForUser(
     console.warn("[activateMembership] enrollment_intents update:", intentError.message);
   }
 
-  await admin.from("onboarding").upsert({ user_id: input.userId });
+  await admin.from("onboarding").upsert({
+    user_id: input.userId,
+    session_ids: DEFAULT_SESSION_IDS,
+    sessions_selected_at: now,
+  });
+
+  const weekStart = getWeekStartDate();
+  await admin.from("member_weekly_picks").upsert(
+    {
+      user_id: input.userId,
+      week_start: weekStart,
+      session_ids: DEFAULT_SESSION_IDS,
+      updated_at: now,
+    },
+    { onConflict: "user_id,week_start" },
+  );
 
   if (kind === "initial" && !ledger.duplicate) {
     const config = await getEnrollmentFromSiteConfig(admin, input.email);
@@ -82,7 +98,7 @@ export async function activateMembershipForUser(
         full_name: profile?.full_name ?? config?.full_name ?? input.email,
         phone: config?.phone ?? null,
         amount_inr: amountInr,
-        session_ids: config?.session_ids ?? [],
+        session_ids: config?.session_ids?.length ? config.session_ids : DEFAULT_SESSION_IDS,
       });
     } catch (err) {
       console.warn("[activateMembership] coach alert failed", err);

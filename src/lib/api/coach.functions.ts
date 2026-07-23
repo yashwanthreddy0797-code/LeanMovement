@@ -163,6 +163,8 @@ export const coachAddRecording = createServerFn({ method: "POST" })
       session_type: data.sessionType,
       video_url: data.videoUrl,
       duration: data.duration ?? "45 min",
+      recorded_at: new Date().toISOString(),
+      expires_at: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000).toISOString(),
     });
     if (error) return { ok: false as const, message: error.message };
     return { ok: true as const };

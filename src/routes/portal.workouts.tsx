@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import { SectionTitle, SoftCard } from "@/components/portal/ui";
+import { PortalPageHeader, SectionTitle, SoftCard } from "@/components/portal/ui";
 import { usePortalPageContent } from "@/lib/portal/portal-content";
 import { Dumbbell, Play } from "lucide-react";
 
@@ -18,26 +18,26 @@ function Circuits() {
 
   return (
     <div className="space-y-10">
-      <div>
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">On-demand library</div>
-        <h1 className="text-4xl md:text-5xl font-serif">Kettlebell circuits</h1>
-        <p className="mt-2 text-[#737373] max-w-xl">
-          Five circuits for travel days, extra conditioning, or when you can&apos;t make live.
-        </p>
-      </div>
+      <PortalPageHeader
+        eyebrow="On-demand library"
+        title="Kettlebell circuits"
+        description="Five circuits for travel days, extra conditioning, or when you can't make live."
+      />
 
-      <div className="space-y-5">
+      <div className="space-y-px bg-border">
         {circuits.map((c, i) => (
-          <div key={c.id} className="card-soft overflow-hidden">
-            <div className="grid md:grid-cols-12 gap-0">
-              <div className="md:col-span-1 bg-[#000000] text-white grid place-items-center py-6 md:py-0">
-                <span className="font-display text-2xl">{String(i + 1).padStart(2, "0")}</span>
+          <div key={c.id} className="overflow-hidden bg-white">
+            <div className="grid gap-0 md:grid-cols-12">
+              <div className="grid place-items-center bg-foreground py-6 text-background md:col-span-1 md:py-0">
+                <span className="font-display text-2xl tracking-[0.04em]">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
               </div>
-              <div className="md:col-span-11 p-6 md:p-8">
+              <div className="p-6 md:col-span-11 md:p-8">
                 <div className="flex flex-wrap items-start justify-between gap-4">
                   <div>
-                    <h2 className="font-display text-2xl uppercase tracking-tight">{c.name}</h2>
-                    <p className="mt-2 text-sm text-[#737373] max-w-lg">{c.description}</p>
+                    <h2 className="font-display text-2xl uppercase tracking-[0.04em]">{c.name}</h2>
+                    <p className="mt-2 max-w-lg text-sm text-muted-foreground">{c.description}</p>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     <span className="chip">{c.duration}</span>
@@ -45,10 +45,10 @@ function Circuits() {
                     <span className="chip">{c.difficulty}</span>
                   </div>
                 </div>
-                <ul className="mt-6 grid sm:grid-cols-2 gap-2">
+                <ul className="mt-6 grid gap-2 sm:grid-cols-2">
                   {c.exercises.map((ex) => (
-                    <li key={ex} className="flex items-center gap-2 text-sm text-[#404040]">
-                      <Dumbbell size={14} className="text-[var(--accent)] shrink-0" />
+                    <li key={ex} className="flex items-center gap-2 text-sm text-foreground/70">
+                      <Dumbbell size={14} className="shrink-0 text-accent" />
                       {ex}
                     </li>
                   ))}
@@ -58,7 +58,7 @@ function Circuits() {
                     href={c.videoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-6 inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#000000] text-white text-sm font-medium hover:bg-[#111]"
+                    className="portal-btn mt-6"
                   >
                     <Play size={14} fill="currentColor" /> Watch demo
                   </a>
@@ -71,7 +71,7 @@ function Circuits() {
 
       <SoftCard>
         <SectionTitle eyebrow="Between lives" title="When to use circuits" />
-        <p className="text-sm text-[#737373] leading-relaxed">
+        <p className="text-sm leading-relaxed text-muted-foreground">
           Circuits complement your three weekly live sessions — not replace them.
         </p>
       </SoftCard>

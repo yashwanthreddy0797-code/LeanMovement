@@ -14,10 +14,10 @@ export function LiveSessionBadge({ liveState, minutesUntilStart, className = "" 
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] uppercase tracking-[0.18em] font-semibold ${
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] font-semibold ${
         isLive
-          ? "bg-[var(--accent)] text-white"
-          : "bg-[#FEE2E2] text-[var(--accent)]"
+          ? "bg-accent text-white"
+          : "bg-surface text-accent border border-border"
       } ${className}`}
     >
       <Radio size={11} className={isLive ? "animate-pulse" : ""} />
@@ -44,8 +44,8 @@ export function LiveJoinButton({
   const isActive = liveState === "live" || liveState === "soon";
   const sizeClass =
     size === "lg"
-      ? "px-8 py-4 text-sm"
-      : "px-5 py-2.5 text-sm";
+      ? "px-8 py-4"
+      : "px-5 py-2.5";
 
   return (
     <div className={`flex flex-col items-stretch sm:items-end gap-2 shrink-0 ${className}`}>
@@ -54,11 +54,7 @@ export function LiveJoinButton({
         href={joinUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`inline-flex items-center justify-center gap-2 rounded-full font-medium transition ${
-          isActive
-            ? "bg-[var(--accent)] text-white hover:opacity-90 shadow-lg shadow-black/10"
-            : "bg-[#000000] text-white hover:bg-[#111]"
-        } ${sizeClass}`}
+        className={`${isActive ? "portal-btn-accent portal-btn" : "portal-btn"} ${sizeClass}`}
       >
         {isActive ? "Join live now" : "Open session link"}
       </a>

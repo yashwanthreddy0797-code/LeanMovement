@@ -126,15 +126,15 @@ export function sessionBatchLabel(session: Pick<LiveSessionRow, "start_time" | "
   return isEveningSession(session) ? "Evening" : "Morning";
 }
 
-/** Morning = black, Evening = red — keep calendar readable at a glance. */
+/** Morning = black, Evening = red — inline hex so colors always ship. */
+export function sessionBatchHex(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
+  return isEveningSession(session) ? "#E11D2A" : "#111111";
+}
+
 export function sessionBatchColor(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
   return isEveningSession(session)
     ? "bg-[#E11D2A] text-white"
     : "bg-[#111111] text-white";
-}
-
-export function sessionBatchDotColor(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
-  return isEveningSession(session) ? "bg-[#E11D2A] text-[#E11D2A]" : "bg-[#111111] text-[#111111]";
 }
 
 export { WEEKDAYS, formatSessionTime, isSameDay, isSameMonth, isToday, format, getHours, getMinutes };

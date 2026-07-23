@@ -6,11 +6,21 @@ type SidebarBrandProps = {
   collapsed: boolean;
   onToggle: () => void;
   subtitle: string;
+  /** light = member (white sidebar), dark = coach console */
+  tone?: "light" | "dark";
 };
 
-const logoClass = "text-lg text-[#000000]";
+export function SidebarBrand({
+  collapsed,
+  onToggle,
+  subtitle,
+  tone = "light",
+}: SidebarBrandProps) {
+  const isDark = tone === "dark";
+  const logoClass = isDark ? "text-lg text-white" : "text-lg text-foreground";
+  const muted = isDark ? "text-white/40 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:bg-surface hover:text-foreground";
+  const subClass = isDark ? "text-white/40" : "text-muted-foreground";
 
-export function SidebarBrand({ collapsed, onToggle, subtitle }: SidebarBrandProps) {
   return (
     <div className={`py-5 ${collapsed ? "px-3" : "px-6"}`}>
       <div
@@ -40,14 +50,14 @@ export function SidebarBrand({ collapsed, onToggle, subtitle }: SidebarBrandProp
               collapsed
                 ? "opacity-100 scale-100"
                 : "opacity-0 scale-[0.97] absolute left-0 top-0 pointer-events-none"
-            }`}
+            } ${isDark ? "text-white" : ""}`}
           />
         </Link>
 
         <button
           type="button"
           onClick={onToggle}
-          className="shrink-0 p-1.5 rounded-lg text-[#A3A3A3] hover:bg-[#F5F5F5] hover:text-[#000000] transition-colors"
+          className={`shrink-0 p-1.5 transition-colors ${muted}`}
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
@@ -60,7 +70,7 @@ export function SidebarBrand({ collapsed, onToggle, subtitle }: SidebarBrandProp
       </div>
 
       <p
-        className={`text-[10px] uppercase tracking-[0.28em] text-[#737373] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+        className={`text-[10px] uppercase tracking-[0.28em] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${subClass} ${
           collapsed ? "max-h-0 opacity-0 mt-0" : "max-h-6 opacity-100 mt-2"
         }`}
       >

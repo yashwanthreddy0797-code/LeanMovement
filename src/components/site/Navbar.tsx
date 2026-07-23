@@ -6,37 +6,27 @@ import { BrandLogo } from "@/components/brand/BrandLogo";
 const links = [
   { to: "/", label: "Home" },
   { to: "/programs", label: "Membership" },
-  { to: "/results", label: "Results" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
-  useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [open]);
 
   return (
     <>
-      <header
-        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-          scrolled || open ? "bg-background/95 backdrop-blur-md border-b border-border" : "bg-transparent"
-        }`}
-      >
+      <header className="fixed inset-x-0 top-0 z-50 bg-black/90 border-b border-border backdrop-blur-md">
         <div className="container-x">
           <div className="flex items-center justify-between h-16 md:h-20">
-            <Link to="/" aria-label="LEANMOVEMENT home" className="text-foreground min-w-0">
-              <BrandLogo variant="navbar" />
+            <Link to="/" aria-label="LEANMOVEMENT home" className="text-white min-w-0">
+              <BrandLogo variant="navbar" className="text-white" />
             </Link>
 
             <nav className="hidden lg:flex items-center gap-8">
@@ -44,8 +34,8 @@ export function Navbar() {
                 <Link
                   key={l.to}
                   to={l.to}
-                  className="font-display text-[1.125rem] uppercase tracking-[0.08em] text-foreground/45 hover:text-foreground transition-colors"
-                  activeProps={{ className: "text-foreground" }}
+                  className="font-display text-[1.125rem] uppercase tracking-[0.08em] text-white/45 hover:text-white transition-colors"
+                  activeProps={{ className: "text-white" }}
                   activeOptions={{ exact: l.to === "/" }}
                 >
                   {l.label}
@@ -53,7 +43,13 @@ export function Navbar() {
               ))}
             </nav>
 
-            <div className="flex items-center gap-3 shrink-0">
+            <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+              <Link
+                to="/login"
+                className="hidden sm:inline-flex items-center min-h-11 px-3 font-display text-[1.05rem] uppercase tracking-[0.08em] text-white/50 hover:text-white transition-colors"
+              >
+                Sign in
+              </Link>
               <Link
                 to="/join"
                 search={{ plan: "standard" }}
@@ -62,7 +58,7 @@ export function Navbar() {
                 Join
               </Link>
               <button
-                className="lg:hidden text-foreground p-2 -mr-2"
+                className="lg:hidden text-white min-h-11 min-w-11 grid place-items-center -mr-1"
                 onClick={() => setOpen(!open)}
                 aria-label={open ? "Close menu" : "Open menu"}
                 aria-expanded={open}
@@ -80,7 +76,7 @@ export function Navbar() {
         }`}
         aria-hidden={!open}
       >
-        <div className="absolute inset-0 bg-background" onClick={() => setOpen(false)} />
+        <div className="absolute inset-0 bg-black" onClick={() => setOpen(false)} />
         <div className="relative h-full flex flex-col pt-6 pb-8 px-6">
           <div className="flex justify-end mb-8">
             <button onClick={() => setOpen(false)} aria-label="Close menu" className="p-2 -mr-2">
@@ -94,7 +90,7 @@ export function Navbar() {
                 key={l.to}
                 to={l.to}
                 onClick={() => setOpen(false)}
-                className="py-4 border-b border-border font-display text-2xl uppercase tracking-wide"
+                className="py-4 border-b border-border font-display text-2xl uppercase tracking-wide text-white"
                 activeProps={{ className: "text-accent" }}
                 activeOptions={{ exact: l.to === "/" }}
               >
@@ -103,14 +99,23 @@ export function Navbar() {
             ))}
           </nav>
 
-          <Link
-            to="/join"
-            search={{ plan: "standard" }}
-            onClick={() => setOpen(false)}
-            className="mt-8 btn-primary w-full"
-          >
-            Join
-          </Link>
+          <div className="mt-8 space-y-3">
+            <Link
+              to="/join"
+              search={{ plan: "standard" }}
+              onClick={() => setOpen(false)}
+              className="btn-primary w-full min-h-12"
+            >
+              Join
+            </Link>
+            <Link
+              to="/login"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center min-h-12 w-full border border-border font-display text-lg uppercase tracking-[0.08em]"
+            >
+              Sign in
+            </Link>
+          </div>
         </div>
       </div>
     </>

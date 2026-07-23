@@ -10,7 +10,6 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as ResultsRouteImport } from './routes/results'
 import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as PricingRouteImport } from './routes/pricing'
 import { Route as PortalRouteImport } from './routes/portal'
@@ -54,11 +53,6 @@ import { Route as PortalCoachAnalyticsRouteImport } from './routes/portal.coach.
 const SignupRoute = SignupRouteImport.update({
   id: '/signup',
   path: '/signup',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ResultsRoute = ResultsRouteImport.update({
-  id: '/results',
-  path: '/results',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgramsRoute = ProgramsRouteImport.update({
@@ -268,7 +262,6 @@ export interface FileRoutesByFullPath {
   '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
-  '/results': typeof ResultsRoute
   '/signup': typeof SignupRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/join/success': typeof JoinSuccessRoute
@@ -309,7 +302,6 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
-  '/results': typeof ResultsRoute
   '/signup': typeof SignupRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/join/success': typeof JoinSuccessRoute
@@ -353,7 +345,6 @@ export interface FileRoutesById {
   '/portal': typeof PortalRouteWithChildren
   '/pricing': typeof PricingRoute
   '/programs': typeof ProgramsRoute
-  '/results': typeof ResultsRoute
   '/signup': typeof SignupRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/join/success': typeof JoinSuccessRoute
@@ -398,7 +389,6 @@ export interface FileRouteTypes {
     | '/portal'
     | '/pricing'
     | '/programs'
-    | '/results'
     | '/signup'
     | '/blog/$slug'
     | '/join/success'
@@ -439,7 +429,6 @@ export interface FileRouteTypes {
     | '/login'
     | '/pricing'
     | '/programs'
-    | '/results'
     | '/signup'
     | '/blog/$slug'
     | '/join/success'
@@ -482,7 +471,6 @@ export interface FileRouteTypes {
     | '/portal'
     | '/pricing'
     | '/programs'
-    | '/results'
     | '/signup'
     | '/blog/$slug'
     | '/join/success'
@@ -526,7 +514,6 @@ export interface RootRouteChildren {
   PortalRoute: typeof PortalRouteWithChildren
   PricingRoute: typeof PricingRoute
   ProgramsRoute: typeof ProgramsRoute
-  ResultsRoute: typeof ResultsRoute
   SignupRoute: typeof SignupRoute
   BlogSlugRoute: typeof BlogSlugRoute
   BlogIndexRoute: typeof BlogIndexRoute
@@ -539,13 +526,6 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/signup'
       preLoaderRoute: typeof SignupRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/results': {
-      id: '/results'
-      path: '/results'
-      fullPath: '/results'
-      preLoaderRoute: typeof ResultsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/programs': {
@@ -906,7 +886,6 @@ const rootRouteChildren: RootRouteChildren = {
   PortalRoute: PortalRouteWithChildren,
   PricingRoute: PricingRoute,
   ProgramsRoute: ProgramsRoute,
-  ResultsRoute: ResultsRoute,
   SignupRoute: SignupRoute,
   BlogSlugRoute: BlogSlugRoute,
   BlogIndexRoute: BlogIndexRoute,

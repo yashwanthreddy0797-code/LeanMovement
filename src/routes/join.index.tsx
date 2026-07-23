@@ -1,25 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Check, ShieldCheck, Loader2 } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { BrandLogo } from "@/components/brand/BrandLogo";
+import { ZoomMark } from "@/components/brand/ZoomMark";
 import { PasswordInput } from "@/components/portal/PasswordInput";
 import { INCLUDED_SUMMARY, PRICING_PLANS } from "@/lib/lean-kettlebell";
 import { abandonUnpaidRegistration, completeCheckout } from "@/lib/enrollment/checkout";
 import { planSlugFromSearch, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import {
-  SESSION_SLOTS,
-  SESSION_WINDOWS,
-  SESSIONS_TO_PICK,
-  slotsForWindow,
-} from "@/lib/sessions";
-import {
   createMemberRazorpayOrder,
-  getPaymentConfig,
   verifyMemberRazorpayPayment,
 } from "@/lib/api/membership.functions";
-import { openRazorpayCheckout } from "@/lib/razorpay/checkout-client";
+import {
+  loadRazorpayScript,
+  openRazorpayCheckout,
+  preloadRazorpayScript,
+} from "@/lib/razorpay/checkout-client";
 import { formatInr } from "@/lib/portal/member-format";
 
 export const Route = createFileRoute("/join/")({
@@ -42,35 +40,24 @@ function CheckoutPage() {
   const [email, setEmail] = useState(emailFromSearch);
   const [phone, setPhone] = useState("");
   const [password, setPassword] = useState("");
-  const [selectedSessions, setSelectedSessions] = useState<string[]>([]);
   const [agreed, setAgreed] = useState(false);
   const [loading, setLoading] = useState(false);
   const [payStep, setPayStep] = useState<"form" | "paying" | "verifying">("form");
 
-  const toggleSession = (id: string) => {
-    setSelectedSessions((prev) => {
-      if (prev.includes(id)) return prev.filter((s) => s !== id);
-      if (prev.length >= SESSIONS_TO_PICK) {
-        toast.message(`Pick exactly ${SESSIONS_TO_PICK} sessions`);
-        return prev;
-      }
-      return [...prev, id];
-    });
-  };
+  // Warm Checkout.js while the member fills the form so Proceed opens faster.
+  useEffect(() => {
+    preloadRazorpayScript();
+  }, []);
 
   const runPayment = async (userId: string, prefill: { email: string; name: string; phone?: string | null }) => {
     setPayStep("paying");
-    const config = await getPaymentConfig();
-    if (!config.razorpayEnabled) {
-      await abandonUnpaidRegistration();
-      toast.error("Online payment is not configured yet. Contact the coach on WhatsApp.");
-      setPayStep("form");
-      return;
-    }
 
-    const order = await createMemberRazorpayOrder({
-      data: { userId, kind: "initial" },
-    });
+    // Create subscription/order and finish loading Checkout.js in parallel.
+    const [order] = await Promise.all([
+      createMemberRazorpayOrder({ data: { userId, kind: "initial" } }),
+      loadRazorpayScript(),
+    ]);
+
     if (!order.ok) {
       await abandonUnpaidRegistration();
       toast.error(order.message ?? "Could not start payment");
@@ -84,7 +71,7 @@ function CheckoutPage() {
         amount: order.amountPaise,
         currency: order.currency,
         name: "LEANMOVEMENT",
-        description: `Lean Program · ${formatInr(order.amountInr)}/mo`,
+        description: `Lean Program · ${formatInr(order.amountInr)}/mo · cancel anytime`,
         order_id: order.orderId ?? undefined,
         subscription_id: order.subscriptionId ?? undefined,
         prefill: {
@@ -135,11 +122,6 @@ function CheckoutPage() {
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (selectedSessions.length !== SESSIONS_TO_PICK) {
-      toast.error(`Choose ${SESSIONS_TO_PICK} sessions to continue`);
-      return;
-    }
-
     if (!agreed) {
       toast.error("Please accept the terms to continue");
       return;
@@ -153,15 +135,18 @@ function CheckoutPage() {
         planSlug: activePlan.id,
         phone: phone || undefined,
         password: password || (isSupabaseConfigured() ? "" : "demo123456"),
-        sessionIds: selectedSessions,
       });
 
       if (!result.ok) {
         toast.error(result.message ?? "Registration failed");
         if ("redirectToLogin" in result && result.redirectToLogin) {
+          // Existing account — after login, open portal checkout (not join form again).
           await navigate({
             to: "/login",
-            search: { redirect: "/join", email: email.trim().toLowerCase() },
+            search: {
+              redirect: "/portal/checkout",
+              email: email.trim().toLowerCase(),
+            },
           });
         }
         return;
@@ -224,6 +209,9 @@ function CheckoutPage() {
                   <span className="text-sm text-muted-foreground">{activePlan.period}</span>
                 </div>
                 <p className="mt-4 type-body !max-w-none">{activePlan.description}</p>
+                <div className="mt-4">
+                  <ZoomMark size="sm" label="live sessions" />
+                </div>
               </div>
 
               <ul className="space-y-2.5">
@@ -238,7 +226,11 @@ function CheckoutPage() {
               <div className="border border-border p-4 text-xs text-muted-foreground space-y-2">
                 <p className="font-medium text-foreground">Secure checkout</p>
                 <p>Pay {formatInr(PROGRAM_AMOUNT_INR)} on this page. Portal access unlocks only after payment is verified.</p>
-                <p>Auto-renewal via Razorpay when available · 4-day grace after each 30-day cycle.</p>
+                <p>
+                  Monthly auto-renew via Razorpay. Cancel / unsubscribe anytime before the next cycle —
+                  you will not be charged after cancel. Razorpay may show a far end date; that is their
+                  max subscription length, not a lock-in.
+                </p>
               </div>
             </div>
           </aside>
@@ -247,7 +239,8 @@ function CheckoutPage() {
             <div className="border border-border bg-card p-7 md:p-8">
               <h2 className="type-h3">Join & pay</h2>
               <p className="type-body stack-head !max-w-none">
-                Pick 3 sessions, create your account, then pay securely — portal opens after payment.
+                Create your account and pay securely. After payment, your portal unlocks with your
+                Tue / Thu / Sat morning schedule.
               </p>
 
               {payStep !== "form" && (
@@ -261,70 +254,6 @@ function CheckoutPage() {
               )}
 
               <form onSubmit={(e) => void submit(e)} className="mt-8 space-y-5">
-                <div>
-                  <div className="flex items-end justify-between gap-4 mb-3">
-                    <span className="block text-xs text-muted-foreground">
-                      Choose {SESSIONS_TO_PICK} sessions
-                    </span>
-                    <span className="text-xs font-medium text-accent">
-                      {selectedSessions.length}/{SESSIONS_TO_PICK}
-                    </span>
-                  </div>
-
-                  <div className="space-y-5">
-                    {SESSION_WINDOWS.map((window) => (
-                      <div key={window.id}>
-                        <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground mb-2">
-                          {window.label} · {window.days} · {window.time}
-                        </p>
-                        <div className="grid gap-2">
-                          {slotsForWindow(window.id).map((slot) => {
-                            const on = selectedSessions.includes(slot.id);
-                            return (
-                              <button
-                                key={slot.id}
-                                type="button"
-                                disabled={busy}
-                                onClick={() => toggleSession(slot.id)}
-                                className={`border px-4 py-3 text-left transition ${
-                                  on
-                                    ? "border-foreground bg-foreground text-background"
-                                    : "border-border hover:border-foreground/40"
-                                }`}
-                              >
-                                <div className="flex items-center justify-between gap-3">
-                                  <div>
-                                    <div className="text-sm font-medium">
-                                      {slot.day} · {slot.focus}
-                                    </div>
-                                    <div
-                                      className={`mt-0.5 text-xs ${
-                                        on ? "text-background/60" : "text-muted-foreground"
-                                      }`}
-                                    >
-                                      {slot.timeLabel} · {slot.brief}
-                                    </div>
-                                  </div>
-                                  <div
-                                    className={`w-4 h-4 border shrink-0 grid place-items-center ${
-                                      on ? "border-accent bg-accent" : "border-current/30"
-                                    }`}
-                                  >
-                                    {on && <Check size={10} className="text-white" />}
-                                  </div>
-                                </div>
-                              </button>
-                            );
-                          })}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="mt-2 text-[11px] text-muted-foreground">
-                    {SESSION_SLOTS.length} slots · mix morning and evening if you want
-                  </p>
-                </div>
-
                 <Field label="Full name">
                   <input
                     className="checkout-input"
@@ -382,7 +311,8 @@ function CheckoutPage() {
                   />
                   <span className="text-xs text-muted-foreground leading-relaxed">
                     I agree to the terms and consent to sharing my details with LEANMOVEMENT and my coach.
-                    Membership renews monthly; cancel anytime before the next billing cycle.
+                    Membership renews monthly. You can unsubscribe / cancel anytime before the next billing
+                    cycle — billing stops after cancel.
                   </span>
                 </label>
 

@@ -43,12 +43,17 @@ export function CoachShell({ children }: { children: ReactNode }) {
 
   return (
     <CoachGate>
-      <div className="portal-theme min-h-screen">
+      <div className="coach-portal min-h-screen">
         <div className="flex">
           <aside
-            className={`hidden lg:flex fixed left-0 top-0 h-screen flex-col border-r border-[var(--border)] bg-white/60 backdrop-blur-xl transition-[width] duration-300 ease-in-out ${sidebarW} ${ready ? "" : "opacity-0"}`}
+            className={`portal-sidebar hidden lg:flex fixed left-0 top-0 h-screen flex-col border-r transition-[width] duration-300 ease-in-out ${sidebarW} ${ready ? "" : "opacity-0"}`}
           >
-            <SidebarBrand collapsed={collapsed} onToggle={toggle} subtitle="Coach Console" />
+            <SidebarBrand
+              collapsed={collapsed}
+              onToggle={toggle}
+              subtitle="Coach console"
+              tone="dark"
+            />
 
             <nav className={`flex-1 space-y-0.5 ${collapsed ? "px-2" : "px-3"}`}>
               {nav.map((n) => {
@@ -62,12 +67,9 @@ export function CoachShell({ children }: { children: ReactNode }) {
                     key={n.to}
                     to={n.to}
                     title={collapsed ? n.label : undefined}
-                    className={`flex items-center rounded-xl text-sm transition-colors ${
+                    data-active={active}
+                    className={`portal-nav-link ${
                       collapsed ? "justify-center p-2.5" : "gap-3 px-3.5 py-2.5"
-                    } ${
-                      active
-                        ? "bg-[#FEE2E2] text-[#000000] font-medium"
-                        : "text-[#404040] hover:bg-[#F5F5F5]"
                     }`}
                   >
                     <Icon size={17} strokeWidth={1.6} className="shrink-0" />
@@ -81,7 +83,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
               <Link
                 to="/portal/dashboard"
                 title={collapsed ? "Member portal view" : undefined}
-                className={`flex items-center rounded-xl text-xs text-[#737373] hover:bg-[#F5F5F5] hover:text-[#000000] ${
+                className={`portal-nav-link ${
                   collapsed ? "justify-center p-2.5" : "gap-2 px-3.5 py-2.5"
                 }`}
               >
@@ -92,20 +94,20 @@ export function CoachShell({ children }: { children: ReactNode }) {
 
             <div className={collapsed ? "p-2" : "p-4"}>
               {!collapsed ? (
-                <div className="card-soft p-4">
+                <div className="portal-sidebar-card p-4">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold shrink-0">
+                    <div className="w-9 h-9 bg-accent text-white grid place-items-center text-xs font-semibold shrink-0">
                       {coachName[0]}
                     </div>
                     <div className="min-w-0">
-                      <div className="text-sm font-medium truncate">{coachName}</div>
-                      <div className="text-[11px] text-[#737373]">Head Coach</div>
+                      <div className="text-sm font-medium truncate text-white">{coachName}</div>
+                      <div className="text-[11px] text-muted-foreground">Head Coach · Ops</div>
                     </div>
                   </div>
                 </div>
               ) : (
                 <div
-                  className="w-9 h-9 mx-auto rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold"
+                  className="w-9 h-9 mx-auto bg-accent text-white grid place-items-center text-xs font-semibold"
                   title={coachName}
                 >
                   {coachName[0]}
@@ -114,7 +116,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
               <button
                 onClick={() => void signOut()}
                 title="Sign out"
-                className={`mt-4 flex items-center text-xs text-[#737373] hover:text-[#000000] ${
+                className={`mt-4 flex items-center text-xs text-muted-foreground hover:text-white ${
                   collapsed ? "justify-center w-full p-2" : "gap-2"
                 }`}
               >
@@ -125,47 +127,79 @@ export function CoachShell({ children }: { children: ReactNode }) {
           </aside>
 
           <div className={`flex-1 transition-[margin] duration-300 ease-in-out ${mainMl}`}>
-            <header className="sticky top-0 z-30 backdrop-blur-xl bg-[var(--background)]/70 border-b border-[var(--border)]">
-              <div className="px-5 lg:px-10 py-4 flex items-center justify-between gap-4">
-                <Link to="/" className="lg:hidden flex items-center gap-2">
+            <header className="portal-topbar sticky top-0 z-30 backdrop-blur-xl border-b">
+              <div className="px-4 sm:px-5 lg:px-10 py-3 sm:py-4 flex items-center justify-between gap-3">
+                <Link to="/" className="lg:hidden flex items-center gap-2 min-h-11">
                   <BrandLogo className="text-base" />
-                  <span className="text-[10px] tracking-[0.28em] uppercase text-[#737373]">Coach</span>
-                </Link>
-                <div className="hidden lg:flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-[#737373]">
-                  Lean Kettlebell™ · Coach
-                </div>
-                <div className="ml-auto flex items-center gap-3">
-                  <span className="chip hidden sm:inline">
-                    {isSupabaseConfigured() ? "Live" : "Demo"}
+                  <span className="text-[10px] tracking-[0.28em] uppercase text-muted-foreground">
+                    Coach
                   </span>
-                  <div className="w-9 h-9 rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold">
+                </Link>
+                <div className="hidden lg:flex items-center gap-3">
+                  <span className="portal-identity-badge px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] font-semibold">
+                    Coach console
+                  </span>
+                  <div className="text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                    Lean Kettlebell™ · Operations
+                  </div>
+                </div>
+                <div className="ml-auto flex items-center gap-2 sm:gap-3">
+                  <Link
+                    to="/portal/dashboard"
+                    className="lg:hidden text-[11px] uppercase tracking-[0.12em] text-muted-foreground min-h-11 px-2 grid place-items-center"
+                  >
+                    Member
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={() => void signOut()}
+                    className="lg:hidden text-[11px] uppercase tracking-[0.12em] text-muted-foreground min-h-11 px-2 grid place-items-center"
+                  >
+                    Sign out
+                  </button>
+                  <span className="chip chip-console hidden sm:inline">
+                    {isSupabaseConfigured() ? "Live ops" : "Demo ops"}
+                  </span>
+                  <div className="w-9 h-9 bg-foreground text-white grid place-items-center text-xs font-semibold">
                     {coachName[0]}
                   </div>
                 </div>
               </div>
             </header>
-            <main className="px-5 lg:px-10 py-8 lg:py-12 max-w-[1280px] pb-24 lg:pb-12">{children}</main>
+            <main className="px-4 sm:px-5 lg:px-10 py-6 sm:py-8 lg:py-12 max-w-[1280px] pb-[calc(5.5rem+env(safe-area-inset-bottom))] lg:pb-12 overflow-x-hidden">
+              {children}
+            </main>
           </div>
         </div>
 
-        <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-[var(--border)] bg-white/95 backdrop-blur-xl">
-          <div className="grid grid-cols-6">
+        <nav className="portal-mobile-nav lg:hidden fixed bottom-0 inset-x-0 z-40 border-t backdrop-blur-xl pb-[env(safe-area-inset-bottom)]">
+          <div className="flex overflow-x-auto no-scrollbar">
             {nav.map((n) => {
               const Icon = n.icon;
               const active =
                 n.to === "/portal/coach"
                   ? pathname === "/portal/coach"
                   : pathname.startsWith(n.to);
+              const short =
+                n.label === "Live Schedule"
+                  ? "Schedule"
+                  : n.label === "Onboarding"
+                    ? "Onboard"
+                    : n.label;
               return (
                 <Link
                   key={n.to}
                   to={n.to}
-                  className={`flex flex-col items-center gap-1 py-2.5 text-[10px] ${
-                    active ? "text-[#000000]" : "text-[#737373]"
+                  data-active={active}
+                  className={`relative flex flex-col items-center justify-center gap-0.5 min-h-14 min-w-[4.5rem] flex-1 px-1 text-[10px] ${
+                    active ? "text-white" : "text-white/50"
                   }`}
                 >
-                  <Icon size={18} strokeWidth={1.6} />
-                  {n.label.split(" ")[0]}
+                  <Icon size={18} strokeWidth={1.6} className={active ? "text-accent" : undefined} />
+                  <span className="truncate max-w-[4.5rem]">{short}</span>
+                  {active && (
+                    <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-6 bg-accent" />
+                  )}
                 </Link>
               );
             })}

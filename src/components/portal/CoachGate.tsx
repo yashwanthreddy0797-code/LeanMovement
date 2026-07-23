@@ -17,7 +17,7 @@ export function CoachGate({ children }: { children: ReactNode }) {
   if (session.loading) {
     return (
       <div className="min-h-[50vh] grid place-items-center">
-        <div className="text-sm text-[#737373]">Loading coach console…</div>
+        <div className="text-sm text-muted-foreground">Loading coach console…</div>
       </div>
     );
   }
@@ -28,14 +28,14 @@ export function CoachGate({ children }: { children: ReactNode }) {
     return (
       <div className="portal-theme min-h-[50vh] grid place-items-center p-6">
         <div className="text-center max-w-md">
-          <h1 className="font-serif text-2xl">Coach access only</h1>
-          <p className="mt-2 text-sm text-[#737373]">
-            Set your <code className="text-xs bg-[#F5F5F5] px-1 py-0.5 rounded">role</code> to{" "}
+          <h1 className="font-display text-2xl uppercase tracking-[0.04em]">Coach access only</h1>
+          <p className="mt-2 text-sm text-muted-foreground">
+            Set your <code className="bg-surface px-1 py-0.5 text-xs">role</code> to{" "}
             <strong>coach</strong> in Supabase → profiles, then refresh.
           </p>
           <Link
             to="/portal/dashboard"
-            className="mt-6 inline-flex text-sm text-[#E11D2A] hover:underline"
+            className="mt-6 inline-flex text-sm text-accent hover:text-foreground"
           >
             ← Back to member portal
           </Link>

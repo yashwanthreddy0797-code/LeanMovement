@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Mail, MessageCircle, Instagram } from "lucide-react";
+import { Loader2, Mail, MessageCircle, Instagram } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { toast } from "sonner";
 import { CONTACT } from "@/lib/lean-kettlebell";
+import { submitContactMessage } from "@/lib/api/contact.functions";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -30,10 +31,66 @@ const CHANNELS = [
 ];
 
 function ContactPage() {
-  const onSubmit = (e: React.FormEvent) => {
+  const [sending, setSending] = useState(false);
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    toast.success("Message received. We'll reply within 2 hours.");
-    (e.target as HTMLFormElement).reset();
+    if (sending) return;
+
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    const name = String(fd.get("name") ?? "").trim();
+    const email = String(fd.get("email") ?? "").trim();
+    const whatsapp = String(fd.get("whatsapp") ?? "").trim();
+    const message = String(fd.get("message") ?? "").trim();
+
+    setSending(true);
+    try {
+      const result = await submitContactMessage({
+        data: { name, email, whatsapp: whatsapp || undefined, message },
+      });
+
+      if (result.ok) {
+        toast.success(
+          result.emailed
+            ? `Message sent to ${CONTACT.email}. We'll reply within 2 hours.`
+            : `Message received — we'll reply to you at ${email} within 2 hours.`,
+        );
+        form.reset();
+        return;
+      }
+
+      // Browser-side FormSubmit fallback (works when server IP is blocked)
+      const fallback = await fetch(
+        `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT.email)}`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json", Accept: "application/json" },
+          body: JSON.stringify({
+            name,
+            email,
+            whatsapp: whatsapp || "—",
+            message,
+            _subject: `LEANMOVEMENT contact — ${name}`,
+            _replyto: email,
+            _template: "table",
+            _captcha: "false",
+          }),
+        },
+      );
+
+      if (fallback.ok) {
+        toast.success(`Message sent to ${CONTACT.email}. We'll reply within 2 hours.`);
+        form.reset();
+        return;
+      }
+
+      toast.error(result.message);
+    } catch {
+      toast.error(`Could not send your message. Email ${CONTACT.email} directly.`);
+    } finally {
+      setSending(false);
+    }
   };
 
   return (
@@ -43,6 +100,7 @@ function ContactPage() {
         title="Say hello."
         subtitle="Email or WhatsApp. We reply within 2 hours during business hours."
         compact
+        borderless
       />
 
       <section className="container-x pb-24 md:pb-28">
@@ -63,22 +121,32 @@ function ContactPage() {
           </FadeUp>
 
           <FadeUp delay={0.1}>
-            <form onSubmit={onSubmit} className="space-y-6">
-              <Field label="Name" name="name" required />
-              <Field label="Email" name="email" type="email" required />
-              <Field label="WhatsApp" name="whatsapp" type="tel" />
+            <form onSubmit={(e) => void onSubmit(e)} className="space-y-6">
+              <Field label="Name" name="name" required disabled={sending} />
+              <Field label="Email" name="email" type="email" required disabled={sending} />
+              <Field label="WhatsApp" name="whatsapp" type="tel" disabled={sending} />
               <div>
                 <label className="block text-xs text-muted-foreground mb-2">Message</label>
                 <textarea
                   name="message"
                   rows={5}
                   required
-                  className="w-full border border-border bg-background px-4 py-3 text-sm focus:border-accent focus:outline-none resize-none"
+                  disabled={sending}
+                  className="w-full border border-border bg-background px-4 py-3 text-sm focus:border-accent focus:outline-none resize-none disabled:opacity-60"
                 />
               </div>
-              <button type="submit" className="btn-primary">
-                Send message
+              <button type="submit" className="btn-primary inline-flex items-center gap-2" disabled={sending}>
+                {sending ? (
+                  <>
+                    <Loader2 size={14} className="animate-spin" /> Sending…
+                  </>
+                ) : (
+                  "Send message"
+                )}
               </button>
+              <p className="text-xs text-muted-foreground">
+                Messages go to <span className="text-foreground">{CONTACT.email}</span>
+              </p>
             </form>
           </FadeUp>
         </div>
@@ -92,11 +160,13 @@ function Field({
   name,
   type = "text",
   required,
+  disabled,
 }: {
   label: string;
   name: string;
   type?: string;
   required?: boolean;
+  disabled?: boolean;
 }) {
   return (
     <div>
@@ -105,7 +175,8 @@ function Field({
         name={name}
         type={type}
         required={required}
-        className="w-full border border-border bg-background px-4 py-3 h-11 text-sm focus:border-accent focus:outline-none"
+        disabled={disabled}
+        className="w-full border border-border bg-background px-4 py-3 h-11 text-sm focus:border-accent focus:outline-none disabled:opacity-60"
       />
     </div>
   );

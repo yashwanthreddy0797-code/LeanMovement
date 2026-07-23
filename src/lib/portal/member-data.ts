@@ -19,9 +19,9 @@ export const memberProfile = {
 
 export const nextLiveSession = {
   title: "Lean Kettlebell - Morning",
-  day: "Monday",
-  date: "Mar 3, 2026",
-  time: "7:00 AM IST",
+  day: "Tuesday",
+  date: "Mar 4, 2026",
+  time: "6:00 AM IST",
   duration: "60 min",
   type: "Strength",
   status: "upcoming" as const,
@@ -31,60 +31,34 @@ export const nextLiveSession = {
 
 export const weeklySchedule = [
   {
-    day: "Monday",
+    day: "Tuesday",
     date: "This week",
     title: "Lean Kettlebell - Morning",
-    focus: "",
-    time: "7:00 AM IST",
+    focus: "Strength",
+    time: "6:00 AM IST",
     status: "upcoming" as const,
     isToday: true,
   },
   {
-    day: "Tuesday",
-    date: "This week",
-    title: "Lean Kettlebell - Evening",
-    focus: "",
-    time: "7:00 PM IST",
-    status: "scheduled" as const,
-    isToday: false,
-  },
-  {
-    day: "Wednesday",
-    date: "This week",
-    title: "Lean Kettlebell - Morning",
-    focus: "",
-    time: "7:00 AM IST",
-    status: "scheduled" as const,
-    isToday: false,
-  },
-  {
     day: "Thursday",
     date: "This week",
-    title: "Lean Kettlebell - Evening",
-    focus: "",
-    time: "7:00 PM IST",
-    status: "scheduled" as const,
-    isToday: false,
-  },
-  {
-    day: "Friday",
-    date: "This week",
     title: "Lean Kettlebell - Morning",
-    focus: "",
-    time: "7:00 AM IST",
+    focus: "Endurance",
+    time: "6:00 AM IST",
     status: "scheduled" as const,
     isToday: false,
   },
   {
     day: "Saturday",
     date: "This week",
-    title: "Lean Kettlebell - Evening",
-    focus: "",
-    time: "7:00 PM IST",
+    title: "Lean Kettlebell - Morning",
+    focus: "Hybrid",
+    time: "6:00 AM IST",
     status: "scheduled" as const,
     isToday: false,
   },
 ];
+
 
 export const recordings = [
   {

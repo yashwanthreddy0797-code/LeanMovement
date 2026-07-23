@@ -63,7 +63,7 @@ function LoginPage() {
       }
 
       const supabase = getSupabase();
-      let destination: "/portal/dashboard" | "/portal/coach" = redirect as "/portal/dashboard";
+      let destination = redirect;
       if (supabase) {
         const { data } = await supabase.auth.getUser();
         if (data.user) {

@@ -34,7 +34,7 @@ export function ActivateMemberButton({
         type="button"
         disabled={loading}
         onClick={() => void activate()}
-        className="text-[11px] px-3 py-1.5 rounded-full bg-[#000000] text-white hover:bg-[#111111] disabled:opacity-50"
+        className="portal-btn !px-3 !py-1.5 text-[11px] disabled:opacity-50"
       >
         {loading ? "…" : "Activate"}
       </button>
@@ -46,7 +46,7 @@ export function ActivateMemberButton({
       <select
         value={plan}
         onChange={(e) => setPlan(e.target.value as MembershipPlan)}
-        className="text-xs px-2 py-1.5 rounded-lg border border-[var(--border)] bg-white"
+        className="text-xs px-2 py-1.5 border border-border bg-white"
       >
         {(Object.keys(PLAN_LABELS) as MembershipPlan[]).map((p) => (
           <option key={p} value={p}>
@@ -58,7 +58,7 @@ export function ActivateMemberButton({
         type="button"
         disabled={loading}
         onClick={() => void activate()}
-        className="text-xs px-3 py-1.5 rounded-full bg-[#E11D2A] text-white font-medium hover:opacity-90 disabled:opacity-50"
+        className="portal-btn portal-btn-accent !px-3 !py-1.5 text-xs disabled:opacity-50"
       >
         {loading ? "Activating…" : "Activate"}
       </button>

@@ -7,6 +7,8 @@ const DEMO_ONBOARDING: Onboarding = {
   foundations_booked_at: new Date().toISOString(),
   foundations_completed_at: new Date().toISOString(),
   whatsapp_joined: true,
+  session_ids: ["tue-am", "thu-am", "sat-am"],
+  sessions_selected_at: new Date().toISOString(),
 };
 
 export function useMemberOnboarding(userId?: string | null) {

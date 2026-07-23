@@ -57,6 +57,7 @@ async function handleMembershipCronRequest(request: Request): Promise<Response> 
   const url = new URL(request.url);
   const secret =
     request.headers.get("x-cron-secret") ||
+    request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ||
     url.searchParams.get("secret") ||
     "";
   const expected = process.env.CRON_SECRET;
@@ -74,6 +75,31 @@ async function handleMembershipCronRequest(request: Request): Promise<Response> 
   return Response.json({ ok: true, ...result });
 }
 
+async function handleZoomRecordingsCronRequest(request: Request): Promise<Response> {
+  if (request.method !== "POST" && request.method !== "GET") {
+    return Response.json({ ok: false, message: "Method not allowed" }, { status: 405 });
+  }
+  const url = new URL(request.url);
+  const secret =
+    request.headers.get("x-cron-secret") ||
+    request.headers.get("authorization")?.replace(/^Bearer\s+/i, "") ||
+    url.searchParams.get("secret") ||
+    "";
+  const expected = process.env.CRON_SECRET;
+  if (!expected || secret !== expected) {
+    return Response.json({ ok: false, message: "Unauthorized" }, { status: 401 });
+  }
+
+  const { getSupabaseAdmin } = await import("./lib/supabase/server");
+  const { syncZoomRecordingsToPortal } = await import("./lib/zoom/sync-recordings.server");
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    return Response.json({ ok: false, message: "Server not configured" }, { status: 503 });
+  }
+  const result = await syncZoomRecordingsToPortal(admin, { daysBack: 14 });
+  return Response.json(result, { status: result.ok ? 200 : 500 });
+}
+
 export default {
   async fetch(request: Request, env: unknown, ctx: unknown) {
     try {
@@ -83,6 +109,9 @@ export default {
       }
       if (url.pathname === "/api/cron/membership") {
         return await handleMembershipCronRequest(request);
+      }
+      if (url.pathname === "/api/cron/zoom-recordings") {
+        return await handleZoomRecordingsCronRequest(request);
       }
 
       const handler = await getServerEntry();

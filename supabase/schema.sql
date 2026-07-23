@@ -31,8 +31,36 @@ create table if not exists public.onboarding (
   user_id uuid primary key references public.profiles(id) on delete cascade,
   foundations_booked_at timestamptz,
   foundations_completed_at timestamptz,
-  whatsapp_joined boolean not null default false
+  whatsapp_joined boolean not null default false,
+  session_ids text[] not null default '{}',
+  sessions_selected_at timestamptz
 );
+
+-- Weekly session picks + attendance
+create table if not exists public.member_weekly_picks (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  week_start date not null,
+  session_ids text[] not null default '{}',
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now(),
+  unique (user_id, week_start)
+);
+
+create table if not exists public.session_attendance (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references public.profiles(id) on delete cascade,
+  week_start date not null,
+  session_slot_id text not null,
+  attended_at timestamptz not null default now(),
+  unique (user_id, week_start, session_slot_id)
+);
+
+create index if not exists member_weekly_picks_user_week_idx
+  on public.member_weekly_picks (user_id, week_start desc);
+
+create index if not exists session_attendance_user_week_idx
+  on public.session_attendance (user_id, week_start desc);
 
 -- Pre-signup enrollment from /join (before Razorpay goes live)
 create table if not exists public.enrollment_intents (
@@ -81,8 +109,15 @@ create table if not exists public.recordings (
   thumbnail_url text,
   duration text,
   recorded_at timestamptz not null default now(),
-  expires_at timestamptz
+  expires_at timestamptz,
+  source text not null default 'manual',
+  external_id text,
+  meeting_id text
 );
+
+create unique index if not exists recordings_external_id_uidx
+  on public.recordings (external_id)
+  where external_id is not null;
 
 -- Kettlebell circuits
 create table if not exists public.circuits (
@@ -187,6 +222,8 @@ $$;
 alter table public.profiles enable row level security;
 alter table public.memberships enable row level security;
 alter table public.onboarding enable row level security;
+alter table public.member_weekly_picks enable row level security;
+alter table public.session_attendance enable row level security;
 alter table public.enrollment_intents enable row level security;
 alter table public.live_sessions enable row level security;
 alter table public.recordings enable row level security;
@@ -207,6 +244,22 @@ create policy "memberships_update_coach" on public.memberships for update using 
 create policy "onboarding_select_own" on public.onboarding for select using (auth.uid() = user_id);
 create policy "onboarding_update_own" on public.onboarding for update using (auth.uid() = user_id);
 create policy "onboarding_select_coach" on public.onboarding for select using (public.is_coach_or_admin());
+
+create policy "member_weekly_picks_select_own" on public.member_weekly_picks
+  for select using (auth.uid() = user_id);
+create policy "member_weekly_picks_insert_own" on public.member_weekly_picks
+  for insert with check (auth.uid() = user_id);
+create policy "member_weekly_picks_update_own" on public.member_weekly_picks
+  for update using (auth.uid() = user_id);
+create policy "member_weekly_picks_coach" on public.member_weekly_picks
+  for select using (public.is_coach_or_admin());
+
+create policy "session_attendance_select_own" on public.session_attendance
+  for select using (auth.uid() = user_id);
+create policy "session_attendance_insert_own" on public.session_attendance
+  for insert with check (auth.uid() = user_id);
+create policy "session_attendance_coach" on public.session_attendance
+  for select using (public.is_coach_or_admin());
 
 create policy "enrollment_intents_coach_read" on public.enrollment_intents
   for select using (public.is_coach_or_admin());
@@ -241,12 +294,9 @@ create policy "site_config_coach_write" on public.site_config for all using (pub
 
 -- Seed content (safe to re-run with on conflict)
 insert into public.live_sessions (day_of_week, title, session_type, focus, start_time, duration_minutes, join_url, sort_order) values
-  ('Monday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 1),
-  ('Tuesday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 2),
-  ('Wednesday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 3),
-  ('Thursday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 4),
-  ('Friday', 'Lean Kettlebell - Morning', 'Morning', null, '07:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 5),
-  ('Saturday', 'Lean Kettlebell - Evening', 'Evening', null, '19:00', 60, 'https://us06web.zoom.us/j/89098161507?pwd=xaACWGZlRrC9v19DkScafUetpmpPy6.1', 6)
+  ('Tuesday', 'Lean Kettlebell - Morning', 'Morning', 'Strength', '06:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 1),
+  ('Thursday', 'Lean Kettlebell - Morning', 'Morning', 'Endurance', '06:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 2),
+  ('Saturday', 'Lean Kettlebell - Morning', 'Morning', 'Hybrid', '06:00', 60, 'https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1', 3)
 on conflict do nothing;
 
 insert into public.site_config (key, value) values

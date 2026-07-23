@@ -29,13 +29,13 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
     <SoftCard className="p-6 md:p-8">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <div className="text-[10px] uppercase tracking-[0.2em] text-[#737373]">
+          <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
             Pending enrollments
           </div>
-          <h2 className="mt-2 text-2xl font-serif">
+          <h2 className="mt-2 font-display text-2xl uppercase tracking-[0.06em]">
             Awaiting account / payment · {rows.length}
           </h2>
-          <p className="mt-2 text-sm text-[#737373] max-w-xl">
+          <p className="mt-2 text-sm text-muted-foreground max-w-xl">
             New registrations appear here with their chosen 3 sessions. Activate from the member list after payment.
           </p>
         </div>

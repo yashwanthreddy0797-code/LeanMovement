@@ -293,7 +293,9 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
     source: "supabase",
     members,
     liveSessions: (liveRes.data as LiveSessionRow[]) ?? MOCK_SESSIONS,
-    recordings: (recRes.data as RecordingRow[]) ?? [],
+    recordings: ((recRes.data as RecordingRow[]) ?? []).filter(
+      (row) => !row.expires_at || new Date(row.expires_at) > new Date(),
+    ),
     siteConfig: configMap,
     stats: computeStats(members),
   };

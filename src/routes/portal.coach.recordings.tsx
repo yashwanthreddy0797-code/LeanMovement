@@ -1,11 +1,16 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
-import { SectionTitle, SoftCard } from "@/components/portal/ui";
+import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
+import { PortalPageHeader, SectionTitle, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import { addRecording, deleteRecording, formatDate } from "@/lib/portal/coach-queries";
-import { Plus, Trash2, Video } from "lucide-react";
+import {
+  coachSyncZoomRecordings,
+  getZoomSyncStatus,
+} from "@/lib/api/zoom-recordings.functions";
+import { Plus, RefreshCw, Trash2, Video } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/coach/recordings")({
@@ -23,12 +28,18 @@ function RecordingsPage() {
   const coachId = session.user?.id;
   const [showForm, setShowForm] = useState(false);
   const [title, setTitle] = useState("");
-  const [sessionType, setSessionType] = useState("Strength");
+  const [sessionType, setSessionType] = useState("Morning");
   const [videoUrl, setVideoUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [syncing, setSyncing] = useState(false);
+  const [zoomConfigured, setZoomConfigured] = useState(false);
+
+  useEffect(() => {
+    void getZoomSyncStatus().then((s) => setZoomConfigured(s.configured));
+  }, []);
 
   if (loading || !data) {
-    return <p className="text-sm text-[#737373]">Loading recordings…</p>;
+    return <PortalPageSkeleton />;
   }
 
   const submit = async (e: React.FormEvent) => {
@@ -54,6 +65,28 @@ function RecordingsPage() {
     }
   };
 
+  const syncZoom = async () => {
+    if (!coachId) return;
+    setSyncing(true);
+    try {
+      const result = await coachSyncZoomRecordings({
+        data: { coachId, daysBack: 14 },
+      });
+      if (!result.ok) {
+        toast.error(result.message ?? "Zoom sync failed");
+      } else if (result.inserted > 0) {
+        toast.success(result.message ?? `Added ${result.inserted} recording(s)`);
+        void refresh();
+      } else {
+        toast.message(result.message ?? "No new recordings");
+      }
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Zoom sync failed");
+    } finally {
+      setSyncing(false);
+    }
+  };
+
   const remove = async (id: string) => {
     if (!confirm("Delete this recording?")) return;
     const { error } = await deleteRecording(coachId, id);
@@ -66,79 +99,94 @@ function RecordingsPage() {
 
   return (
     <div className="space-y-8 pb-20 lg:pb-0">
-      <div className="flex items-end justify-between flex-wrap gap-4">
-        <div>
-          <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Library</div>
-          <h1 className="text-4xl md:text-5xl font-serif">Session recordings</h1>
-          <p className="mt-2 text-[#737373] max-w-xl">
-            Upload YouTube or Vimeo embed URLs so members can catch up on missed sessions.
+      <PortalPageHeader
+        eyebrow="Library"
+        title="Session recordings"
+        description="Zoom cloud recordings sync automatically. You can also add YouTube/Vimeo links manually."
+        action={
+          <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => void syncZoom()}
+              disabled={syncing || !zoomConfigured}
+              className="portal-btn portal-btn-ghost disabled:opacity-50"
+              title={
+                zoomConfigured
+                  ? "Pull latest Zoom cloud recordings"
+                  : "Add Zoom API env vars on Vercel first"
+              }
+            >
+              <RefreshCw size={15} className={syncing ? "animate-spin" : ""} />
+              {syncing ? "Syncing…" : "Sync from Zoom"}
+            </button>
+            <button type="button" onClick={() => setShowForm(true)} className="portal-btn">
+              <Plus size={15} /> Add manually
+            </button>
+          </div>
+        }
+      />
+
+      {!zoomConfigured && (
+        <SoftCard className="border-accent/20 bg-accent/[0.03]">
+          <p className="text-sm text-foreground/80">
+            Zoom auto-sync is not configured yet. Add{" "}
+            <code className="bg-surface px-1 text-xs">ZOOM_ACCOUNT_ID</code>,{" "}
+            <code className="bg-surface px-1 text-xs">ZOOM_CLIENT_ID</code>,{" "}
+            <code className="bg-surface px-1 text-xs">ZOOM_CLIENT_SECRET</code>, and{" "}
+            <code className="bg-surface px-1 text-xs">ZOOM_HOST_EMAIL</code> in Vercel, then run{" "}
+            <code className="bg-surface px-1 text-xs">supabase/recordings-zoom-sync.sql</code> in
+            Supabase.
           </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => setShowForm(true)}
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#000000] text-white text-sm font-medium hover:bg-[#111111]"
-        >
-          <Plus size={15} /> Add recording
-        </button>
-      </div>
+        </SoftCard>
+      )}
 
       {showForm && (
         <SoftCard>
           <SectionTitle eyebrow="New" title="Add session recording" />
-          <form onSubmit={(e) => void submit(e)} className="space-y-4 max-w-xl">
+          <form onSubmit={(e) => void submit(e)} className="max-w-xl space-y-4">
             <label className="block">
-              <span className="block text-[11px] uppercase tracking-[0.18em] text-[#737373] mb-1.5">
+              <span className="mb-1.5 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                 Title
               </span>
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Monday Strength — Mar 3"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] text-sm outline-none focus:border-[#FCA5A5]"
+                placeholder="Monday Morning — Mar 3"
+                className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
                 required
               />
             </label>
             <label className="block">
-              <span className="block text-[11px] uppercase tracking-[0.18em] text-[#737373] mb-1.5">
+              <span className="mb-1.5 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                 Session type
               </span>
               <select
                 value={sessionType}
                 onChange={(e) => setSessionType(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] text-sm outline-none focus:border-[#FCA5A5]"
+                className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
               >
-                <option>Strength</option>
-                <option>Conditioning</option>
-                <option>Hybrid</option>
+                <option>Morning</option>
+                <option>Evening</option>
                 <option>Foundations</option>
               </select>
             </label>
             <label className="block">
-              <span className="block text-[11px] uppercase tracking-[0.18em] text-[#737373] mb-1.5">
-                Video URL (YouTube embed)
+              <span className="mb-1.5 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                Video URL (YouTube / Vimeo / Zoom share)
               </span>
               <input
                 value={videoUrl}
                 onChange={(e) => setVideoUrl(e.target.value)}
                 placeholder="https://www.youtube.com/embed/VIDEO_ID"
-                className="w-full px-4 py-3 rounded-xl border border-[var(--border)] text-sm outline-none focus:border-[#FCA5A5]"
+                className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
                 required
               />
             </label>
             <div className="flex gap-3 pt-2">
-              <button
-                type="button"
-                onClick={() => setShowForm(false)}
-                className="px-4 py-2.5 rounded-xl border border-[var(--border)] text-sm"
-              >
+              <button type="button" onClick={() => setShowForm(false)} className="portal-btn portal-btn-ghost">
                 Cancel
               </button>
-              <button
-                type="submit"
-                disabled={submitting}
-                className="px-5 py-2.5 rounded-xl bg-[#E11D2A] text-white text-sm font-medium disabled:opacity-50"
-              >
+              <button type="submit" disabled={submitting} className="portal-btn portal-btn-accent disabled:opacity-50">
                 {submitting ? "Saving…" : "Save recording"}
               </button>
             </div>
@@ -148,47 +196,53 @@ function RecordingsPage() {
 
       <SoftCard className="!p-0 overflow-hidden">
         {data.recordings.length === 0 ? (
-          <div className="p-12 text-center text-[#737373]">
+          <div className="p-12 text-center text-muted-foreground">
             <Video size={32} className="mx-auto mb-3 opacity-40" />
-            <p>No recordings yet. Add your first session recording above.</p>
+            <p>No recordings yet. Sync from Zoom after a live class, or add manually.</p>
           </div>
         ) : (
-          <table className="w-full text-sm">
-            <thead>
-              <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-[#737373] bg-[#FAFAF6]">
-                <th className="px-6 py-3 font-medium">Title</th>
-                <th className="px-6 py-3 font-medium">Type</th>
-                <th className="px-6 py-3 font-medium">Recorded</th>
-                <th className="px-6 py-3 font-medium text-right">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {data.recordings.map((r) => (
-                <tr key={r.id} className="border-t border-[var(--border)]">
-                  <td className="px-6 py-4 font-medium">{r.title}</td>
-                  <td className="px-6 py-4 text-[#404040]">{r.session_type}</td>
-                  <td className="px-6 py-4 text-[#404040]">{formatDate(r.recorded_at)}</td>
-                  <td className="px-6 py-4 text-right space-x-3">
-                    <a
-                      href={r.video_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-[#E11D2A] hover:underline"
-                    >
-                      Preview
-                    </a>
-                    <button
-                      type="button"
-                      onClick={() => void remove(r.id)}
-                      className="text-xs text-[#737373] hover:text-[#E11D2A] inline-flex items-center gap-1"
-                    >
-                      <Trash2 size={12} /> Delete
-                    </button>
-                  </td>
+          <div className="overflow-x-auto">
+            <table className="w-full min-w-[640px] text-sm">
+              <thead>
+                <tr className="bg-surface text-left text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                  <th className="px-4 py-3 font-medium sm:px-6">Title</th>
+                  <th className="px-4 py-3 font-medium sm:px-6">Type</th>
+                  <th className="px-4 py-3 font-medium sm:px-6">Source</th>
+                  <th className="px-4 py-3 font-medium sm:px-6">Recorded</th>
+                  <th className="px-4 py-3 text-right font-medium sm:px-6">Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {data.recordings.map((r) => (
+                  <tr key={r.id} className="border-t border-border">
+                    <td className="px-4 py-4 font-medium sm:px-6">{r.title}</td>
+                    <td className="px-4 py-4 text-foreground/70 sm:px-6">{r.session_type}</td>
+                    <td className="px-4 py-4 sm:px-6">
+                      <span className="chip">{r.source === "zoom" ? "Zoom" : "Manual"}</span>
+                    </td>
+                    <td className="px-4 py-4 text-foreground/70 sm:px-6">{formatDate(r.recorded_at)}</td>
+                    <td className="space-x-3 px-4 py-4 text-right sm:px-6">
+                      <a
+                        href={r.video_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-accent hover:underline"
+                      >
+                        Preview
+                      </a>
+                      <button
+                        type="button"
+                        onClick={() => void remove(r.id)}
+                        className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-accent"
+                      >
+                        <Trash2 size={12} /> Delete
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </SoftCard>
     </div>

@@ -30,6 +30,8 @@ export type Onboarding = {
   foundations_booked_at: string | null;
   foundations_completed_at: string | null;
   whatsapp_joined: boolean;
+  session_ids: string[];
+  sessions_selected_at: string | null;
 };
 
 export type LiveSessionRow = {
@@ -54,6 +56,9 @@ export type RecordingRow = {
   duration: string | null;
   recorded_at: string;
   expires_at: string | null;
+  source?: string | null;
+  external_id?: string | null;
+  meeting_id?: string | null;
 };
 
 export type CircuitRow = {

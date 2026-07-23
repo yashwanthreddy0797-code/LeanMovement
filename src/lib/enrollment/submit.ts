@@ -8,7 +8,7 @@ export type SubmitEnrollmentInput = {
   fullName: string;
   planSlug: string;
   phone?: string;
-  sessionIds: string[];
+  sessionIds?: string[];
 };
 
 export async function submitEnrollment(input: SubmitEnrollmentInput) {
@@ -24,7 +24,7 @@ export async function submitEnrollment(input: SubmitEnrollmentInput) {
       plan,
       planSlug: input.planSlug,
       amountInr,
-      sessionIds: input.sessionIds,
+      sessionIds: input.sessionIds ?? [],
       submittedAt: new Date().toISOString(),
     });
     return { ok: true as const, mode: "demo" as const };
@@ -36,7 +36,7 @@ export async function submitEnrollment(input: SubmitEnrollmentInput) {
       fullName,
       planSlug: input.planSlug,
       phone: input.phone,
-      sessionIds: input.sessionIds,
+      sessionIds: input.sessionIds ?? [],
     },
   });
 

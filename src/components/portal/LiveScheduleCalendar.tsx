@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -19,7 +19,7 @@ import {
   navigateDate,
   occurrencesInRange,
   periodLabel,
-  sessionBatchColor,
+  sessionBatchHex,
   sessionBatchLabel,
   isEveningSession,
   sessionsOnDate,
@@ -56,6 +56,16 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
   const [anchor, setAnchor] = useState(() => new Date());
   const [selected, setSelected] = useState(() => new Date());
 
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const apply = () => {
+      if (mq.matches) setView((v) => (v === "month" || v === "year" ? "day" : v));
+    };
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   const go = (dir: -1 | 1) => setAnchor((d) => navigateDate(d, view, dir));
   const goToday = () => {
     const now = new Date();
@@ -74,46 +84,46 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
   return (
     <SoftCard className="!p-0 overflow-hidden">
       {/* Toolbar */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 p-5 md:p-6 border-b border-[var(--border)] bg-[#FAFAF6]/80">
+      <div className="flex flex-col gap-3 border-b border-border bg-surface/80 p-4 sm:p-5 md:p-6">
         <div className="flex items-center gap-2">
-          <CalendarIcon size={18} className="text-[#E11D2A]" />
-          <h2 className="font-serif text-xl md:text-2xl">Session calendar</h2>
+          <CalendarIcon size={18} className="shrink-0 text-accent" />
+          <h2 className="font-display text-xl uppercase tracking-[0.04em] md:text-2xl">Session calendar</h2>
         </div>
 
-        <div className="flex flex-wrap items-center gap-2">
-          <div className="inline-flex p-0.5 rounded-xl bg-white border border-[var(--border)]">
-            {VIEWS.map((v) => (
-              <button
-                key={v.id}
-                type="button"
-                onClick={() => setView(v.id)}
-                className={`px-3 py-1.5 text-[11px] uppercase tracking-[0.14em] rounded-[10px] transition-colors ${
-                  view === v.id
-                    ? "bg-[#000000] text-white"
-                    : "text-[#737373] hover:text-[#000000]"
-                }`}
-              >
-                {v.label}
-              </button>
-            ))}
-          </div>
+        <div className="inline-flex w-full overflow-x-auto border border-border bg-white p-0.5 sm:w-auto">
+          {VIEWS.map((v) => (
+            <button
+              key={v.id}
+              type="button"
+              onClick={() => setView(v.id)}
+              className={`min-h-10 flex-1 px-3 py-2 text-[11px] uppercase tracking-[0.14em] transition-colors sm:flex-none ${
+                view === v.id
+                  ? "bg-foreground text-background"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {v.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {/* Navigation */}
-      <div className="flex items-center justify-between gap-3 px-5 md:px-6 py-4 border-b border-[var(--border)]">
+      <div className="flex flex-col justify-between gap-3 border-b border-border px-4 py-4 sm:flex-row sm:items-center sm:px-5 md:px-6">
         <div className="flex items-center gap-1">
           <NavBtn onClick={() => go(-1)} label="Previous" />
           <button
             type="button"
             onClick={goToday}
-            className="px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] rounded-lg border border-[var(--border)] hover:bg-[#FAFAF6] transition-colors"
+            className="portal-btn portal-btn-ghost !min-h-10 !px-3 !py-1.5"
           >
             Today
           </button>
           <NavBtn onClick={() => go(1)} label="Next" />
         </div>
-        <div className="font-serif text-lg md:text-xl text-[#000000]">{periodLabel(anchor, view)}</div>
+        <div className="truncate font-display text-base uppercase tracking-[0.04em] text-foreground sm:text-lg md:text-xl">
+          {periodLabel(anchor, view)}
+        </div>
       </div>
 
       <div className="p-4 md:p-6">
@@ -159,10 +169,10 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
       </div>
 
       {/* Legend */}
-      <div className="flex flex-wrap gap-4 px-5 md:px-6 py-4 border-t border-[var(--border)] bg-[#FAFAF6]/50 text-[11px] uppercase tracking-[0.12em] text-[#737373]">
-        <LegendDot className="bg-[#111111]" label="Morning · 7 AM" />
-        <LegendDot className="bg-[#E11D2A]" label="Evening · 7 PM" />
-        <span className="text-[#A3A3A3]">IST</span>
+      <div className="flex flex-wrap gap-4 border-t border-border bg-surface/50 px-5 py-4 text-[11px] uppercase tracking-[0.12em] text-muted-foreground md:px-6">
+        <LegendDot className="bg-foreground" label="Morning · 7 AM" />
+        <LegendDot className="bg-accent" label="Evening · 7 PM" />
+        <span className="text-muted-foreground/70">IST</span>
       </div>
     </SoftCard>
   );
@@ -174,7 +184,7 @@ function NavBtn({ onClick, label }: { onClick: () => void; label: string }) {
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="p-2 rounded-lg hover:bg-[#F5F5F5] text-[#737373] hover:text-[#000000] transition-colors"
+      className="grid min-h-10 min-w-10 place-items-center text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
     >
       {label === "Previous" ? <ChevronLeft size={18} /> : <ChevronRight size={18} />}
     </button>
@@ -184,7 +194,7 @@ function NavBtn({ onClick, label }: { onClick: () => void; label: string }) {
 function LegendDot({ className, label }: { className: string; label: string }) {
   return (
     <span className="inline-flex items-center gap-2">
-      <span className={`w-2 h-2 rounded-full ${className}`} />
+      <span className={`h-2 w-2 ${className}`} />
       {label}
     </span>
   );
@@ -198,11 +208,13 @@ function SessionPill({
   compact?: boolean;
 }) {
   const batch = sessionBatchLabel(occ.session);
+  const hex = sessionBatchHex(occ.session);
   return (
     <div
-      className={`rounded-md px-2 py-1 text-[10px] font-semibold truncate ${sessionBatchColor(occ.session)} ${
+      className={`rounded-md px-2 py-1 text-[10px] font-semibold truncate text-white ${
         compact ? "leading-tight" : ""
       }`}
+      style={{ backgroundColor: hex }}
       title={`${batch} · ${formatSessionTime(occ.session.start_time)}`}
     >
       {compact ? batch : `${batch} · ${formatSessionTime(occ.session.start_time)}`}
@@ -320,12 +332,12 @@ function MonthView({
               key={day.toISOString()}
               type="button"
               onClick={() => onSelectDay(day)}
-              className={`min-h-[88px] md:min-h-[100px] p-1.5 md:p-2 text-left bg-white transition-colors hover:bg-[#FAFAF6] ${
+              className={`min-h-[72px] sm:min-h-[88px] md:min-h-[100px] p-1 sm:p-1.5 md:p-2 text-left bg-white transition-colors hover:bg-[#FAFAF6] ${
                 !inMonth ? "opacity-40" : ""
               } ${isSelected ? "ring-2 ring-inset ring-[#E11D2A]" : ""}`}
             >
               <div
-                className={`text-xs font-medium mb-1 w-7 h-7 flex items-center justify-center rounded-full ${
+                className={`text-[11px] sm:text-xs font-medium mb-1 w-6 h-6 sm:w-7 sm:h-7 flex items-center justify-center rounded-full ${
                   isToday(day) ? "bg-[#000000] text-white" : "text-[#404040]"
                 }`}
               >
@@ -361,7 +373,10 @@ function WeekView({
   const hours = Array.from({ length: HOUR_END - HOUR_START + 1 }, (_, i) => HOUR_START + i);
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto -mx-1 px-1">
+      <p className="md:hidden text-[10px] uppercase tracking-[0.14em] text-[#A3A3A3] mb-2 px-1">
+        Swipe for full week →
+      </p>
       <div className="min-w-[640px]">
         <div className="grid grid-cols-8 border-b border-[var(--border)]">
           <div className="p-2" />
@@ -378,8 +393,8 @@ function WeekView({
                 {format(day, "EEE")}
               </div>
               <div
-                className={`text-lg font-serif mt-0.5 ${
-                  isToday(day) ? "text-[#E11D2A]" : "text-[#000000]"
+                className={`text-lg font-display mt-0.5 tracking-[0.04em] ${
+                  isToday(day) ? "text-accent" : "text-foreground"
                 }`}
               >
                 {format(day, "d")}
@@ -413,8 +428,12 @@ function WeekView({
                   return (
                     <div
                       key={`${occ.session.id}-${day.toISOString()}`}
-                      className={`absolute left-1 right-1 rounded-lg px-2 py-1.5 text-[10px] leading-snug overflow-hidden shadow-sm ${sessionBatchColor(occ.session)}`}
-                      style={{ top: `${top}px`, height: `${Math.max(height, 40)}px` }}
+                      className="absolute left-1 right-1 rounded-lg px-2 py-1.5 text-[10px] leading-snug overflow-hidden shadow-sm text-white"
+                      style={{
+                        top: `${top}px`,
+                        height: `${Math.max(height, 40)}px`,
+                        backgroundColor: sessionBatchHex(occ.session),
+                      }}
                     >
                       <div className="font-semibold truncate">{sessionBatchLabel(occ.session)}</div>
                       <div className="opacity-90 truncate">
@@ -449,30 +468,32 @@ function DayView({
         <button
           type="button"
           onClick={() => onShift(addDays(date, -1))}
-          className="p-2 rounded-lg hover:bg-[#F5F5F5]"
+          className="p-2 text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
         >
           <ChevronLeft size={18} />
         </button>
         <div className="text-center">
-          <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373]">
+          <div className="text-[11px] uppercase tracking-[0.2em] text-muted-foreground">
             {format(date, "EEEE")}
           </div>
-          <div className="font-serif text-3xl mt-1">{format(date, "d MMMM yyyy")}</div>
+          <div className="mt-1 font-display text-3xl uppercase tracking-[0.04em]">
+            {format(date, "d MMMM yyyy")}
+          </div>
         </div>
         <button
           type="button"
           onClick={() => onShift(addDays(date, 1))}
-          className="p-2 rounded-lg hover:bg-[#F5F5F5]"
+          className="p-2 text-muted-foreground transition-colors hover:bg-surface hover:text-foreground"
         >
           <ChevronRight size={18} />
         </button>
       </div>
 
       {occs.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-[var(--border)] p-12 text-center text-[#737373] text-sm">
+        <div className="border border-dashed border-border p-12 text-center text-sm text-muted-foreground">
           No live sessions scheduled this day.
           <br />
-          <span className="text-xs mt-2 block">
+          <span className="mt-2 block text-xs">
             Morning Mon · Wed · Fri · Evening Tue · Thu · Sat
           </span>
         </div>
@@ -481,19 +502,20 @@ function DayView({
           {occs.map((occ) => (
             <div
               key={occ.session.id}
-              className="rounded-xl border border-[var(--border)] p-5 bg-white hover:border-[#FCA5A5] transition-colors"
+              className="border border-border bg-white p-5 transition-colors hover:border-accent/40"
             >
               <div className="flex flex-wrap items-start justify-between gap-4">
                 <div>
                   <span
-                    className={`inline-block text-[10px] uppercase tracking-[0.14em] px-2 py-0.5 rounded-full mb-2 ${sessionBatchColor(occ.session)}`}
+                    className="mb-2 inline-block px-2 py-0.5 text-[10px] uppercase tracking-[0.14em] text-white"
+                    style={{ backgroundColor: sessionBatchHex(occ.session) }}
                   >
                     {sessionBatchLabel(occ.session)}
                   </span>
-                  <h3 className="font-serif text-2xl">
+                  <h3 className="font-display text-2xl uppercase tracking-[0.04em]">
                     Lean Kettlebell — {sessionBatchLabel(occ.session)}
                   </h3>
-                  <p className="text-sm text-[#737373] mt-1">
+                  <p className="mt-1 text-sm text-muted-foreground">
                     {formatSessionTime(occ.session.start_time)} · {occ.session.duration_minutes} min ·
                     IST
                   </p>
@@ -503,7 +525,7 @@ function DayView({
                     href={occ.session.join_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#000000] text-white text-xs font-medium"
+                    className="portal-btn"
                   >
                     <Play size={14} /> Host
                   </a>
@@ -511,7 +533,7 @@ function DayView({
                     href={occ.session.join_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl border border-[var(--border)] text-xs"
+                    className="portal-btn portal-btn-ghost"
                   >
                     <ExternalLink size={14} /> Link
                   </a>

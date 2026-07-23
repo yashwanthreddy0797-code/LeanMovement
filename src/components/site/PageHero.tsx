@@ -8,6 +8,7 @@ export function PageHero({
   image,
   children,
   compact = false,
+  borderless = false,
 }: {
   eyebrow: string;
   title: ReactNode;
@@ -15,10 +16,12 @@ export function PageHero({
   image?: string;
   children?: ReactNode;
   compact?: boolean;
+  /** Hide the bottom rule under the hero */
+  borderless?: boolean;
 }) {
   return (
     <section
-      className={`relative overflow-hidden border-b border-border ${
+      className={`relative overflow-hidden ${borderless ? "" : "border-b border-border"} ${
         compact ? "hero-y" : "min-h-[68vh] flex items-end hero-y"
       }`}
     >

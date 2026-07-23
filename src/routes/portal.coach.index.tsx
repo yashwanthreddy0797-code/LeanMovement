@@ -1,10 +1,12 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CoachShell } from "@/components/portal/CoachShell";
+import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
 import { SectionTitle, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import { ActivateMemberButton } from "@/components/portal/ActivateMemberButton";
 import { CoachRegistrationAlerts } from "@/components/portal/CoachRegistrationAlerts";
+import { CoachContactInbox } from "@/components/portal/CoachContactInbox";
 import {
   formatDate,
   formatInr,
@@ -41,11 +43,7 @@ function CoachDashboard() {
   const { data, loading, refresh } = useCoachData();
 
   if (loading || !data) {
-    return (
-      <div className="min-h-[40vh] grid place-items-center text-sm text-[#737373]">
-        Loading coach dashboard…
-      </div>
-    );
+    return <PortalPageSkeleton lines={4} />;
   }
 
   const { stats, liveSessions, members, recordings, siteConfig } = data;
@@ -62,30 +60,62 @@ function CoachDashboard() {
   const greet = hours < 12 ? "Good morning" : hours < 18 ? "Good afternoon" : "Good evening";
   const coachName = session.profile?.full_name ?? session.user?.name ?? "Coach";
   const coachId = session.user?.id;
+  const today = new Date().toLocaleDateString("en-IN", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
 
   return (
     <div className="space-y-10 pb-20 lg:pb-0">
-      <div className="flex items-end justify-between flex-wrap gap-4">
-        <div>
-          <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">
-            {greet}, {coachName.split(" ")[0]}
+      <section className="overflow-hidden border border-border bg-[#0F1217] text-background">
+        <div className="p-8 md:p-10 lg:p-12">
+          <div className="flex flex-wrap items-center gap-3">
+            <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-background/55">
+              <span className="h-1.5 w-1.5 bg-accent" />
+              Coach console · {today}
+            </p>
           </div>
-          <h1 className="text-4xl md:text-5xl font-serif">Lean Program</h1>
-          <p className="mt-2 text-[#737373] max-w-xl">
-            Manage registrations, session picks, and live calendar for your members.
+
+          <h1 className="mt-5 max-w-3xl font-display text-4xl uppercase leading-[0.92] tracking-[0.04em] text-background sm:text-5xl md:text-[3.5rem]">
+            Operations,
+            <br />
+            <span className="text-background/80">{coachName.split(" ")[0]}.</span>
+          </h1>
+
+          <p className="mt-5 max-w-lg text-sm leading-relaxed text-background/60 md:text-[0.9375rem]">
+            Members · registrations · live calendar · recordings. Run the week from here.
           </p>
+
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link to="/portal/coach/members" className="portal-btn portal-btn-accent inline-flex gap-2">
+              <UserPlus size={14} /> Manage members
+            </Link>
+            {nextSession && (
+              <a
+                href={nextSession.join_url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="portal-btn portal-btn-ghost !border-background/20 !text-background hover:!bg-background/10"
+              >
+                <Radio size={14} /> {isToday ? "Host today" : "Next session"}
+              </a>
+            )}
+          </div>
+
+          <div className="mt-10 grid grid-cols-2 gap-6 border-t border-background/15 pt-8 md:grid-cols-4">
+            <HeroStat k="Active" v={String(stats.activeMembers)} />
+            <HeroStat k="Pending" v={String(stats.pendingMembers)} />
+            <HeroStat k="Est. MRR" v={formatInr(stats.mrrInr)} />
+            <HeroStat k="Renewals (14d)" v={String(stats.expiringSoon)} />
+          </div>
         </div>
-        <Link
-          to="/portal/coach/members"
-          className="inline-flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-[#000000] text-white text-sm font-medium hover:bg-[#111111]"
-        >
-          <UserPlus size={15} /> Manage members
-        </Link>
-      </div>
+      </section>
 
       <CoachRegistrationAlerts coachId={coachId} />
+      <CoachContactInbox coachId={coachId} />
 
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="grid grid-cols-2 gap-px bg-border md:grid-cols-3 lg:grid-cols-6">
         {[
           { label: "Active members", value: String(stats.activeMembers), sub: "paying & live" },
           { label: "Pending approval", value: String(stats.pendingMembers), sub: "awaiting activate" },
@@ -94,43 +124,43 @@ function CoachDashboard() {
           { label: "Foundations due", value: String(stats.foundationsPending), sub: "not completed" },
           { label: "WhatsApp pending", value: String(stats.whatsappPending), sub: "not joined" },
         ].map((k) => (
-          <div key={k.label} className="card-soft p-5">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-[#737373]">{k.label}</div>
-            <div className="mt-2 text-2xl font-serif text-[#000000]">{k.value}</div>
-            <div className="mt-1 text-[11px] text-[#E11D2A]">{k.sub}</div>
+          <div key={k.label} className="bg-white p-5">
+            <div className="eyebrow !gap-0">{k.label}</div>
+            <div className="mt-2 font-display text-2xl tracking-[0.04em] text-foreground">{k.value}</div>
+            <div className="mt-1 text-[11px] text-accent">{k.sub}</div>
           </div>
         ))}
       </div>
 
       {nextSession && (
-        <SoftCard className="bg-gradient-to-br from-[#000000] to-[#1a1a1a] text-white border-0 !p-0 overflow-hidden">
-          <div className="p-8 md:p-10 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+        <SoftCard className="overflow-hidden border-0 !bg-foreground !p-0 text-background">
+          <div className="flex flex-col justify-between gap-6 p-8 md:flex-row md:items-center md:p-10">
             <div>
-              <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-[var(--accent)]">
+              <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
                 <Radio size={12} className={isToday ? "animate-pulse" : ""} />
                 {isToday ? "Today's session" : "Next live session"}
               </div>
-              <h2 className="mt-3 font-serif text-3xl md:text-4xl">
+              <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.04em] md:text-4xl">
                 {nextSession.title}
               </h2>
-              <p className="mt-2 text-white/70 text-sm">
+              <p className="mt-2 text-sm text-background/70">
                 {nextSession.day_of_week} · {formatSessionTime(nextSession.start_time)} ·{" "}
                 {nextSession.duration_minutes} min
               </p>
-              <p className="mt-1 text-white/50 text-xs">{nextSession.focus}</p>
+              <p className="mt-1 text-xs text-background/50">{nextSession.focus}</p>
             </div>
-            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
+            <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
               <a
                 href={nextSession.join_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[var(--accent)] text-white font-medium hover:opacity-90"
+                className="portal-btn portal-btn-accent"
               >
                 <Play size={16} fill="currentColor" /> Host session
               </a>
               <Link
                 to="/portal/coach/schedule"
-                className="inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full border border-white/20 text-white text-sm hover:bg-white/10"
+                className="portal-btn portal-btn-ghost !border-background/20 !text-background hover:!bg-background/10"
               >
                 Edit links
               </Link>
@@ -139,32 +169,29 @@ function CoachDashboard() {
         </SoftCard>
       )}
 
-      <div className="grid lg:grid-cols-2 gap-5">
+      <div className="grid gap-5 lg:grid-cols-2">
         <SoftCard>
           <SectionTitle
             eyebrow="Needs action"
             title="Pending members"
             action={
-              <Link to="/portal/coach/members" className="text-xs text-[#E11D2A] hover:underline">
+              <Link to="/portal/coach/members" className="text-xs text-accent hover:underline">
                 All members
               </Link>
             }
           />
           {pendingMembers.length === 0 ? (
-            <p className="text-sm text-[#737373]">No pending members — all caught up.</p>
+            <p className="text-sm text-muted-foreground">No pending members — all caught up.</p>
           ) : (
             <div className="space-y-3">
               {pendingMembers.slice(0, 5).map((m) => (
-                <div
-                  key={m.id}
-                  className="flex items-center gap-3 p-3 rounded-xl bg-[#FAFAF6]"
-                >
-                  <div className="w-9 h-9 rounded-full bg-[#000000] text-white grid place-items-center text-xs font-semibold">
+                <div key={m.id} className="flex items-center gap-3 border border-border bg-surface p-3">
+                  <div className="grid h-9 w-9 place-items-center bg-foreground text-xs font-semibold text-background">
                     {(m.full_name ?? m.email)[0]}
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="text-sm font-medium truncate">{m.full_name ?? m.email}</div>
-                    <div className="text-[11px] text-[#737373]">{m.email}</div>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate text-sm font-medium">{m.full_name ?? m.email}</div>
+                    <div className="text-[11px] text-muted-foreground">{m.email}</div>
                   </div>
                   <ActivateMemberButton
                     coachId={coachId}
@@ -183,32 +210,28 @@ function CoachDashboard() {
             eyebrow="Morning · Evening"
             title="Weekly schedule"
             action={
-              <Link to="/portal/coach/schedule" className="text-xs text-[#E11D2A] hover:underline">
+              <Link to="/portal/coach/schedule" className="text-xs text-accent hover:underline">
                 Manage
               </Link>
             }
           />
-          <div className="space-y-3">
+          <div className="space-y-px bg-border">
             {liveSessions.map((s) => {
               const isSessionToday = s.day_of_week === todayWeekday();
               return (
                 <div
                   key={s.id}
-                  className={`flex items-center justify-between gap-4 p-4 rounded-xl border ${
-                    isSessionToday
-                      ? "border-[var(--accent)] bg-[#FEE2E2]/30"
-                      : "border-[var(--border)] bg-[#FAFAF6]"
+                  className={`flex items-center justify-between gap-4 bg-white p-4 ${
+                    isSessionToday ? "ring-1 ring-inset ring-accent" : ""
                   }`}
                 >
                   <div>
-                    <div className="text-[10px] uppercase tracking-[0.18em] text-[#737373]">
+                    <div className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">
                       {s.day_of_week}
-                      {isSessionToday && (
-                        <span className="ml-2 text-[#E11D2A]">· Today</span>
-                      )}
+                      {isSessionToday && <span className="ml-2 text-accent">· Today</span>}
                     </div>
-                    <div className="text-sm font-medium mt-0.5">{s.title}</div>
-                    <div className="text-[11px] text-[#737373]">
+                    <div className="mt-0.5 text-sm font-medium">{s.title}</div>
+                    <div className="text-[11px] text-muted-foreground">
                       {formatSessionTime(s.start_time)} · {s.duration_minutes} min
                     </div>
                   </div>
@@ -216,7 +239,7 @@ function CoachDashboard() {
                     href={s.join_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs text-[#E11D2A] font-medium hover:underline shrink-0"
+                    className="shrink-0 text-xs font-medium text-accent hover:underline"
                   >
                     Open link
                   </a>
@@ -227,7 +250,7 @@ function CoachDashboard() {
         </SoftCard>
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-5">
+      <div className="grid gap-5 lg:grid-cols-3">
         <SoftCard className="lg:col-span-2">
           <SectionTitle
             eyebrow="Membership"
@@ -235,16 +258,16 @@ function CoachDashboard() {
             action={
               <Link
                 to="/portal/coach/members"
-                className="text-xs text-[#E11D2A] inline-flex items-center gap-1 hover:underline"
+                className="inline-flex items-center gap-1 text-xs text-accent hover:underline"
               >
                 View all <ArrowRight size={13} />
               </Link>
             }
           />
-          <div className="overflow-x-auto -mx-6">
-            <table className="w-full text-sm min-w-[520px]">
+          <div className="-mx-6 overflow-x-auto">
+            <table className="w-full min-w-[520px] text-sm">
               <thead>
-                <tr className="text-left text-[11px] uppercase tracking-[0.18em] text-[#737373] bg-[#FAFAF6]">
+                <tr className="bg-surface text-left text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                   <th className="px-6 py-3 font-medium">Member</th>
                   <th className="px-6 py-3 font-medium">Plan</th>
                   <th className="px-6 py-3 font-medium">Joined</th>
@@ -254,24 +277,24 @@ function CoachDashboard() {
               <tbody>
                 {recentMembers.length === 0 ? (
                   <tr>
-                    <td colSpan={4} className="px-6 py-8 text-[#737373]">
+                    <td colSpan={4} className="px-6 py-8 text-muted-foreground">
                       No members yet. Share /join to enroll.
                     </td>
                   </tr>
                 ) : (
                   recentMembers.map((m) => (
-                    <tr key={m.id} className="border-t border-[var(--border)]">
+                    <tr key={m.id} className="border-t border-border">
                       <td className="px-6 py-4">
                         <div className="font-medium">{m.full_name ?? "—"}</div>
-                        <div className="text-xs text-[#737373]">{m.email}</div>
+                        <div className="text-xs text-muted-foreground">{m.email}</div>
                       </td>
-                      <td className="px-6 py-4 text-[#404040]">
+                      <td className="px-6 py-4 text-foreground/70">
                         {m.membership ? PLAN_LABELS[m.membership.plan] : "—"}
                       </td>
-                      <td className="px-6 py-4 text-[#404040]">{formatDate(m.created_at)}</td>
+                      <td className="px-6 py-4 text-foreground/70">{formatDate(m.created_at)}</td>
                       <td className="px-6 py-4">
                         <span
-                          className={`inline-flex px-2.5 py-0.5 rounded-full text-[11px] font-medium ${statusChipClass(m.membership?.status)}`}
+                          className={`inline-flex px-2.5 py-0.5 text-[11px] font-medium ${statusChipClass(m.membership?.status)}`}
                         >
                           {membershipStatusLabel(m.membership?.status)}
                         </span>
@@ -294,7 +317,7 @@ function CoachDashboard() {
                     href={siteConfig.whatsapp_invite_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#E11D2A] hover:underline"
+                    className="text-accent hover:underline"
                   >
                     WhatsApp group →
                   </a>
@@ -306,20 +329,17 @@ function CoachDashboard() {
                     href={siteConfig.foundations_calendly_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#E11D2A] hover:underline"
+                    className="text-accent hover:underline"
                   >
                     Foundations Calendly →
                   </a>
                 </li>
               )}
-              <li className="text-[#737373]">
+              <li className="text-muted-foreground">
                 Cohort: {siteConfig.cohort_start_date ?? "Not set"}
               </li>
             </ul>
-            <Link
-              to="/portal/coach/settings"
-              className="mt-4 inline-block text-[11px] text-[#E11D2A] hover:underline"
-            >
+            <Link to="/portal/coach/settings" className="mt-4 inline-block text-[11px] text-accent hover:underline">
               Edit portal settings →
             </Link>
           </SoftCard>
@@ -329,18 +349,18 @@ function CoachDashboard() {
               eyebrow="Library"
               title="Recordings"
               action={
-                <Link to="/portal/coach/recordings" className="text-xs text-[#E11D2A] hover:underline">
+                <Link to="/portal/coach/recordings" className="text-xs text-accent hover:underline">
                   Manage
                 </Link>
               }
             />
             {recordings.length === 0 ? (
-              <p className="text-sm text-[#737373]">No recordings yet.</p>
+              <p className="text-sm text-muted-foreground">No recordings yet.</p>
             ) : (
               <ul className="space-y-2">
                 {recordings.slice(0, 3).map((r) => (
                   <li key={r.id} className="flex items-center gap-2 text-sm">
-                    <Video size={14} className="text-[#737373] shrink-0" />
+                    <Video size={14} className="shrink-0 text-muted-foreground" />
                     <span className="truncate">{r.title}</span>
                   </li>
                 ))}
@@ -349,14 +369,14 @@ function CoachDashboard() {
           </SoftCard>
 
           {stats.pendingMembers > 0 && (
-            <SoftCard className="border-[#FCA5A5] bg-[#FEE2E2]/20">
+            <SoftCard className="border-accent/40 bg-accent/5">
               <div className="flex gap-3">
-                <AlertCircle size={18} className="text-[#E11D2A] shrink-0 mt-0.5" />
+                <AlertCircle size={18} className="mt-0.5 shrink-0 text-accent" />
                 <div>
                   <div className="text-sm font-medium">
                     {stats.pendingMembers} member{stats.pendingMembers > 1 ? "s" : ""} waiting
                   </div>
-                  <p className="text-xs text-[#737373] mt-1">
+                  <p className="mt-1 text-xs text-muted-foreground">
                     Activate manually if a member paid offline.
                   </p>
                 </div>
@@ -366,7 +386,7 @@ function CoachDashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 gap-px bg-border md:grid-cols-4">
         {[
           { icon: Users, label: "Members", to: "/portal/coach/members" as const },
           { icon: Calendar, label: "Schedule", to: "/portal/coach/schedule" as const },
@@ -378,16 +398,23 @@ function CoachDashboard() {
             <Link
               key={item.label}
               to={item.to}
-              className="card-soft p-5 hover:border-[#FCA5A5] transition-colors group"
+              className="group bg-white p-5 transition-colors hover:bg-surface"
             >
-              <Icon size={20} className="text-[#E11D2A]" />
-              <div className="mt-3 text-sm font-medium group-hover:text-[#E11D2A]">
-                {item.label}
-              </div>
+              <Icon size={20} className="text-accent" />
+              <div className="mt-3 text-sm font-medium group-hover:text-accent">{item.label}</div>
             </Link>
           );
         })}
       </div>
+    </div>
+  );
+}
+
+function HeroStat({ k, v }: { k: string; v: string }) {
+  return (
+    <div>
+      <div className="text-[10px] uppercase tracking-[0.16em] text-background/45">{k}</div>
+      <div className="mt-1 text-sm font-medium text-background/85">{v}</div>
     </div>
   );
 }

@@ -17,6 +17,10 @@ This creates tables, RLS policies, triggers, and seed data (live sessions, circu
 
 If you already ran an older `schema.sql` and see **infinite recursion** errors, run [`fix-rls.sql`](./fix-rls.sql) instead (or use `npm run supabase:fix-rls` with `SUPABASE_DB_URL` in `.env`).
 
+For **portal session picks** (members choose 3 weekly sessions after payment), run [`onboarding-session-picks.sql`](./onboarding-session-picks.sql) once in SQL Editor.
+
+For **weekly picks + attendance tracking**, run [`member-weekly-sessions.sql`](./member-weekly-sessions.sql) once in SQL Editor.
+
 ## 3. Auth settings (important for dev)
 
 1. **Authentication** → **Providers** → Email → ensure enabled
@@ -145,7 +149,7 @@ Then log in at `/portal/login` → you’ll be redirected to `/portal/coach`.
 |-------|---------|
 | `profiles` | User info + role (member/coach) |
 | `memberships` | Payment status, plan, renewals |
-| `onboarding` | Foundations + WhatsApp progress |
+| `onboarding` | Foundations + WhatsApp progress + weekly session picks (`session_ids`) |
 | `live_sessions` | Morning Mon/Wed/Fri + Evening Tue/Thu/Sat Zoom links |
 | `recordings` | Session video URLs |
 | `circuits` | 5 kettlebell circuits |
@@ -156,9 +160,20 @@ Then log in at `/portal/login` → you’ll be redirected to `/portal/coach`.
 Edit in Supabase **Table Editor**:
 
 - **live_sessions** → change `join_url` for Zoom / Meet links (or run `npm run supabase:update-sessions`)
-- **recordings** → add rows with YouTube embed URLs (`https://www.youtube.com/embed/VIDEO_ID`)
+- **recordings** → Zoom auto-sync + manual YouTube/Vimeo URLs
+  - One-time SQL: `supabase/recordings-zoom-sync.sql`
+  - Coach portal: **Sync from Zoom** (or hourly cron `/api/cron/zoom-recordings`)
+  - Env: `ZOOM_ACCOUNT_ID`, `ZOOM_CLIENT_ID`, `ZOOM_CLIENT_SECRET`, `ZOOM_HOST_EMAIL`
 - **circuits** → edit exercises JSON array
 - **site_config** → update WhatsApp invite, Calendly URL
+
+### Zoom cloud recording sync
+
+1. Zoom Marketplace → **Server-to-Server OAuth** app with cloud recording read scopes
+2. Enable cloud recording + shareable links on the host account
+3. Add Zoom env vars + `CRON_SECRET` on Vercel
+4. Run `recordings-zoom-sync.sql` in Supabase
+5. After a live class: Coach → Recordings → **Sync from Zoom** (or wait for hourly cron)
 
 ## When Razorpay is ready
 

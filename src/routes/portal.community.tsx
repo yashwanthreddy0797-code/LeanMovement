@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SoftCard } from "@/components/portal/ui";
+import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { usePortalPageContent } from "@/lib/portal/portal-content";
 import { CONTACT, COACH } from "@/lib/lean-kettlebell";
 import { MessageCircle, Mail, User } from "lucide-react";
@@ -14,35 +14,32 @@ function CoachContact() {
   const whatsappUrl = siteConfig.whatsappInviteUrl || CONTACT.whatsapp;
 
   return (
-    <div className="space-y-10 max-w-2xl mx-auto">
-      <div className="text-center">
-        <div className="text-[11px] uppercase tracking-[0.2em] text-[#737373] mb-1.5">Your coach</div>
-        <h1 className="text-4xl md:text-5xl font-serif">{COACH.name}</h1>
-        <p className="mt-2 text-[#737373]">{COACH.title} · Direct support for your Lean Program.</p>
-      </div>
+    <div className="mx-auto max-w-2xl space-y-10">
+      <PortalPageHeader
+        eyebrow="Your coach"
+        title={COACH.name}
+        description={`${COACH.title} · Direct support for your Lean Program.`}
+      />
 
-      <SoftCard className="text-center p-10 md:p-14">
-        <div className="w-20 h-20 rounded-full bg-[#111] grid place-items-center text-white mx-auto">
+      <SoftCard className="p-10 text-center md:p-14">
+        <div className="mx-auto grid h-20 w-20 place-items-center bg-foreground text-background">
           <User size={36} />
         </div>
-        <h2 className="mt-6 font-serif text-3xl">Message your coach</h2>
-        <p className="mt-3 text-[#737373] max-w-md mx-auto">
+        <h2 className="mt-6 font-display text-3xl uppercase tracking-[0.04em]">Message your coach</h2>
+        <p className="mx-auto mt-3 max-w-md type-body">
           Members only connect with {COACH.name.split(" ")[0]} — session questions, schedule, and progress.
         </p>
 
-        <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#25D366] text-white font-medium hover:opacity-90 w-full sm:w-auto"
+            className="portal-btn portal-btn-accent w-full sm:w-auto"
           >
             <MessageCircle size={18} /> WhatsApp coach
           </a>
-          <a
-            href={`mailto:${CONTACT.email}`}
-            className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full border border-[var(--border)] font-medium hover:bg-[#FAFAFA] w-full sm:w-auto"
-          >
+          <a href={`mailto:${CONTACT.email}`} className="portal-btn portal-btn-ghost w-full sm:w-auto">
             <Mail size={18} /> Email
           </a>
         </div>

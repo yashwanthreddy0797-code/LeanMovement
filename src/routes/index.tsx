@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Check } from "lucide-react";
 import { FadeUp } from "@/components/site/FadeUp";
+import { ZoomMark } from "@/components/brand/ZoomMark";
 import {
   Accordion,
   AccordionContent,
@@ -8,15 +9,22 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import {
+  BRAND,
   COHORT,
   FAQ,
-  HERO_IMAGE,
-  HERO_IMAGE_DEFAULT,
-  heroImageSrcSet,
-  heroImageUrl,
-  INCLUDED_SUMMARY,
-  LEAN_KETTLEBELL,
+  FOUNDATIONS,
+  HOME_CLOSING,
+  HOME_HERO,
+  HOME_INCLUDED,
+  HOME_QUOTE,
+  HOME_STATEMENT,
+  NUTRITION,
   PRICING_PLANS,
+  PROGRAM_GALLERY,
+  REQUIREMENTS,
+  SESSION_SCHEDULE,
+  WHO_ITS_FOR,
+  WHY_KETTLEBELLS,
 } from "@/lib/lean-kettlebell";
 
 export const Route = createFileRoute("/")({
@@ -26,127 +34,108 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Live kettlebell coaching for busy professionals. 12 coached sessions per month, nutrition framework, and private community.",
+          "Train live. Stay lean. Three live kettlebell coaching sessions every week — Tue / Thu / Sat · 6–7 AM IST. ₹6,999/mo.",
       },
       { property: "og:title", content: "Lean Movement — LEANMOVEMENT" },
       {
         property: "og:description",
-        content: "Train live three times a week. Short, effective kettlebell sessions for visible abs, muscle, and athletic fitness.",
+        content:
+          "Live coaching three mornings a week. Build strength, improve endurance, stay lean.",
       },
-      { property: "og:image", content: heroImageUrl(1200) },
+      { property: "og:image", content: "/images/programs/kb-hero.webp" },
     ],
   }),
   component: HomePage,
 });
 
-const HOME_FAQ = FAQ.slice(0, 3);
-
-function SectionHeader({
-  eyebrow,
-  title,
-  description,
-}: {
-  eyebrow: string;
-  title: string;
-  description?: string;
-}) {
-  return (
-    <div className="section-head">
-      <p className="eyebrow">
-        <span className="w-6 h-px bg-accent" />
-        {eyebrow}
-      </p>
-      <h2 className="type-h2 stack-head">{title}</h2>
-      {description && <p className="type-lead stack-head">{description}</p>}
-    </div>
-  );
-}
+const HOME_FAQ = FAQ.slice(0, 5);
+const HOME_GALLERY = [
+  PROGRAM_GALLERY[0],
+  PROGRAM_GALLERY[1],
+  { src: "/images/programs/kb-02.webp", alt: "Athlete mid kettlebell swing" },
+  PROGRAM_GALLERY[2],
+] as const;
 
 function HomePage() {
-  const featuredPlan = PRICING_PLANS[0];
+  const plan = PRICING_PLANS[0];
+  const schedule = SESSION_SCHEDULE.batches[0];
 
   return (
-    <>
-      <section className="bg-white border-b border-border min-h-[100svh] flex flex-col justify-center">
-        <div className="container-x w-full pt-20 pb-6 md:pt-22 md:pb-8 lg:pt-[5.5rem] lg:pb-6">
-          <div className="grid lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
-            <div className="lg:col-span-5 flex flex-col justify-center">
-              <FadeUp>
-                <p className="eyebrow">
-                  <span className="w-6 h-px bg-accent" />
-                  Live kettlebell coaching
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.06}>
-                <h1 className="mt-5 font-display uppercase text-[3rem] sm:text-[3.75rem] md:text-[4.5rem] lg:text-[5rem] xl:text-[5.25rem] leading-[0.9] tracking-[0.04em]">
-                  Get lean.
-                  <br />
-                  Get strong.
-                  <br />
-                  <span className="text-accent">Stay athletic.</span>
-                </h1>
-              </FadeUp>
-              <FadeUp delay={0.1}>
-                <p className="type-lead stack-head">
-                  {LEAN_KETTLEBELL.positioning}
-                </p>
-              </FadeUp>
-              <FadeUp delay={0.14}>
-                <div className="mt-8 flex flex-wrap items-center gap-6">
-                  <Link
-                    to="/join"
-                    search={{ plan: "standard", email: "", name: "" }}
-                    className="btn-primary"
-                  >
-                    Join now <ArrowRight size={14} />
-                  </Link>
-                  <Link to="/programs" className="type-link">
-                    View membership →
-                  </Link>
-                </div>
-              </FadeUp>
-              <FadeUp delay={0.18}>
-                <p className="mt-6 type-meta">
-                  3 live sessions per week · 45 minutes · All recorded
-                </p>
-              </FadeUp>
+    <div className="bg-background text-foreground">
+      {/* Hero */}
+      <header
+        className="relative flex flex-col justify-end overflow-hidden bg-black"
+        style={{ height: "100dvh", maxHeight: "100dvh" }}
+      >
+        <img
+          src="/images/programs/kb-hero.webp"
+          alt="Athlete gripping a kettlebell handle"
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          fetchPriority="high"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40" />
+        <div className="container-x relative z-10 pb-12 pt-28 md:pb-16 md:pt-32">
+          <FadeUp>
+            <p className="font-display text-sm tracking-[0.28em] text-white/70 md:text-base">
+              {BRAND.name}
+            </p>
+            <h1 className="mt-4 max-w-4xl font-display text-[3.25rem] uppercase leading-[0.9] tracking-[0.04em] text-white sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem]">
+              Train live.
+              <br />
+              <span className="text-accent">Stay lean.</span>
+            </h1>
+            <div className="mt-5 max-w-lg space-y-1 text-base leading-relaxed text-white/75 md:text-lg">
+              {HOME_HERO.sublines.map((line) => (
+                <p key={line}>{line}</p>
+              ))}
             </div>
+            <p className="mt-4 text-sm uppercase tracking-[0.14em] text-white/55">
+              {HOME_HERO.sessionsLine}
+            </p>
+            <div className="mt-9 flex flex-wrap items-center gap-5">
+              <Link
+                to="/join"
+                search={{ plan: "standard", email: "", name: "" }}
+                className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+              >
+                Join now <ArrowRight size={13} />
+              </Link>
+              <span className="font-display text-2xl text-white md:text-3xl">{plan.price}</span>
+              <span className="text-xs uppercase tracking-[0.14em] text-white/45">{plan.period}</span>
+              <ZoomMark tone="light" size="sm" label="live sessions" />
+            </div>
+          </FadeUp>
+        </div>
+      </header>
 
-            <FadeUp delay={0.08} className="lg:col-span-7 flex items-center justify-center lg:justify-end">
-              <div className="relative w-full max-w-[420px] sm:max-w-[460px] lg:max-w-none h-[min(62svh,540px)] md:h-[min(70svh,620px)] lg:h-[min(74svh,680px)] aspect-[4/5] lg:aspect-auto lg:w-[min(100%,calc(min(74svh,680px)*0.8))] overflow-hidden bg-white">
-                <img
-                  src={HERO_IMAGE_DEFAULT}
-                  srcSet={heroImageSrcSet()}
-                  sizes="(min-width: 1024px) 48vw, 90vw"
-                  alt={HERO_IMAGE.alt}
-                  width={1920}
-                  height={2400}
-                  loading="eager"
-                  fetchPriority="high"
-                  decoding="async"
-                  className="absolute inset-0 w-full h-full object-cover object-[center_32%]"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent" />
-              </div>
-            </FadeUp>
-          </div>
+      {/* Statement */}
+      <section className="border-b border-border bg-black text-white">
+        <div className="container-x py-16 md:py-20 lg:py-24">
+          <FadeUp className="mx-auto max-w-3xl">
+            <h2 className="font-display text-[2.25rem] uppercase leading-[0.95] tracking-[0.04em] sm:text-4xl md:text-5xl">
+              {HOME_STATEMENT.title}
+            </h2>
+            <div className="mt-8 space-y-4 text-base leading-relaxed text-white/65 md:text-[1.0625rem]">
+              {HOME_STATEMENT.paragraphs.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
+          </FadeUp>
         </div>
       </section>
 
-      <section className="bg-white border-b border-border">
-        <div className="container-x section-y">
-          <FadeUp>
-            <SectionHeader
-              eyebrow="Membership"
-              title="Everything included."
-              description="One membership. Live coaching, recordings, nutrition framework, and community."
-            />
-          </FadeUp>
-          <FadeUp delay={0.08}>
-            <ul className="section-content-gap grid sm:grid-cols-2 gap-x-14 gap-y-5 max-w-2xl">
-              {INCLUDED_SUMMARY.map((item) => (
-                <li key={item} className="flex gap-3 type-body">
-                  <Check size={15} strokeWidth={2} className="mt-1 shrink-0 text-accent" />
+      {/* What's included */}
+      <section className="border-b border-border">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-3xl text-center">
+            <p className="eyebrow justify-center">
+              <span className="w-6 h-px bg-accent" />
+              What&apos;s included
+            </p>
+            <ul className="mt-10 grid gap-3 text-left sm:grid-cols-2">
+              {HOME_INCLUDED.map((item) => (
+                <li key={item} className="flex gap-2.5 border-t border-border pt-4 text-sm text-foreground/80">
+                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
                   {item}
                 </li>
               ))}
@@ -155,103 +144,204 @@ function HomePage() {
         </div>
       </section>
 
-      <section id="pricing" className="bg-white border-b border-border scroll-mt-24">
-        <div className="container-x section-y">
-          <FadeUp className="flex flex-wrap items-end justify-between gap-8">
-            <SectionHeader
-              eyebrow="Program"
-              title="One program. ₹6,999/mo."
-              description="Strength and endurance — live with your coach. Pick 3 sessions at signup."
-            />
-            <p className="type-meta pb-1">
-              {COHORT.label}: {COHORT.date}
+      {/* Schedule */}
+      <section className="border-b border-border bg-black text-white">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-2xl text-center">
+            <p className="eyebrow justify-center !text-white/45">
+              <span className="w-6 h-px bg-accent" />
+              Schedule
+            </p>
+            <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              {schedule.day}
+            </h2>
+            <p className="mt-4 font-display text-2xl text-accent md:text-3xl">{schedule.time} IST</p>
+            <p className="mt-6 text-sm leading-relaxed text-white/60">
+              Train before work. Start your day with intent.
             </p>
           </FadeUp>
+        </div>
+      </section>
 
-          <div className="section-content-gap max-w-xl">
-            {PRICING_PLANS.map((plan) => (
-              <FadeUp key={plan.id}>
-                <div className="group flex flex-col p-7 md:p-8 border border-border bg-white text-foreground transition-colors duration-300 hover:border-foreground hover:bg-foreground hover:text-background">
-                  <span className="type-meta transition-colors duration-300 group-hover:text-background/50">
-                    {plan.tag}
-                  </span>
-                  <h3 className="type-h3 stack-head">{plan.name}</h3>
-                  <div className="mt-6 font-display text-[2.5rem] leading-none tracking-[0.04em] transition-colors duration-300 group-hover:text-accent">
-                    {plan.price}
-                  </div>
-                  <p className="mt-3 type-meta transition-colors duration-300 group-hover:text-background/50">
-                    {plan.period}
-                  </p>
-                  <p className="mt-5 type-body transition-colors duration-300 group-hover:!text-background/70">
-                    {plan.description}
-                  </p>
-                  <ul className="mt-6 space-y-2.5">
-                    {INCLUDED_SUMMARY.slice(0, 4).map((item) => (
-                      <li
-                        key={item}
-                        className="flex gap-2.5 text-sm text-foreground/70 transition-colors duration-300 group-hover:text-background/70"
-                      >
-                        <Check size={14} className="mt-0.5 shrink-0 text-accent" />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <Link
-                    to="/join"
-                    search={{ plan: plan.id, email: "", name: "" }}
-                    className="mt-8 inline-flex items-center justify-center gap-2 px-5 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.16em] border border-border transition-colors duration-300 group-hover:border-accent group-hover:bg-accent group-hover:text-white"
-                  >
-                    Join now <ArrowRight size={12} />
-                  </Link>
-                </div>
-              </FadeUp>
-            ))}
+      {/* Foundations */}
+      <section className="border-b border-border">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-3xl">
+            <p className="eyebrow">
+              <span className="w-6 h-px bg-accent" />
+              {FOUNDATIONS.title}
+            </p>
+            <p className="mt-4 type-lead">{FOUNDATIONS.description}</p>
+            <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+              {FOUNDATIONS.items.map((item) => (
+                <li key={item} className="flex gap-2 text-sm text-foreground/75">
+                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* What you'll need */}
+      <section className="border-b border-border bg-black text-white">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-3xl">
+            <p className="eyebrow !text-white/45">
+              <span className="w-6 h-px bg-accent" />
+              {REQUIREMENTS.title}
+            </p>
+            <p className="mt-4 text-lg text-white/70">{REQUIREMENTS.subtitle}</p>
+            <ul className="mt-10 space-y-6">
+              {REQUIREMENTS.items.map((item) => (
+                <li key={item.label}>
+                  <p className="font-display text-xl uppercase tracking-[0.06em] text-white">{item.label}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-white/60">{item.detail}</p>
+                </li>
+              ))}
+            </ul>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Who it's for + Why kettlebells */}
+      <section className="border-b border-border">
+        <div className="container-x py-14 md:py-16">
+          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
+            <FadeUp>
+              <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
+              <ul className="mt-6 space-y-3">
+                {WHO_ITS_FOR.items.map((item) => (
+                  <li key={item} className="flex gap-2 text-sm text-foreground/75">
+                    <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </FadeUp>
+            <FadeUp delay={0.06}>
+              <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHY_KETTLEBELLS.title}</h2>
+              <p className="mt-4 type-lead">{WHY_KETTLEBELLS.lead}</p>
+              <p className="mt-4 text-sm text-foreground/70">{WHY_KETTLEBELLS.items.join(" · ")}</p>
+              <p className="mt-4 type-body">{WHY_KETTLEBELLS.closing}</p>
+            </FadeUp>
           </div>
         </div>
       </section>
 
-      <section id="faq" className="bg-white border-b border-border scroll-mt-24">
-        <div className="container-x section-y">
-          <FadeUp>
-            <SectionHeader eyebrow="FAQ" title="Common questions." />
-          </FadeUp>
-          <FadeUp delay={0.06}>
-            <Accordion type="single" collapsible className="section-content-gap max-w-2xl">
-              {HOME_FAQ.map((f, i) => (
-                <AccordionItem key={i} value={`item-${i}`} className="border-border">
-                  <AccordionTrigger className="text-left text-base md:text-lg font-medium tracking-[-0.014em] hover:text-foreground hover:no-underline py-6">
-                    {f.q}
-                  </AccordionTrigger>
-                  <AccordionContent className="type-lead max-w-none pb-6">
-                    {f.a}
-                  </AccordionContent>
-                </AccordionItem>
-              ))}
-            </Accordion>
-          </FadeUp>
-          <FadeUp delay={0.1}>
-            <Link to="/programs" className="mt-10 inline-block type-link">
-              Full membership details →
-            </Link>
+      {/* Quote */}
+      <section className="border-b border-border bg-black text-white">
+        <div className="container-x py-16 md:py-20">
+          <FadeUp className="mx-auto max-w-3xl text-center">
+            <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] md:text-3xl">
+              &ldquo;{HOME_QUOTE.text}&rdquo;
+            </blockquote>
+            <p className="mt-8 text-xs uppercase tracking-[0.16em] text-white/45">— {HOME_QUOTE.author}</p>
           </FadeUp>
         </div>
       </section>
 
-      <section className="bg-white border-b border-border">
-        <div className="container-x section-y-sm">
-          <FadeUp className="section-head">
-            <h2 className="type-h2">Start with {featuredPlan.price}/mo.</h2>
-            <p className="type-lead stack-head">{COHORT.note}</p>
-            <Link
-              to="/join"
-              search={{ plan: "standard", email: "", name: "" }}
-              className="btn-primary stack-head"
-            >
-              Join now <ArrowRight size={14} />
-            </Link>
+      {/* Nutrition */}
+      <section className="border-b border-border">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-3xl">
+            <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
+            <p className="mt-4 type-lead">{NUTRITION.description}</p>
+            <ul className="mt-8 grid gap-2 sm:grid-cols-2">
+              {NUTRITION.items.map((item) => (
+                <li key={item} className="flex gap-2 text-sm text-foreground/75">
+                  <Check size={14} className="mt-0.5 shrink-0 text-accent" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+            <p className="mt-6 type-body">{NUTRITION.closing}</p>
           </FadeUp>
         </div>
       </section>
-    </>
+
+      {/* Pricing */}
+      <section id="pricing" className="border-b border-border scroll-mt-24 bg-black text-white">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-xl text-center">
+            <p className="eyebrow justify-center !text-white/45">
+              <span className="w-6 h-px bg-accent" />
+              {plan.name}
+            </p>
+            <p className="mt-6 font-display text-5xl text-accent md:text-6xl">{plan.price}</p>
+            <p className="mt-2 text-xs uppercase tracking-[0.14em] text-white/45">{plan.period}</p>
+            <p className="mt-6 text-sm leading-relaxed text-white/65">{plan.description}</p>
+            <p className="mt-4 text-xs uppercase tracking-[0.12em] text-white/40">Cancel anytime</p>
+            <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+              <Link
+                to="/join"
+                search={{ plan: plan.id, email: "", name: "" }}
+                className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+              >
+                Join now <ArrowRight size={13} />
+              </Link>
+              <Link to="/programs" className="text-xs uppercase tracking-[0.12em] text-white/50 hover:text-white">
+                View program details →
+              </Link>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Gallery */}
+      <div className="grid grid-cols-2 md:grid-cols-4">
+        {HOME_GALLERY.map((img) => (
+          <div key={img.src} className="relative aspect-[3/4] overflow-hidden bg-black">
+            <img
+              src={img.src}
+              alt={img.alt}
+              className="absolute inset-0 h-full w-full object-cover opacity-90 transition duration-700 hover:scale-105 hover:opacity-100"
+              loading="lazy"
+            />
+          </div>
+        ))}
+      </div>
+
+      {/* FAQ */}
+      <section id="faq" className="border-b border-border scroll-mt-24">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-2xl">
+            <h2 className="text-center font-display text-3xl uppercase tracking-[0.06em]">FAQ</h2>
+            <Accordion type="single" collapsible className="mt-10">
+              {HOME_FAQ.map((f, i) => (
+                <AccordionItem key={i} value={`item-${i}`} className="border-border">
+                  <AccordionTrigger className="py-4 text-left text-base font-medium hover:no-underline">
+                    {f.q}
+                  </AccordionTrigger>
+                  <AccordionContent className="type-body pb-4">{f.a}</AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </FadeUp>
+        </div>
+      </section>
+
+      {/* Close */}
+      <section className="bg-black text-white">
+        <div className="container-x py-14 md:py-16">
+          <FadeUp className="mx-auto max-w-xl text-center">
+            <p className="font-display text-sm tracking-[0.28em] text-white/50">{BRAND.name}</p>
+            <h2 className="mt-4 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              {HOME_CLOSING.headline}
+            </h2>
+            <p className="mt-4 text-sm text-white/55">{HOME_CLOSING.subline}</p>
+            <Link
+              to="/join"
+              search={{ plan: "standard", email: "", name: "" }}
+              className="mt-8 inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+            >
+              Join now · {plan.price}/mo <ArrowRight size={13} />
+            </Link>
+            <p className="mt-6 text-xs text-white/40">{COHORT.note}</p>
+          </FadeUp>
+        </div>
+      </section>
+    </div>
   );
 }
