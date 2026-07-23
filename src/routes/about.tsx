@@ -82,7 +82,7 @@ function AboutPage() {
               <Link
                 to="/join"
                 search={{ plan: plan.id, email: "", name: "" }}
-                className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+                className="btn-primary inline-flex"
               >
                 Join now <ArrowRight size={13} />
               </Link>
@@ -96,7 +96,7 @@ function AboutPage() {
 
       {/* Story — tight editorial */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <p className="eyebrow justify-center">
               <span className="w-6 h-px bg-accent" />
@@ -121,7 +121,7 @@ function AboutPage() {
 
       {/* Coach — full-bleed dark feature */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <FadeUp className="lg:col-span-5">
               <div className="relative aspect-[4/5] overflow-hidden bg-[#111111]">
@@ -161,7 +161,7 @@ function AboutPage() {
               <Link
                 to="/join"
                 search={{ plan: plan.id, email: "", name: "" }}
-                className="mt-10 inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+                className="btn-primary mt-10 inline-flex"
               >
                 Train with {COACH.name.split(" ")[0]} <ArrowRight size={13} />
               </Link>
@@ -172,7 +172,7 @@ function AboutPage() {
 
       {/* Quote band */}
       <section className="border-b border-border bg-surface">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] text-foreground md:text-3xl">
               &ldquo;{quote.quote}&rdquo;
@@ -186,7 +186,7 @@ function AboutPage() {
 
       {/* Principles — solid, not sparse */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="eyebrow justify-center !text-white/45">
               <span className="w-6 h-px bg-accent" />
@@ -218,7 +218,7 @@ function AboutPage() {
 
       {/* Close */}
       <section className="border-t border-border bg-background">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
               Ready to <span className="text-accent">train</span>?

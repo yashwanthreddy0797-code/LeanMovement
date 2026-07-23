@@ -81,7 +81,7 @@ function ProgramsPage() {
               <Link
                 to="/join"
                 search={{ plan: plan.id, email: "", name: "" }}
-                className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+                className="btn-primary inline-flex"
               >
                 Join now <ArrowRight size={13} />
               </Link>
@@ -95,7 +95,7 @@ function ProgramsPage() {
 
       {/* Train with me */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
               {MEMBERSHIP_STATEMENT.title}
@@ -111,7 +111,7 @@ function ProgramsPage() {
 
       {/* What's included */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl">
             <p className="eyebrow">
               <span className="w-6 h-px bg-accent" />
@@ -131,7 +131,7 @@ function ProgramsPage() {
 
       {/* Schedule */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-20">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="eyebrow justify-center !text-white/45">
               <span className="w-6 h-px bg-accent" />
@@ -159,7 +159,7 @@ function ProgramsPage() {
 
       {/* Foundations + What you need */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-20">
+        <div className="container-x section-y-sm">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <FadeUp>
               <p className="eyebrow">
@@ -198,7 +198,7 @@ function ProgramsPage() {
 
       {/* Who + Why */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <FadeUp>
               <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
@@ -227,7 +227,7 @@ function ProgramsPage() {
 
       {/* Quote */}
       <section className="border-b border-border">
-        <div className="container-x py-16 md:py-24">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] md:text-3xl">
               &ldquo;{MEMBERSHIP_QUOTE.text}&rdquo;
@@ -239,7 +239,7 @@ function ProgramsPage() {
 
       {/* Nutrition */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
             <p className="mt-4 text-lg leading-relaxed text-white/70 md:text-xl">{NUTRITION.description}</p>
@@ -258,7 +258,7 @@ function ProgramsPage() {
 
       {/* Price */}
       <section className="border-b border-border">
-        <div className="container-x py-16 md:py-24">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
             <p className="eyebrow justify-center">
               <span className="w-6 h-px bg-accent" />
@@ -281,7 +281,7 @@ function ProgramsPage() {
 
       {/* FAQ */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-20">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-2xl">
             <h2 className="text-center font-display text-3xl uppercase tracking-[0.06em]">FAQ</h2>
             <Accordion type="single" collapsible className="mt-10">
@@ -302,7 +302,7 @@ function ProgramsPage() {
 
       {/* Close + contact */}
       <section>
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
             <p className="font-display text-sm tracking-[0.28em] text-muted-foreground">LEANMOVEMENT</p>
             <h2 className="mt-4 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">

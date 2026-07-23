@@ -63,8 +63,8 @@ export function WeeklySessionsPanel({
 
   if (loading || !data) {
     return (
-      <section className="border border-border bg-white p-6 md:p-8">
-        <div className="flex items-center gap-3 text-sm text-muted-foreground">
+      <section className="card-soft p-6 md:p-8">
+        <div className="flex items-center gap-3 text-base text-muted-foreground">
           <Loader2 size={16} className="animate-spin text-accent" />
           Loading your weekly schedule…
         </div>
@@ -73,8 +73,8 @@ export function WeeklySessionsPanel({
   }
 
   return (
-    <section className="overflow-hidden border border-border bg-white">
-      <div className="border-b border-border bg-surface px-6 py-5 md:px-8">
+    <section className="card-soft overflow-hidden !p-0">
+      <div className="border-b border-border bg-background px-6 py-5 md:px-8">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="eyebrow mb-2">
@@ -84,9 +84,9 @@ export function WeeklySessionsPanel({
             <h2 className="font-display text-2xl uppercase tracking-[0.06em] md:text-3xl">
               Your live sessions
             </h2>
-            <p className="mt-2 text-sm text-muted-foreground">{data.weekLabel}</p>
+            <p className="mt-2 text-base text-muted-foreground">{data.weekLabel}</p>
           </div>
-          <div className="flex flex-wrap gap-2 text-[10px] uppercase tracking-[0.14em]">
+          <div className="flex flex-wrap gap-2 text-xs uppercase tracking-[0.12em]">
             <StatPill label="Sessions" value={`${SESSIONS_TO_PICK}/week`} />
             <StatPill label="Attended" value={`${data.attendedCount}/${SESSIONS_TO_PICK}`} accent />
           </div>
@@ -94,33 +94,33 @@ export function WeeklySessionsPanel({
       </div>
 
       <div className="p-6 md:p-8">
-        <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground">
+        <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
           Tue / Thu / Sat · 6:00–7:00 AM IST. Your program includes all three live sessions every week.
         </p>
 
-        <div className="mt-6 space-y-4">
+        <div className="mt-6 space-y-3">
           {data.slots.map((slot) => (
             <div
               key={slot.slotId}
               className={`border p-4 md:p-5 ${
-                slot.attended ? "border-accent/30 bg-accent/5" : "border-border"
+                slot.attended ? "border-accent/30 bg-accent/[0.04]" : "border-border bg-background/60"
               }`}
             >
               <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                 <div className="min-w-0">
                   <div className="flex flex-wrap items-center gap-2">
-                    <p className="font-display text-lg uppercase tracking-[0.06em]">
+                    <p className="font-display text-lg uppercase tracking-[0.06em] md:text-xl">
                       {slot.day} · {slot.focus}
                     </p>
                     {slot.attended ? (
-                      <span className="inline-flex items-center gap-1 text-[10px] uppercase tracking-[0.14em] text-accent">
+                      <span className="inline-flex items-center gap-1 text-xs uppercase tracking-[0.12em] text-accent">
                         <Check size={12} /> Attended
                       </span>
                     ) : (
                       <LiveSessionBadge liveState={slot.liveState} />
                     )}
                   </div>
-                  <p className="mt-1 text-sm text-muted-foreground">
+                  <p className="mt-1.5 text-base text-muted-foreground">
                     {slot.timeLabel} · {slot.brief}
                   </p>
                 </div>
@@ -149,7 +149,7 @@ export function WeeklySessionsPanel({
           ))}
         </div>
 
-        <p className="mt-6 text-xs text-muted-foreground">{formatSelectedSessions(pickedIds)}</p>
+        <p className="mt-6 text-sm text-muted-foreground">{formatSelectedSessions(pickedIds)}</p>
       </div>
     </section>
   );

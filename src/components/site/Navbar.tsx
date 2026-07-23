@@ -53,7 +53,7 @@ export function Navbar() {
               <Link
                 to="/join"
                 search={{ plan: "standard" }}
-                className="hidden lg:inline-flex btn-primary !py-2.5 !px-5 !text-[10px]"
+                className="hidden lg:inline-flex btn-primary !px-5 !py-2.5"
               >
                 Join
               </Link>

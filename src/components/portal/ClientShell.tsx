@@ -218,10 +218,10 @@ function ClientShellInner({
                 <BrandLogo className="text-base" />
               </Link>
               <div className="hidden lg:flex items-center gap-3">
-                <span className="portal-identity-badge px-3 py-1.5 text-[10px] uppercase tracking-[0.18em] font-semibold">
+                <span className="portal-identity-badge px-3 py-1.5 text-xs uppercase tracking-[0.14em] font-semibold">
                   Member portal
                 </span>
-                <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-muted-foreground">
+                <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-muted-foreground">
                   <span className="w-1.5 h-1.5 bg-accent animate-pulse" />
                   {isSupabaseConfigured() ? session.mode : "Demo mode"}
                 </div>
@@ -254,7 +254,7 @@ function ClientShellInner({
         </div>
       </div>
 
-      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-white/95 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]">
+      <nav className="lg:hidden fixed bottom-0 inset-x-0 z-40 border-t border-border bg-background/95 backdrop-blur-xl pb-[env(safe-area-inset-bottom)]">
         <div className="grid grid-cols-5">
           {nav.map((n) => {
             const Icon = n.icon;
@@ -263,7 +263,7 @@ function ClientShellInner({
               <Link
                 key={n.to}
                 to={n.to}
-                className={`relative flex flex-col items-center justify-center gap-0.5 min-h-14 text-[10px] ${
+                className={`relative flex flex-col items-center justify-center gap-0.5 min-h-14 text-[11px] ${
                   active ? "text-foreground" : "text-muted-foreground"
                 }`}
               >

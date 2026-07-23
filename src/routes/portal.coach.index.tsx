@@ -71,7 +71,7 @@ function CoachDashboard() {
       <section className="overflow-hidden border border-border bg-[#0F1217] text-background">
         <div className="p-8 md:p-10 lg:p-12">
           <div className="flex flex-wrap items-center gap-3">
-            <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-background/55">
+            <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-background/55">
               <span className="h-1.5 w-1.5 bg-accent" />
               Coach console · {today}
             </p>
@@ -83,7 +83,7 @@ function CoachDashboard() {
             <span className="text-background/80">{coachName.split(" ")[0]}.</span>
           </h1>
 
-          <p className="mt-5 max-w-lg text-sm leading-relaxed text-background/60 md:text-[0.9375rem]">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-background/65">
             Members · registrations · live calendar · recordings. Run the week from here.
           </p>
 
@@ -115,19 +115,17 @@ function CoachDashboard() {
       <CoachRegistrationAlerts coachId={coachId} />
       <CoachContactInbox coachId={coachId} />
 
-      <div className="grid grid-cols-2 gap-px bg-border md:grid-cols-3 lg:grid-cols-6">
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
         {[
-          { label: "Active members", value: String(stats.activeMembers), sub: "paying & live" },
-          { label: "Pending approval", value: String(stats.pendingMembers), sub: "awaiting activate" },
-          { label: "Est. MRR", value: formatInr(stats.mrrInr), sub: "monthly recurring" },
-          { label: "Renewals (14d)", value: String(stats.expiringSoon), sub: "action needed" },
           { label: "Foundations due", value: String(stats.foundationsPending), sub: "not completed" },
           { label: "WhatsApp pending", value: String(stats.whatsappPending), sub: "not joined" },
+          { label: "Pending approval", value: String(stats.pendingMembers), sub: "awaiting activate" },
+          { label: "Renewals (14d)", value: String(stats.expiringSoon), sub: "action needed" },
         ].map((k) => (
-          <div key={k.label} className="bg-white p-5">
+          <div key={k.label} className="card-soft p-5">
             <div className="eyebrow !gap-0">{k.label}</div>
             <div className="mt-2 font-display text-2xl tracking-[0.04em] text-foreground">{k.value}</div>
-            <div className="mt-1 text-[11px] text-accent">{k.sub}</div>
+            <div className="mt-1 text-xs text-accent">{k.sub}</div>
           </div>
         ))}
       </div>
@@ -136,7 +134,7 @@ function CoachDashboard() {
         <SoftCard className="overflow-hidden border-0 !bg-foreground !p-0 text-background">
           <div className="flex flex-col justify-between gap-6 p-8 md:flex-row md:items-center md:p-10">
             <div>
-              <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
+              <div className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-accent">
                 <Radio size={12} className={isToday ? "animate-pulse" : ""} />
                 {isToday ? "Today's session" : "Next live session"}
               </div>
@@ -413,7 +411,7 @@ function CoachDashboard() {
 function HeroStat({ k, v }: { k: string; v: string }) {
   return (
     <div>
-      <div className="text-[10px] uppercase tracking-[0.16em] text-background/45">{k}</div>
+      <div className="text-xs uppercase tracking-[0.14em] text-background/45">{k}</div>
       <div className="mt-1 text-sm font-medium text-background/85">{v}</div>
     </div>
   );

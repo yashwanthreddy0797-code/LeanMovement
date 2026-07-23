@@ -4,7 +4,7 @@ import { Loader2, Mail, MessageCircle, Instagram } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { toast } from "sonner";
-import { CONTACT } from "@/lib/lean-kettlebell";
+import { ABOUT_HERO, CONTACT } from "@/lib/lean-kettlebell";
 import { submitContactMessage } from "@/lib/api/contact.functions";
 
 export const Route = createFileRoute("/contact")({
@@ -99,20 +99,22 @@ function ContactPage() {
         eyebrow="Contact"
         title="Say hello."
         subtitle="Email or WhatsApp. We reply within 2 hours during business hours."
-        compact
+        image={ABOUT_HERO.src}
         borderless
       />
 
-      <section className="container-x pb-24 md:pb-28">
-        <div className="grid lg:grid-cols-2 gap-16 lg:gap-20 max-w-4xl">
+      <section className="container-x section-y">
+        <div className="grid max-w-4xl gap-16 lg:grid-cols-2 lg:gap-20">
           <FadeUp>
             <div className="space-y-8">
               {CHANNELS.map((c) => (
-                <a key={c.label} href={c.href} className="flex items-center gap-4 group">
-                  <c.icon className="text-accent shrink-0" size={20} strokeWidth={1.5} />
+                <a key={c.label} href={c.href} className="group flex items-center gap-4">
+                  <c.icon className="shrink-0 text-accent" size={22} strokeWidth={1.5} />
                   <div>
-                    <div className="text-xs uppercase tracking-[0.12em] text-muted-foreground">{c.label}</div>
-                    <div className="mt-1 text-base group-hover:text-accent transition-colors md:text-lg">{c.value}</div>
+                    <div className="text-xs uppercase tracking-[0.14em] text-muted-foreground">{c.label}</div>
+                    <div className="mt-1.5 text-lg transition-colors group-hover:text-accent md:text-xl">
+                      {c.value}
+                    </div>
                   </div>
                 </a>
               ))}

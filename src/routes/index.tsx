@@ -96,7 +96,7 @@ function HomePage() {
               <Link
                 to="/join"
                 search={{ plan: "standard", email: "", name: "" }}
-                className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+                className="btn-primary inline-flex"
               >
                 Join now <ArrowRight size={13} />
               </Link>
@@ -110,7 +110,7 @@ function HomePage() {
 
       {/* Statement */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-16 md:py-20 lg:py-24">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-[2.25rem] uppercase leading-[0.95] tracking-[0.04em] sm:text-4xl md:text-5xl">
               {HOME_STATEMENT.title}
@@ -126,7 +126,7 @@ function HomePage() {
 
       {/* What's included */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <p className="eyebrow justify-center">
               <span className="w-6 h-px bg-accent" />
@@ -146,7 +146,7 @@ function HomePage() {
 
       {/* Schedule */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="eyebrow justify-center !text-white/45">
               <span className="w-6 h-px bg-accent" />
@@ -165,7 +165,7 @@ function HomePage() {
 
       {/* Foundations */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl">
             <p className="eyebrow">
               <span className="w-6 h-px bg-accent" />
@@ -186,7 +186,7 @@ function HomePage() {
 
       {/* What you'll need */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
             <p className="eyebrow !text-white/45">
               <span className="w-6 h-px bg-accent" />
@@ -207,7 +207,7 @@ function HomePage() {
 
       {/* Who it's for + Why kettlebells */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
             <FadeUp>
               <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{WHO_ITS_FOR.title}</h2>
@@ -234,7 +234,7 @@ function HomePage() {
 
       {/* Quote */}
       <section className="border-b border-border bg-black text-white">
-        <div className="container-x py-16 md:py-20">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] md:text-3xl">
               &ldquo;{HOME_QUOTE.text}&rdquo;
@@ -246,7 +246,7 @@ function HomePage() {
 
       {/* Nutrition */}
       <section className="border-b border-border">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em]">{NUTRITION.title}</h2>
             <p className="mt-4 type-lead">{NUTRITION.description}</p>
@@ -265,7 +265,7 @@ function HomePage() {
 
       {/* Pricing */}
       <section id="pricing" className="border-b border-border scroll-mt-24 bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
             <p className="eyebrow justify-center !text-white/45">
               <span className="w-6 h-px bg-accent" />
@@ -279,7 +279,7 @@ function HomePage() {
               <Link
                 to="/join"
                 search={{ plan: plan.id, email: "", name: "" }}
-                className="inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+                className="btn-primary inline-flex"
               >
                 Join now <ArrowRight size={13} />
               </Link>
@@ -307,7 +307,7 @@ function HomePage() {
 
       {/* FAQ */}
       <section id="faq" className="border-b border-border scroll-mt-24">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-2xl">
             <h2 className="text-center font-display text-3xl uppercase tracking-[0.06em]">FAQ</h2>
             <Accordion type="single" collapsible className="mt-10">
@@ -326,7 +326,7 @@ function HomePage() {
 
       {/* Close */}
       <section className="bg-black text-white">
-        <div className="container-x py-14 md:py-16">
+        <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
             <p className="font-display text-sm tracking-[0.28em] text-white/50">{BRAND.name}</p>
             <h2 className="mt-4 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
@@ -336,7 +336,7 @@ function HomePage() {
             <Link
               to="/join"
               search={{ plan: "standard", email: "", name: "" }}
-              className="mt-8 inline-flex items-center gap-2 bg-accent px-7 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+              className="btn-primary mt-8 inline-flex"
             >
               Join now · {plan.price}/mo <ArrowRight size={13} />
             </Link>

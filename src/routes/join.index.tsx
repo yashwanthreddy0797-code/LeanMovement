@@ -223,7 +223,7 @@ function CheckoutPage() {
                 ))}
               </ul>
 
-              <div className="border border-border p-4 text-xs text-muted-foreground space-y-2">
+              <div className="space-y-2 border border-border bg-surface p-5 text-sm leading-relaxed text-muted-foreground">
                 <p className="font-medium text-foreground">Secure checkout</p>
                 <p>Pay {formatInr(PROGRAM_AMOUNT_INR)} on this page. Portal access unlocks only after payment is verified.</p>
                 <p>
@@ -316,8 +316,8 @@ function CheckoutPage() {
                   </span>
                 </label>
 
-                <div className="flex items-start gap-3 text-xs text-muted-foreground bg-white border border-border p-4">
-                  <ShieldCheck size={16} className="shrink-0 mt-0.5 text-accent" />
+                <div className="flex items-start gap-3 border border-border bg-surface p-4 text-sm leading-relaxed text-muted-foreground">
+                  <ShieldCheck size={16} className="mt-0.5 shrink-0 text-accent" />
                   <p>
                     Razorpay secure checkout opens next. Your coach is notified after payment succeeds.
                     Portal login unlocks only when payment is verified on our server.
@@ -346,7 +346,7 @@ function CheckoutPage() {
           padding: 0.85rem 1rem;
           border: 1px solid var(--border);
           background: var(--background);
-          font-size: 0.875rem;
+          font-size: 1rem;
           color: var(--foreground);
           outline: none;
         }

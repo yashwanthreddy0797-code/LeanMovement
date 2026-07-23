@@ -15,37 +15,34 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-foreground text-background">
-      {/* Main band */}
-      <div className="container-x py-14 md:py-16">
+    <footer className="border-t border-border bg-black text-white">
+      <div className="container-x py-16 md:py-20">
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
-          {/* Brand + CTA */}
           <div className="lg:col-span-5">
-            <Link to="/" className="inline-block text-background">
-              <BrandLogo className="text-3xl md:text-[2.25rem] text-background" />
+            <Link to="/" className="inline-block text-white">
+              <BrandLogo className="text-3xl text-white md:text-[2.25rem]" />
             </Link>
-            <p className="mt-5 max-w-sm text-sm leading-relaxed text-background/55">
+            <p className="mt-5 max-w-sm text-base leading-relaxed text-white/55">
               Live kettlebell coaching for busy professionals. Three morning sessions every week —
               Tue / Thu / Sat · 6–7 AM IST.
             </p>
             <Link
               to="/join"
               search={{ plan: "standard", email: "", name: "" }}
-              className="mt-8 inline-flex items-center gap-2 bg-accent px-6 py-3.5 text-[0.6875rem] font-semibold uppercase tracking-[0.18em] text-white hover:opacity-90"
+              className="btn-primary mt-8 inline-flex"
             >
-              Join · {plan.price}/mo <ArrowRight size={12} />
+              Join · {plan.price}/mo <ArrowRight size={13} />
             </Link>
           </div>
 
-          {/* Explore */}
           <div className="lg:col-span-2">
-            <p className="font-display text-sm tracking-[0.2em] text-background/40">Explore</p>
+            <p className="font-display text-sm tracking-[0.2em] text-white/40">Explore</p>
             <ul className="mt-5 space-y-3">
               {NAV.map((l) => (
                 <li key={l.to}>
                   <Link
                     to={l.to}
-                    className="font-display text-lg uppercase tracking-[0.08em] text-background/70 hover:text-accent transition-colors"
+                    className="font-display text-lg uppercase tracking-[0.08em] text-white/70 transition-colors hover:text-accent"
                   >
                     {l.label}
                   </Link>
@@ -54,14 +51,13 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Account */}
           <div className="lg:col-span-2">
-            <p className="font-display text-sm tracking-[0.2em] text-background/40">Account</p>
+            <p className="font-display text-sm tracking-[0.2em] text-white/40">Account</p>
             <ul className="mt-5 space-y-3">
               <li>
                 <Link
                   to="/login"
-                  className="font-display text-lg uppercase tracking-[0.08em] text-background/70 hover:text-accent transition-colors"
+                  className="font-display text-lg uppercase tracking-[0.08em] text-white/70 transition-colors hover:text-accent"
                 >
                   Sign in
                 </Link>
@@ -70,7 +66,7 @@ export function Footer() {
                 <Link
                   to="/join"
                   search={{ plan: "standard", email: "", name: "" }}
-                  className="font-display text-lg uppercase tracking-[0.08em] text-background/70 hover:text-accent transition-colors"
+                  className="font-display text-lg uppercase tracking-[0.08em] text-white/70 transition-colors hover:text-accent"
                 >
                   Join
                 </Link>
@@ -78,14 +74,13 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* Contact */}
           <div className="lg:col-span-3">
-            <p className="font-display text-sm tracking-[0.2em] text-background/40">Connect</p>
-            <ul className="mt-5 space-y-3 text-sm text-background/70">
+            <p className="font-display text-sm tracking-[0.2em] text-white/40">Connect</p>
+            <ul className="mt-5 space-y-3 text-base text-white/70">
               <li>
                 <a
                   href={`mailto:${CONTACT.email}`}
-                  className="hover:text-accent transition-colors break-all"
+                  className="break-all transition-colors hover:text-accent"
                 >
                   {CONTACT.email}
                 </a>
@@ -95,7 +90,7 @@ export function Footer() {
                   href={CONTACT.whatsapp}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors"
+                  className="transition-colors hover:text-accent"
                 >
                   WhatsApp · {CONTACT.phone}
                 </a>
@@ -105,24 +100,23 @@ export function Footer() {
                   href={CONTACT.instagram}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-accent transition-colors"
+                  className="transition-colors hover:text-accent"
                 >
                   @{CONTACT.instagramHandle}
                 </a>
               </li>
-              <li className="pt-1 text-background/40">{CONTACT.location}</li>
+              <li className="pt-1 text-white/40">{CONTACT.location}</li>
             </ul>
           </div>
         </div>
       </div>
 
-      {/* Bottom bar */}
-      <div className="border-t border-background/10">
+      <div className="border-t border-white/10">
         <div className="container-x flex flex-col gap-3 py-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-[0.6875rem] uppercase tracking-[0.14em] text-background/35">
+          <p className="text-xs uppercase tracking-[0.14em] text-white/35">
             © {year} {BRAND.name}
           </p>
-          <p className="font-display text-sm tracking-[0.16em] text-background/35">
+          <p className="font-display text-sm tracking-[0.16em] text-white/35">
             Get lean. Get strong. Stay athletic.
           </p>
         </div>

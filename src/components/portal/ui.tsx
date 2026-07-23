@@ -28,7 +28,7 @@ export function KPICard({
         {unit && <div className="text-xs text-muted-foreground font-medium">{unit}</div>}
       </div>
       {delta && (
-        <div className={`mt-3 inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium ${toneClass}`}>
+        <div className={`mt-3 inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium ${toneClass}`}>
           <Icon size={12} /> {delta}
         </div>
       )}
@@ -124,9 +124,9 @@ export function ProgressRing({
       <div className="-mt-[68px] text-center">
         <div className="font-display text-lg tracking-[0.04em]">
           {value}
-          <span className="ml-0.5 text-[10px] text-muted-foreground">{unit}</span>
+          <span className="ml-0.5 text-xs text-muted-foreground">{unit}</span>
         </div>
-        <div className="text-[10px] text-muted-foreground">
+        <div className="text-xs text-muted-foreground">
           of {target}
           {unit}
         </div>

@@ -13,7 +13,6 @@ import { usePortalSession } from "@/lib/portal/session";
 import { COACH } from "@/lib/lean-kettlebell";
 import {
   ArrowRight,
-  Calendar,
   Play,
   Radio,
   Video,
@@ -28,7 +27,7 @@ export const Route = createFileRoute("/portal/dashboard")({
 
 function Dashboard() {
   const session = usePortalSession();
-  const { content, isLoading, isError, nextLiveSession, weeklySchedule, recordings, circuits, siteConfig } =
+  const { content, isLoading, isError, nextLiveSession, recordings, circuits, siteConfig } =
     usePortalPageContent();
   const { data: onboarding, isLoading: onboardingLoading, refetch: refetchOnboarding } =
     useMemberOnboarding(session.user?.id);
@@ -85,24 +84,12 @@ function Dashboard() {
   });
 
   return (
-    <div className="space-y-10">
-      {session.user?.id && (
-        <WeeklySessionsPanel
-          userId={session.user.id}
-          data={weeklySessions && "ok" in weeklySessions && weeklySessions.ok ? weeklySessions : null}
-          loading={weeklyLoading}
-          onRefresh={() => {
-            void refetchWeekly();
-            void refetchOnboarding();
-          }}
-        />
-      )}
-
-      {/* Welcome hero — marketing-style dark band */}
+    <div className="space-y-8 md:space-y-10">
+      {/* Welcome hero */}
       <section className="overflow-hidden border border-border bg-foreground text-background">
         <div className="p-8 md:p-10 lg:p-12">
           <div className="flex flex-wrap items-center gap-3">
-            <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.22em] text-background/55">
+            <p className="inline-flex items-center gap-2 text-xs uppercase tracking-[0.18em] text-background/55">
               <span className="h-1.5 w-1.5 bg-accent" />
               {today} · {greet}
             </p>
@@ -115,12 +102,12 @@ function Dashboard() {
             <span className="text-background/80">{displayName}.</span>
           </h1>
 
-          <p className="mt-5 max-w-lg text-sm leading-relaxed text-background/60 md:text-[0.9375rem]">
+          <p className="mt-5 max-w-lg text-base leading-relaxed text-background/65">
             Lean Kettlebell™ · {billing.planLabel} · {billing.statusLabel}
           </p>
 
           <div className="mt-8 max-w-md">
-            <div className="mb-2 flex items-center justify-between text-[10px] uppercase tracking-[0.16em] text-background/45">
+            <div className="mb-2 flex items-center justify-between text-xs uppercase tracking-[0.14em] text-background/45">
               <span>Sessions this month</span>
               <span className="font-medium text-background/75">
                 {content.sessionsThisMonth ?? 0}/{content.totalSessionsPerMonth ?? 12}
@@ -140,7 +127,9 @@ function Dashboard() {
               target="_blank"
               rel="noopener noreferrer"
               className={`portal-btn inline-flex gap-2 ${
-                live.liveState !== "later" ? "portal-btn-accent" : "!bg-background/10 !text-background hover:!bg-background/15"
+                live.liveState !== "later"
+                  ? "portal-btn-accent"
+                  : "!bg-background/10 !text-background hover:!bg-background/15"
               }`}
             >
               <Radio size={14} />
@@ -163,6 +152,18 @@ function Dashboard() {
         </div>
       </section>
 
+      {session.user?.id && (
+        <WeeklySessionsPanel
+          userId={session.user.id}
+          data={weeklySessions && "ok" in weeklySessions && weeklySessions.ok ? weeklySessions : null}
+          loading={weeklyLoading}
+          onRefresh={() => {
+            void refetchWeekly();
+            void refetchOnboarding();
+          }}
+        />
+      )}
+
       <OnboardingChecklist
         onboarding={onboarding}
         calendlyUrl={calendlyUrl}
@@ -170,17 +171,18 @@ function Dashboard() {
         loading={onboardingLoading}
       />
 
-      <section className="grid gap-px bg-border lg:grid-cols-5">
-        <div className="bg-white p-6 lg:col-span-3 lg:p-8">
+      {/* Next live + Foundations */}
+      <section className="grid gap-4 lg:grid-cols-5">
+        <div className="card-soft p-6 lg:col-span-3 lg:p-8">
           <div className="flex items-start justify-between gap-4">
             <div>
-              <p className="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.18em] text-accent">
+              <p className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.16em] text-accent">
                 <Radio size={12} className="animate-pulse" /> Next live session
               </p>
               <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.04em] text-foreground">
                 {live.title}
               </h2>
-              <p className="mt-2 text-sm text-muted-foreground">
+              <p className="mt-2 text-base text-muted-foreground">
                 {live.day} · {live.date} · {live.time}
               </p>
             </div>
@@ -199,14 +201,14 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="flex flex-col bg-white p-6 lg:col-span-2 lg:p-8">
+        <div className="card-soft flex flex-col p-6 lg:col-span-2 lg:p-8">
           <p className="eyebrow !gap-0">Foundations</p>
           <h3 className="mt-3 font-display text-2xl uppercase tracking-[0.06em]">Book Foundations</h3>
-          <p className="mt-2 flex-1 text-sm text-muted-foreground">
+          <p className="mt-2 flex-1 text-base leading-relaxed text-muted-foreground">
             60-min technique session before your first live class.
           </p>
           {onboarding?.foundations_completed_at ? (
-            <p className="mt-4 text-xs font-medium text-foreground/70">
+            <p className="mt-4 text-sm font-medium text-foreground/70">
               Completed {formatPortalDate(onboarding.foundations_completed_at)}
             </p>
           ) : calendlyUrl ? (
@@ -222,66 +224,22 @@ function Dashboard() {
         </div>
       </section>
 
-      <section>
-        <SectionTitle
-          eyebrow="This week"
-          title="Live schedule"
-          action={
-            <Link
-              to="/portal/live"
-              className="inline-flex items-center gap-1 text-xs font-medium uppercase tracking-[0.12em] text-accent hover:text-foreground"
-            >
-              Full schedule <ArrowRight size={14} />
-            </Link>
-          }
-        />
-        <div className="grid gap-px bg-border md:grid-cols-2 xl:grid-cols-3">
-          {weeklySchedule.map((s) => (
-            <div
-              key={`${s.day}-${s.time}`}
-              className={`bg-white p-5 ${s.isToday ? "ring-1 ring-inset ring-accent" : ""}`}
-            >
-              <div className="flex items-center justify-between gap-2">
-                <span className="text-[10px] uppercase tracking-[0.18em] text-muted-foreground">{s.day}</span>
-                {s.isToday && (
-                  <LiveSessionBadge liveState={s.liveState ?? "later"} className="!text-[9px]" />
-                )}
-              </div>
-              <h3 className="mt-2 font-display text-lg uppercase tracking-[0.06em]">{s.title}</h3>
-              <div className="mt-4 flex items-center justify-between gap-2">
-                <div className="flex items-center gap-1.5 text-xs text-foreground/70">
-                  <Calendar size={12} /> {s.time}
-                </div>
-                <a
-                  href={s.joinUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-xs font-medium uppercase tracking-[0.1em] text-accent hover:text-foreground"
-                >
-                  Join Zoom
-                </a>
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <section className="grid gap-px bg-border lg:grid-cols-2">
-        <div className="bg-white p-6">
+      <section className="grid gap-4 lg:grid-cols-2">
+        <div className="card-soft p-6 md:p-7">
           <SectionTitle eyebrow="Library" title="Recent recordings" />
           <div className="space-y-1">
             {recordings.slice(0, 3).map((r) => (
               <Link
                 key={r.id}
                 to="/portal/recordings"
-                className="flex items-center gap-4 border-t border-border py-3 transition first:border-0 hover:bg-surface"
+                className="flex items-center gap-4 border-t border-border py-3.5 transition first:border-0 hover:bg-background"
               >
                 <div className="h-12 w-16 shrink-0 overflow-hidden bg-foreground">
                   <img src={r.thumbnail} alt="" className="h-full w-full object-cover opacity-80" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <div className="truncate text-sm font-medium">{r.title}</div>
-                  <div className="text-[11px] text-muted-foreground">
+                  <div className="truncate text-base font-medium">{r.title}</div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">
                     {r.date} · {r.duration}
                   </div>
                 </div>
@@ -291,18 +249,18 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="bg-white p-6">
+        <div className="card-soft p-6 md:p-7">
           <SectionTitle eyebrow="On-demand" title="Kettlebell circuits" />
           <div className="space-y-1">
             {circuits.slice(0, 3).map((c) => (
               <Link
                 key={c.id}
                 to="/portal/workouts"
-                className="flex items-center justify-between border-t border-border py-3 transition first:border-0 hover:bg-surface"
+                className="flex items-center justify-between border-t border-border py-3.5 transition first:border-0 hover:bg-background"
               >
                 <div>
-                  <div className="text-sm font-medium">{c.name}</div>
-                  <div className="text-[11px] text-muted-foreground">
+                  <div className="text-base font-medium">{c.name}</div>
+                  <div className="mt-0.5 text-xs text-muted-foreground">
                     {c.duration} · {c.difficulty}
                   </div>
                 </div>
@@ -313,26 +271,23 @@ function Dashboard() {
         </div>
       </section>
 
-      <section className="border border-border bg-surface p-6 md:p-8">
-        <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+      <section className="card-soft p-6 md:p-8">
+        <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
           <div className="flex items-start gap-4">
-            <div className="grid h-11 w-11 shrink-0 place-items-center bg-[#25D366] text-white">
+            <div className="grid h-11 w-11 shrink-0 place-items-center border border-border bg-background text-[#25D366]">
               <MessageCircle size={20} />
             </div>
             <div>
               <h3 className="font-display text-xl uppercase tracking-[0.06em]">
                 {whatsAppCommunity.groupName}
               </h3>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-base text-muted-foreground">
                 Questions, accountability, progress sharing
                 {onboarding?.whatsapp_joined && " · You're in the group"}
               </p>
             </div>
           </div>
-          <Link
-            to="/portal/community"
-            className="inline-flex shrink-0 items-center justify-center bg-[#25D366] px-6 py-3 text-[0.6875rem] font-semibold uppercase tracking-[0.14em] text-white hover:opacity-90"
-          >
+          <Link to="/portal/community" className="portal-btn portal-btn-accent shrink-0">
             Open community
           </Link>
         </div>
@@ -344,8 +299,8 @@ function Dashboard() {
 function HeroStat({ k, v }: { k: string; v: string }) {
   return (
     <div>
-      <div className="text-[10px] uppercase tracking-[0.16em] text-background/45">{k}</div>
-      <div className="mt-1.5 text-sm font-medium leading-snug text-background/95">{v}</div>
+      <div className="text-xs uppercase tracking-[0.14em] text-background/45">{k}</div>
+      <div className="mt-1.5 text-sm font-medium leading-snug text-background/95 md:text-base">{v}</div>
     </div>
   );
 }

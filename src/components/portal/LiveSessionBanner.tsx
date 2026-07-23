@@ -14,7 +14,7 @@ export function LiveSessionBadge({ liveState, minutesUntilStart, className = "" 
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-[10px] uppercase tracking-[0.18em] font-semibold ${
+      className={`inline-flex items-center gap-1.5 px-2.5 py-1 text-xs uppercase tracking-[0.14em] font-semibold ${
         isLive
           ? "bg-accent text-white"
           : "bg-surface text-accent border border-border"
