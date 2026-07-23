@@ -58,7 +58,15 @@ function LoginPage() {
       const { error } = await signInWithEmail(email, pwd || "demo-password-not-used");
 
       if (error) {
-        toast.error(error);
+        toast.error(error, {
+          description: "Forgot your password? Use Reset password below.",
+          action: {
+            label: "Reset",
+            onClick: () => {
+              void router.navigate({ to: "/portal/forgot" });
+            },
+          },
+        });
         return;
       }
 
@@ -166,6 +174,15 @@ function LoginPage() {
               />
             </Field>
 
+            <div className="flex justify-end -mt-1">
+              <Link
+                to="/portal/forgot"
+                className="text-[11px] font-semibold uppercase tracking-[0.14em] text-[#E11D2A] hover:underline"
+              >
+                Forgot password?
+              </Link>
+            </div>
+
             <button
               type="submit"
               disabled={loading}
@@ -180,6 +197,10 @@ function LoginPage() {
             New member?{" "}
             <Link to="/join" className="text-black font-semibold border-b border-[#E11D2A]">
               Join now
+            </Link>
+            {" · "}
+            <Link to="/portal/forgot" className="text-black font-semibold border-b border-black/20 hover:border-[#E11D2A]">
+              Reset password
             </Link>
           </p>
           {!supabaseLive && (

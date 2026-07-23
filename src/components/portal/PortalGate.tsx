@@ -3,7 +3,12 @@ import { useRouter } from "@tanstack/react-router";
 import { usePortalSession } from "@/lib/portal/session";
 import { MembershipPaywall } from "./MembershipPaywall";
 
-const PUBLIC_PATHS = ["/portal/login", "/portal/signup", "/portal/forgot"];
+const PUBLIC_PATHS = [
+  "/portal/login",
+  "/portal/signup",
+  "/portal/forgot",
+  "/portal/reset-password",
+];
 
 /** Unpaid / expired members may only reach renewal checkout */
 const PENDING_MEMBER_PATHS = ["/portal/checkout", "/portal/payments"];

@@ -27,14 +27,20 @@ For **weekly picks + attendance tracking**, run [`member-weekly-sessions.sql`](.
 2. For local dev, disable email confirmation:
    - **Authentication** → **Providers** → Email → turn off **Confirm email**
    - Or: **Authentication** → **URL configuration** → add `http://localhost:8080/**` to redirect URLs
+3. **Password reset** (`/portal/forgot` → email → `/portal/reset-password`):
+   - **Authentication** → **URL configuration** → Redirect URLs:
+     - `http://localhost:8080/portal/reset-password`
+     - `https://www.leanmovement.in/portal/reset-password`
+   - Site URL = your app origin while testing that environment
 
 ### Branded auth emails (not “Supabase Auth”)
 
 Default signup emails are sent from `noreply@mail.app.supabase.io` as **Supabase Auth**. To use your brand:
 
-1. **Authentication** → **Email Templates** → **Confirm signup**
-   - Subject: `Confirm your LEANMOVEMENT account`
-   - Body: use your copy + `{{ .ConfirmationURL }}` for the link (see [Supabase template vars](https://supabase.com/docs/guides/auth/auth-email-templates))
+1. **Authentication** → **Email Templates** → **Confirm signup** / **Reset password**
+   - Confirm signup subject: `Confirm your LEANMOVEMENT account`
+   - Reset password subject: `Reset your LEANMOVEMENT password`
+   - Body: your copy + `{{ .ConfirmationURL }}` for the link (see [Supabase template vars](https://supabase.com/docs/guides/auth/auth-email-templates))
 
 2. **Production — custom sender name** (recommended):
    - **Authentication** → **SMTP Settings** → enable custom SMTP

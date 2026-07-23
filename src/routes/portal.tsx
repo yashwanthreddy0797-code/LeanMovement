@@ -3,7 +3,12 @@ import { ClientShell } from "@/components/portal/ClientShell";
 import { PortalSessionProvider } from "@/lib/portal/session";
 
 /** Auth pages — no session polling (prevents crash/flicker on signup/login) */
-const PUBLIC_PREFIXES = ["/portal/login", "/portal/signup", "/portal/forgot"];
+const PUBLIC_PREFIXES = [
+  "/portal/login",
+  "/portal/signup",
+  "/portal/forgot",
+  "/portal/reset-password",
+];
 const COACH_PREFIXES = ["/portal/coach", "/portal/admin"];
 
 function AuthenticatedPortalLayout() {

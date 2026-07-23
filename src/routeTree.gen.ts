@@ -25,6 +25,7 @@ import { Route as JoinIndexRouteImport } from './routes/join.index'
 import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as PortalWorkoutsRouteImport } from './routes/portal.workouts'
 import { Route as PortalSignupRouteImport } from './routes/portal.signup'
+import { Route as PortalResetPasswordRouteImport } from './routes/portal.reset-password'
 import { Route as PortalRecordingsRouteImport } from './routes/portal.recordings'
 import { Route as PortalProgressRouteImport } from './routes/portal.progress'
 import { Route as PortalPaymentsRouteImport } from './routes/portal.payments'
@@ -128,6 +129,11 @@ const PortalWorkoutsRoute = PortalWorkoutsRouteImport.update({
 const PortalSignupRoute = PortalSignupRouteImport.update({
   id: '/signup',
   path: '/signup',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalResetPasswordRoute = PortalResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => PortalRoute,
 } as any)
 const PortalRecordingsRoute = PortalRecordingsRouteImport.update({
@@ -278,6 +284,7 @@ export interface FileRoutesByFullPath {
   '/portal/payments': typeof PortalPaymentsRoute
   '/portal/progress': typeof PortalProgressRoute
   '/portal/recordings': typeof PortalRecordingsRoute
+  '/portal/reset-password': typeof PortalResetPasswordRoute
   '/portal/signup': typeof PortalSignupRoute
   '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog/': typeof BlogIndexRoute
@@ -318,6 +325,7 @@ export interface FileRoutesByTo {
   '/portal/payments': typeof PortalPaymentsRoute
   '/portal/progress': typeof PortalProgressRoute
   '/portal/recordings': typeof PortalRecordingsRoute
+  '/portal/reset-password': typeof PortalResetPasswordRoute
   '/portal/signup': typeof PortalSignupRoute
   '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog': typeof BlogIndexRoute
@@ -361,6 +369,7 @@ export interface FileRoutesById {
   '/portal/payments': typeof PortalPaymentsRoute
   '/portal/progress': typeof PortalProgressRoute
   '/portal/recordings': typeof PortalRecordingsRoute
+  '/portal/reset-password': typeof PortalResetPasswordRoute
   '/portal/signup': typeof PortalSignupRoute
   '/portal/workouts': typeof PortalWorkoutsRoute
   '/blog/': typeof BlogIndexRoute
@@ -405,6 +414,7 @@ export interface FileRouteTypes {
     | '/portal/payments'
     | '/portal/progress'
     | '/portal/recordings'
+    | '/portal/reset-password'
     | '/portal/signup'
     | '/portal/workouts'
     | '/blog/'
@@ -445,6 +455,7 @@ export interface FileRouteTypes {
     | '/portal/payments'
     | '/portal/progress'
     | '/portal/recordings'
+    | '/portal/reset-password'
     | '/portal/signup'
     | '/portal/workouts'
     | '/blog'
@@ -487,6 +498,7 @@ export interface FileRouteTypes {
     | '/portal/payments'
     | '/portal/progress'
     | '/portal/recordings'
+    | '/portal/reset-password'
     | '/portal/signup'
     | '/portal/workouts'
     | '/blog/'
@@ -631,6 +643,13 @@ declare module '@tanstack/react-router' {
       path: '/signup'
       fullPath: '/portal/signup'
       preLoaderRoute: typeof PortalSignupRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/reset-password': {
+      id: '/portal/reset-password'
+      path: '/reset-password'
+      fullPath: '/portal/reset-password'
+      preLoaderRoute: typeof PortalResetPasswordRouteImport
       parentRoute: typeof PortalRoute
     }
     '/portal/recordings': {
@@ -830,6 +849,7 @@ interface PortalRouteChildren {
   PortalPaymentsRoute: typeof PortalPaymentsRoute
   PortalProgressRoute: typeof PortalProgressRoute
   PortalRecordingsRoute: typeof PortalRecordingsRoute
+  PortalResetPasswordRoute: typeof PortalResetPasswordRoute
   PortalSignupRoute: typeof PortalSignupRoute
   PortalWorkoutsRoute: typeof PortalWorkoutsRoute
   PortalIndexRoute: typeof PortalIndexRoute
@@ -858,6 +878,7 @@ const PortalRouteChildren: PortalRouteChildren = {
   PortalPaymentsRoute: PortalPaymentsRoute,
   PortalProgressRoute: PortalProgressRoute,
   PortalRecordingsRoute: PortalRecordingsRoute,
+  PortalResetPasswordRoute: PortalResetPasswordRoute,
   PortalSignupRoute: PortalSignupRoute,
   PortalWorkoutsRoute: PortalWorkoutsRoute,
   PortalIndexRoute: PortalIndexRoute,

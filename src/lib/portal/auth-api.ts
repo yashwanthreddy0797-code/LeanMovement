@@ -33,3 +33,24 @@ export async function signOutPortal() {
     setPortalUser(null);
   }
 }
+
+/** Send Supabase password-recovery email. Always returns ok to avoid email enumeration. */
+export async function requestPasswordReset(email: string) {
+  if (!isSupabaseConfigured()) {
+    return { error: "Password reset needs Supabase. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY." };
+  }
+  const supabase = getSupabase()!;
+  const redirectTo = `${window.location.origin}/portal/reset-password`;
+  const { error } = await supabase.auth.resetPasswordForEmail(email.trim(), { redirectTo });
+  return { error: error?.message ?? null };
+}
+
+/** Set a new password while in a recovery session (after clicking the email link). */
+export async function updatePassword(password: string) {
+  if (!isSupabaseConfigured()) {
+    return { error: "Password reset needs Supabase." };
+  }
+  const supabase = getSupabase()!;
+  const { error } = await supabase.auth.updateUser({ password });
+  return { error: error?.message ?? null };
+}
