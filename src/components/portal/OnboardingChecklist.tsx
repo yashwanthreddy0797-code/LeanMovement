@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Check, Circle, ClipboardList } from "lucide-react";
+import { Check, Circle, ClipboardList, Calendar } from "lucide-react";
 import { SoftCard } from "@/components/portal/ui";
 import { formatPortalDate } from "@/lib/portal/member-format";
 import { formatSelectedSessions } from "@/lib/sessions";
@@ -30,16 +30,16 @@ export function OnboardingChecklist({
   if (loading) return null;
 
   const intakeDone = Boolean(intakeComplete);
-  const foundationsDone = Boolean(onboarding?.foundations_completed_at);
-  const foundationsBooked = Boolean(onboarding?.foundations_booked_at) && !foundationsDone;
+  const onboardingDone = Boolean(onboarding?.foundations_completed_at);
+  const onboardingBooked = Boolean(onboarding?.foundations_booked_at) && !onboardingDone;
   const whatsappDone = Boolean(onboarding?.whatsapp_joined);
   const sessionsDone = Boolean(
     onboarding?.sessions_selected_at && (onboarding?.session_ids?.length ?? 0) >= 3,
   );
 
-  if (intakeDone && foundationsDone && whatsappDone && sessionsDone) return null;
+  if (intakeDone && onboardingDone && whatsappDone && sessionsDone) return null;
 
-  const canBookFoundations = intakeDone && !foundationsDone && !foundationsBooked;
+  const canBookOnboarding = intakeDone && !onboardingDone && !onboardingBooked;
 
   const steps = [
     {
@@ -52,34 +52,36 @@ export function OnboardingChecklist({
       pending: false,
       to: !intakeDone ? "/portal/intake" : undefined,
       cta: "Fill in profile",
+      icon: ClipboardList,
     },
     {
-      id: "foundations",
-      label: foundationsDone
-        ? "Foundations session"
-        : foundationsBooked
-          ? "Foundations booked"
-          : "Book Foundations session",
+      id: "onboarding",
+      label: onboardingDone
+        ? "Onboarding call"
+        : onboardingBooked
+          ? "Onboarding call booked"
+          : "Book onboarding call",
       detail: !intakeDone
         ? "Complete your profile first"
-        : foundationsDone
+        : onboardingDone
           ? `Completed ${formatPortalDate(onboarding?.foundations_completed_at)}`
-          : foundationsBooked
-            ? `Booked ${formatPortalDate(onboarding?.foundations_booked_at)} - coach will confirm`
-            : "60-min technique call with me before your first live class",
-      done: foundationsDone,
-      pending: foundationsBooked,
-      href: canBookFoundations && calendlyUrl ? calendlyUrl : undefined,
-      cta: "Book on Calendly",
-      onCta: canBookFoundations ? onBookFoundations : undefined,
+          : onboardingBooked
+            ? `Booked ${formatPortalDate(onboarding?.foundations_booked_at)} — check email for Zoom`
+            : "30-min Zoom call with your coach before your first live class",
+      done: onboardingDone,
+      pending: onboardingBooked,
+      to: canBookOnboarding ? "/portal/book-onboarding" : undefined,
+      cta: "Pick a time",
+      onCta: canBookOnboarding ? onBookFoundations : undefined,
       locked: !intakeDone,
+      icon: Calendar,
     },
     {
       id: "sessions",
       label: "Weekly schedule",
       detail: sessionsDone
         ? formatSelectedSessions(onboarding?.session_ids ?? [])
-        : "Tue / Thu / Sat · 6:00–7:00 AM IST - assigned automatically",
+        : "Tue / Thu / Sat · 6:00–7:00 AM IST — assigned automatically",
       done: sessionsDone,
     },
     {
@@ -97,8 +99,8 @@ export function OnboardingChecklist({
       <h2 className="font-display text-lg uppercase tracking-[0.06em] sm:text-xl">Finish setup</h2>
       <p className="mt-1 text-sm text-muted-foreground">
         {intakeDone
-          ? "Book your Foundations call — then you're ready for live classes."
-          : "Start with your profile — then book Foundations."}
+          ? "Book your onboarding call — then you're ready for live classes."
+          : "Start with your profile — then book your onboarding call."}
       </p>
       <ul className="mt-5 space-y-3">
         {steps.map((step) => (
@@ -129,8 +131,11 @@ export function OnboardingChecklist({
                 <Link
                   to={step.to}
                   className="mt-1.5 inline-flex items-center gap-1 type-link !text-accent hover:!text-foreground"
+                  onClick={() => {
+                    if (step.onCta) void step.onCta();
+                  }}
                 >
-                  <ClipboardList size={12} />
+                  {step.icon && <step.icon size={12} />}
                   {step.cta} →
                 </Link>
               )}
@@ -140,9 +145,6 @@ export function OnboardingChecklist({
                   target="_blank"
                   rel="noopener noreferrer"
                   className="mt-1.5 inline-flex type-link !text-accent hover:!text-foreground"
-                  onClick={() => {
-                    if (step.onCta) void step.onCta();
-                  }}
                 >
                   {step.cta} →
                 </a>

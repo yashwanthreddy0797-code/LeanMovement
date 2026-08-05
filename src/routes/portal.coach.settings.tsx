@@ -60,7 +60,7 @@ function SettingsPage() {
     else {
       toast.success(
         calendlyNormalized
-          ? "Saved - new members will see the Foundations booking popup"
+          ? "Saved — new members will book onboarding after their profile"
           : "Portal settings saved",
       );
       setCalendly(calendlyNormalized);
@@ -72,7 +72,7 @@ function SettingsPage() {
     <div className="max-w-2xl space-y-8 pb-20 lg:pb-0">
       <PortalPageHeader
         title="Settings"
-        description="WhatsApp, Foundations booking, and cohort date shown to members."
+        description="WhatsApp, onboarding call (Calendly), and cohort date shown to members."
       />
 
       <SoftCard className="!p-5 md:!p-6">
@@ -86,16 +86,16 @@ function SettingsPage() {
               className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
             />
           </Field>
-          <Field label="Foundations session - Calendly event link">
+          <Field label="Onboarding call — Calendly event link">
             <input
               value={calendly}
               onChange={(e) => setCalendly(e.target.value)}
-              placeholder="https://calendly.com/mohith/foundations"
+              placeholder="https://calendly.com/your-name/leanmovement-onboarding"
               className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
             />
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
-              Create a 60-min event in Calendly (e.g. “Foundations Session”), copy that event’s
-              share link, and paste it here. Until this is set, members won’t see the booking popup.
+              In Calendly: open your event (e.g. “LeanMovement - Onboarding Call with Coach”) →
+              Copy link → paste here. Members see this embedded right after they submit their profile.
             </p>
           </Field>
           <Field label="Cohort start date (display text)">

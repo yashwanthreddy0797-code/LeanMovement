@@ -74,11 +74,10 @@ export function FoundationsBookingModal({
           id="foundations-booking-title"
           className="mt-2 font-display text-2xl uppercase tracking-[0.06em] sm:text-[1.75rem]"
         >
-          Book your Foundations call
+          Book your onboarding call
         </h2>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-          Before your first live class, book a 60-minute Foundations session with me ({coachName}).
-          Technique first. Then we train live.
+          30 minutes on Zoom with {coachName} — goals, technique basics, and how live sessions work.
         </p>
 
         <div className="mt-6 flex flex-col gap-2 sm:flex-row">

@@ -65,7 +65,7 @@ function MemberIntakePage() {
   useEffect(() => {
     if (isLoading || !intakeResult?.ok) return;
     if (isIntakeComplete(intakeResult.intake) && !submitted) {
-      void navigate({ to: "/portal/dashboard" });
+      void navigate({ to: "/portal/book-onboarding" });
       return;
     }
     const intake = intakeResult.intake;
@@ -121,8 +121,8 @@ function MemberIntakePage() {
       }
 
       setSubmitted(true);
-      toast.success("Profile saved — you're ready for Foundations");
-      void navigate({ to: "/portal/dashboard" });
+      toast.success("Profile saved — book your onboarding call next");
+      void navigate({ to: "/portal/book-onboarding" });
     } catch {
       toast.error("Something went wrong. Please try again.");
     }
@@ -142,12 +142,12 @@ function MemberIntakePage() {
         <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center bg-accent/10 text-accent">
           <Check size={24} />
         </div>
-        <h1 className="font-display text-2xl uppercase tracking-[0.06em]">You&apos;re set</h1>
+        <h1 className="font-display text-2xl uppercase tracking-[0.06em]">Profile saved</h1>
         <p className="mt-3 text-sm text-muted-foreground">
-          {COACH.name.split(" ")[0]} will review your answers before your Foundations call.
+          Next: book your 30-minute onboarding call with {COACH.name.split(" ")[0]}.
         </p>
-        <Link to="/portal/dashboard" className="portal-btn portal-btn-accent mt-8 inline-flex">
-          Go to dashboard
+        <Link to="/portal/book-onboarding" className="portal-btn portal-btn-accent mt-8 inline-flex">
+          Book onboarding call
         </Link>
       </div>
     );
@@ -158,7 +158,7 @@ function MemberIntakePage() {
       <PortalPageHeader
         eyebrow="Welcome"
         title="Tell me about you"
-        description="You're in. Help me coach you properly before your Foundations session."
+        description="You're in. Help me coach you properly — then book your onboarding call."
       />
 
       <SoftCard className="!p-5 sm:!p-8">

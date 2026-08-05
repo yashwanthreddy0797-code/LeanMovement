@@ -1,16 +1,10 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { LiveSessionBadge } from "@/components/portal/LiveSessionBanner";
-import {
-  FoundationsBookingModal,
-  dismissFoundationsModal,
-  wasFoundationsModalDismissed,
-} from "@/components/portal/FoundationsBookingModal";
 import { OnboardingChecklist } from "@/components/portal/OnboardingChecklist";
 import { WeeklySessionsPanel } from "@/components/portal/WeeklySessionsPanel";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
 import {
-  useMarkFoundationsBooked,
   useMemberOnboarding,
 } from "@/hooks/useMemberOnboarding";
 import { isIntakeComplete, useMemberIntake } from "@/hooks/useMemberIntake";
@@ -18,7 +12,7 @@ import { useWeeklySessions } from "@/hooks/useWeeklySessions";
 import { usePortalPageContent } from "@/lib/portal/portal-content";
 import { whatsAppCommunity } from "@/lib/portal/member-data";
 import { usePortalSession } from "@/lib/portal/session";
-import { normalizeCalendlyUrl } from "@/lib/calendly";
+import { resolveOnboardingCalendlyUrl } from "@/lib/calendly";
 import { COACH } from "@/lib/lean-kettlebell";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { Radio } from "lucide-react";
@@ -36,19 +30,16 @@ function Dashboard() {
     useMemberOnboarding(session.user?.id);
   const { data: intakeResult, isLoading: intakeLoading } = useMemberIntake(session.user?.id);
   const intakeComplete = isIntakeComplete(intakeResult?.intake);
-  const markFoundationsBooked = useMarkFoundationsBooked(session.user?.id);
   const {
     data: weeklySessions,
     isLoading: weeklyLoading,
     refetch: refetchWeekly,
   } = useWeeklySessions(session.user?.id);
-  const [showFoundationsModal, setShowFoundationsModal] = useState(false);
 
-  const calendlyUrl = normalizeCalendlyUrl(siteConfig.foundationsCalendlyUrl);
-  const needsFoundationsBooking =
+  const calendlyUrl = resolveOnboardingCalendlyUrl(siteConfig.foundationsCalendlyUrl);
+  const needsOnboardingBooking =
     Boolean(session.user?.id) &&
     intakeComplete &&
-    Boolean(calendlyUrl) &&
     !onboardingLoading &&
     !onboarding?.foundations_completed_at &&
     !onboarding?.foundations_booked_at;
@@ -61,16 +52,18 @@ function Dashboard() {
   }, [session.user?.id, intakeLoading, intakeResult, intakeComplete, navigate]);
 
   useEffect(() => {
-    if (!needsFoundationsBooking || !session.user?.id) {
-      setShowFoundationsModal(false);
-      return;
-    }
-    if (wasFoundationsModalDismissed(session.user.id)) {
-      setShowFoundationsModal(false);
-      return;
-    }
-    setShowFoundationsModal(true);
-  }, [needsFoundationsBooking, session.user?.id]);
+    if (!session.user?.id || intakeLoading || onboardingLoading || !isSupabaseConfigured()) return;
+    if (!intakeComplete) return;
+    if (!needsOnboardingBooking) return;
+    void navigate({ to: "/portal/book-onboarding" });
+  }, [
+    session.user?.id,
+    intakeLoading,
+    onboardingLoading,
+    intakeComplete,
+    needsOnboardingBooking,
+    navigate,
+  ]);
 
   if (isLoading) {
     return <PortalPageSkeleton lines={3} />;
@@ -143,10 +136,6 @@ function Dashboard() {
         calendlyUrl={calendlyUrl}
         whatsappUrl={whatsappUrl}
         loading={onboardingLoading || intakeLoading}
-        onBookFoundations={async () => {
-          await markFoundationsBooked.mutateAsync();
-          setShowFoundationsModal(false);
-        }}
       />
 
       {session.user?.id && (
@@ -160,19 +149,6 @@ function Dashboard() {
           }}
         />
       )}
-
-      <FoundationsBookingModal
-        open={showFoundationsModal}
-        calendlyUrl={calendlyUrl}
-        onBook={async () => {
-          await markFoundationsBooked.mutateAsync();
-          setShowFoundationsModal(false);
-        }}
-        onDismiss={() => {
-          if (session.user?.id) dismissFoundationsModal(session.user.id);
-          setShowFoundationsModal(false);
-        }}
-      />
 
       {isLiveSoon && (
         <div className="fixed inset-x-0 bottom-[calc(3.5rem+env(safe-area-inset-bottom))] z-30 border-t border-accent bg-accent p-3 lg:hidden">

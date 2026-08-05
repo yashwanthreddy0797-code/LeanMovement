@@ -30,3 +30,27 @@ export function normalizeCalendlyUrl(raw?: string | null): string {
 export function isCalendlyUrlConfigured(raw?: string | null): boolean {
   return Boolean(normalizeCalendlyUrl(raw));
 }
+
+/** Site config first, then optional VITE_CALENDLY_ONBOARDING_URL fallback. */
+export function resolveOnboardingCalendlyUrl(siteConfigUrl?: string | null): string {
+  const fromSite = normalizeCalendlyUrl(siteConfigUrl);
+  if (fromSite) return fromSite;
+  const envUrl = import.meta.env.VITE_CALENDLY_ONBOARDING_URL as string | undefined;
+  return normalizeCalendlyUrl(envUrl);
+}
+
+export function calendlyUrlWithPrefill(
+  baseUrl: string,
+  prefill: { name?: string; email?: string; phone?: string },
+): string {
+  try {
+    const url = new URL(baseUrl);
+    if (prefill.name) url.searchParams.set("name", prefill.name);
+    if (prefill.email) url.searchParams.set("email", prefill.email);
+    const digits = prefill.phone?.replace(/\D/g, "");
+    if (digits) url.searchParams.set("a1", prefill.phone!);
+    return url.toString();
+  } catch {
+    return baseUrl;
+  }
+}

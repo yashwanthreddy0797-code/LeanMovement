@@ -40,6 +40,7 @@ import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
 import { Route as PortalCommunityRouteImport } from './routes/portal.community'
 import { Route as PortalCheckoutRouteImport } from './routes/portal.checkout'
 import { Route as PortalCheckinRouteImport } from './routes/portal.checkin'
+import { Route as PortalBookOnboardingRouteImport } from './routes/portal.book-onboarding'
 import { Route as PortalAdminRouteImport } from './routes/portal.admin'
 import { Route as JoinSuccessRouteImport } from './routes/join.success'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
@@ -208,6 +209,11 @@ const PortalCheckinRoute = PortalCheckinRouteImport.update({
   path: '/checkin',
   getParentRoute: () => PortalRoute,
 } as any)
+const PortalBookOnboardingRoute = PortalBookOnboardingRouteImport.update({
+  id: '/book-onboarding',
+  path: '/book-onboarding',
+  getParentRoute: () => PortalRoute,
+} as any)
 const PortalAdminRoute = PortalAdminRouteImport.update({
   id: '/admin',
   path: '/admin',
@@ -285,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/blog/$slug': typeof BlogSlugRoute
   '/join/success': typeof JoinSuccessRoute
   '/portal/admin': typeof PortalAdminRoute
+  '/portal/book-onboarding': typeof PortalBookOnboardingRoute
   '/portal/checkin': typeof PortalCheckinRoute
   '/portal/checkout': typeof PortalCheckoutRoute
   '/portal/community': typeof PortalCommunityRoute
@@ -328,6 +335,7 @@ export interface FileRoutesByTo {
   '/blog/$slug': typeof BlogSlugRoute
   '/join/success': typeof JoinSuccessRoute
   '/portal/admin': typeof PortalAdminRoute
+  '/portal/book-onboarding': typeof PortalBookOnboardingRoute
   '/portal/checkin': typeof PortalCheckinRoute
   '/portal/checkout': typeof PortalCheckoutRoute
   '/portal/community': typeof PortalCommunityRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/blog/$slug': typeof BlogSlugRoute
   '/join/success': typeof JoinSuccessRoute
   '/portal/admin': typeof PortalAdminRoute
+  '/portal/book-onboarding': typeof PortalBookOnboardingRoute
   '/portal/checkin': typeof PortalCheckinRoute
   '/portal/checkout': typeof PortalCheckoutRoute
   '/portal/community': typeof PortalCommunityRoute
@@ -421,6 +430,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/join/success'
     | '/portal/admin'
+    | '/portal/book-onboarding'
     | '/portal/checkin'
     | '/portal/checkout'
     | '/portal/community'
@@ -464,6 +474,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/join/success'
     | '/portal/admin'
+    | '/portal/book-onboarding'
     | '/portal/checkin'
     | '/portal/checkout'
     | '/portal/community'
@@ -509,6 +520,7 @@ export interface FileRouteTypes {
     | '/blog/$slug'
     | '/join/success'
     | '/portal/admin'
+    | '/portal/book-onboarding'
     | '/portal/checkin'
     | '/portal/checkout'
     | '/portal/community'
@@ -775,6 +787,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalCheckinRouteImport
       parentRoute: typeof PortalRoute
     }
+    '/portal/book-onboarding': {
+      id: '/portal/book-onboarding'
+      path: '/book-onboarding'
+      fullPath: '/portal/book-onboarding'
+      preLoaderRoute: typeof PortalBookOnboardingRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/portal/admin': {
       id: '/portal/admin'
       path: '/admin'
@@ -876,6 +895,7 @@ const JoinRouteWithChildren = JoinRoute._addFileChildren(JoinRouteChildren)
 
 interface PortalRouteChildren {
   PortalAdminRoute: typeof PortalAdminRoute
+  PortalBookOnboardingRoute: typeof PortalBookOnboardingRoute
   PortalCheckinRoute: typeof PortalCheckinRoute
   PortalCheckoutRoute: typeof PortalCheckoutRoute
   PortalCommunityRoute: typeof PortalCommunityRoute
@@ -906,6 +926,7 @@ interface PortalRouteChildren {
 
 const PortalRouteChildren: PortalRouteChildren = {
   PortalAdminRoute: PortalAdminRoute,
+  PortalBookOnboardingRoute: PortalBookOnboardingRoute,
   PortalCheckinRoute: PortalCheckinRoute,
   PortalCheckoutRoute: PortalCheckoutRoute,
   PortalCommunityRoute: PortalCommunityRoute,
