@@ -26,6 +26,8 @@ type ZoomMeetingRecording = {
   start_time?: string;
   duration?: number;
   share_url?: string;
+  /** Splice into share_url / play_url as ?pwd= so members skip the passcode screen. */
+  recording_play_passcode?: string;
   recording_files?: ZoomRecordingFile[];
 };
 
@@ -155,11 +157,27 @@ function titleForMeeting(meeting: ZoomMeetingRecording): string {
   return `${topic} — ${date}`;
 }
 
+function withRecordingPasscode(url: string, passcode?: string): string {
+  const pwd = passcode?.trim();
+  if (!pwd) return url;
+  try {
+    const parsed = new URL(url);
+    if (!parsed.searchParams.get("pwd")) {
+      parsed.searchParams.set("pwd", pwd);
+    }
+    return parsed.toString();
+  } catch {
+    // Fallback if Zoom returns a non-standard URL
+    if (/[?&]pwd=/i.test(url)) return url;
+    return `${url}${url.includes("?") ? "&" : "?"}pwd=${encodeURIComponent(pwd)}`;
+  }
+}
+
 function playableUrl(meeting: ZoomMeetingRecording, file: ZoomRecordingFile): string | null {
   const share = meeting.share_url?.trim();
-  if (share) return share;
+  if (share) return withRecordingPasscode(share, meeting.recording_play_passcode);
   const play = file.play_url?.trim();
-  if (play) return play;
+  if (play) return withRecordingPasscode(play, meeting.recording_play_passcode);
   return null;
 }
 
