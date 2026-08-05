@@ -42,27 +42,27 @@ function HomePage() {
     <div className="bg-background text-foreground">
       {/* Hero — wordmark upper zone, copy + CTA lower zone (no overlap) */}
       <header
-        className="relative grid min-h-[100dvh] max-h-[100dvh] grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-black"
+        className="relative grid min-h-[100dvh] max-h-[100dvh] grid-rows-[minmax(0,1.2fr)_auto] gap-5 overflow-hidden bg-black md:grid-rows-[minmax(0,1.35fr)_auto] md:gap-8"
       >
         <div
-          className="flex min-h-0 items-center justify-center px-6 pt-20 pb-4 sm:px-10 md:pt-28 md:pb-6"
+          className="flex min-h-0 items-end justify-center px-5 pt-20 pb-0 sm:px-8 md:pt-28"
           aria-hidden
         >
           <img
             src="/brand/lean-movement-wordmark.png"
             alt=""
-            className="h-auto w-full max-w-[min(88vw,520px)] max-h-[min(26vh,200px)] object-contain object-center sm:max-h-[min(30vh,240px)] md:max-w-[600px] md:max-h-[min(38vh,320px)] lg:max-h-[min(40vh,360px)]"
+            className="h-auto w-full max-w-[min(92vw,640px)] max-h-[min(34vh,280px)] object-contain object-bottom sm:max-w-[min(90vw,700px)] sm:max-h-[min(36vh,320px)] md:max-w-[760px] md:max-h-[min(46vh,440px)] lg:max-w-[840px] lg:max-h-[min(48vh,480px)]"
             fetchPriority="high"
           />
         </div>
-        <div className="relative z-10 shrink-0 bg-black pb-10 pt-2 shadow-[0_-32px_64px_rgba(0,0,0,0.85)] md:pb-16 md:pt-4">
+        <div className="relative z-10 shrink-0 bg-black pb-10 pt-0 shadow-[0_-40px_80px_rgba(0,0,0,0.9)] md:pb-16">
           <div className="container-x">
             <FadeUp>
               <h1 className="max-w-4xl font-display text-[3rem] uppercase leading-[0.9] tracking-[0.04em] text-white sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem]">
-              Train live.
-              <br />
-              <span className="text-accent">Stay lean.</span>
-            </h1>
+                Train live.
+                <br />
+                <span className="text-accent">Stay lean.</span>
+              </h1>
             <p className="mt-5 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
               {HOME_HERO.sessionsLine}
             </p>
