@@ -16,6 +16,7 @@ import { Route as PortalRouteImport } from './routes/portal'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as JoinRouteImport } from './routes/join'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as AboutRouteImport } from './routes/about'
@@ -85,6 +86,11 @@ const JoinRoute = JoinRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookRoute = BookRouteImport.update({
@@ -268,6 +274,7 @@ export interface FileRoutesByFullPath {
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
   '/book': typeof BookRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/join': typeof JoinRouteWithChildren
   '/login': typeof LoginRoute
@@ -312,6 +319,7 @@ export interface FileRoutesByTo {
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
   '/book': typeof BookRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/login': typeof LoginRoute
   '/pricing': typeof PricingRoute
@@ -355,6 +363,7 @@ export interface FileRoutesById {
   '/about': typeof AboutRoute
   '/apply': typeof ApplyRoute
   '/book': typeof BookRoute
+  '/checkout': typeof CheckoutRoute
   '/contact': typeof ContactRoute
   '/join': typeof JoinRouteWithChildren
   '/login': typeof LoginRoute
@@ -401,6 +410,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/book'
+    | '/checkout'
     | '/contact'
     | '/join'
     | '/login'
@@ -445,6 +455,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/book'
+    | '/checkout'
     | '/contact'
     | '/login'
     | '/pricing'
@@ -487,6 +498,7 @@ export interface FileRouteTypes {
     | '/about'
     | '/apply'
     | '/book'
+    | '/checkout'
     | '/contact'
     | '/join'
     | '/login'
@@ -532,6 +544,7 @@ export interface RootRouteChildren {
   AboutRoute: typeof AboutRoute
   ApplyRoute: typeof ApplyRoute
   BookRoute: typeof BookRoute
+  CheckoutRoute: typeof CheckoutRoute
   ContactRoute: typeof ContactRoute
   JoinRoute: typeof JoinRouteWithChildren
   LoginRoute: typeof LoginRoute
@@ -592,6 +605,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/book': {
@@ -922,6 +942,7 @@ const rootRouteChildren: RootRouteChildren = {
   AboutRoute: AboutRoute,
   ApplyRoute: ApplyRoute,
   BookRoute: BookRoute,
+  CheckoutRoute: CheckoutRoute,
   ContactRoute: ContactRoute,
   JoinRoute: JoinRouteWithChildren,
   LoginRoute: LoginRoute,
