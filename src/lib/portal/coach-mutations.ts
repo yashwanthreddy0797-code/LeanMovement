@@ -1,4 +1,5 @@
 import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { requireAccessToken } from "@/lib/supabase/access-token";
 import type { Membership, MembershipPlan } from "@/lib/supabase/types";
 import {
   coachAddRecording,
@@ -14,6 +15,11 @@ function coachIdOrThrow(coachId: string | undefined) {
   return coachId;
 }
 
+async function coachAuth(coachId: string | undefined) {
+  const accessToken = await requireAccessToken();
+  return { accessToken, coachId: coachIdOrThrow(coachId) };
+}
+
 export async function updateMemberStatus(
   coachId: string | undefined,
   userId: string,
@@ -22,9 +28,10 @@ export async function updateMemberStatus(
 ) {
   if (!isSupabaseConfigured()) return { error: null };
 
+  const auth = await coachAuth(coachId);
   const result = await coachUpdateMemberStatus({
     data: {
-      coachId: coachIdOrThrow(coachId),
+      ...auth,
       memberId: userId,
       status,
       plan,
@@ -45,8 +52,9 @@ export async function updateOnboarding(
 ) {
   if (!isSupabaseConfigured()) return { error: null };
 
+  const auth = await coachAuth(coachId);
   const result = await coachUpdateOnboarding({
-    data: { coachId: coachIdOrThrow(coachId), memberId, ...patch },
+    data: { ...auth, memberId, ...patch },
   });
 
   return { error: result.ok ? null : result.message };
@@ -59,8 +67,9 @@ export async function updateSiteConfig(
 ) {
   if (!isSupabaseConfigured()) return { error: "Demo mode" };
 
+  const auth = await coachAuth(coachId);
   const result = await coachUpdateSiteConfig({
-    data: { coachId: coachIdOrThrow(coachId), key, value },
+    data: { ...auth, key, value },
   });
 
   return { error: result.ok ? null : result.message };
@@ -79,8 +88,9 @@ export async function updateLiveSessionUrl(
     return { error: "Enter a valid URL (https://...)" };
   }
 
+  const auth = await coachAuth(coachId);
   const result = await coachUpdateLiveSession({
-    data: { coachId: coachIdOrThrow(coachId), sessionId: id, joinUrl },
+    data: { ...auth, sessionId: id, joinUrl },
   });
 
   return { error: result.ok ? null : result.message };
@@ -98,9 +108,10 @@ export async function addRecording(
     return { error: "Enter a valid video URL" };
   }
 
+  const auth = await coachAuth(coachId);
   const result = await coachAddRecording({
     data: {
-      coachId: coachIdOrThrow(coachId),
+      ...auth,
       title: input.title,
       sessionType: input.session_type,
       videoUrl: input.video_url,
@@ -114,8 +125,9 @@ export async function addRecording(
 export async function deleteRecording(coachId: string | undefined, recordingId: string) {
   if (!isSupabaseConfigured()) return { error: "Demo mode" };
 
+  const auth = await coachAuth(coachId);
   const result = await coachDeleteRecording({
-    data: { coachId: coachIdOrThrow(coachId), recordingId },
+    data: { ...auth, recordingId },
   });
 
   return { error: result.ok ? null : result.message };

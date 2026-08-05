@@ -154,7 +154,7 @@ begin
     new.id,
     new.email,
     coalesce(new.raw_user_meta_data->>'full_name', split_part(new.email, '@', 1)),
-    coalesce(new.raw_user_meta_data->>'role', 'member')
+    'member'
   );
 
   select plan, amount_inr
@@ -233,7 +233,12 @@ alter table public.site_config enable row level security;
 -- Profiles: read own; coaches read all
 create policy "profiles_select_own" on public.profiles for select using (auth.uid() = id);
 create policy "profiles_select_coach" on public.profiles for select using (public.is_coach_or_admin());
-create policy "profiles_update_own" on public.profiles for update using (auth.uid() = id);
+create policy "profiles_update_own" on public.profiles for update
+  using (auth.uid() = id)
+  with check (
+    auth.uid() = id
+    and role = (select p.role from public.profiles p where p.id = auth.uid())
+  );
 
 -- Memberships: members read own; coaches read/update all
 create policy "memberships_select_own" on public.memberships for select using (auth.uid() = user_id);

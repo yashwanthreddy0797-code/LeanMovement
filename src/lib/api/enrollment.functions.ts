@@ -1,6 +1,8 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { accessTokenSchema } from "@/lib/api/auth-input";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import { authErrorMessage, requireCoachCaller } from "@/lib/supabase/server-auth";
 import { planAmountInr, toMembershipPlan } from "@/lib/enrollment/plans";
 import type { MembershipPlan } from "@/lib/supabase/types";
 import {
@@ -30,19 +32,8 @@ const enrollmentInput = z.object({
   sessionIds: z.array(sessionIdSchema).max(SESSIONS_TO_PICK).optional().default([]),
 });
 
-async function verifyCoach(coachId: string) {
-  const admin = getSupabaseAdmin();
-  if (!admin) throw new Error("Server not configured");
-
-  const { data, error } = await admin
-    .from("profiles")
-    .select("role")
-    .eq("id", coachId)
-    .maybeSingle();
-
-  if (error || !data || (data.role !== "coach" && data.role !== "admin")) {
-    throw new Error("Coach access required");
-  }
+async function verifyCoach(accessToken: string, coachId: string) {
+  const { admin } = await requireCoachCaller(accessToken, coachId);
   return admin;
 }
 
@@ -206,6 +197,15 @@ export const provisionMemberForCheckout = createServerFn({ method: "POST" })
     const email = data.email.trim().toLowerCase();
     const fullName = data.fullName.trim();
 
+    const tableIntent = await readEnrollmentIntent(admin, email);
+    const configIntent = await getEnrollmentFromSiteConfig(admin, email);
+    if (!tableIntent.row && !configIntent) {
+      return {
+        ok: false as const,
+        message: "Complete the join form at leanmovement.in/join first.",
+      };
+    }
+
     const { data: created, error: createError } = await admin.auth.admin.createUser({
       email,
       password: data.password,
@@ -306,9 +306,16 @@ export const linkEnrollmentAfterSignup = createServerFn({ method: "POST" })
 
 /** Coach - enrollments waiting for account or payment confirmation */
 export const coachListPendingEnrollments = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ coachId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, coachId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
+    let admin;
+    try {
+      admin = await verifyCoach(data.accessToken, data.coachId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err), enrollments: [] };
+    }
 
     const configRows = await listPendingEnrollmentsFromSiteConfig(admin);
     const configByEmail = new Map(configRows.map((r) => [r.email, r]));
@@ -353,12 +360,18 @@ export const coachListPendingEnrollments = createServerFn({ method: "GET" })
 export const coachConfirmEnrollmentPayment = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
+      accessToken: accessTokenSchema,
       coachId: z.string().uuid(),
       enrollmentId: z.string().uuid(),
     }),
   )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
+    let admin;
+    try {
+      admin = await verifyCoach(data.accessToken, data.coachId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
 
     const { error } = await admin
       .from("enrollment_intents")
@@ -374,19 +387,31 @@ export const coachConfirmEnrollmentPayment = createServerFn({ method: "POST" })
   });
 
 export const coachGetRegistrationAlerts = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ coachId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, coachId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
-    const alerts = await listCoachAlerts(admin);
-    return { ok: true as const, alerts };
+    try {
+      const admin = await verifyCoach(data.accessToken, data.coachId);
+      const alerts = await listCoachAlerts(admin);
+      return { ok: true as const, alerts };
+    } catch (err) {
+      return { ok: false as const, alerts: [], message: authErrorMessage(err) };
+    }
   });
 
 export const coachMarkRegistrationAlertsRead = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ coachId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, coachId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
-    await markCoachAlertsRead(admin);
-    return { ok: true as const };
+    try {
+      const admin = await verifyCoach(data.accessToken, data.coachId);
+      await markCoachAlertsRead(admin);
+      return { ok: true as const };
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
   });
 
 export type EnrollmentIntentRow = {

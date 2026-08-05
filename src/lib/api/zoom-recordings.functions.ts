@@ -1,22 +1,10 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { accessTokenSchema } from "@/lib/api/auth-input";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import { authErrorMessage, requireCoachCaller } from "@/lib/supabase/server-auth";
 import { syncZoomRecordingsToPortal } from "@/lib/zoom/sync-recordings.server";
 import { isZoomConfigured } from "@/lib/zoom/recordings.server";
-
-async function verifyCoach(coachId: string) {
-  const admin = getSupabaseAdmin();
-  if (!admin) throw new Error("Server not configured");
-  const { data: profile } = await admin
-    .from("profiles")
-    .select("id, role")
-    .eq("id", coachId)
-    .maybeSingle();
-  if (!profile || (profile.role !== "coach" && profile.role !== "admin")) {
-    throw new Error("Coach access required");
-  }
-  return admin;
-}
 
 export const getZoomSyncStatus = createServerFn({ method: "GET" }).handler(async () => {
   return { configured: isZoomConfigured() };
@@ -25,11 +13,16 @@ export const getZoomSyncStatus = createServerFn({ method: "GET" }).handler(async
 export const coachSyncZoomRecordings = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
+      accessToken: accessTokenSchema,
       coachId: z.string().uuid(),
       daysBack: z.number().int().min(1).max(60).optional(),
     }),
   )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
-    return syncZoomRecordingsToPortal(admin, { daysBack: data.daysBack ?? 14 });
+    try {
+      const { admin } = await requireCoachCaller(data.accessToken, data.coachId);
+      return syncZoomRecordingsToPortal(admin, { daysBack: data.daysBack ?? 14 });
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
   });

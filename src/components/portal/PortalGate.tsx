@@ -10,8 +10,8 @@ const PUBLIC_PATHS = [
   "/portal/reset-password",
 ];
 
-/** Unpaid / expired members may only reach renewal checkout */
-const PENDING_MEMBER_PATHS = ["/portal/checkout", "/portal/payments"];
+/** Unpaid / expired members may reach checkout, billing, and post-payment intake */
+const PENDING_MEMBER_PATHS = ["/portal/checkout", "/portal/payments", "/portal/intake"];
 
 export function PortalGate({
   children,
@@ -42,7 +42,7 @@ export function PortalGate({
       session.membership?.status === "pending" &&
       !PENDING_MEMBER_PATHS.some((p) => pathname.startsWith(p))
     ) {
-      router.navigate({ to: "/join", search: { plan: "standard", email: session.user.email, name: "" } });
+      router.navigate({ to: "/portal/checkout" });
     }
   }, [
     session.loading,

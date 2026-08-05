@@ -4,6 +4,7 @@ import {
   recordSessionJoin,
   saveMemberWeeklySessions,
 } from "@/lib/api/weekly-sessions.functions";
+import { requireAccessToken } from "@/lib/supabase/access-token";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { SESSIONS_TO_PICK } from "@/lib/sessions";
 
@@ -36,7 +37,8 @@ export function useWeeklySessions(userId?: string | null) {
     queryFn: async () => {
       if (!userId) return null;
       if (!isSupabaseConfigured()) return DEMO_WEEKLY;
-      return getMemberWeeklySessions({ data: { userId } });
+      const accessToken = await requireAccessToken();
+      return getMemberWeeklySessions({ data: { accessToken, userId } });
     },
     enabled: Boolean(userId),
     staleTime: 20_000,
@@ -55,7 +57,8 @@ export function useWeeklySessionActions(userId?: string | null) {
     if (!isSupabaseConfigured()) {
       return { ok: true as const, sessionIds };
     }
-    const result = await saveMemberWeeklySessions({ data: { userId, sessionIds } });
+    const accessToken = await requireAccessToken();
+    const result = await saveMemberWeeklySessions({ data: { accessToken, userId, sessionIds } });
     if (result.ok) invalidate();
     return result;
   };
@@ -65,7 +68,8 @@ export function useWeeklySessionActions(userId?: string | null) {
     if (!isSupabaseConfigured()) {
       return { ok: true as const, attendedAt: new Date().toISOString() };
     }
-    const result = await recordSessionJoin({ data: { userId, sessionSlotId } });
+    const accessToken = await requireAccessToken();
+    const result = await recordSessionJoin({ data: { accessToken, userId, sessionSlotId } });
     if (result.ok) invalidate();
     return result;
   };

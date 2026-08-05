@@ -1,6 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { getMemberIntake, submitMemberIntake, type MemberIntakeInput } from "@/lib/api/intake.functions";
-import { clearDemoMemberIntake, getDemoMemberIntake, saveDemoMemberIntake } from "@/lib/intake-demo";
+import { getDemoMemberIntake, saveDemoMemberIntake } from "@/lib/intake-demo";
+import { requireAccessToken } from "@/lib/supabase/access-token";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import type { MemberIntake } from "@/lib/supabase/types";
 
@@ -13,7 +14,8 @@ export function useMemberIntake(userId?: string | null) {
         return { ok: true as const, intake: getDemoMemberIntake() };
       }
 
-      return getMemberIntake({ data: { userId } });
+      const accessToken = await requireAccessToken();
+      return getMemberIntake({ data: { accessToken, userId } });
     },
     enabled: Boolean(userId),
     staleTime: 30_000,
@@ -48,7 +50,8 @@ export function useSubmitMemberIntake(userId?: string | null) {
         return { ok: true as const };
       }
 
-      return submitMemberIntake({ data: { ...input, userId } });
+      const accessToken = await requireAccessToken();
+      return submitMemberIntake({ data: { ...input, userId, accessToken } });
     },
     onSuccess: () => {
       void queryClient.invalidateQueries({ queryKey: ["member-intake", userId] });

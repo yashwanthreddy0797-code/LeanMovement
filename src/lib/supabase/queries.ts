@@ -243,14 +243,16 @@ export async function fetchPortalContent(): Promise<PortalContent> {
     ]);
 
     if (liveRes.error || !liveRes.data?.length) {
-      console.warn("[portal-content] live_sessions unavailable, using demo data", liveRes.error?.message);
-      return mockContent();
+      console.warn("[portal-content] live_sessions unavailable", liveRes.error?.message);
+      throw new Error(liveRes.error?.message || "Live schedule unavailable");
     }
 
     const liveRows = (liveRes.data as LiveSessionRow[]).filter(
       (row) => row?.day_of_week && row?.start_time,
     );
-    if (!liveRows.length) return mockContent();
+    if (!liveRows.length) {
+      throw new Error("No live sessions configured");
+    }
 
     const configMap = Object.fromEntries(
       ((cfgRes.data ?? []) as { key: string; value: string }[]).map((c) => [c.key, c.value]),
@@ -276,8 +278,8 @@ export async function fetchPortalContent(): Promise<PortalContent> {
       totalSessionsPerMonth: 12,
     };
   } catch (err) {
-    console.error("[portal-content] fetch failed, using demo data", err);
-    return mockContent();
+    console.error("[portal-content] fetch failed", err);
+    throw err;
   }
 }
 

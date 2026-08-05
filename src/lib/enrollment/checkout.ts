@@ -51,7 +51,7 @@ export async function completeCheckout(input: CheckoutInput) {
     return {
       ok: true as const,
       needsPayment: false as const,
-      destination: "/portal/dashboard" as const,
+      destination: "/portal/intake" as const,
       userId: null as string | null,
       demo: true as const,
     };

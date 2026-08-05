@@ -1,9 +1,16 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { accessTokenSchema } from "@/lib/api/auth-input";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import {
+  authErrorMessage,
+  requireCoachCaller,
+  requireMemberCaller,
+} from "@/lib/supabase/server-auth";
 import type { MemberIntake } from "@/lib/supabase/types";
 
 const intakeSchema = z.object({
+  accessToken: accessTokenSchema,
   userId: z.string().uuid(),
   full_name: z.string().trim().min(1).max(120),
   age: z.coerce.number().int().min(13).max(99).optional().nullable(),
@@ -24,7 +31,7 @@ const intakeSchema = z.object({
   phone: z.string().trim().max(40).optional().nullable(),
 });
 
-export type MemberIntakeInput = z.infer<typeof intakeSchema>;
+export type MemberIntakeInput = Omit<z.infer<typeof intakeSchema>, "accessToken" | "userId">;
 
 function normalizeInstagram(handle: string | null | undefined) {
   if (!handle) return null;
@@ -33,8 +40,14 @@ function normalizeInstagram(handle: string | null | undefined) {
 }
 
 export const getMemberIntake = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ userId: z.string().uuid() }))
+  .inputValidator(z.object({ accessToken: accessTokenSchema, userId: z.string().uuid() }))
   .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, intake: null as MemberIntake | null, message: authErrorMessage(err) };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) return { ok: false as const, intake: null as MemberIntake | null };
 
@@ -57,6 +70,12 @@ export const getMemberIntake = createServerFn({ method: "GET" })
 export const submitMemberIntake = createServerFn({ method: "POST" })
   .inputValidator(intakeSchema)
   .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) {
       return { ok: false as const, message: "Server not configured" };
@@ -97,29 +116,23 @@ export const submitMemberIntake = createServerFn({ method: "POST" })
   });
 
 export const coachListMemberIntakes = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ coachId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, coachId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
-    const admin = getSupabaseAdmin();
-    if (!admin) return { ok: false as const, intakes: [] as MemberIntake[] };
+    try {
+      const { admin } = await requireCoachCaller(data.accessToken, data.coachId);
+      const { data: rows, error } = await admin
+        .from("member_intake")
+        .select("*")
+        .order("completed_at", { ascending: false });
 
-    const { data: coach } = await admin
-      .from("profiles")
-      .select("role")
-      .eq("id", data.coachId)
-      .maybeSingle();
+      if (error) {
+        return { ok: false as const, intakes: [] as MemberIntake[], message: error.message };
+      }
 
-    if (!coach || (coach.role !== "coach" && coach.role !== "admin")) {
-      return { ok: false as const, intakes: [] as MemberIntake[] };
+      return { ok: true as const, intakes: (rows ?? []) as MemberIntake[] };
+    } catch (err) {
+      return { ok: false as const, intakes: [] as MemberIntake[], message: authErrorMessage(err) };
     }
-
-    const { data: rows, error } = await admin
-      .from("member_intake")
-      .select("*")
-      .order("completed_at", { ascending: false });
-
-    if (error) {
-      return { ok: false as const, intakes: [] as MemberIntake[], message: error.message };
-    }
-
-    return { ok: true as const, intakes: (rows ?? []) as MemberIntake[] };
   });

@@ -13,6 +13,7 @@ import {
   createMemberRazorpayOrder,
   verifyMemberRazorpayPayment,
 } from "@/lib/api/membership.functions";
+import { requireAccessToken } from "@/lib/supabase/access-token";
 import {
   loadRazorpayScript,
   openRazorpayCheckout,
@@ -53,8 +54,10 @@ function CheckoutPage() {
     setPayStep("paying");
 
     // Create subscription/order and finish loading Checkout.js in parallel.
+    const accessToken = await requireAccessToken();
+
     const [order] = await Promise.all([
-      createMemberRazorpayOrder({ data: { userId, kind: "initial" } }),
+      createMemberRazorpayOrder({ data: { accessToken, userId, kind: "initial" } }),
       loadRazorpayScript(),
     ]);
 
@@ -84,6 +87,7 @@ function CheckoutPage() {
           setPayStep("verifying");
           const verified = await verifyMemberRazorpayPayment({
             data: {
+              accessToken,
               userId,
               razorpay_order_id: response.razorpay_order_id,
               razorpay_subscription_id: response.razorpay_subscription_id,

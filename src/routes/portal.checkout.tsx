@@ -8,6 +8,7 @@ import {
 } from "@/lib/api/membership.functions";
 import { formatInr, formatPlanLabel } from "@/lib/portal/member-format";
 import { getMembershipAccess } from "@/lib/membership/access";
+import { requireAccessToken } from "@/lib/supabase/access-token";
 import { usePortalSession } from "@/lib/portal/session";
 import { openRazorpayCheckout, loadRazorpayScript, preloadRazorpayScript } from "@/lib/razorpay/checkout-client";
 import { toast } from "sonner";
@@ -49,13 +50,18 @@ function PortalCheckout() {
       return;
     }
 
-    void getMemberCheckout({ data: { userId: session.user.id } })
-      .then((result) => {
+    void (async () => {
+      try {
+        const accessToken = await requireAccessToken();
+        const result = await getMemberCheckout({ data: { accessToken, userId: session.user!.id } });
         if (!result.ok) setError(result.message ?? "Could not load");
         else setCheckout(result);
-      })
-      .catch(() => setError("Could not load checkout"))
-      .finally(() => setLoading(false));
+      } catch {
+        setError("Could not load checkout");
+      } finally {
+        setLoading(false);
+      }
+    })();
   }, [
     session.loading,
     session.user?.id,
@@ -72,9 +78,10 @@ function PortalCheckout() {
       checkout.status === "pending" ? "initial" : ("renewal" as const);
 
     try {
+      const accessToken = await requireAccessToken();
       const [order] = await Promise.all([
         createMemberRazorpayOrder({
-          data: { userId: session.user.id, kind },
+          data: { accessToken, userId: session.user.id, kind },
         }),
         loadRazorpayScript(),
       ]);
@@ -97,8 +104,10 @@ function PortalCheckout() {
         },
         theme: { color: "#E11D2A" },
         onSuccess: async (response) => {
+          const accessToken = await requireAccessToken();
           const verified = await verifyMemberRazorpayPayment({
             data: {
+              accessToken,
               userId: session.user!.id,
               razorpay_order_id: response.razorpay_order_id,
               razorpay_subscription_id: response.razorpay_subscription_id,
@@ -114,8 +123,7 @@ function PortalCheckout() {
           }
 
           toast.success(kind === "renewal" ? "Renewal successful" : "Payment successful - welcome");
-          await router.navigate({ to: "/portal/dashboard" });
-          window.location.reload();
+          window.location.href = kind === "initial" ? "/portal/intake" : "/portal/dashboard";
         },
         onDismiss: () => {
           toast.message("Payment cancelled");

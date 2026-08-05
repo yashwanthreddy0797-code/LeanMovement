@@ -284,7 +284,9 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
       supabase.from("site_config").select("*"),
     ]);
 
-  if (profilesRes.error) return mockDashboard();
+  if (profilesRes.error) {
+    throw new Error(profilesRes.error.message || "Could not load coach dashboard");
+  }
 
   const memberships = (membershipsRes.data ?? []) as Membership[];
   const onboarding = (onboardingRes.data ?? []) as Onboarding[];
@@ -304,7 +306,7 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   return {
     source: "supabase",
     members,
-    liveSessions: (liveRes.data as LiveSessionRow[]) ?? MOCK_SESSIONS,
+    liveSessions: (liveRes.data as LiveSessionRow[]) ?? [],
     // Coach sees the full library (including expired). Members still filter by expires_at.
     recordings: (recRes.data as RecordingRow[]) ?? [],
     siteConfig: configMap,

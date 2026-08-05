@@ -55,7 +55,8 @@ function Dashboard() {
 
   useEffect(() => {
     if (!session.user?.id || intakeLoading || !isSupabaseConfigured()) return;
-    if (!intakeResult?.ok || intakeComplete) return;
+    if (intakeComplete) return;
+    if (intakeResult && "needsMigration" in intakeResult && intakeResult.needsMigration) return;
     void navigate({ to: "/portal/intake" });
   }, [session.user?.id, intakeLoading, intakeResult, intakeComplete, navigate]);
 
@@ -71,14 +72,18 @@ function Dashboard() {
     setShowFoundationsModal(true);
   }, [needsFoundationsBooking, session.user?.id]);
 
-  if (isLoading || !nextLiveSession) {
+  if (isLoading) {
     return <PortalPageSkeleton lines={3} />;
   }
 
-  if (isError) {
+  if (isError || !nextLiveSession) {
     return (
       <div className="card-soft mx-auto max-w-md p-6 text-center sm:p-8">
-        <p className="type-body mx-auto">Could not load your schedule. Refresh and try again.</p>
+        <p className="type-body mx-auto">
+          {isError
+            ? "Could not load your schedule. Refresh and try again."
+            : "Live schedule is not set up yet. Check back soon or message your coach."}
+        </p>
         <button type="button" onClick={() => window.location.reload()} className="portal-btn mt-5">
           Refresh
         </button>

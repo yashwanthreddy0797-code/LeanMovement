@@ -158,7 +158,7 @@ function usePortalSessionState(): PortalSession {
     return () => sub.subscription.unsubscribe();
   }, [loadDemo, loadSupabase, refresh]);
 
-  const isCoach = profile?.role === "coach" || profile?.role === "admin" || user?.role === "coach";
+  const isCoach = profile?.role === "coach" || profile?.role === "admin";
   const hasActiveMembership = isCoach || hasPortalMembershipAccess(membership);
 
   return {

@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { accessTokenSchema } from "@/lib/api/auth-input";
 import { planAmountInr, toMembershipPlan, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { activateMembershipForUser } from "@/lib/membership/activate";
 import { runMembershipLifecycleJob } from "@/lib/membership/renewal";
@@ -14,7 +15,13 @@ import {
   verifySubscriptionPaymentSignature,
 } from "@/lib/razorpay.server";
 import { getSupabaseAdmin, isRazorpayConfigured } from "@/lib/supabase/server";
+import { authErrorMessage, requireMemberCaller } from "@/lib/supabase/server-auth";
 import type { MembershipPlan } from "@/lib/supabase/types";
+
+function noteUserId(notes: Record<string, string> | null | undefined) {
+  const id = notes?.user_id;
+  return typeof id === "string" && id.length > 0 ? id : null;
+}
 
 export const getPaymentConfig = createServerFn({ method: "GET" }).handler(async () => {
   return {
@@ -26,8 +33,16 @@ export const getPaymentConfig = createServerFn({ method: "GET" }).handler(async 
 });
 
 export const getMemberCheckout = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ userId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, userId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) {
       return { ok: false as const, message: "Server not configured" };
@@ -176,6 +191,7 @@ async function createCheckoutForUser(
 export const createMemberRazorpayOrder = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
+      accessToken: accessTokenSchema,
       userId: z.string().uuid(),
       forceOneTime: z.boolean().optional(),
       kind: z.enum(["initial", "renewal"]).optional(),
@@ -184,6 +200,12 @@ export const createMemberRazorpayOrder = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (!isRazorpayConfigured()) {
       return { ok: false as const, message: "Razorpay not configured" };
+    }
+
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
     }
 
     const admin = getSupabaseAdmin();
@@ -214,6 +236,7 @@ export const createMemberRazorpayOrder = createServerFn({ method: "POST" })
 export const verifyMemberRazorpayPayment = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
+      accessToken: accessTokenSchema,
       userId: z.string().uuid(),
       razorpay_order_id: z.string().optional(),
       razorpay_subscription_id: z.string().optional(),
@@ -225,6 +248,12 @@ export const verifyMemberRazorpayPayment = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     if (!isRazorpayConfigured()) {
       return { ok: false as const, message: "Razorpay not configured" };
+    }
+
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
     }
 
     const isSubscription = Boolean(data.razorpay_subscription_id);
@@ -263,10 +292,19 @@ export const verifyMemberRazorpayPayment = createServerFn({ method: "POST" })
       return { ok: false as const, message: "Payment not completed" };
     }
 
+    const paymentUserId = noteUserId(payment.notes as Record<string, string> | undefined);
+    if (paymentUserId && paymentUserId !== data.userId) {
+      return { ok: false as const, message: "Payment does not match this account" };
+    }
+
     if (isSubscription) {
       const sub = await fetchRazorpaySubscription(data.razorpay_subscription_id!);
       if (!sub) {
         return { ok: false as const, message: "Subscription not found" };
+      }
+      const subUserId = noteUserId(sub.notes as Record<string, string> | undefined);
+      if (subUserId && subUserId !== data.userId) {
+        return { ok: false as const, message: "Subscription does not match this account" };
       }
     }
 
@@ -330,8 +368,19 @@ export const handleRazorpayWebhook = createServerFn({ method: "POST" })
   });
 
 export const activateMembershipByEmail = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ email: z.string().email(), plan: z.string().optional() }))
+  .inputValidator(
+    z.object({
+      email: z.string().email(),
+      plan: z.string().optional(),
+      secret: z.string().min(1),
+    }),
+  )
   .handler(async ({ data }) => {
+    const expected = process.env.CRON_SECRET;
+    if (!expected || data.secret !== expected) {
+      return { ok: false, message: "Unauthorized" };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) return { ok: false, message: "Server not configured" };
 

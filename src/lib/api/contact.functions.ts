@@ -1,7 +1,9 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { accessTokenSchema } from "@/lib/api/auth-input";
 import { CONTACT } from "@/lib/lean-kettlebell";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import { authErrorMessage, requireCoachCaller } from "@/lib/supabase/server-auth";
 import { COACH_EMAIL, deliverContactEmailToCoach, sanitizeContactDeliveryError } from "@/lib/email/contact-mail.server";
 
 const contactSchema = z.object({
@@ -85,21 +87,14 @@ export type ContactMessageRow = {
   created_at: string;
 };
 
-async function verifyCoach(coachId: string) {
-  const admin = getSupabaseAdmin();
-  if (!admin) throw new Error("Server not configured");
-  const { data } = await admin.from("profiles").select("role").eq("id", coachId).maybeSingle();
-  if (!data || (data.role !== "coach" && data.role !== "admin")) {
-    throw new Error("Coach access required");
-  }
-  return admin;
-}
-
 export const coachListContactMessages = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ coachId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, coachId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
-    const { data: rows, error } = await admin
+    try {
+      const { admin } = await requireCoachCaller(data.accessToken, data.coachId);
+      const { data: rows, error } = await admin
       .from("contact_messages")
       .select("id, name, email, whatsapp, message, read, created_at")
       .order("created_at", { ascending: false })
@@ -109,12 +104,21 @@ export const coachListContactMessages = createServerFn({ method: "GET" })
       return { ok: false as const, message: error.message, messages: [] as ContactMessageRow[] };
     }
     return { ok: true as const, messages: (rows ?? []) as ContactMessageRow[] };
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err), messages: [] as ContactMessageRow[] };
+    }
   });
 
 export const coachMarkContactMessagesRead = createServerFn({ method: "POST" })
-  .inputValidator(z.object({ coachId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, coachId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
-    const admin = await verifyCoach(data.coachId);
-    await admin.from("contact_messages").update({ read: true }).eq("read", false);
-    return { ok: true as const };
+    try {
+      const { admin } = await requireCoachCaller(data.accessToken, data.coachId);
+      await admin.from("contact_messages").update({ read: true }).eq("read", false);
+      return { ok: true as const };
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
   });

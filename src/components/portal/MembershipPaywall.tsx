@@ -15,7 +15,7 @@ export function MembershipPaywall({
   const summary = membershipSummary(membership);
   const access = getMembershipAccess(membership);
   const isPending = membership?.status === "pending" || !membership;
-  const payTo = isPending ? "/join" : "/portal/checkout";
+  const payTo = "/portal/checkout";
 
   return (
     <div className="min-h-[60vh] flex items-center justify-center p-6">
@@ -30,7 +30,7 @@ export function MembershipPaywall({
 
         <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
           {isPending
-            ? "Complete secure payment on the join page to unlock live sessions and your calendar."
+            ? "Complete payment to unlock live sessions and your member portal."
             : access.inGrace
               ? "Your 30-day cycle ended. You have a few grace days - renew now to keep coaching uninterrupted."
               : "Your membership has ended. Renew to continue live coaching with me."}
@@ -51,7 +51,6 @@ export function MembershipPaywall({
 
         <Link
           to={payTo}
-          search={isPending ? { plan: "standard", email: userEmail ?? "", name: "" } : undefined}
           className="portal-btn mt-8 w-full"
         >
           {isPending ? `Pay ${summary.price}` : `Renew ${summary.price}`}

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { coachListPendingEnrollments, type EnrollmentIntentRow } from "@/lib/api/enrollment.functions";
+import { withCoachAuth } from "@/lib/api/coach-call";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { formatInr, formatPlanLabel } from "@/lib/portal/member-format";
 import { formatDate } from "@/lib/portal/coach-queries";
@@ -17,10 +18,12 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
       return;
     }
 
-    void coachListPendingEnrollments({ data: { coachId } }).then((result) => {
+    void withCoachAuth(coachId)
+      .then((auth) => coachListPendingEnrollments({ data: auth }))
+      .then((result) => {
       if (result.ok) setRows(result.enrollments as EnrollmentIntentRow[]);
       setLoading(false);
-    });
+    }).catch(() => setLoading(false));
   }, [coachId]);
 
   if (!isSupabaseConfigured() || loading || rows.length === 0) return null;

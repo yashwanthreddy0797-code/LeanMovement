@@ -4,6 +4,7 @@ import {
   coachMarkContactMessagesRead,
   type ContactMessageRow,
 } from "@/lib/api/contact.functions";
+import { withCoachAuth } from "@/lib/api/coach-call";
 import { SoftCard } from "@/components/portal/ui";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { Mail, MessageCircle } from "lucide-react";
@@ -17,10 +18,12 @@ export function CoachContactInbox({ coachId }: { coachId?: string }) {
       setLoading(false);
       return;
     }
-    void coachListContactMessages({ data: { coachId } }).then((result) => {
+    void withCoachAuth(coachId)
+      .then((auth) => coachListContactMessages({ data: auth }))
+      .then((result) => {
       if (result.ok) setMessages(result.messages);
       setLoading(false);
-    });
+    }).catch(() => setLoading(false));
   }, [coachId]);
 
   const unread = messages.filter((m) => !m.read);
@@ -46,7 +49,9 @@ export function CoachContactInbox({ coachId }: { coachId?: string }) {
             type="button"
             className="portal-btn portal-btn-ghost !px-3 !py-1.5 text-xs"
             onClick={() => {
-              void coachMarkContactMessagesRead({ data: { coachId } }).then(() => {
+              void withCoachAuth(coachId)
+                .then((auth) => coachMarkContactMessagesRead({ data: auth }))
+                .then(() => {
                 setMessages((prev) => prev.map((m) => ({ ...m, read: true })));
               });
             }}

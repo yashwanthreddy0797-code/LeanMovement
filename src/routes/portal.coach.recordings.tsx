@@ -5,6 +5,7 @@ import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
 import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
+import { withCoachAuth } from "@/lib/api/coach-call";
 import { addRecording, deleteRecording, formatDate } from "@/lib/portal/coach-queries";
 import {
   coachSyncZoomRecordings,
@@ -69,8 +70,9 @@ function RecordingsPage() {
     if (!coachId) return;
     setSyncing(true);
     try {
+      const auth = await withCoachAuth(coachId);
       const result = await coachSyncZoomRecordings({
-        data: { coachId, daysBack: 14 },
+        data: { ...auth, daysBack: 14 },
       });
       if (!result.ok) {
         toast.error(result.message ?? "Zoom sync failed");

@@ -10,6 +10,7 @@ import {
 } from "@/lib/coach-notify";
 import { formatSelectedSessions } from "@/lib/sessions";
 import { formatInr } from "@/lib/portal/member-format";
+import { withCoachAuth } from "@/lib/api/coach-call";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { SoftCard } from "@/components/portal/ui";
 import { Bell, Mail, MessageCircle } from "lucide-react";
@@ -24,10 +25,12 @@ export function CoachRegistrationAlerts({ coachId }: { coachId?: string }) {
       return;
     }
 
-    void coachGetRegistrationAlerts({ data: { coachId } }).then((result) => {
+    void withCoachAuth(coachId)
+      .then((auth) => coachGetRegistrationAlerts({ data: auth }))
+      .then((result) => {
       if (result.ok) setAlerts(result.alerts);
       setLoading(false);
-    });
+    }).catch(() => setLoading(false));
   }, [coachId]);
 
   const unread = alerts.filter((a) => !a.read);
@@ -55,7 +58,9 @@ export function CoachRegistrationAlerts({ coachId }: { coachId?: string }) {
             type="button"
             className="portal-btn portal-btn-ghost !px-3 !py-1.5 text-xs"
             onClick={() => {
-              void coachMarkRegistrationAlertsRead({ data: { coachId } }).then(() => {
+              void withCoachAuth(coachId)
+                .then((auth) => coachMarkRegistrationAlertsRead({ data: auth }))
+                .then(() => {
                 setAlerts((prev) => prev.map((a) => ({ ...a, read: true })));
               });
             }}

@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { accessTokenSchema } from "@/lib/api/auth-input";
 import { getEnrollmentFromSiteConfig, saveEnrollmentToSiteConfig } from "@/lib/enrollment/store";
 import {
   SESSIONS_TO_PICK,
@@ -12,6 +13,7 @@ import {
   validateSessionSelection,
 } from "@/lib/sessions";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import { authErrorMessage, requireMemberCaller } from "@/lib/supabase/server-auth";
 import type { LiveSessionRow } from "@/lib/supabase/types";
 
 const sessionIdSchema = z.string().refine(
@@ -25,8 +27,16 @@ async function fetchLiveSessions(admin: NonNullable<ReturnType<typeof getSupabas
 }
 
 export const getMemberWeeklySessions = createServerFn({ method: "GET" })
-  .inputValidator(z.object({ userId: z.string().uuid() }))
+  .inputValidator(
+    z.object({ accessToken: accessTokenSchema, userId: z.string().uuid() }),
+  )
   .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) return { ok: false as const, message: "Server not configured" };
 
@@ -124,11 +134,18 @@ export const getMemberWeeklySessions = createServerFn({ method: "GET" })
 export const saveMemberWeeklySessions = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
+      accessToken: accessTokenSchema,
       userId: z.string().uuid(),
       sessionIds: z.array(sessionIdSchema).length(SESSIONS_TO_PICK),
     }),
   )
   .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) return { ok: false as const, message: "Server not configured" };
 
@@ -200,11 +217,18 @@ export const saveMemberWeeklySessions = createServerFn({ method: "POST" })
 export const recordSessionJoin = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({
+      accessToken: accessTokenSchema,
       userId: z.string().uuid(),
       sessionSlotId: sessionIdSchema,
     }),
   )
   .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
+
     const admin = getSupabaseAdmin();
     if (!admin) return { ok: false as const, message: "Server not configured" };
 
