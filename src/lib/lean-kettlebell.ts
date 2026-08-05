@@ -1,7 +1,7 @@
 export const BRAND = {
   name: "LEANMOVEMENT",
   display: "Lean Movement",
-  tagline: "Train live. Stay lean.",
+  tagline: "Evidence-based coaching. Lean. Strong. Sustainable.",
 } as const;
 
 export const CONTACT = {
@@ -11,6 +11,7 @@ export const CONTACT = {
   instagram: "https://www.instagram.com/natty.finesse/",
   instagramHandle: "natty.finesse",
   location: "Hyderabad, India",
+  replyNote: "Email or WhatsApp. I reply within 2 business hours.",
 } as const;
 
 export const COACH = {
@@ -18,16 +19,16 @@ export const COACH = {
   title: "Strength & Kettlebell Coach",
   location: "Hyderabad",
   bio: [
-    "Mohith built LEANMOVEMENT for busy professionals who want real coaching — not another PDF program. He leads live sessions three mornings a week with technique-first progressions built for one-hour training blocks.",
-    "When you join, you train with Mohith live — on camera, with corrections, cues, and a plan that fits your schedule.",
+    "I coach people who want to get lean, stronger, and healthier - without living in the gym.",
+    "I coach the basics done properly: train hard, eat well, recover, repeat.",
   ],
   credentials: [
-    "Strength & kettlebell specialist",
-    "Live small-group coaching · Hyderabad",
+    "Strength & conditioning coach",
+    "Live coaching · Hyderabad",
   ],
   image: {
     unsplashId: "photo-1570440828762-ab7a993dbde8",
-    alt: "Male kettlebell trainer in the gym — LEANMOVEMENT coach",
+    alt: "Male kettlebell trainer in the gym - LEANMOVEMENT coach",
   },
 } as const;
 
@@ -39,30 +40,30 @@ export function coachImageUrl(width: number) {
 export const COACH_IMAGE_DEFAULT = coachImageUrl(1200);
 
 export const LEAN_KETTLEBELL = {
-  name: "Lean Program",
+  name: "Lean Movement",
   tagline: BRAND.tagline,
   positioning:
-    "Live coaching designed to help you build strength, improve endurance, move better, and stay lean — with simple equipment and a clear plan.",
-  liveNote: "Train live with your coach — three mornings every week.",
+    "Evidence-based coaching for people who want to get lean, stronger, and healthier - without living in the gym.",
+  liveNote: "Live coaching with me. Three mornings a week.",
 } as const;
 
 export const HOME_HERO = {
   headline: "Train live.\nStay lean.",
-  sublines: ["Build strength.", "Improve endurance.", "Move better.", "Stay consistent."],
-  sessionsLine: "Three live coaching sessions every week.",
+  sublines: ["Strength.", "Muscle.", "Conditioning.", "Consistency."],
+  sessionsLine: "Live kettlebell coaching - strength, muscle, and conditioning. Three mornings a week.",
 } as const;
 
 export const MEMBERSHIP_HERO = {
-  headline: "Build a body that's strong, athletic and built to last.",
+  headline: "Strong. Lean. Built for life.",
   sublines: [
-    "Live kettlebell coaching.",
-    "Three mornings a week.",
-    "One coach.",
-    "One program.",
+    "Live coaching.",
+    "Personalised training.",
+    "Personalised nutrition included.",
+    "No fluff.",
   ],
 } as const;
 
-/** Homepage hero — free Unsplash, kettlebell swing in gym. */
+/** Homepage hero - free Unsplash, kettlebell swing in gym. */
 export const HERO_IMAGE = {
   unsplashId: "photo-1765302892910-748da4a57c10",
   alt: "Athlete swinging a kettlebell during live strength training",
@@ -82,37 +83,36 @@ export function heroImageSrcSet() {
 export const HERO_IMAGE_DEFAULT = heroImageUrl(1920);
 
 export const HOME_STATEMENT = {
-  title: "This isn't another workout program.",
+  title: "This is coaching. Not a workout plan.",
   paragraphs: [
-    "You don't need more exercises. You don't need another PDF. You need a coach.",
-    "At LEANMOVEMENT, we train together three mornings a week. Mohith coaches every session live, fixes your technique, pushes your intensity, and makes sure you're progressing week after week.",
-    "You show up. He'll take care of the rest.",
+    "You don't need more exercises. You need a coach.",
+    "Every session is coached live - technique corrected in the moment, training and nutrition dialled in, progress tracked.",
+    "You show up. The coaching is handled.",
   ],
 } as const;
 
 export const MEMBERSHIP_STATEMENT = {
   title: "Train with me.",
   paragraphs: [
-    "You don't need another workout plan. You need a system you'll actually stick to.",
-    "LEANMOVEMENT is live coaching designed to help you build strength, improve endurance, move better, and stay lean — all with simple equipment and a clear plan.",
-    "Every Tuesday, Thursday, and Saturday morning, we train together. Mohith coaches you through every session, corrects your technique, pushes your intensity, and keeps you accountable.",
-    "Miss a session? The recording is uploaded to your member portal and remains available for 7 days before it expires.",
+    "Training and nutrition are the focus - strength, muscle, conditioning, and macros, coached together.",
+    "Personalised sessions and macros. Meal guidance that fits real life.",
+    "The goal isn't to exhaust you. It's to build a body that's capable today and still capable years from now.",
   ],
 } as const;
 
 export const MEMBERSHIP_OVERVIEW = {
-  title: "Live coaching for busy professionals",
+  title: "Live coaching for busy people",
   subtitle: "One program. One coach. Three mornings a week.",
   description:
-    "A single Lean Program at ₹6,999/month. You train live three times a week — strength, conditioning, and mobility. All sessions recorded for 7 days.",
+    "₹6,969/month. Live coaching, progressive programming, and personalised nutrition included. Sessions recorded for 7 days.",
   idealFor: [
-    "Busy professionals who can commit to 3 sessions per week",
-    "Beginners who want coached strength and endurance progressions",
-    "Anyone who wants accountability with a real coach on camera",
+    "People who can commit to three sessions a week",
+    "Anyone who wants coached strength, conditioning, and nutrition",
+    "People who value evidence and consistency over hype",
   ],
   notFor: [
-    "Self-led PDF programs with no live coaching",
-    "People who cannot commit to three sessions weekly",
+    "PDF plans with no coaching",
+    "People who can't commit to three sessions weekly",
   ],
 } as const;
 
@@ -128,16 +128,20 @@ export const SESSION_SCHEDULE = {
       type: "Strength, conditioning & mobility",
     },
   ],
-  note: "Train before work. Finish before the world wakes up. Recordings land in your portal for 7 days.",
+  note: "One hour. Three mornings. Before work. Recordings stay available for 7 days.",
 } as const;
+
+export const EQUIPMENT_MINIMUM =
+  "As a minimum, you'll need a pair of kettlebells (one lighter, one heavier), a mat, and enough space to train safely." as const;
 
 export const REQUIREMENTS = {
   title: "What You'll Need",
-  subtitle: "Two kettlebells. One lighter. One heavier. That's enough.",
+  subtitle: "A pair of kettlebells, a mat, and room to move. That's enough.",
   items: [
     {
       label: "Equipment",
-      detail: "Two kettlebells — one lighter, one heavier. No expensive equipment. No commercial gym.",
+      detail:
+        "A pair of kettlebells - one lighter, one heavier - plus a mat. No commercial gym required.",
     },
     {
       label: "Space",
@@ -145,11 +149,11 @@ export const REQUIREMENTS = {
     },
     {
       label: "Time",
-      detail: "One hour. Tuesday, Thursday, Saturday. 6:00–7:00 AM. Show up — Mohith handles the rest.",
+      detail: "One hour, three mornings a week. Show up. I handle the coaching.",
     },
     {
       label: "Commitment",
-      detail: "Consistency beats motivation. Three mornings a week. One hour at a time.",
+      detail: "Consistency over perfection. One hour at a time.",
     },
     {
       label: "Tech",
@@ -181,7 +185,7 @@ export const FOUNDATIONS = {
   title: "Foundations Session",
   duration: "1 × 60 mins",
   description:
-    "Every member begins with a one-on-one Foundations Session before joining the group. Build confidence before you build intensity.",
+    "Before your first live class, we do a one-on-one Foundations Session. Technique first. Then intensity.",
   items: [
     "Kettlebell setup",
     "Deadlift",
@@ -194,14 +198,14 @@ export const FOUNDATIONS = {
     "RPE (Rate of Perceived Exertion)",
     "Safe movement and proper technique",
   ],
-  note: "The better your technique, the better your results.",
+  note: "Better technique. Better progress.",
 } as const;
 
 export const LIVE_SESSIONS = {
   title: "Live Sessions",
   schedule: "3 sessions per week · 60 minutes · Tuesday, Thursday, Saturday mornings",
   description:
-    "Progressive strength, conditioning, and mobility programming — coached live every session.",
+    "Progressive strength, conditioning, and mobility. Coached live every session.",
   days: [
     {
       day: "Tue / Thu / Sat",
@@ -214,71 +218,72 @@ export const LIVE_SESSIONS = {
 export const NUTRITION = {
   title: "Nutrition",
   description:
-    "Training gets you stronger. Nutrition keeps you lean. Simple, sustainable guidance built for real life.",
+    "Nutrition is part of the coaching. Not an add-on. Personalised targets and meal guidance for real life.",
   items: [
-    "Personal calorie targets",
+    "Personal macro targets",
     "Protein goals",
-    "Macronutrient breakdown",
-    "Building balanced meals",
+    "Carb and fat targets",
+    "Meal guidance for real life",
     "Eating out without losing progress",
-    "Restaurant and travel nutrition guide",
+    "Travel nutrition",
     "Recovery nutrition",
-    "Long-term fat loss habits",
+    "Sustainable fat-loss habits",
   ],
-  closing: "No meal plans. No detoxes. No unnecessary restrictions. Just nutrition you can actually follow.",
+  closing: "No detoxes. No extreme cuts. Nutrition you can follow.",
 } as const;
 
 export const COMMUNITY = {
   title: "Community",
   items: [
     "Private member community",
-    "Direct access to your coach",
+    "Direct access to me",
     "Questions answered",
-    "Progress sharing",
+    "Progress shared",
     "Ongoing accountability",
   ],
 } as const;
 
-/** Short homepage teaser — full list lives on Membership. */
+/** Short homepage teaser - full list lives on Membership. */
 export const HOME_INCLUDED = [
-  "Three live coaching sessions every week",
-  "One-on-one Foundations Session",
+  "Live coached sessions - three mornings a week",
+  "Personalised training and progressive programming",
+  "Personalised nutrition included - macros and meal guidance",
+  EQUIPMENT_MINIMUM,
+  "Foundations technique session with me",
+  "Progress reviews, technique feedback, accountability",
   "Session recordings for 7 days",
-  "Direct coach access",
-  "Nutrition guidance",
-  "Private member community",
 ] as const;
 
-/** Compact homepage journey — detail expands on Membership. */
+/** Compact homepage steps - detail expands on Membership. */
 export const HOME_JOURNEY = [
   {
     n: "01",
     title: "Foundations",
-    detail: "One-on-one technique session before your first live class.",
+    detail: "One-on-one technique session with me before your first live class.",
   },
   {
     n: "02",
     title: "Live coaching",
-    detail: "Tue / Thu / Sat · 6–7 AM IST. Strength, conditioning, mobility.",
+    detail: "Strength, muscle, and conditioning. Coached live. Three mornings a week.",
   },
   {
     n: "03",
-    title: "Stay lean",
-    detail: "Simple nutrition targets and habits you can actually follow.",
+    title: "Nutrition",
+    detail: "Personalised nutrition included in your coaching. Habits that stick.",
   },
 ] as const;
 
 export const MEMBERSHIP_INCLUDED = [
-  "Three live coaching sessions every week",
-  "Progressive strength, conditioning & mobility programming",
+  "Three live coached sessions every week",
+  "Personalised training and progressive programming",
+  "Personalised nutrition included in the coaching price",
+  "Protein, carb, and fat (macro) targets",
+  "Meal guidance that fits real life",
   "One-on-one Foundations Session before your first class",
-  "Session recordings available for 7 days",
-  "Direct access to your coach for training questions",
-  "Nutrition guidance for fat loss and performance",
-  "Personal calorie, protein and macronutrient targets",
-  "Restaurant and eating-out strategies",
-  "Private member community",
-  "Ongoing accountability",
+  "Exercise technique feedback every session",
+  "Regular progress reviews",
+  "Accountability and ongoing support",
+  "Session recordings for 7 days",
 ] as const;
 
 export const MEMBERSHIP_PILLARS = [
@@ -287,119 +292,118 @@ export const MEMBERSHIP_PILLARS = [
     eyebrow: "Step 1 · Onboarding",
     title: "Foundations Session",
     duration: "1 × 60 minutes",
-    summary: "Before your first live class, every member completes a dedicated technique session with your coach.",
+    summary: "One-on-one technique session with me before your first live class.",
     description:
-      "This is not a workout — it's training literacy. You learn how to set up, move safely, and understand effort levels so you can follow live classes with confidence from day one.",
+      "We cover setup, key lifts, breathing, and effort. So you can train live with clean technique from day one.",
     includes: FOUNDATIONS.items,
-    outcome: "Recorded and saved in your portal for reference.",
+    outcome: "Saved in your portal for reference.",
   },
   {
     id: "live",
     eyebrow: "Core · 12 sessions/month",
     title: "Live Coached Sessions",
     duration: "3× per week · 60 min",
-    summary: "Train live with your coach and a small group. Real-time cues, corrections, and energy.",
+    summary: "Train live with me. Real-time technique feedback. Progressive programming.",
     description:
-      "Tuesday, Thursday, and Saturday mornings — strength, conditioning, and mobility work so you build muscle, engine, and athleticism without burning out. All sessions are recorded.",
-    includes: LIVE_SESSIONS.days.map((d) => `${d.day} · ${d.name} — ${d.focus}`),
-    outcome: "Join from your portal dashboard when the session goes live.",
+      "Tuesday, Thursday, and Saturday mornings. Strength, muscle, and conditioning. Coached live. Recorded for 7 days.",
+    includes: LIVE_SESSIONS.days.map((d) => `${d.day} · ${d.name} - ${d.focus}`),
+    outcome: "Join from your portal when the session goes live.",
   },
   {
     id: "recordings",
-    eyebrow: "Never miss a beat",
+    eyebrow: "If you miss a class",
     title: "Session Recordings",
     duration: "7-day replay",
-    summary: "Every live class recorded — watch on your schedule.",
+    summary: "Every live class is recorded. Watch when you can.",
     description:
-      "Traveling? Working late? Life happens. Recordings land in your portal library and stay available for 7 days. Same coaching, same session — on your time.",
+      "Miss a morning? The recording is in your portal for 7 days. Same session. Same coaching.",
     includes: [
       "Full session replays after each live class",
-      "Organised by session type (Strength, Conditioning, Hybrid)",
+      "Organised by session type",
       "Available for 7 days after each session",
     ],
-    outcome: "Catch up from Portal → Recordings.",
+    outcome: "Portal → Recordings.",
   },
   {
     id: "nutrition",
-    eyebrow: "Not meal plans",
-    title: "Nutrition Framework",
-    duration: "Self-paced guides",
-    summary: "How lean people eat — without rigid spreadsheets or cutting out the foods you enjoy.",
+    eyebrow: "Included in coaching",
+    title: "Personalised Nutrition",
+    duration: "Part of your coaching",
+    summary: "Nutrition is included in the coaching price. Not an add-on.",
     description:
-      "You get calorie and protein targets, flexible dieting principles, and practical guides for restaurants, travel, and daily life. Built for Indian professionals who eat out and travel often.",
+      "Macro targets for protein, carbs, and fat. Meal guidance that fits real life. Built for progress you can sustain.",
     includes: NUTRITION.items,
-    outcome: "Access from Portal → Nutrition.",
+    outcome: "Portal → Nutrition.",
   },
   {
     id: "circuits",
     eyebrow: "On-demand",
     title: "Kettlebell Circuits Library",
     duration: "5 guided circuits",
-    summary: "Short, structured workouts for days between live sessions or when you travel.",
+    summary: "Short sessions for days between live classes or when you travel.",
     description:
-      "Follow-along kettlebell circuits — engine builders, strength complexes, travel flows, and mobility work. Complement your live training, not replace it.",
+      "Conditioning, strength complexes, travel flows, and mobility. Complements live coaching. Does not replace it.",
     includes: [
-      "The Engine Builder — 20 min conditioning",
-      "Strength Complex A — heavy controlled work",
-      "Travel KB Flow — hotel-friendly",
-      "Hybrid Finisher — power & grit",
-      "Mobility & Activation — pre-session prep",
+      "The Engine Builder - 20 min conditioning",
+      "Strength Complex A - heavy controlled work",
+      "Travel KB Flow - hotel-friendly",
+      "Hybrid Finisher - power & grit",
+      "Mobility & Activation - pre-session prep",
     ],
-    outcome: "Access from Portal → Circuits.",
+    outcome: "Portal → Circuits.",
   },
   {
     id: "community",
     eyebrow: "Accountability",
     title: "Private Member Community",
-    duration: "Always on",
-    summary: "Questions answered, progress shared, accountability built in.",
+    duration: "Ongoing",
+    summary: "Ask questions. Share progress. Stay accountable.",
     description:
-      "A private group with your coach and fellow members. Ask form questions, share wins, stay accountable between sessions. Not a noisy broadcast channel — a real community.",
+      "A private group with me and other members. Form check. Support. Consistency between sessions.",
     includes: COMMUNITY.items,
-    outcome: "Invite link unlocks after coach activates your membership.",
+    outcome: "Invite link after membership is active.",
   },
 ] as const;
 
 export const MEMBERSHIP_JOURNEY = [
-  { step: "01", title: "Enroll & pay", detail: "One program · ₹6,999/mo · portal unlocks after payment." },
-  { step: "02", title: "Book Foundations", detail: "One-on-one technique session before your first live class." },
-  { step: "03", title: "Train with your coach", detail: "Tue / Thu / Sat · 6:00–7:00 AM · strength + endurance." },
+  { step: "01", title: "Enroll & pay", detail: "One program · ₹6,969/mo · portal access after payment." },
+  { step: "02", title: "Book Foundations", detail: "One-on-one technique session with me before your first live class." },
+  { step: "03", title: "Train with me", detail: "Tue / Thu / Sat · 6:00–7:00 AM · strength, muscle, conditioning." },
 ] as const;
 
 export const PRICING_PLANS = [
   {
     id: "standard",
-    name: "Lean Program",
+    name: "Lean Movement",
     tag: "One program",
-    price: "₹6,999",
+    price: "₹6,969",
     period: "per month",
     description:
-      "Everything you need. Three live coaching sessions every week, Foundations Session, progressive programming, nutrition guidance, direct coach access, 7-day session recordings, and private community.",
+      "Live coaching and personalised nutrition included. Training, macros, progress reviews, and accountability - one price.",
     featured: true,
   },
 ] as const;
 
 export const INCLUDED_SUMMARY = [
-  "Live coaching — strength, conditioning & mobility",
-  "3 Zoom live sessions per week · Tue / Thu / Sat",
-  "6:00 – 7:00 AM IST",
-  "Session recordings in your portal (7 days)",
-  "Direct access to your coach",
+  "Live coaching - strength, muscle & conditioning",
+  "Personalised nutrition included",
+  "Pair of kettlebells, mat, and space to train",
+  "Foundations session + 7-day recordings",
 ] as const;
 
 export const COHORT = {
   label: "Program",
   date: "Open enrollment",
-  note: "One program. One coach. Become stronger. Stay lean.",
+  note: "One program. One coach. Lean. Strong. Sustainable.",
 } as const;
 
 export const HOME_QUOTE = {
-  text: "Train for the life you want to live, not just the body you want to have.",
+  text: "Consistency over perfection. Progress you can measure.",
   author: "Mohith Chowdary",
 } as const;
 
 export const MEMBERSHIP_QUOTE = {
-  text: "You don't need more equipment. You need a system you'll actually stick to.",
+  text: "I don't coach extremes. I coach what works.",
   author: "Mohith Chowdary",
 } as const;
 
@@ -426,16 +430,29 @@ export const PROGRAM_GALLERY = [
   },
 ] as const;
 
-/** Membership hero — full-bleed kettlebell swing (landscape). */
+/** Membership hero - full-bleed kettlebell swing (landscape). */
 export const PROGRAM_HERO = {
   src: "/images/programs/membership-hero-full.png?v=4",
   alt: "Athlete mid kettlebell swing in a professional gym",
 } as const;
 
-/** About page hero — coach with kettlebell (local, premium). */
+/** About page full-bleed hero. Set 2: training pose. */
+export const ABOUT_PAGE_HERO = {
+  src: "/images/coach/about-training-pose.webp",
+  srcFallback: "/images/coach/about-training-pose-hq.jpg",
+  alt: "Mohith Chowdary - strength and conditioning training",
+} as const;
+
+/** Coach portrait - about page + contact. Set 2: beach lifestyle. */
 export const ABOUT_HERO = {
-  src: "/images/programs/about-hero.webp",
-  alt: "LEANMOVEMENT coach with kettlebell in the gym",
+  src: "/images/coach/about-hero-beach.png",
+  alt: "Mohith Chowdary - lean, athletic physique",
+} as const;
+
+/** About page - training feature visual. Set 2: gym locker. */
+export const ABOUT_TRAINING_FEATURE = {
+  src: "/images/coach/about-coach-locker.png",
+  alt: "Mohith Chowdary - strength and kettlebell coach in the gym",
 } as const;
 
 export const ABOUT_GALLERY = [
@@ -457,7 +474,7 @@ export const ABOUT_GALLERY = [
   },
 ] as const;
 
-/** Legacy Unsplash helper — prefer local PROGRAM_GALLERY / PROGRAM_HERO. */
+/** Legacy Unsplash helper - prefer local PROGRAM_GALLERY / PROGRAM_HERO. */
 export function programImageUrl(unsplashId: string, width = 1600) {
   const q = width >= 2400 ? 92 : width >= 1600 ? 90 : 88;
   return `https://images.unsplash.com/${unsplashId}?auto=format&fit=crop&w=${width}&q=${q}&fm=webp`;
@@ -465,28 +482,28 @@ export function programImageUrl(unsplashId: string, width = 1600) {
 
 export const PROGRAM_BENEFITS = [
   {
-    title: "Clear structure — no guesswork",
-    detail: "A fixed weekly schedule. Show up Tue, Thu, Sat — train, progress.",
+    title: "Clear structure",
+    detail: "Fixed weekly schedule. Tue, Thu, Sat. Show up. Progress.",
   },
   {
-    title: "Real coach on camera",
-    detail: "Corrections, cues, and accountability in every session — not a pre-recorded video bank.",
+    title: "Live coaching",
+    detail: "Technique feedback and accountability every session. Not a pre-recorded library.",
   },
   {
-    title: "Built for busy schedules",
-    detail: "One hour, three mornings a week. Train before work starts.",
+    title: "Built for real schedules",
+    detail: "One hour, three mornings a week. Before work.",
   },
   {
-    title: "Never fall behind",
-    detail: "Miss a class? Recordings land in your portal for 7 days.",
+    title: "Miss a class?",
+    detail: "Recordings stay in your portal for 7 days.",
   },
   {
     title: "Home-friendly setup",
-    detail: "Two kettlebells and space to move. No commercial gym required.",
+    detail: EQUIPMENT_MINIMUM,
   },
   {
-    title: "Nutrition + community",
-    detail: "Simple eating framework and a private member community with your coach.",
+    title: "Nutrition included",
+    detail: "Personalised nutrition is part of the coaching price. Plus ongoing support.",
   },
 ] as const;
 
@@ -495,46 +512,50 @@ export const PROGRAM_STAGES = [
     stage: "01",
     title: "Foundations",
     detail:
-      "One dedicated technique session before your first live class — swing, clean, press, squat, breathing, and effort literacy.",
+      "One technique session before your first live class - swing, clean, press, squat, breathing, and effort.",
   },
   {
     stage: "02",
     title: "Live training",
     detail:
-      "Three coached sessions every week across strength, conditioning, and mobility. Real-time cues in a small group.",
+      "Three coached sessions every week. Strength, conditioning, mobility. Real-time feedback.",
   },
   {
     stage: "03",
-    title: "Sustain & progress",
+    title: "Progress & habits",
     detail:
-      "Recordings, circuits, nutrition framework, and community accountability so consistency sticks month after month.",
+      "Recordings, nutrition, and accountability so consistency sticks month after month.",
   },
 ] as const;
 
 export const FAQ = [
   {
     q: "Is this beginner friendly?",
-    a: "Yes. Everyone starts with a Foundations Session before joining the live classes, so you'll learn every movement correctly from day one.",
+    a: "Yes. Everyone starts with a Foundations Session. You learn the movements correctly before joining live classes.",
   },
   {
     q: "Do I need a gym?",
-    a: "No. Two kettlebells and enough room to move are all you need.",
+    a: `No. ${EQUIPMENT_MINIMUM}`,
   },
   {
     q: "What if I miss a class?",
-    a: "Every session is uploaded to your portal. Recordings remain available for 7 days before they expire.",
+    a: "Every session goes to your portal. Recordings stay available for 7 days.",
   },
   {
-    q: "Will this help me lose fat?",
-    a: "Yes — if you train consistently and follow the nutrition guidance, you'll get leaner while becoming stronger and fitter. We're building a body that's capable for life, not chasing quick weight loss.",
+    q: "Is nutrition included?",
+    a: "Yes. Personalised nutrition is part of the coaching price - macros and meal guidance. Not an add-on.",
   },
   {
-    q: "When will I see results?",
-    a: "You'll feel stronger before you look stronger. Stay consistent for a few weeks and you'll notice the difference. Stay consistent for a few months and everyone else will too.",
+    q: "Will this help me get leaner?",
+    a: "If you train consistently and follow the nutrition coaching, yes. We build strength and performance first. Fat loss follows sustainable habits - not extreme cuts.",
+  },
+  {
+    q: "When will I see progress?",
+    a: "You'll feel stronger before you look different. Stay consistent for a few weeks. Stay consistent for a few months and it shows.",
   },
   {
     q: "What payment methods do you accept?",
-    a: "All major Indian cards, UPI, and net banking via Razorpay.",
+    a: "Cards, UPI, and net banking via Razorpay.",
   },
 ] as const;
 
@@ -555,7 +576,7 @@ export const TESTIMONIALS = [
   },
   {
     quote:
-      "Showing up live changed everything. I actually train now — not just read about training.",
+      "Showing up live changed everything. I actually train now - not just read about training.",
     name: "Anika",
     detail: "Consultant · Mumbai",
     since: "2025",
@@ -563,11 +584,11 @@ export const TESTIMONIALS = [
 ] as const;
 
 export const HOME_CLOSING = {
-  headline: "Strong enough to lift. Fit enough to run. Consistent enough to keep it.",
-  subline: "Live coaching. Tuesday, Thursday, Saturday. 6:00–7:00 AM IST.",
+  headline: "Strong. Athletic. Built to last.",
+  subline: "Live coaching for training and nutrition - structured, sustainable, and built for busy schedules.",
 } as const;
 
 export const MEMBERSHIP_CLOSING = {
-  headline: "Train live. Stay lean.",
-  sublines: ["Build strength.", "Improve endurance.", "Move with confidence.", "Stay consistent."],
+  headline: "Ready when you are.",
+  sublines: ["Start with Foundations.", "Then train live with me."],
 } as const;
