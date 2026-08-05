@@ -1,4 +1,3 @@
-import { PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { pickNextLiveSession } from "@/lib/portal/live-session";
 import type {
@@ -76,68 +75,12 @@ function computeStats(members: CoachMember[]): CoachStats {
   };
 }
 
-const MOCK_MEMBERS: CoachMember[] = [
-  {
-    id: "1",
-    email: "rahul@example.com",
-    full_name: "Rahul Mehta",
-    role: "member",
-    created_at: "2026-02-01T00:00:00Z",
-    membership: {
-      id: "m1",
-      user_id: "1",
-      product: "lean_kettlebell",
-      plan: "monthly",
-      status: "active",
-      amount_inr: PROGRAM_AMOUNT_INR,
-      razorpay_subscription_id: null,
-      razorpay_payment_id: null,
-      started_at: "2026-02-01T00:00:00Z",
-      renews_at: "2026-03-01T00:00:00Z",
-      cancelled_at: null,
-      created_at: "2026-02-01T00:00:00Z",
-    },
-    onboarding: {
-      user_id: "1",
-      foundations_booked_at: "2026-02-02T00:00:00Z",
-      foundations_completed_at: "2026-02-05T00:00:00Z",
-      whatsapp_joined: true,
-      session_ids: [],
-      sessions_selected_at: null,
-    },
-    intake: null,
-  },
-  {
-    id: "2",
-    email: "priya@example.com",
-    full_name: "Priya Sharma",
-    role: "member",
-    created_at: "2026-02-18T00:00:00Z",
-    membership: {
-      id: "m2",
-      user_id: "2",
-      product: "lean_kettlebell",
-      plan: "founding",
-      status: "pending",
-      amount_inr: null,
-      razorpay_subscription_id: null,
-      razorpay_payment_id: null,
-      started_at: null,
-      renews_at: null,
-      cancelled_at: null,
-      created_at: "2026-02-18T00:00:00Z",
-    },
-    onboarding: {
-      user_id: "2",
-      foundations_booked_at: null,
-      foundations_completed_at: null,
-      whatsapp_joined: false,
-      session_ids: [],
-      sessions_selected_at: null,
-    },
-    intake: null,
-  },
-];
+const EMPTY_STATS: CoachStats = {
+  activeMembers: 0,
+  pendingMembers: 0,
+  onboardingPending: 0,
+  whatsappPending: 0,
+};
 
 const MORNING_ZOOM =
   "https://us06web.zoom.us/j/88998807036?pwd=32Ie2ribLO6IU1w7nml5F6xaasz2zY.1";
@@ -220,18 +163,17 @@ const MOCK_SESSIONS: LiveSessionRow[] = [
 ];
 
 function mockDashboard(): CoachDashboardData {
-  const members = MOCK_MEMBERS;
   return {
     source: "mock",
-    members,
+    members: [],
     liveSessions: MOCK_SESSIONS,
     recordings: [],
     siteConfig: {
-      whatsapp_invite_url: "https://chat.whatsapp.com/demo",
+      whatsapp_invite_url: "",
       foundations_calendly_url: "",
-      cohort_start_date: "April 2026",
+      cohort_start_date: "",
     },
-    stats: computeStats(members),
+    stats: EMPTY_STATS,
   };
 }
 
@@ -259,7 +201,9 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   const onboarding = (onboardingRes.data ?? []) as Onboarding[];
   const intakes = (intakeRes.data ?? []) as MemberIntake[];
 
-  const members: CoachMember[] = ((profilesRes.data ?? []) as Profile[]).map((p) => ({
+  const members: CoachMember[] = ((profilesRes.data ?? []) as Profile[])
+    .filter((p) => p.role === "member")
+    .map((p) => ({
     ...p,
     membership: memberships.find((m) => m.user_id === p.id) ?? null,
     onboarding: onboarding.find((o) => o.user_id === p.id) ?? null,

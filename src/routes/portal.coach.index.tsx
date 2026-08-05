@@ -43,8 +43,11 @@ function CoachDashboard() {
           {firstName}
         </h1>
         <p className="mt-2 text-sm text-background/60">
-          {stats.activeMembers} active
-          {stats.pendingMembers > 0 ? ` · ${stats.pendingMembers} pending activation` : ""}
+          {stats.activeMembers === 0 && stats.pendingMembers === 0
+            ? "No members yet — new signups will appear here after handover"
+            : `${stats.activeMembers} active${
+                stats.pendingMembers > 0 ? ` · ${stats.pendingMembers} pending activation` : ""
+              }`}
         </p>
         <div className="mt-5 flex flex-wrap gap-2">
           <Link to="/portal/coach/members" className="portal-btn portal-btn-accent inline-flex gap-2">
