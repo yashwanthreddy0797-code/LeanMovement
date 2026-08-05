@@ -40,25 +40,25 @@ function HomePage() {
 
   return (
     <div className="bg-background text-foreground">
-      {/* Hero — brand wordmark backdrop + CTA */}
+      {/* Hero — wordmark upper zone, copy + CTA lower zone (no overlap) */}
       <header
-        className="relative flex min-h-[100dvh] max-h-[100dvh] flex-col overflow-hidden bg-black"
+        className="relative grid min-h-[100dvh] max-h-[100dvh] grid-rows-[minmax(0,1fr)_auto] overflow-hidden bg-black"
       >
-        <div className="pointer-events-none absolute inset-0" aria-hidden>
+        <div
+          className="flex min-h-0 items-center justify-center px-6 pt-20 pb-4 sm:px-10 md:pt-28 md:pb-6"
+          aria-hidden
+        >
           <img
             src="/brand/lean-movement-wordmark.png"
             alt=""
-            className="absolute inset-0 h-full w-full object-contain object-center px-6 py-20 sm:px-12 md:px-20"
+            className="h-auto w-full max-w-[min(88vw,520px)] max-h-[min(26vh,200px)] object-contain object-center sm:max-h-[min(30vh,240px)] md:max-w-[600px] md:max-h-[min(38vh,320px)] lg:max-h-[min(40vh,360px)]"
             fetchPriority="high"
           />
         </div>
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 h-[62%] bg-gradient-to-t from-black via-black/92 to-transparent"
-          aria-hidden
-        />
-        <div className="container-x relative z-10 flex flex-1 flex-col justify-end pb-12 pt-28 md:pb-16 md:pt-32">
-          <FadeUp>
-            <h1 className="max-w-4xl font-display text-[3.25rem] uppercase leading-[0.9] tracking-[0.04em] text-white sm:text-[4.5rem] md:text-[5.5rem] lg:text-[6.5rem]">
+        <div className="relative z-10 shrink-0 bg-black pb-10 pt-2 shadow-[0_-32px_64px_rgba(0,0,0,0.85)] md:pb-16 md:pt-4">
+          <div className="container-x">
+            <FadeUp>
+              <h1 className="max-w-4xl font-display text-[3rem] uppercase leading-[0.9] tracking-[0.04em] text-white sm:text-[4.25rem] md:text-[5rem] lg:text-[5.5rem]">
               Train live.
               <br />
               <span className="text-accent">Stay lean.</span>
@@ -79,6 +79,7 @@ function HomePage() {
               <ZoomMark tone="light" size="sm" label="live" />
             </div>
           </FadeUp>
+          </div>
         </div>
       </header>
 
