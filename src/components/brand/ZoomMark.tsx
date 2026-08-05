@@ -22,7 +22,7 @@ const TONE = {
   muted: "text-foreground/55",
 } as const;
 
-/** Official-style Zoom camera mark — transparent, no plate/background. */
+/** Official-style Zoom camera mark - transparent, no plate/background. */
 function ZoomIcon({ size, className }: { size: number; className?: string }) {
   return (
     <svg
@@ -41,7 +41,7 @@ function ZoomIcon({ size, className }: { size: number; className?: string }) {
 
 /**
  * Zoom brand lockup for live-call trust signals.
- * No background, badge, or pill — icon + wordmark only.
+ * No background, badge, or pill - icon + wordmark only.
  */
 export function ZoomMark({
   variant = "lockup",

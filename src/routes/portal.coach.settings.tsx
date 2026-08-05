@@ -1,16 +1,17 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import { PortalPageHeader, SectionTitle, SoftCard } from "@/components/portal/ui";
+import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
-import { formatInr, updateSiteConfig } from "@/lib/portal/coach-queries";
+import { normalizeCalendlyUrl } from "@/lib/calendly";
+import { updateSiteConfig } from "@/lib/portal/coach-queries";
 import { Save } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/coach/settings")({
-  head: () => ({ meta: [{ title: "Settings — Lean Kettlebell Coach" }] }),
+  head: () => ({ meta: [{ title: "Settings - Lean Kettlebell Coach" }] }),
   component: () => (
     <CoachShell>
       <SettingsPage />
@@ -40,10 +41,16 @@ function SettingsPage() {
   }
 
   const save = async () => {
+    const calendlyNormalized = calendly.trim() ? normalizeCalendlyUrl(calendly) : "";
+    if (calendly.trim() && !calendlyNormalized) {
+      toast.error("Use a full Calendly event link (https://calendly.com/your-name/event)");
+      return;
+    }
+
     setSaving(true);
     const results = await Promise.all([
       updateSiteConfig(coachId, "whatsapp_invite_url", whatsapp.trim()),
-      updateSiteConfig(coachId, "foundations_calendly_url", calendly.trim()),
+      updateSiteConfig(coachId, "foundations_calendly_url", calendlyNormalized),
       updateSiteConfig(coachId, "cohort_start_date", cohort.trim()),
     ]);
     setSaving(false);
@@ -51,7 +58,12 @@ function SettingsPage() {
     const err = results.find((r) => r.error)?.error;
     if (err) toast.error(err);
     else {
-      toast.success("Portal settings saved");
+      toast.success(
+        calendlyNormalized
+          ? "Saved - new members will see the Foundations booking popup"
+          : "Portal settings saved",
+      );
+      setCalendly(calendlyNormalized);
       void refresh();
     }
   };
@@ -59,13 +71,12 @@ function SettingsPage() {
   return (
     <div className="max-w-2xl space-y-8 pb-20 lg:pb-0">
       <PortalPageHeader
-        eyebrow="Portal"
         title="Settings"
-        description="Links and dates shown to members on their dashboard and community pages."
+        description="WhatsApp, Foundations booking, and cohort date shown to members."
       />
 
-      <SoftCard>
-        <SectionTitle eyebrow="Member-facing" title="Portal links" />
+      <SoftCard className="!p-5 md:!p-6">
+        <h2 className="mb-5 font-display text-xl uppercase tracking-[0.06em]">Portal links</h2>
         <div className="space-y-5">
           <Field label="WhatsApp group invite URL">
             <input
@@ -75,13 +86,17 @@ function SettingsPage() {
               className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
             />
           </Field>
-          <Field label="Foundations session — Calendly URL">
+          <Field label="Foundations session - Calendly event link">
             <input
               value={calendly}
               onChange={(e) => setCalendly(e.target.value)}
-              placeholder="https://calendly.com/your-link"
+              placeholder="https://calendly.com/mohith/foundations"
               className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
             />
+            <p className="mt-2 text-xs leading-relaxed text-muted-foreground">
+              Create a 60-min event in Calendly (e.g. “Foundations Session”), copy that event’s
+              share link, and paste it here. Until this is set, members won’t see the booking popup.
+            </p>
           </Field>
           <Field label="Cohort start date (display text)">
             <input
@@ -101,31 +116,6 @@ function SettingsPage() {
             {saving ? "Saving…" : "Save settings"}
           </button>
         </div>
-      </SoftCard>
-
-      <SoftCard>
-        <SectionTitle eyebrow="Revenue" title="Membership overview" />
-        <dl className="grid grid-cols-2 gap-4 text-sm">
-          <div>
-            <dt className="text-xs uppercase tracking-wider text-muted-foreground">Active members</dt>
-            <dd className="mt-1 font-display text-2xl tracking-[0.04em]">{data.stats.activeMembers}</dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wider text-muted-foreground">Est. MRR</dt>
-            <dd className="mt-1 font-display text-2xl tracking-[0.04em]">{formatInr(data.stats.mrrInr)}</dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wider text-muted-foreground">Pending</dt>
-            <dd className="mt-1 font-display text-2xl tracking-[0.04em]">{data.stats.pendingMembers}</dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wider text-muted-foreground">Renewals (14d)</dt>
-            <dd className="mt-1 font-display text-2xl tracking-[0.04em]">{data.stats.expiringSoon}</dd>
-          </div>
-        </dl>
-        <Link to="/portal/coach/members" className="mt-6 inline-block text-sm text-accent hover:underline">
-          Manage members →
-        </Link>
       </SoftCard>
     </div>
   );

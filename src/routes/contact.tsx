@@ -4,16 +4,20 @@ import { Loader2, Mail, MessageCircle, Instagram } from "lucide-react";
 import { PageHero } from "@/components/site/PageHero";
 import { FadeUp } from "@/components/site/FadeUp";
 import { toast } from "sonner";
-import { ABOUT_HERO, CONTACT } from "@/lib/lean-kettlebell";
+import { CONTACT } from "@/lib/lean-kettlebell";
 import { submitContactMessage } from "@/lib/api/contact.functions";
+import { sendViaFormSubmit, sendViaWeb3Forms } from "@/lib/email/contact-mail.shared";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — LEANMOVEMENT" },
-      { name: "description", content: "Get in touch with LEANMOVEMENT. Email, WhatsApp, or Instagram." },
-      { property: "og:title", content: "Contact — LEANMOVEMENT" },
-      { property: "og:description", content: "Get in touch with LEANMOVEMENT." },
+      { title: "Contact - LEANMOVEMENT" },
+      {
+        name: "description",
+        content: "Questions about coaching, training, or nutrition? Email or WhatsApp. Replies within 2 business hours.",
+      },
+      { property: "og:title", content: "Contact - LEANMOVEMENT" },
+      { property: "og:description", content: "Ask about live coaching, training, or nutrition." },
     ],
   }),
   component: ContactPage,
@@ -29,6 +33,32 @@ const CHANNELS = [
     href: CONTACT.instagram,
   },
 ];
+
+type ContactPayload = {
+  name: string;
+  email: string;
+  whatsapp?: string;
+  message: string;
+};
+
+async function deliverContactEmailFromBrowser(data: ContactPayload) {
+  const web3Key = import.meta.env.VITE_WEB3FORMS_ACCESS_KEY?.trim();
+  if (web3Key) {
+    try {
+      await sendViaWeb3Forms(data, web3Key);
+      return { ok: true as const };
+    } catch {
+      // fall through to FormSubmit
+    }
+  }
+
+  try {
+    await sendViaFormSubmit(data);
+    return { ok: true as const };
+  } catch {
+    return { ok: false as const };
+  }
+}
 
 function ContactPage() {
   const [sending, setSending] = useState(false);
@@ -46,48 +76,45 @@ function ContactPage() {
 
     setSending(true);
     try {
-      const result = await submitContactMessage({
-        data: { name, email, whatsapp: whatsapp || undefined, message },
-      });
+      const payload = { name, email, whatsapp: whatsapp || undefined, message };
+      const result = await submitContactMessage({ data: payload });
 
-      if (result.ok) {
+      let emailed = result.ok && result.emailed;
+
+      if (result.ok && !emailed) {
+        const browserDelivery = await deliverContactEmailFromBrowser(payload);
+        emailed = browserDelivery.ok;
+      }
+
+      if (!result.ok && !emailed) {
+        const browserDelivery = await deliverContactEmailFromBrowser(payload);
+        if (browserDelivery.ok) {
+          emailed = true;
+        } else {
+          toast.error(
+            `Could not send right now. Email ${CONTACT.email} or WhatsApp ${CONTACT.phone}.`,
+          );
+          return;
+        }
+      }
+
+      if (emailed) {
+        toast.success(`Message sent to ${CONTACT.email}. I'll reply within 2 business hours.`);
+        form.reset();
+        return;
+      }
+
+      if (result.ok && result.stored) {
         toast.success(
-          result.emailed
-            ? `Message sent to ${CONTACT.email}. We'll reply within 2 hours.`
-            : `Message received — we'll reply to you at ${email} within 2 hours.`,
+          `Message saved. If you don't hear back soon, email ${CONTACT.email} directly or WhatsApp ${CONTACT.phone}.`,
         );
         form.reset();
         return;
       }
 
-      // Browser-side FormSubmit fallback (works when server IP is blocked)
-      const fallback = await fetch(
-        `https://formsubmit.co/ajax/${encodeURIComponent(CONTACT.email)}`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json", Accept: "application/json" },
-          body: JSON.stringify({
-            name,
-            email,
-            whatsapp: whatsapp || "—",
-            message,
-            _subject: `LEANMOVEMENT contact — ${name}`,
-            _replyto: email,
-            _template: "table",
-            _captcha: "false",
-          }),
-        },
-      );
-
-      if (fallback.ok) {
-        toast.success(`Message sent to ${CONTACT.email}. We'll reply within 2 hours.`);
-        form.reset();
-        return;
-      }
-
-      toast.error(result.message);
+      toast.error(`Could not send right now. Email ${CONTACT.email} or WhatsApp ${CONTACT.phone}.`);
     } catch {
-      toast.error(`Could not send your message. Email ${CONTACT.email} directly.`);
+      toast.error(`Could not send right now. Email ${CONTACT.email} or WhatsApp ${CONTACT.phone}.`);
     } finally {
       setSending(false);
     }
@@ -98,8 +125,7 @@ function ContactPage() {
       <PageHero
         eyebrow="Contact"
         title="Say hello."
-        subtitle="Email or WhatsApp. We reply within 2 hours during business hours."
-        image={ABOUT_HERO.src}
+        subtitle={CONTACT.replyNote}
         borderless
       />
 
@@ -147,7 +173,8 @@ function ContactPage() {
                 )}
               </button>
               <p className="text-xs text-muted-foreground">
-                Messages go to <span className="text-foreground">{CONTACT.email}</span>
+                Messages go to <span className="text-foreground">{CONTACT.email}</span>.{" "}
+                {CONTACT.replyNote}
               </p>
             </form>
           </FadeUp>

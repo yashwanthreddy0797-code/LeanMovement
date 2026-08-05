@@ -2,7 +2,7 @@ import { createFileRoute, Outlet, useRouterState } from "@tanstack/react-router"
 import { ClientShell } from "@/components/portal/ClientShell";
 import { PortalSessionProvider } from "@/lib/portal/session";
 
-/** Auth pages — no session polling (prevents crash/flicker on signup/login) */
+/** Auth pages - no session polling (prevents crash/flicker on signup/login) */
 const PUBLIC_PREFIXES = [
   "/portal/login",
   "/portal/signup",

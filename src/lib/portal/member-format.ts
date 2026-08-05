@@ -1,9 +1,10 @@
+import { PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import type { Membership, MembershipPlan, MembershipStatus } from "@/lib/supabase/types";
 
 const PLAN_LABELS: Record<MembershipPlan, string> = {
-  monthly: "Lean Program",
-  quarterly: "Lean Program",
-  founding: "Lean Program",
+  monthly: "Lean Movement",
+  quarterly: "Lean Movement",
+  founding: "Lean Movement",
 };
 
 const STATUS_LABELS: Record<MembershipStatus, string> = {
@@ -24,7 +25,7 @@ export function formatMembershipStatus(status?: MembershipStatus | string | null
   return STATUS_LABELS[status as MembershipStatus] ?? status;
 }
 
-export function formatPortalDate(iso?: string | null, fallback = "—") {
+export function formatPortalDate(iso?: string | null, fallback = "-") {
   if (!iso) return fallback;
   return new Date(iso).toLocaleDateString("en-IN", {
     day: "numeric",
@@ -34,7 +35,7 @@ export function formatPortalDate(iso?: string | null, fallback = "—") {
 }
 
 export function formatInr(amount?: number | null) {
-  if (amount == null) return "—";
+  if (amount == null) return "-";
   return new Intl.NumberFormat("en-IN", {
     style: "currency",
     currency: "INR",
@@ -43,7 +44,7 @@ export function formatInr(amount?: number | null) {
 }
 
 export function planPriceInr(_plan?: MembershipPlan | string | null) {
-  return 6999;
+  return PROGRAM_AMOUNT_INR;
 }
 
 export function membershipSummary(membership: Membership | null) {

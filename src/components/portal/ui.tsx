@@ -73,18 +73,24 @@ export function PortalPageHeader({
   action?: ReactNode;
 }) {
   return (
-    <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-      <div className="max-w-2xl">
+    <div className="mb-5 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:flex-wrap sm:items-end sm:justify-between sm:gap-4">
+      <div className="max-w-xl min-w-0">
         {eyebrow && (
-          <p className="eyebrow mb-2">
+          <p className="eyebrow mb-1.5 sm:mb-2">
             <span className="h-px w-5 bg-accent" />
             {eyebrow}
           </p>
         )}
-        <h1 className="font-display text-4xl uppercase tracking-[0.04em] md:text-5xl">{title}</h1>
-        {description && <p className="mt-3 type-body !max-w-xl">{description}</p>}
+        <h1 className="font-display text-[1.75rem] uppercase tracking-[0.04em] sm:text-3xl md:text-4xl">
+          {title}
+        </h1>
+        {description && (
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground sm:mt-2 sm:text-base">
+            {description}
+          </p>
+        )}
       </div>
-      {action}
+      {action && <div className="w-full sm:w-auto">{action}</div>}
     </div>
   );
 }

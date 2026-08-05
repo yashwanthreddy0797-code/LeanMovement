@@ -33,6 +33,7 @@ import { Route as PortalNutritionRouteImport } from './routes/portal.nutrition'
 import { Route as PortalMessagesRouteImport } from './routes/portal.messages'
 import { Route as PortalLoginRouteImport } from './routes/portal.login'
 import { Route as PortalLiveRouteImport } from './routes/portal.live'
+import { Route as PortalIntakeRouteImport } from './routes/portal.intake'
 import { Route as PortalForgotRouteImport } from './routes/portal.forgot'
 import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
 import { Route as PortalCommunityRouteImport } from './routes/portal.community'
@@ -171,6 +172,11 @@ const PortalLiveRoute = PortalLiveRouteImport.update({
   path: '/live',
   getParentRoute: () => PortalRoute,
 } as any)
+const PortalIntakeRoute = PortalIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => PortalRoute,
+} as any)
 const PortalForgotRoute = PortalForgotRouteImport.update({
   id: '/forgot',
   path: '/forgot',
@@ -277,6 +283,7 @@ export interface FileRoutesByFullPath {
   '/portal/community': typeof PortalCommunityRoute
   '/portal/dashboard': typeof PortalDashboardRoute
   '/portal/forgot': typeof PortalForgotRoute
+  '/portal/intake': typeof PortalIntakeRoute
   '/portal/live': typeof PortalLiveRoute
   '/portal/login': typeof PortalLoginRoute
   '/portal/messages': typeof PortalMessagesRoute
@@ -318,6 +325,7 @@ export interface FileRoutesByTo {
   '/portal/community': typeof PortalCommunityRoute
   '/portal/dashboard': typeof PortalDashboardRoute
   '/portal/forgot': typeof PortalForgotRoute
+  '/portal/intake': typeof PortalIntakeRoute
   '/portal/live': typeof PortalLiveRoute
   '/portal/login': typeof PortalLoginRoute
   '/portal/messages': typeof PortalMessagesRoute
@@ -362,6 +370,7 @@ export interface FileRoutesById {
   '/portal/community': typeof PortalCommunityRoute
   '/portal/dashboard': typeof PortalDashboardRoute
   '/portal/forgot': typeof PortalForgotRoute
+  '/portal/intake': typeof PortalIntakeRoute
   '/portal/live': typeof PortalLiveRoute
   '/portal/login': typeof PortalLoginRoute
   '/portal/messages': typeof PortalMessagesRoute
@@ -407,6 +416,7 @@ export interface FileRouteTypes {
     | '/portal/community'
     | '/portal/dashboard'
     | '/portal/forgot'
+    | '/portal/intake'
     | '/portal/live'
     | '/portal/login'
     | '/portal/messages'
@@ -448,6 +458,7 @@ export interface FileRouteTypes {
     | '/portal/community'
     | '/portal/dashboard'
     | '/portal/forgot'
+    | '/portal/intake'
     | '/portal/live'
     | '/portal/login'
     | '/portal/messages'
@@ -491,6 +502,7 @@ export interface FileRouteTypes {
     | '/portal/community'
     | '/portal/dashboard'
     | '/portal/forgot'
+    | '/portal/intake'
     | '/portal/live'
     | '/portal/login'
     | '/portal/messages'
@@ -701,6 +713,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalLiveRouteImport
       parentRoute: typeof PortalRoute
     }
+    '/portal/intake': {
+      id: '/portal/intake'
+      path: '/intake'
+      fullPath: '/portal/intake'
+      preLoaderRoute: typeof PortalIntakeRouteImport
+      parentRoute: typeof PortalRoute
+    }
     '/portal/forgot': {
       id: '/portal/forgot'
       path: '/forgot'
@@ -842,6 +861,7 @@ interface PortalRouteChildren {
   PortalCommunityRoute: typeof PortalCommunityRoute
   PortalDashboardRoute: typeof PortalDashboardRoute
   PortalForgotRoute: typeof PortalForgotRoute
+  PortalIntakeRoute: typeof PortalIntakeRoute
   PortalLiveRoute: typeof PortalLiveRoute
   PortalLoginRoute: typeof PortalLoginRoute
   PortalMessagesRoute: typeof PortalMessagesRoute
@@ -871,6 +891,7 @@ const PortalRouteChildren: PortalRouteChildren = {
   PortalCommunityRoute: PortalCommunityRoute,
   PortalDashboardRoute: PortalDashboardRoute,
   PortalForgotRoute: PortalForgotRoute,
+  PortalIntakeRoute: PortalIntakeRoute,
   PortalLiveRoute: PortalLiveRoute,
   PortalLoginRoute: PortalLoginRoute,
   PortalMessagesRoute: PortalMessagesRoute,

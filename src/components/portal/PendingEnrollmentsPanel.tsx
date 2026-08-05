@@ -26,17 +26,14 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
   if (!isSupabaseConfigured() || loading || rows.length === 0) return null;
 
   return (
-    <SoftCard className="p-6 md:p-8">
+    <SoftCard className="!p-5 md:!p-6">
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
-          <div className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">
-            Pending enrollments
-          </div>
-          <h2 className="mt-2 font-display text-2xl uppercase tracking-[0.06em]">
-            Awaiting account / payment · {rows.length}
+          <h2 className="font-display text-xl uppercase tracking-[0.06em]">
+            New enrollments · {rows.length}
           </h2>
-          <p className="mt-2 text-sm text-muted-foreground max-w-xl">
-            New registrations appear here with their chosen 3 sessions. Activate from the member list after payment.
+          <p className="mt-1 text-sm text-muted-foreground max-w-xl">
+            Activate from the member list after payment clears.
           </p>
         </div>
         <UserPlus size={20} className="text-[#A3A3A3] shrink-0" />
@@ -55,7 +52,7 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
           <tbody>
             {rows.map((row) => (
               <tr key={row.id} className="border-b border-[var(--border)] last:border-0">
-                <td className="py-3 pr-4 font-medium">{row.full_name ?? "—"}</td>
+                <td className="py-3 pr-4 font-medium">{row.full_name ?? "-"}</td>
                 <td className="py-3 pr-4">
                   <span className="inline-flex items-center gap-1.5 text-[#737373]">
                     <Mail size={12} />
@@ -66,7 +63,7 @@ export function PendingEnrollmentsPanel({ coachId }: { coachId?: string }) {
                   </div>
                 </td>
                 <td className="py-3 pr-4 text-[#404040] max-w-xs">
-                  {formatSelectedSessions(row.session_ids ?? []) || "—"}
+                  {formatSelectedSessions(row.session_ids ?? []) || "-"}
                 </td>
                 <td className="py-3 text-[#737373]">{formatDate(row.created_at)}</td>
               </tr>

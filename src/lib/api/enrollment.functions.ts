@@ -126,7 +126,7 @@ async function saveEnrollmentIntent(
   return { storage: "table" as const, id: created.id };
 }
 
-/** Public — visitor submits enrollment from /join */
+/** Public - visitor submits enrollment from /join */
 export const createEnrollment = createServerFn({ method: "POST" })
   .inputValidator(enrollmentInput)
   .handler(async ({ data }) => {
@@ -188,7 +188,7 @@ export const createEnrollment = createServerFn({ method: "POST" })
 
 /**
  * Create (or unlock) a member account for /join checkout.
- * Uses the service role so email confirmation never blocks Razorpay —
+ * Uses the service role so email confirmation never blocks Razorpay -
  * members pay on the join page, then enter the portal.
  */
 export const provisionMemberForCheckout = createServerFn({ method: "POST" })
@@ -236,7 +236,7 @@ export const provisionMemberForCheckout = createServerFn({ method: "POST" })
     if (!profile) {
       return {
         ok: false as const,
-        message: "Account exists — sign in with your password to complete payment",
+        message: "Account exists - sign in with your password to complete payment",
         needsSignIn: true as const,
       };
     }
@@ -253,7 +253,7 @@ export const provisionMemberForCheckout = createServerFn({ method: "POST" })
     return { ok: true as const, userId: profile.id, created: false as const };
   });
 
-/** After signup — apply chosen plan from enrollment */
+/** After signup - apply chosen plan from enrollment */
 export const linkEnrollmentAfterSignup = createServerFn({ method: "POST" })
   .inputValidator(z.object({ email: z.string().email() }))
   .handler(async ({ data }) => {
@@ -304,7 +304,7 @@ export const linkEnrollmentAfterSignup = createServerFn({ method: "POST" })
     return { ok: true as const, plan };
   });
 
-/** Coach — enrollments waiting for account or payment confirmation */
+/** Coach - enrollments waiting for account or payment confirmation */
 export const coachListPendingEnrollments = createServerFn({ method: "GET" })
   .inputValidator(z.object({ coachId: z.string().uuid() }))
   .handler(async ({ data }) => {
@@ -349,7 +349,7 @@ export const coachListPendingEnrollments = createServerFn({ method: "GET" })
     return { ok: true as const, enrollments };
   });
 
-/** Coach — mark offline payment received */
+/** Coach - mark offline payment received */
 export const coachConfirmEnrollmentPayment = createServerFn({ method: "POST" })
   .inputValidator(
     z.object({

@@ -301,7 +301,7 @@ on conflict do nothing;
 
 insert into public.site_config (key, value) values
   ('whatsapp_invite_url', 'https://chat.whatsapp.com/demo-lean-kettlebell'),
-  ('foundations_calendly_url', 'https://calendly.com/apex-coaching'),
+  ('foundations_calendly_url', ''),
   ('cohort_start_date', 'April 2026')
 on conflict (key) do update set value = excluded.value;
 
@@ -319,3 +319,54 @@ insert into public.recordings (title, session_type, video_url, thumbnail_url, du
   ('Hybrid Athlete — Power & Flow', 'Hybrid', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&q=70&auto=format&fit=crop', '46 min', now() - interval '2 days'),
   ('Foundations — Swing & Clean Mechanics', 'Foundations', 'https://www.youtube.com/embed/dQw4w9WgXcQ', 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800&q=70&auto=format&fit=crop', '58 min', now() - interval '12 days')
 on conflict do nothing;
+
+-- Contact form inbox (public form posts via service role only)
+create table if not exists public.contact_messages (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  email text not null,
+  whatsapp text,
+  message text not null,
+  source text not null default 'contact_page',
+  read boolean not null default false,
+  created_at timestamptz not null default now()
+);
+
+alter table public.contact_messages enable row level security;
+
+drop policy if exists "contact_messages_coach_read" on public.contact_messages;
+create policy "contact_messages_coach_read" on public.contact_messages
+  for select using (public.is_coach_or_admin());
+
+drop policy if exists "contact_messages_coach_update" on public.contact_messages;
+create policy "contact_messages_coach_update" on public.contact_messages
+  for update using (public.is_coach_or_admin());
+
+-- Post-payment member intake questionnaire
+create table if not exists public.member_intake (
+  user_id uuid primary key references public.profiles(id) on delete cascade,
+  full_name text not null,
+  age smallint,
+  height text,
+  weight text,
+  occupation text,
+  goal text not null,
+  biggest_struggle text,
+  training_experience text not null,
+  training_days_per_week text not null,
+  why_now text,
+  instagram_handle text,
+  phone text,
+  completed_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.member_intake enable row level security;
+
+drop policy if exists "member_intake_select_own" on public.member_intake;
+create policy "member_intake_select_own" on public.member_intake
+  for select using (auth.uid() = user_id);
+
+drop policy if exists "member_intake_select_coach" on public.member_intake;
+create policy "member_intake_select_coach" on public.member_intake
+  for select using (public.is_coach_or_admin());

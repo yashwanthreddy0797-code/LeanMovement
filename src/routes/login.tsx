@@ -14,13 +14,13 @@ function safeRedirect(value: unknown) {
   return "/portal/dashboard";
 }
 
-/** Standalone login — outside /portal layout to avoid session/auth race crashes */
+/** Standalone login - outside /portal layout to avoid session/auth race crashes */
 export const Route = createFileRoute("/login")({
   validateSearch: (search: Record<string, unknown>) => ({
     redirect: safeRedirect(search.redirect),
     email: typeof search.email === "string" ? search.email : "",
   }),
-  head: () => ({ meta: [{ title: "Client Login — LEANMOVEMENT" }] }),
+  head: () => ({ meta: [{ title: "Client Login - LEANMOVEMENT" }] }),
   component: LoginPage,
 });
 
@@ -45,6 +45,7 @@ function LoginPage() {
       if (!supabaseLive) {
         const name = role === "coach" ? COACH.name : email.split("@")[0] || "Member";
         setPortalUser({
+          id: role === "coach" ? "demo-coach" : "demo-member",
           email: email || (role === "coach" ? "coach@leanmovement.in" : "member@example.com"),
           name,
           role,
@@ -105,16 +106,15 @@ function LoginPage() {
           </Link>
           <div>
             <div className="inline-flex items-center gap-2 text-[10px] tracking-[0.28em] uppercase text-[#E11D2A] mb-5">
-              <span className="w-8 h-px bg-[#E11D2A]" /> Lean Kettlebell™
+              <span className="w-8 h-px bg-[#E11D2A]" /> Account
             </div>
             <h1 className="font-display text-5xl xl:text-7xl leading-[0.95] uppercase tracking-tight">
-              Train live.
+              Member
               <br />
-              <span className="text-[#E11D2A]">Three times</span>
-              <br />a week.
+              <span className="text-[#E11D2A]">portal</span>
             </h1>
             <p className="mt-6 max-w-md text-sm text-white/70 leading-relaxed">
-              Live sessions, recordings, circuits, nutrition framework, and WhatsApp community.
+              Sign in to access your live sessions, recordings, and training tools.
             </p>
           </div>
           <div className="text-[10px] tracking-[0.25em] uppercase text-white/50">© LEANMOVEMENT</div>

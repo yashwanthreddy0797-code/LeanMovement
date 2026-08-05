@@ -34,21 +34,20 @@ export function CoachRegistrationAlerts({ coachId }: { coachId?: string }) {
   if (!isSupabaseConfigured() || loading || alerts.length === 0) return null;
 
   return (
-    <SoftCard className="border-accent/20 bg-accent/[0.02] p-6 md:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+    <SoftCard className="!p-5 md:!p-6 border-accent/20 bg-accent/[0.02]">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <div className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
-            <Bell size={12} />
+          <h2 className="inline-flex items-center gap-2 font-display text-xl uppercase tracking-[0.06em]">
+            <Bell size={15} className="text-accent" />
             New registrations
             {unread.length > 0 && (
-              <span className="bg-accent px-1.5 py-0.5 text-[10px] text-white">
+              <span className="bg-accent px-1.5 py-0.5 text-[10px] font-sans normal-case tracking-normal text-white">
                 {unread.length}
               </span>
             )}
-          </div>
-          <h2 className="mt-2 font-display text-2xl uppercase tracking-[0.06em]">Members waiting</h2>
-          <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-            You are notified when someone registers. Review their session picks, then activate after payment.
+          </h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            Review picks, then activate after payment.
           </p>
         </div>
         {unread.length > 0 && coachId && (
@@ -66,7 +65,7 @@ export function CoachRegistrationAlerts({ coachId }: { coachId?: string }) {
         )}
       </div>
 
-      <div className="mt-6 space-y-4">
+      <div className="mt-4 space-y-3">
         {alerts.slice(0, 8).map((alert) => (
           <div
             key={alert.id}

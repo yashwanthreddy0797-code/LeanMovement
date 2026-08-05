@@ -13,7 +13,7 @@ export const Route = createFileRoute("/blog/$slug")({
   head: ({ loaderData }) => ({
     meta: loaderData
       ? [
-          { title: `${loaderData.post.title} — LEANMOVEMENT Journal` },
+          { title: `${loaderData.post.title} - LEANMOVEMENT Journal` },
           { name: "description", content: loaderData.post.excerpt },
           { property: "og:title", content: loaderData.post.title },
           { property: "og:description", content: loaderData.post.excerpt },
@@ -59,17 +59,17 @@ function BlogPost() {
       <article className="container-x pb-24">
         <FadeUp className="max-w-3xl mx-auto space-y-6 text-lg text-foreground/85 leading-relaxed">
           <p className="text-xl text-foreground/90">{post.excerpt}</p>
-          <p>Most fitness content is written for the algorithm, not for the reader. Loud claims, thin substance, no follow-through. This essay is the opposite — long, specific, and built to actually be useful.</p>
+          <p>Most fitness content is written for the algorithm, not for the reader. Loud claims, thin substance, no follow-through. This essay is the opposite - long, specific, and built to actually be useful.</p>
           <h2 className="font-display text-4xl text-foreground pt-6">The actual problem.</h2>
-          <p>The default playbook for the modern Indian professional is a contradiction: extreme calorie cuts, supplements stacked on supplements, and a training program that ignores how you actually live. It generates burnout, not bodies.</p>
+          <p>The default playbook for the modern Indian professional is a contradiction: extreme cutting, supplements stacked on supplements, and a training program that ignores how you actually live. It generates burnout, not bodies.</p>
           <p>The fix isn't another protocol. It's a framework that respects your schedule, your kitchen, and your nervous system. Build the framework once, run it for a decade.</p>
           <h2 className="font-display text-4xl text-foreground pt-6">What to do this week.</h2>
-          <p>Pick one variable. Hit it daily for seven days. Measure. Adjust. The clients who win aren't the ones who chase intensity — they're the ones who compound boring decisions across long stretches of time.</p>
+          <p>Pick one variable. Hit it daily for seven days. Measure. Adjust. The clients who win aren't the ones who chase intensity - they're the ones who compound boring decisions across long stretches of time.</p>
           <p>That's the whole game.</p>
           <blockquote className="border-l-2 border-accent pl-6 my-8 font-display text-3xl text-foreground">
             The plan you can run for a decade beats the one you abandon in eight weeks.
           </blockquote>
-          <p>If this is the kind of thinking you want in your training, book a call. Otherwise, take the framework above and run it. Either way — get to work.</p>
+          <p>If this is the kind of thinking you want in your training, book a call. Otherwise, take the framework above and run it. Either way - get to work.</p>
         </FadeUp>
       </article>
 

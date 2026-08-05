@@ -70,7 +70,7 @@ export const getMemberCheckout = createServerFn({ method: "GET" })
       paymentInstructions:
         config.payment_instructions ??
         process.env.PAYMENT_INSTRUCTIONS ??
-        "Pay via UPI or bank transfer. Share the payment screenshot with your coach on WhatsApp.",
+        "Pay via UPI or bank transfer. Share the payment screenshot with me on WhatsApp.",
       supportWhatsapp: config.support_whatsapp ?? config.whatsapp_invite_url ?? null,
     };
   });

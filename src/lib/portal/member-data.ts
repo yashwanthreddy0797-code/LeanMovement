@@ -1,4 +1,4 @@
-// LEANMOVEMENT member portal — demo data for client preview
+// LEANMOVEMENT member portal - demo data for client preview
 
 import { COACH } from "@/lib/lean-kettlebell";
 
@@ -6,9 +6,9 @@ export const memberProfile = {
   name: "Rahul",
   fullName: "Rahul Mehta",
   email: "rahul@example.com",
-  membership: "Lean Program",
+  membership: "Lean Movement",
   plan: "Monthly",
-  price: "₹6,999",
+  price: "₹6,969",
   coach: COACH.name,
   memberSince: "Mar 1, 2026",
   membershipRenewsOn: "Apr 1, 2026",
@@ -63,7 +63,7 @@ export const weeklySchedule = [
 export const recordings = [
   {
     id: "1",
-    title: "Strength — Heavy KB & Carries",
+    title: "Strength - Heavy KB & Carries",
     date: "Feb 24, 2026",
     duration: "47 min",
     type: "Strength",
@@ -71,7 +71,7 @@ export const recordings = [
   },
   {
     id: "2",
-    title: "Conditioning — EMOM Complex",
+    title: "Conditioning - EMOM Complex",
     date: "Feb 26, 2026",
     duration: "44 min",
     type: "Conditioning",
@@ -79,7 +79,7 @@ export const recordings = [
   },
   {
     id: "3",
-    title: "Hybrid Athlete — Power & Flow",
+    title: "Hybrid Athlete - Power & Flow",
     date: "Mar 1, 2026",
     duration: "46 min",
     type: "Hybrid",
@@ -87,7 +87,7 @@ export const recordings = [
   },
   {
     id: "4",
-    title: "Foundations — Swing & Clean Mechanics",
+    title: "Foundations - Swing & Clean Mechanics",
     date: "Feb 20, 2026",
     duration: "58 min",
     type: "Foundations",
@@ -144,17 +144,18 @@ export const circuits = [
 ];
 
 export const nutritionFramework = {
-  calorieTarget: 2200,
   proteinTarget: 165,
+  carbsTarget: 220,
+  fatTarget: 65,
   proteinPerKg: "1.8–2.2g/kg",
   sections: [
     {
-      title: "Calorie targets",
-      body: "Set a moderate deficit for fat loss or maintenance calories for recomposition. Adjust every 2–3 weeks based on progress, not daily scale noise.",
+      title: "Macro targets",
+      body: "Hit your protein, carb, and fat targets. Adjust every 2-3 weeks based on progress, not daily scale noise.",
     },
     {
       title: "Protein first",
-      body: "Hit your protein target before optimizing anything else. Lean meats, eggs, dal, paneer, Greek yogurt — pick what fits your life.",
+      body: "Hit your protein target before optimizing anything else. Lean meats, eggs, dal, paneer, Greek yogurt - pick what fits your life.",
     },
     {
       title: "Flexible dieting",
@@ -166,7 +167,7 @@ export const nutritionFramework = {
     },
     {
       title: "Travel eating",
-      body: "Protein shake + fruit for backup. Hotel eggs and dal work. One missed meal isn't a crisis — the next one is.",
+      body: "Protein shake + fruit for backup. Hotel eggs and dal work. One missed meal isn't a crisis - the next one is.",
     },
     {
       title: "Supplements",
@@ -176,12 +177,12 @@ export const nutritionFramework = {
 };
 
 export const memberInvoices = [
-  { id: "INV-LK-0042", date: "Mar 1, 2026", amount: "₹7,999", status: "Paid" },
-  { id: "INV-LK-0031", date: "Feb 1, 2026", amount: "₹7,999", status: "Paid" },
+  { id: "INV-LK-0042", date: "Mar 1, 2026", amount: "₹6,969", status: "Paid" },
+  { id: "INV-LK-0031", date: "Feb 1, 2026", amount: "₹6,969", status: "Paid" },
 ];
 
 export const whatsAppCommunity = {
-  groupName: "LEANMOVEMENT — Members",
+  groupName: "LEANMOVEMENT - Members",
   members: 24,
   inviteUrl: "https://chat.whatsapp.com/demo-lean-kettlebell",
   description: "Private WhatsApp group for accountability, questions, and progress sharing.",

@@ -1,17 +1,14 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight } from "lucide-react";
 import { BrandLogo } from "@/components/brand/BrandLogo";
-import { BRAND, CONTACT, PRICING_PLANS } from "@/lib/lean-kettlebell";
+import { BRAND, CONTACT } from "@/lib/lean-kettlebell";
 
 const NAV = [
   { to: "/", label: "Home" },
-  { to: "/programs", label: "Membership" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
 
 export function Footer() {
-  const plan = PRICING_PLANS[0];
   const year = new Date().getFullYear();
 
   return (
@@ -20,19 +17,11 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-12 lg:gap-10">
           <div className="lg:col-span-5">
             <Link to="/" className="inline-block text-white">
-              <BrandLogo className="text-3xl text-white md:text-[2.25rem]" />
+              <BrandLogo className="text-[2rem] text-white md:text-[2.4rem]" />
             </Link>
-            <p className="mt-5 max-w-sm text-base leading-relaxed text-white/55">
-              Live kettlebell coaching for busy professionals. Three morning sessions every week —
-              Tue / Thu / Sat · 6–7 AM IST.
+            <p className="mt-5 font-display text-[0.8125rem] uppercase tracking-[0.2em] text-white/45 md:text-sm">
+              Strong. Lean. Built for life.
             </p>
-            <Link
-              to="/join"
-              search={{ plan: "standard", email: "", name: "" }}
-              className="btn-primary mt-8 inline-flex"
-            >
-              Join · {plan.price}/mo <ArrowRight size={13} />
-            </Link>
           </div>
 
           <div className="lg:col-span-2">
@@ -76,6 +65,7 @@ export function Footer() {
 
           <div className="lg:col-span-3">
             <p className="font-display text-sm tracking-[0.2em] text-white/40">Connect</p>
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/50">{CONTACT.replyNote}</p>
             <ul className="mt-5 space-y-3 text-base text-white/70">
               <li>
                 <a
@@ -117,7 +107,7 @@ export function Footer() {
             © {year} {BRAND.name}
           </p>
           <p className="font-display text-sm tracking-[0.16em] text-white/35">
-            Get lean. Get strong. Stay athletic.
+            Strong. Lean. Built for life.
           </p>
         </div>
       </div>

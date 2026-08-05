@@ -54,3 +54,35 @@ export function useMarkWhatsAppJoined(userId?: string | null) {
     },
   });
 }
+
+/** Mark Foundations as booked when member opens Calendly (coach still marks completed). */
+export function useMarkFoundationsBooked(userId?: string | null) {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: async () => {
+      if (!userId || !isSupabaseConfigured()) return;
+      const supabase = getSupabase()!;
+      const bookedAt = new Date().toISOString();
+      const { data: existing } = await supabase
+        .from("onboarding")
+        .select("user_id")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      const { error } = existing
+        ? await supabase
+            .from("onboarding")
+            .update({ foundations_booked_at: bookedAt })
+            .eq("user_id", userId)
+        : await supabase.from("onboarding").insert({
+            user_id: userId,
+            foundations_booked_at: bookedAt,
+          });
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      void queryClient.invalidateQueries({ queryKey: ["member-onboarding", userId] });
+    },
+  });
+}

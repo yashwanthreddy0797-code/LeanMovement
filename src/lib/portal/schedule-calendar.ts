@@ -126,7 +126,7 @@ export function sessionBatchLabel(session: Pick<LiveSessionRow, "start_time" | "
   return isEveningSession(session) ? "Evening" : "Morning";
 }
 
-/** Morning = black, Evening = red — inline hex so colors always ship. */
+/** Morning = black, Evening = red - inline hex so colors always ship. */
 export function sessionBatchHex(session: Pick<LiveSessionRow, "start_time" | "title" | "session_type">) {
   return isEveningSession(session) ? "#E11D2A" : "#111111";
 }

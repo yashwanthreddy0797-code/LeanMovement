@@ -26,7 +26,7 @@ export const Route = createFileRoute("/")({
       {
         property: "og:description",
         content:
-          "Live coaching three mornings a week. Personalised training and nutrition. Strength. Muscle. Consistency.",
+          "Live coaching three mornings a week. Personalised training and nutrition. Strength. Conditioning. Consistency.",
       },
       { property: "og:image", content: "/brand/lean-movement-wordmark.png" },
     ],
@@ -132,7 +132,7 @@ function HomePage() {
                 {schedule.time} IST
               </p>
               <p className="mt-5 text-base leading-relaxed text-white/65">
-                One hour. Before work. Strength, muscle, conditioning.
+                One hour. Before work. Strength and conditioning.
               </p>
               <Link
                 to="/about"

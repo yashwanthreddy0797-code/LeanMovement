@@ -1,6 +1,6 @@
 import type { MembershipPlan } from "@/lib/supabase/types";
 
-/** UI plan slugs from /programs and /join — single program mapped to monthly */
+/** UI plan slugs from /programs and /join - single program mapped to monthly */
 export type PlanSlug = "standard" | "monthly" | "quarterly" | "founding";
 
 const SLUG_TO_PLAN: Record<PlanSlug, MembershipPlan> = {
@@ -10,7 +10,7 @@ const SLUG_TO_PLAN: Record<PlanSlug, MembershipPlan> = {
   founding: "monthly",
 };
 
-export const PROGRAM_AMOUNT_INR = 6999;
+export const PROGRAM_AMOUNT_INR = 6969;
 
 export function toMembershipPlan(slug: string): MembershipPlan {
   return SLUG_TO_PLAN[slug as PlanSlug] ?? "monthly";

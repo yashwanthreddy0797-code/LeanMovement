@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import { PortalPageHeader, SectionTitle, SoftCard } from "@/components/portal/ui";
+import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import { addRecording, deleteRecording, formatDate } from "@/lib/portal/coach-queries";
@@ -14,7 +14,7 @@ import { Plus, RefreshCw, Trash2, Video } from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/coach/recordings")({
-  head: () => ({ meta: [{ title: "Recordings — Lean Kettlebell Coach" }] }),
+  head: () => ({ meta: [{ title: "Recordings - Lean Kettlebell Coach" }] }),
   component: () => (
     <CoachShell>
       <RecordingsPage />
@@ -74,8 +74,8 @@ function RecordingsPage() {
       });
       if (!result.ok) {
         toast.error(result.message ?? "Zoom sync failed");
-      } else if (result.inserted > 0) {
-        toast.success(result.message ?? `Added ${result.inserted} recording(s)`);
+      } else if (result.inserted > 0 || result.updated > 0) {
+        toast.success(result.message ?? `Synced recordings`);
         void refresh();
       } else {
         toast.message(result.message ?? "No new recordings");
@@ -100,9 +100,8 @@ function RecordingsPage() {
   return (
     <div className="space-y-8 pb-20 lg:pb-0">
       <PortalPageHeader
-        eyebrow="Library"
-        title="Session recordings"
-        description="Zoom cloud recordings sync automatically. You can also add YouTube/Vimeo links manually."
+        title="Recordings"
+        description="Sync Zoom cloud videos or add a link manually. Members see them for 7 days."
         action={
           <div className="flex flex-wrap gap-2">
             <button
@@ -117,32 +116,29 @@ function RecordingsPage() {
               }
             >
               <RefreshCw size={15} className={syncing ? "animate-spin" : ""} />
-              {syncing ? "Syncing…" : "Sync from Zoom"}
+              {syncing ? "Syncing…" : "Sync Zoom"}
             </button>
             <button type="button" onClick={() => setShowForm(true)} className="portal-btn">
-              <Plus size={15} /> Add manually
+              <Plus size={15} /> Add
             </button>
           </div>
         }
       />
 
       {!zoomConfigured && (
-        <SoftCard className="border-accent/20 bg-accent/[0.03]">
-          <p className="text-sm text-foreground/80">
-            Zoom auto-sync is not configured yet. Add{" "}
-            <code className="bg-surface px-1 text-xs">ZOOM_ACCOUNT_ID</code>,{" "}
-            <code className="bg-surface px-1 text-xs">ZOOM_CLIENT_ID</code>,{" "}
-            <code className="bg-surface px-1 text-xs">ZOOM_CLIENT_SECRET</code>, and{" "}
-            <code className="bg-surface px-1 text-xs">ZOOM_HOST_EMAIL</code> in Vercel, then run{" "}
-            <code className="bg-surface px-1 text-xs">supabase/recordings-zoom-sync.sql</code> in
-            Supabase.
-          </p>
-        </SoftCard>
+        <div className="border border-border bg-white px-5 py-4 text-sm text-muted-foreground">
+          Zoom sync needs env vars on Vercel (
+          <code className="text-xs">ZOOM_ACCOUNT_ID</code>,{" "}
+          <code className="text-xs">ZOOM_CLIENT_ID</code>,{" "}
+          <code className="text-xs">ZOOM_CLIENT_SECRET</code>,{" "}
+          <code className="text-xs">ZOOM_HOST_EMAIL</code>
+          ) plus <code className="text-xs">supabase/recordings-zoom-sync.sql</code>.
+        </div>
       )}
 
       {showForm && (
-        <SoftCard>
-          <SectionTitle eyebrow="New" title="Add session recording" />
+        <SoftCard className="!p-5 md:!p-6">
+          <h2 className="mb-4 font-display text-xl uppercase tracking-[0.06em]">Add recording</h2>
           <form onSubmit={(e) => void submit(e)} className="max-w-xl space-y-4">
             <label className="block">
               <span className="mb-1.5 block text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
@@ -151,7 +147,7 @@ function RecordingsPage() {
               <input
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="Monday Morning — Mar 3"
+                placeholder="Monday Morning - Mar 3"
                 className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
                 required
               />
@@ -204,24 +200,29 @@ function RecordingsPage() {
           <div className="overflow-x-auto">
             <table className="w-full min-w-[640px] text-sm">
               <thead>
-                <tr className="bg-surface text-left text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                  <th className="px-4 py-3 font-medium sm:px-6">Title</th>
-                  <th className="px-4 py-3 font-medium sm:px-6">Type</th>
-                  <th className="px-4 py-3 font-medium sm:px-6">Source</th>
-                  <th className="px-4 py-3 font-medium sm:px-6">Recorded</th>
-                  <th className="px-4 py-3 text-right font-medium sm:px-6">Actions</th>
+                <tr className="bg-surface text-left text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                  <th className="px-5 py-3 font-medium">Title</th>
+                  <th className="px-5 py-3 font-medium">Type</th>
+                  <th className="px-5 py-3 font-medium">Recorded</th>
+                  <th className="px-5 py-3 text-right font-medium">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {data.recordings.map((r) => (
+                {data.recordings.map((r) => {
+                  const expired =
+                    Boolean(r.expires_at) && new Date(r.expires_at as string) <= new Date();
+                  return (
                   <tr key={r.id} className="border-t border-border">
-                    <td className="px-4 py-4 font-medium sm:px-6">{r.title}</td>
-                    <td className="px-4 py-4 text-foreground/70 sm:px-6">{r.session_type}</td>
-                    <td className="px-4 py-4 sm:px-6">
-                      <span className="chip">{r.source === "zoom" ? "Zoom" : "Manual"}</span>
+                    <td className="px-5 py-4">
+                      <div className="font-medium">{r.title}</div>
+                      <div className="mt-0.5 text-xs text-muted-foreground">
+                        {r.source === "zoom" ? "Zoom" : "Manual"}
+                        {expired ? " · Expired" : ""}
+                      </div>
                     </td>
-                    <td className="px-4 py-4 text-foreground/70 sm:px-6">{formatDate(r.recorded_at)}</td>
-                    <td className="space-x-3 px-4 py-4 text-right sm:px-6">
+                    <td className="px-5 py-4 text-foreground/70">{r.session_type}</td>
+                    <td className="px-5 py-4 text-foreground/70">{formatDate(r.recorded_at)}</td>
+                    <td className="space-x-3 px-5 py-4 text-right">
                       <a
                         href={r.video_url}
                         target="_blank"
@@ -239,7 +240,8 @@ function RecordingsPage() {
                       </button>
                     </td>
                   </tr>
-                ))}
+                  );
+                })}
               </tbody>
             </table>
           </div>

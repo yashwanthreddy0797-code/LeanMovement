@@ -17,12 +17,14 @@ export function SidebarBrand({
   tone = "light",
 }: SidebarBrandProps) {
   const isDark = tone === "dark";
-  const logoClass = isDark ? "text-lg text-white" : "text-lg text-foreground";
-  const muted = isDark ? "text-white/40 hover:text-white hover:bg-white/5" : "text-muted-foreground hover:bg-surface hover:text-foreground";
-  const subClass = isDark ? "text-white/40" : "text-muted-foreground";
+  const logoClass = isDark ? "text-white" : "text-foreground";
+  const muted = isDark
+    ? "text-white/40 hover:text-white hover:bg-white/5"
+    : "text-muted-foreground hover:bg-surface hover:text-foreground";
+  const subClass = isDark ? "text-white/55" : "text-foreground/62";
 
   return (
-    <div className={`py-5 ${collapsed ? "px-3" : "px-6"}`}>
+    <div className={`shrink-0 py-5 ${collapsed ? "px-3" : "px-6"}`}>
       <div
         className={`flex ${
           collapsed ? "flex-col items-center gap-3" : "items-center justify-between gap-2"
@@ -30,27 +32,25 @@ export function SidebarBrand({
       >
         <Link
           to="/"
-          title="LEANMOVEMENT"
-          className={`relative block shrink-0 ${collapsed ? "w-full text-center" : "min-w-0 flex-1"}`}
-          style={{ minHeight: "1.125rem" }}
+          title="Lean Movement"
+          className={`relative block shrink-0 ${collapsed ? "w-full flex justify-center" : "min-w-0 flex-1"}`}
         >
           <BrandLogo
             aria-hidden={collapsed}
-            className={`${logoClass} transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+            className={`${logoClass} text-[1.35rem] transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
               collapsed
                 ? "opacity-0 scale-[0.97] absolute left-0 top-0 pointer-events-none"
                 : "opacity-100 scale-100"
             }`}
           />
           <BrandLogo
-            variant="abbr"
-            monogramSize={28}
+            variant="compact"
             aria-hidden={!collapsed}
-            className={`transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+            className={`${logoClass} transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
               collapsed
                 ? "opacity-100 scale-100"
                 : "opacity-0 scale-[0.97] absolute left-0 top-0 pointer-events-none"
-            } ${isDark ? "text-white" : ""}`}
+            }`}
           />
         </Link>
 
@@ -69,13 +69,21 @@ export function SidebarBrand({
         </button>
       </div>
 
-      <p
-        className={`text-[10px] uppercase tracking-[0.28em] overflow-hidden transition-all duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${subClass} ${
-          collapsed ? "max-h-0 opacity-0 mt-0" : "max-h-6 opacity-100 mt-2"
+      <div
+        className={`grid transition-[grid-template-rows] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] ${
+          collapsed ? "grid-rows-[0fr]" : "grid-rows-[1fr]"
         }`}
       >
-        {subtitle}
-      </p>
+        <div className="min-h-0 overflow-hidden">
+          <p
+            className={`pt-2.5 text-[10px] font-medium uppercase tracking-[0.12em] leading-[1.5] transition-opacity duration-300 ${subClass} ${
+              collapsed ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            {subtitle}
+          </p>
+        </div>
+      </div>
     </div>
   );
 }

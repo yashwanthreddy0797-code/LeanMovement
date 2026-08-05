@@ -6,7 +6,7 @@ function safeRedirect(value: unknown) {
   return "/portal/dashboard";
 }
 
-/** Legacy URL — redirect to standalone login page (SSR + client-safe) */
+/** Legacy URL - redirect to standalone login page (SSR + client-safe) */
 export const Route = createFileRoute("/portal/login")({
   validateSearch: (search: Record<string, unknown>) => ({
     redirect: safeRedirect(search.redirect),

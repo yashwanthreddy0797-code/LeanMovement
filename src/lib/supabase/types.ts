@@ -34,6 +34,24 @@ export type Onboarding = {
   sessions_selected_at: string | null;
 };
 
+export type MemberIntake = {
+  user_id: string;
+  full_name: string;
+  age: number | null;
+  height: string | null;
+  weight: string | null;
+  occupation: string | null;
+  goal: string;
+  biggest_struggle: string | null;
+  training_experience: string;
+  training_days_per_week: string;
+  why_now: string | null;
+  instagram_handle: string | null;
+  phone: string | null;
+  completed_at: string;
+  updated_at: string;
+};
+
 export type LiveSessionRow = {
   id: string;
   day_of_week: string;
@@ -79,6 +97,7 @@ export type Database = {
       profiles: { Row: Profile; Insert: Partial<Profile>; Update: Partial<Profile> };
       memberships: { Row: Membership; Insert: Partial<Membership>; Update: Partial<Membership> };
       onboarding: { Row: Onboarding; Insert: Partial<Onboarding>; Update: Partial<Onboarding> };
+      member_intake: { Row: MemberIntake; Insert: Partial<MemberIntake>; Update: Partial<MemberIntake> };
       live_sessions: { Row: LiveSessionRow; Insert: Partial<LiveSessionRow>; Update: Partial<LiveSessionRow> };
       recordings: { Row: RecordingRow; Insert: Partial<RecordingRow>; Update: Partial<RecordingRow> };
       circuits: { Row: CircuitRow; Insert: Partial<CircuitRow>; Update: Partial<CircuitRow> };

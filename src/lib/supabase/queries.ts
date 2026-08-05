@@ -220,7 +220,7 @@ function mockContent(): PortalContent {
     })),
     siteConfig: {
       whatsappInviteUrl: mockWhatsApp.inviteUrl,
-      foundationsCalendlyUrl: "https://calendly.com/apex-coaching",
+      foundationsCalendlyUrl: "",
       cohortStartDate: "April 2026",
     },
     sessionsThisMonth: countPastSessionsThisMonth(sessionDays),
@@ -269,7 +269,7 @@ export async function fetchPortalContent(): Promise<PortalContent> {
       circuits: (cirRes.data as CircuitRow[] | null)?.map(mapCircuit) ?? fallback.circuits,
       siteConfig: {
         whatsappInviteUrl: configMap.whatsapp_invite_url ?? mockWhatsApp.inviteUrl,
-        foundationsCalendlyUrl: configMap.foundations_calendly_url ?? "https://calendly.com/apex-coaching",
+        foundationsCalendlyUrl: configMap.foundations_calendly_url ?? "",
         cohortStartDate: configMap.cohort_start_date ?? "April 2026",
       },
       sessionsThisMonth: countPastSessionsThisMonth(sessionDays),

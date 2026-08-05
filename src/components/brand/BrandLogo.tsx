@@ -1,46 +1,39 @@
 import { cn } from "@/lib/utils";
 import type { HTMLAttributes } from "react";
-import { BrandMonogram } from "@/components/brand/BrandMonogram";
 
 type BrandLogoProps = HTMLAttributes<HTMLSpanElement> & {
-  variant?: "full" | "abbr" | "navbar";
-  /** Collapsed sidebar / icon-only mark size in px */
-  monogramSize?: number;
+  /** full = default wordmark; navbar = nav scale; compact = collapsed sidebar */
+  variant?: "full" | "navbar" | "compact";
 };
 
+/**
+ * Stacked LEAN / MOVEMENT wordmark — matches the brand lockup.
+ * Uses currentColor so it works on black nav and light portal chrome.
+ */
 export function BrandLogo({
   variant = "full",
   className,
-  monogramSize,
   ...props
 }: BrandLogoProps) {
-  if (variant === "abbr") {
-    return (
-      <span
-        className={cn("inline-flex items-center justify-center text-[#000000]", className)}
-        aria-label="LEANMOVEMENT"
-        {...props}
-      >
-        <BrandMonogram size={monogramSize ?? 26} />
-      </span>
-    );
-  }
-
-  if (variant === "navbar") {
-    return (
-      <span className={cn("flex items-center gap-2 sm:gap-2.5 text-current", className)} {...props}>
-        <BrandMonogram className="w-5 h-5 sm:w-[22px] sm:h-[22px]" />
-        <span className="brand-logo text-[12px] sm:text-[15px] tracking-[0.28em] sm:tracking-[0.32em] truncate">
-          LEANMOVEMENT
-        </span>
-      </span>
-    );
-  }
+  const sizeClass =
+    variant === "navbar"
+      ? "text-[1.35rem] sm:text-[1.55rem]"
+      : variant === "compact"
+        ? "text-[1.05rem]"
+        : undefined;
 
   return (
-    <span className={cn("brand-logo inline-flex items-center gap-[0.35em] tracking-tight", className)} {...props}>
-      <BrandMonogram className="h-[0.82em] w-[0.82em]" />
-      <span>LEANMOVEMENT</span>
+    <span
+      className={cn(
+        "brand-logo inline-flex flex-col items-start justify-center text-current select-none",
+        sizeClass,
+        className,
+      )}
+      aria-label="Lean Movement"
+      {...props}
+    >
+      <span className="brand-logo-lean">LEAN</span>
+      <span className="brand-logo-movement">MOVEMENT</span>
     </span>
   );
 }

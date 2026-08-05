@@ -2,6 +2,7 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { CONTACT } from "@/lib/lean-kettlebell";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
+import { COACH_EMAIL, deliverContactEmailToCoach, sanitizeContactDeliveryError } from "@/lib/email/contact-mail.server";
 
 const contactSchema = z.object({
   name: z.string().trim().min(1).max(120),
@@ -11,22 +12,6 @@ const contactSchema = z.object({
 });
 
 export type ContactFormInput = z.infer<typeof contactSchema>;
-
-const COACH_EMAIL = CONTACT.email; // coach@leanmovement.in
-
-function buildEmailText(data: ContactFormInput) {
-  return [
-    `New message from leanmovement.in/contact`,
-    ``,
-    `Name: ${data.name}`,
-    `Email: ${data.email}`,
-    data.whatsapp ? `WhatsApp: ${data.whatsapp}` : null,
-    ``,
-    data.message,
-  ]
-    .filter(Boolean)
-    .join("\n");
-}
 
 async function saveToSupabase(data: ContactFormInput): Promise<{ ok: boolean; id?: string; error?: string }> {
   const admin = getSupabaseAdmin();
@@ -46,7 +31,6 @@ async function saveToSupabase(data: ContactFormInput): Promise<{ ok: boolean; id
     .maybeSingle();
 
   if (error) {
-    // Table may not exist yet
     if (/contact_messages|relation|schema/i.test(error.message)) {
       return {
         ok: false,
@@ -59,119 +43,35 @@ async function saveToSupabase(data: ContactFormInput): Promise<{ ok: boolean; id
   return { ok: true, id: row?.id };
 }
 
-async function sendViaResend(data: ContactFormInput, apiKey: string) {
-  const from =
-    process.env.RESEND_FROM_EMAIL?.trim() || "LEANMOVEMENT <onboarding@resend.dev>";
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      from,
-      to: [COACH_EMAIL],
-      reply_to: data.email,
-      subject: `Contact — ${data.name}`,
-      text: buildEmailText(data),
-    }),
-  });
-
-  if (!res.ok) {
-    const body = await res.text().catch(() => "");
-    throw new Error(`Resend ${res.status}: ${body.slice(0, 200)}`);
-  }
-}
-
-async function sendViaFormSubmit(data: ContactFormInput) {
-  const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(COACH_EMAIL)}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
-    },
-    body: JSON.stringify({
-      name: data.name,
-      email: data.email,
-      whatsapp: data.whatsapp || "—",
-      message: data.message,
-      _subject: `LEANMOVEMENT contact — ${data.name}`,
-      _replyto: data.email,
-      _template: "table",
-      _captcha: "false",
-    }),
-  });
-
-  const bodyText = await res.text().catch(() => "");
-  if (!res.ok) {
-    throw new Error(`FormSubmit ${res.status}: ${bodyText.slice(0, 200)}`);
-  }
-
-  try {
-    const json = JSON.parse(bodyText) as { success?: string | boolean; message?: string };
-    if (json.success === false) {
-      throw new Error(json.message || "FormSubmit rejected");
-    }
-  } catch (err) {
-    if (err instanceof SyntaxError) return; // non-JSON success body
-    throw err;
-  }
-}
-
 /**
  * Contact form → coach@leanmovement.in
- * 1) Always persist to Supabase (source of truth)
- * 2) Email via Resend (if configured) or FormSubmit
- * Success if DB save OR email succeeds.
+ * 1) Persist to Supabase when configured (coach dashboard inbox)
+ * 2) Email via Resend / Web3Forms / FormSubmit
  */
 export const submitContactMessage = createServerFn({ method: "POST" })
   .inputValidator(contactSchema)
   .handler(async ({ data }) => {
     const saved = await saveToSupabase(data);
-    let emailed = false;
-    let emailError: string | undefined;
+    const delivery = await deliverContactEmailToCoach(data);
 
-    const resendKey = process.env.RESEND_API_KEY?.trim();
-    try {
-      if (resendKey) {
-        await sendViaResend(data, resendKey);
-        emailed = true;
-      } else {
-        await sendViaFormSubmit(data);
-        emailed = true;
-      }
-    } catch (err) {
-      emailError = err instanceof Error ? err.message : "email failed";
-      console.error("[contact] email delivery failed", emailError);
-
-      // If Resend failed, still try FormSubmit once
-      if (resendKey) {
-        try {
-          await sendViaFormSubmit(data);
-          emailed = true;
-          emailError = undefined;
-        } catch (err2) {
-          emailError = err2 instanceof Error ? err2.message : "email failed";
-          console.error("[contact] FormSubmit fallback failed", emailError);
-        }
-      }
-    }
-
-    if (saved.ok || emailed) {
+    if (delivery.ok || saved.ok) {
       return {
         ok: true as const,
-        emailed,
+        emailed: delivery.ok,
         stored: saved.ok,
+        provider: delivery.provider,
         to: COACH_EMAIL,
+        deliveryError: delivery.ok ? undefined : delivery.error,
       };
     }
 
     return {
       ok: false as const,
-      message:
-        saved.error ||
-        `Could not send. Email ${COACH_EMAIL} directly, or run supabase/contact-messages.sql.`,
+      message: sanitizeContactDeliveryError(
+        delivery.error ||
+          saved.error ||
+          `Could not send. Email ${COACH_EMAIL} directly.`,
+      ),
     };
   });
 

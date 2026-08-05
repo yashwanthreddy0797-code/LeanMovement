@@ -18,6 +18,6 @@ export const POSTS: Post[] = [
     image: "https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=1200&q=80" },
   { slug: "vegetarian-protein", category: "Nutrition", title: "Hitting 150g protein as a vegetarian.", excerpt: "It's not hard. It's not boring. Here's the playbook for Indian vegetarians.", date: "Mar 30, 2026",
     image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1200&q=80" },
-  { slug: "cardio-vs-weights", category: "Training", title: "Cardio vs weights: stop choosing.", excerpt: "The 'either/or' debate is a trap. The right ratio depends on your actual goal — not your preference.", date: "Mar 12, 2026",
+  { slug: "cardio-vs-weights", category: "Training", title: "Cardio vs weights: stop choosing.", excerpt: "The 'either/or' debate is a trap. The right ratio depends on your actual goal - not your preference.", date: "Mar 12, 2026",
     image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=1200&q=80" },
 ];

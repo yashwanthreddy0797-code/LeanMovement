@@ -106,7 +106,7 @@ export async function createRazorpayOrder(input: {
 /** Process-local cache so we don't create a new Razorpay plan on every checkout. */
 let cachedMonthlyPlanId: string | null = null;
 
-/** Ensure a monthly plan exists — uses env plan id or creates one via API. */
+/** Ensure a monthly plan exists - uses env plan id or creates one via API. */
 export async function ensureMonthlyPlanId() {
   if (process.env.RAZORPAY_PLAN_ID_MONTHLY) {
     return process.env.RAZORPAY_PLAN_ID_MONTHLY;
@@ -126,10 +126,10 @@ export async function ensureMonthlyPlanId() {
       period: "monthly",
       interval: 1,
       item: {
-        name: "LEANMOVEMENT Lean Program",
+        name: "LEANMOVEMENT Lean Movement",
         amount: amountPaise,
         currency: "INR",
-        description: "Live strength & endurance coaching — monthly. Cancel anytime.",
+        description: "Live coaching + personalised nutrition - monthly.",
       },
     }),
   });
@@ -161,7 +161,6 @@ export async function createRazorpaySubscription(input: {
     body: JSON.stringify({
       plan_id: input.planId,
       // Razorpay requires a finite cycle count; checkout UI shows an end date from this.
-      // Members can still cancel anytime (portal / coach / Razorpay) — billing stops after cancel.
       total_count: input.totalCount ?? 120,
       customer_notify: 1,
       notes: input.notes,

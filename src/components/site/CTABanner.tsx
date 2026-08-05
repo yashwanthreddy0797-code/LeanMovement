@@ -5,7 +5,7 @@ import { FadeUp } from "./FadeUp";
 export function CTABanner({
   title = "Ready to start?",
   highlight = "start",
-  subtitle = "Live kettlebell coaching · 3× per week.",
+  subtitle = "Join Lean Movement.",
   ctaText = "Join now",
   ctaTo = "/join",
 }: {

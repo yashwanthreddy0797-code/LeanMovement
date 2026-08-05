@@ -1,5 +1,6 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
+import { PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import type { MembershipPlan } from "@/lib/supabase/types";
 
@@ -22,7 +23,7 @@ async function verifyCoach(coachId: string) {
 }
 
 function planAmount(_plan: MembershipPlan) {
-  return 6999;
+  return PROGRAM_AMOUNT_INR;
 }
 
 function renewalDate(plan: MembershipPlan) {

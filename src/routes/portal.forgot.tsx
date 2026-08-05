@@ -5,7 +5,7 @@ import { requestPasswordReset } from "@/lib/portal/auth-api";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/forgot")({
-  head: () => ({ meta: [{ title: "Reset Password — LEANMOVEMENT" }] }),
+  head: () => ({ meta: [{ title: "Reset Password - LEANMOVEMENT" }] }),
   component: ForgotPage,
 });
 

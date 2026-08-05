@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
+import { PortalPageHeader } from "@/components/portal/ui";
 import { usePortalPageContent } from "@/lib/portal/portal-content";
 import { CONTACT, COACH } from "@/lib/lean-kettlebell";
-import { MessageCircle, Mail, User } from "lucide-react";
+import { MessageCircle, Mail } from "lucide-react";
 
 export const Route = createFileRoute("/portal/community")({
-  head: () => ({ meta: [{ title: "Your Coach — Lean Movement Portal" }] }),
+  head: () => ({ meta: [{ title: "Your Coach - LEANMOVEMENT Portal" }] }),
   component: CoachContact,
 });
 
@@ -14,36 +14,30 @@ function CoachContact() {
   const whatsappUrl = siteConfig.whatsappInviteUrl || CONTACT.whatsapp;
 
   return (
-    <div className="mx-auto max-w-2xl space-y-10">
+    <div className="mx-auto max-w-md space-y-6">
       <PortalPageHeader
-        eyebrow="Your coach"
-        title={COACH.name}
-        description={`${COACH.title} · Direct support for your Lean Program.`}
+        title="Your coach"
+        description={`${COACH.name} · ${CONTACT.replyNote}`}
       />
 
-      <SoftCard className="p-10 text-center md:p-14">
-        <div className="mx-auto grid h-20 w-20 place-items-center bg-foreground text-background">
-          <User size={36} />
-        </div>
-        <h2 className="mt-6 font-display text-3xl uppercase tracking-[0.04em]">Message your coach</h2>
-        <p className="mx-auto mt-3 max-w-md type-body">
-          Members only connect with {COACH.name.split(" ")[0]} — session questions, schedule, and progress.
+      <div className="border border-border bg-white p-6 text-center sm:p-8">
+        <p className="text-sm text-muted-foreground">
+          Session questions, schedule, or progress — reach out directly.
         </p>
-
-        <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+        <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
           <a
             href={whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="portal-btn portal-btn-accent w-full sm:w-auto"
+            className="portal-btn portal-btn-accent"
           >
-            <MessageCircle size={18} /> WhatsApp coach
+            <MessageCircle size={16} /> WhatsApp
           </a>
-          <a href={`mailto:${CONTACT.email}`} className="portal-btn portal-btn-ghost w-full sm:w-auto">
-            <Mail size={18} /> Email
+          <a href={`mailto:${CONTACT.email}`} className="portal-btn portal-btn-ghost">
+            <Mail size={16} /> Email
           </a>
         </div>
-      </SoftCard>
+      </div>
     </div>
   );
 }

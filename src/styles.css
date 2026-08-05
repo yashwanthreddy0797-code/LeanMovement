@@ -59,7 +59,7 @@
   --content-medium: 42rem;
 }
 
-/* ====== MEMBER PORTAL — warm athletic companion ====== */
+/* ====== MEMBER PORTAL - warm athletic companion ====== */
 .portal-theme,
 .member-portal {
   --background: #F7F5F2;
@@ -85,7 +85,7 @@
   min-height: 100vh;
 }
 
-/* ====== COACH PORTAL — dark operational console ====== */
+/* ====== COACH PORTAL - dark operational console ====== */
 .coach-portal {
   --background: #F3F4F6;
   --surface: #FFFFFF;
@@ -171,8 +171,6 @@
 .member-portal .brand-logo,
 .coach-portal .brand-logo {
   font-family: var(--font-display);
-  font-weight: 400;
-  letter-spacing: 0.08em;
 }
 
 .portal-theme .portal-nav-link,
@@ -332,12 +330,80 @@
   color: #FFFFFF;
 }
 
+/* Mobile portal polish */
+@media (max-width: 1023px) {
+  .member-portal .portal-btn,
+  .coach-portal .portal-btn,
+  .portal-theme .portal-btn {
+    min-height: 2.75rem;
+    padding-left: 1.125rem;
+    padding-right: 1.125rem;
+  }
+
+  .portal-mobile-sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    background: rgba(10, 10, 10, 0.45);
+  }
+
+  .portal-mobile-sheet-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--card, #fff);
+    border-top: 1px solid var(--border);
+    padding: 1rem 1rem calc(1.25rem + env(safe-area-inset-bottom));
+  }
+
+  .coach-portal .portal-mobile-sheet-panel {
+    background: #0F1217;
+    border-color: #1C222B;
+    color: #F5F7FA;
+  }
+}
+
+@media (max-width: 639px) {
+  .portal-cta-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.625rem;
+  }
+
+  .portal-cta-stack > .portal-btn,
+  .portal-cta-stack > a.portal-btn,
+  .portal-cta-stack > button.portal-btn {
+    width: 100%;
+  }
+}
+
+/* Stacked LEAN / MOVEMENT lockup — scales from font-size on the root */
 .brand-logo {
   font-family: var(--font-display);
-  font-weight: 700;
   text-transform: uppercase;
   line-height: 1;
-  letter-spacing: 0.02em;
+  letter-spacing: 0;
+}
+
+.brand-logo-lean {
+  display: block;
+  font-size: 1em;
+  font-weight: 400;
+  line-height: 0.9;
+  letter-spacing: 0.16em;
+  padding-right: 0.08em; /* optical balance for final letter tracking */
+}
+
+.brand-logo-movement {
+  display: block;
+  margin-top: 0.22em;
+  font-size: 0.34em;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0.52em;
+  padding-right: 0.26em; /* keep MOVEMENT width aligned under LEAN */
+  opacity: 0.92;
 }
 
 

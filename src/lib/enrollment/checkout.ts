@@ -18,7 +18,7 @@ export type CheckoutInput = {
 };
 
 /**
- * Register account for payment — does NOT grant portal access yet.
+ * Register account for payment - does NOT grant portal access yet.
  * Caller must open Razorpay and verify before entering the portal.
  * On payment cancel, caller should sign the user out.
  *
@@ -74,11 +74,11 @@ export async function completeCheckout(input: CheckoutInput) {
 
   const { error: signInError } = await signInWithEmail(email, password);
   if (signInError) {
-    // Existing account with a different password — send them to pay after login.
+    // Existing account with a different password - send them to pay after login.
     if (!provisioned.created) {
       return {
         ok: false as const,
-        message: "Account exists — sign in with your password to complete payment",
+        message: "Account exists - sign in with your password to complete payment",
         redirectToLogin: true as const,
       };
     }

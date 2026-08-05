@@ -12,6 +12,8 @@ export const CONTACT = {
   instagramHandle: "natty.finesse",
   location: "Hyderabad, India",
   replyNote: "Email or WhatsApp. I reply within 2 business hours.",
+  /** FormSubmit form id (activated for leanmovement.in) — forwards to coach@leanmovement.in */
+  formsubmitId: "349bef5b7cb4223b3cccaebf4163fe69",
 } as const;
 
 export const COACH = {
@@ -49,8 +51,8 @@ export const LEAN_KETTLEBELL = {
 
 export const HOME_HERO = {
   headline: "Train live.\nStay lean.",
-  sublines: ["Strength.", "Muscle.", "Conditioning.", "Consistency."],
-  sessionsLine: "Live kettlebell coaching - strength, muscle, and conditioning. Three mornings a week.",
+  sublines: ["Strength.", "Conditioning.", "Consistency."],
+  sessionsLine: "Live kettlebell coaching - strength and conditioning. Three mornings a week.",
 } as const;
 
 export const MEMBERSHIP_HERO = {
@@ -264,7 +266,7 @@ export const HOME_JOURNEY = [
   {
     n: "02",
     title: "Live coaching",
-    detail: "Strength, muscle, and conditioning. Coached live. Three mornings a week.",
+    detail: "Strength and conditioning. Coached live. Three mornings a week.",
   },
   {
     n: "03",

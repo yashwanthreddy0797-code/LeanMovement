@@ -13,7 +13,7 @@ import { openRazorpayCheckout, loadRazorpayScript, preloadRazorpayScript } from 
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/checkout")({
-  head: () => ({ meta: [{ title: "Pay — LEANMOVEMENT Portal" }] }),
+  head: () => ({ meta: [{ title: "Pay - LEANMOVEMENT Portal" }] }),
   component: PortalCheckout,
 });
 
@@ -88,7 +88,7 @@ function PortalCheckout() {
         amount: order.amountPaise,
         currency: order.currency,
         name: "LEANMOVEMENT",
-        description: `Lean Program · ${formatPlanLabel(order.plan)} · cancel anytime`,
+        description: `Lean Movement · ${formatPlanLabel(order.plan)}`,
         order_id: order.orderId ?? undefined,
         subscription_id: order.subscriptionId ?? undefined,
         prefill: {
@@ -113,7 +113,7 @@ function PortalCheckout() {
             return;
           }
 
-          toast.success(kind === "renewal" ? "Renewal successful" : "Payment successful — welcome");
+          toast.success(kind === "renewal" ? "Renewal successful" : "Payment successful - welcome");
           await router.navigate({ to: "/portal/dashboard" });
           window.location.reload();
         },
@@ -166,7 +166,7 @@ function PortalCheckout() {
           {formatInr(checkout.amountInr)}
         </div>
         <div className="mt-1 text-sm text-muted-foreground">
-          Lean Program · {formatPlanLabel(checkout.plan)} / month
+          Lean Movement · {formatPlanLabel(checkout.plan)} / month
         </div>
         {access.inGrace && access.graceEndsAt && (
           <p className="mt-3 text-xs text-accent">

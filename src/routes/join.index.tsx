@@ -27,7 +27,7 @@ export const Route = createFileRoute("/join/")({
     name: typeof search.name === "string" ? search.name : "",
   }),
   head: () => ({
-    meta: [{ title: "Join — LEANMOVEMENT" }],
+    meta: [{ title: "Join - LEANMOVEMENT" }],
   }),
   component: CheckoutPage,
 });
@@ -71,7 +71,7 @@ function CheckoutPage() {
         amount: order.amountPaise,
         currency: order.currency,
         name: "LEANMOVEMENT",
-        description: `Lean Program · ${formatInr(order.amountInr)}/mo · cancel anytime`,
+        description: `Lean Movement · ${formatInr(order.amountInr)}/mo`,
         order_id: order.orderId ?? undefined,
         subscription_id: order.subscriptionId ?? undefined,
         prefill: {
@@ -100,12 +100,12 @@ function CheckoutPage() {
             return;
           }
 
-          toast.success("Payment confirmed — welcome to your portal");
-          window.location.href = "/portal/dashboard";
+          toast.success("Payment confirmed - welcome to your portal");
+          window.location.href = "/portal/intake";
         },
         onDismiss: () => {
           void abandonUnpaidRegistration().then(() => {
-            toast.message("Payment required to join. Your account is saved — sign in and pay to continue.");
+            toast.message("Payment required to join. Your account is saved - sign in and pay to continue.");
             setPayStep("form");
           });
         },
@@ -140,7 +140,7 @@ function CheckoutPage() {
       if (!result.ok) {
         toast.error(result.message ?? "Registration failed");
         if ("redirectToLogin" in result && result.redirectToLogin) {
-          // Existing account — after login, open portal checkout (not join form again).
+          // Existing account - after login, open portal checkout (not join form again).
           await navigate({
             to: "/login",
             search: {
@@ -153,13 +153,13 @@ function CheckoutPage() {
       }
 
       if ("demo" in result && result.demo) {
-        toast.success("Demo mode — entering portal");
+        toast.success("Demo mode - entering portal");
         window.location.href = result.destination;
         return;
       }
 
       if (result.needsPayment && result.userId) {
-        toast.message("Complete payment to unlock your portal");
+        toast.message("Complete payment to open your portal");
         await runPayment(result.userId, {
           email: result.email,
           name: result.fullName,
@@ -225,12 +225,8 @@ function CheckoutPage() {
 
               <div className="space-y-2 border border-border bg-surface p-5 text-sm leading-relaxed text-muted-foreground">
                 <p className="font-medium text-foreground">Secure checkout</p>
-                <p>Pay {formatInr(PROGRAM_AMOUNT_INR)} on this page. Portal access unlocks only after payment is verified.</p>
-                <p>
-                  Monthly auto-renew via Razorpay. Cancel / unsubscribe anytime before the next cycle —
-                  you will not be charged after cancel. Razorpay may show a far end date; that is their
-                  max subscription length, not a lock-in.
-                </p>
+                <p>Pay {formatInr(PROGRAM_AMOUNT_INR)} on this page. Portal access opens after payment is verified.</p>
+                <p>Training and personalised nutrition are included. After you join, book your Foundations session with me from the portal.</p>
               </div>
             </div>
           </aside>
@@ -239,8 +235,7 @@ function CheckoutPage() {
             <div className="border border-border bg-card p-7 md:p-8">
               <h2 className="type-h3">Join & pay</h2>
               <p className="type-body stack-head !max-w-none">
-                Create your account and pay securely. After payment, your portal unlocks with your
-                Tue / Thu / Sat morning schedule.
+                Create your account and pay securely. Portal access opens after payment is verified.
               </p>
 
               {payStep !== "form" && (
@@ -311,16 +306,15 @@ function CheckoutPage() {
                   />
                   <span className="text-xs text-muted-foreground leading-relaxed">
                     I agree to the terms and consent to sharing my details with LEANMOVEMENT and my coach.
-                    Membership renews monthly. You can unsubscribe / cancel anytime before the next billing
-                    cycle — billing stops after cancel.
+                    Membership renews monthly.
                   </span>
                 </label>
 
                 <div className="flex items-start gap-3 border border-border bg-surface p-4 text-sm leading-relaxed text-muted-foreground">
                   <ShieldCheck size={16} className="mt-0.5 shrink-0 text-accent" />
                   <p>
-                    Razorpay secure checkout opens next. Your coach is notified after payment succeeds.
-                    Portal login unlocks only when payment is verified on our server.
+                    Razorpay secure checkout opens next. I&apos;m notified after payment succeeds.
+                    Portal login opens only when payment is verified on our server.
                   </p>
                 </div>
 

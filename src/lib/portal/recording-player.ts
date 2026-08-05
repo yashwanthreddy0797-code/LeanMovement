@@ -46,7 +46,7 @@ export function classifyRecordingUrl(raw: string): {
     return { kind: "external", src: url, label: "Watch on Zoom" };
   }
 
-  // Unknown https — try embed; browsers will show blank if blocked
+  // Unknown https - try embed; browsers will show blank if blocked
   if (/^https?:\/\//i.test(url)) {
     return { kind: "external", src: url, label: "Open recording" };
   }

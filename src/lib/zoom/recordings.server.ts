@@ -154,7 +154,7 @@ function titleForMeeting(meeting: ZoomMeetingRecording): string {
     month: "short",
     timeZone: "Asia/Kolkata",
   });
-  return `${topic} — ${date}`;
+  return `${topic} - ${date}`;
 }
 
 function withRecordingPasscode(url: string, passcode?: string): string {

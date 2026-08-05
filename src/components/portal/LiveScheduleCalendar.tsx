@@ -513,7 +513,7 @@ function DayView({
                     {sessionBatchLabel(occ.session)}
                   </span>
                   <h3 className="font-display text-2xl uppercase tracking-[0.04em]">
-                    Lean Kettlebell — {sessionBatchLabel(occ.session)}
+                    Lean Kettlebell - {sessionBatchLabel(occ.session)}
                   </h3>
                   <p className="mt-1 text-sm text-muted-foreground">
                     {formatSessionTime(occ.session.start_time)} · {occ.session.duration_minutes} min ·

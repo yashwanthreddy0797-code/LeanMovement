@@ -58,7 +58,7 @@ export function coachEmailNotifyHref(alert: {
       `Amount: ₹${alert.amount_inr.toLocaleString("en-IN")}`,
       `Sessions: ${sessions}`,
       ``,
-      `— Portal: activate from Coach → Members`,
+      `- Portal: activate from Coach → Members`,
     ]
       .filter(Boolean)
       .join("\n"),

@@ -71,7 +71,7 @@ export async function syncZoomRecordingsToPortal(
     .in("external_id", ids);
 
   if (existingError) {
-    // Column may not exist yet — surface a clear migration hint.
+    // Column may not exist yet - surface a clear migration hint.
     if (/external_id|column/i.test(existingError.message)) {
       return {
         ok: false,

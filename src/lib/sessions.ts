@@ -1,4 +1,4 @@
-/** Fixed live session slots — Tue / Thu / Sat · 6:00–7:00 AM IST */
+/** Fixed live session slots - Tue / Thu / Sat · 6:00–7:00 AM IST */
 
 import { addDays, format, parseISO } from "date-fns";
 import type { LiveSessionRow } from "@/lib/supabase/types";
@@ -30,7 +30,7 @@ export const SESSION_SLOTS: SessionSlot[] = [
     startHour: 6,
     endHour: 7,
     focus: "Strength",
-    brief: "Heavy kettlebell work — presses, squats, pulls",
+    brief: "Heavy kettlebell work - presses, squats, pulls",
   },
   {
     id: "thu-am",
@@ -41,7 +41,7 @@ export const SESSION_SLOTS: SessionSlot[] = [
     startHour: 6,
     endHour: 7,
     focus: "Endurance",
-    brief: "Conditioning & engine — intervals, complexes",
+    brief: "Conditioning & engine - intervals, complexes",
   },
   {
     id: "sat-am",
@@ -145,7 +145,7 @@ export function attendedFocuses(attendedSlotIds: string[]) {
   return [...new Set(resolveSessionSlots(attendedSlotIds).map((slot) => slot.focus))];
 }
 
-/** Fixed program — all three slots are always valid. */
+/** Fixed program - all three slots are always valid. */
 export function validateSessionSelection(ids: string[], _attendedSlotIds: string[] = []) {
   const unique = [...new Set(ids)];
   if (unique.length !== SESSIONS_TO_PICK) {

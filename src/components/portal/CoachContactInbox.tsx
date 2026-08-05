@@ -27,22 +27,19 @@ export function CoachContactInbox({ coachId }: { coachId?: string }) {
   if (!isSupabaseConfigured() || loading || messages.length === 0) return null;
 
   return (
-    <SoftCard className="border-accent/20 bg-accent/[0.02] p-6 md:p-8">
-      <div className="flex flex-wrap items-start justify-between gap-4">
+    <SoftCard className="!p-5 md:!p-6 border-accent/20 bg-accent/[0.02]">
+      <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="inline-flex items-center gap-2 text-[10px] uppercase tracking-[0.2em] text-accent">
-            <Mail size={12} />
-            Contact form
+          <h2 className="inline-flex items-center gap-2 font-display text-xl uppercase tracking-[0.06em]">
+            <Mail size={15} className="text-accent" />
+            Website messages
             {unread.length > 0 && (
-              <span className="bg-accent px-1.5 py-0.5 text-[10px] text-white">{unread.length}</span>
+              <span className="bg-accent px-1.5 py-0.5 text-[10px] font-sans normal-case tracking-normal text-white">
+                {unread.length}
+              </span>
             )}
-          </p>
-          <h2 className="mt-2 font-display text-2xl uppercase tracking-[0.06em]">
-            Messages from the website
           </h2>
-          <p className="mt-2 max-w-xl text-sm text-muted-foreground">
-            Also emailed to coach@leanmovement.in when email delivery is configured.
-          </p>
+          <p className="mt-1 text-sm text-muted-foreground">From the public contact form.</p>
         </div>
         {unread.length > 0 && coachId && (
           <button

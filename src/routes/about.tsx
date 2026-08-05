@@ -6,24 +6,26 @@ import {
   ABOUT_HERO,
   COACH,
   CONTACT,
+  MEMBERSHIP_HERO,
+  MEMBERSHIP_STATEMENT,
   PRICING_PLANS,
-  TESTIMONIALS,
+  PROGRAM_HERO,
 } from "@/lib/lean-kettlebell";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: `About — ${COACH.name} | LEANMOVEMENT` },
+      { title: `About - ${COACH.name} | LEANMOVEMENT` },
       {
         name: "description",
-        content: `Meet ${COACH.name}, ${COACH.title.toLowerCase()} at LEANMOVEMENT. Live kettlebell coaching for busy professionals.`,
+        content: `Meet ${COACH.name}. Live coaching focused on training and nutrition - to get lean, stronger, and healthier without living in the gym.`,
       },
-      { property: "og:title", content: `About — ${COACH.name} | LEANMOVEMENT` },
+      { property: "og:title", content: `About - ${COACH.name} | LEANMOVEMENT` },
       {
         property: "og:description",
-        content: `Train live with ${COACH.name}. Strength-first kettlebell coaching built for real schedules.`,
+        content: `Live coaching with ${COACH.name}. Training and nutrition - strength, muscle, conditioning, consistency.`,
       },
-      { property: "og:image", content: ABOUT_HERO.src },
+      { property: "og:image", content: PROGRAM_HERO.src },
     ],
   }),
   component: AboutPage,
@@ -32,53 +34,40 @@ export const Route = createFileRoute("/about")({
 const PRINCIPLES = [
   {
     n: "01",
-    t: "Consistency over intensity",
-    d: "Show up three mornings a week — Tue, Thu, Sat. Progress compounds.",
+    t: "Consistency over perfection",
+    d: "Show up. Progress compounds.",
   },
   {
     n: "02",
     t: "Technique before load",
-    d: "Foundations first. Clean movement unlocks strength, endurance, and longevity.",
+    d: "Foundations first. Clean movement builds strength, performance, and longevity.",
   },
   {
     n: "03",
-    t: "Fitness creates freedom",
-    d: "Training should give energy back to work, family, and life — not take it away.",
+    t: "Training that fits life",
+    d: "Capable today. Still capable years from now. Training that fits real life.",
   },
 ];
 
 function AboutPage() {
   const plan = PRICING_PLANS[0];
-  const quote = TESTIMONIALS[0];
 
   return (
     <div className="bg-background text-foreground">
-      {/* Exact one-screen hero — no next-section peek */}
+      {/* Hero */}
       <header
-        className="relative flex flex-col justify-end overflow-hidden"
+        className="relative flex flex-col justify-center overflow-hidden bg-black"
         style={{ height: "100dvh", maxHeight: "100dvh" }}
       >
-        <img
-          src={ABOUT_HERO.src}
-          alt={ABOUT_HERO.alt}
-          className="absolute inset-0 h-full w-full object-cover object-[center_22%]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/30" />
-        <div className="container-x relative z-10 pb-12 pt-28 md:pb-16 md:pt-32">
+        <div className="container-x relative z-10 translate-y-6 md:translate-y-8">
           <FadeUp>
-            <p className="font-display text-sm tracking-[0.28em] text-white/70 md:text-base">
-              LEANMOVEMENT
-            </p>
-            <h1 className="mt-4 max-w-4xl font-display text-[3.25rem] uppercase leading-[0.9] tracking-[0.04em] text-white sm:text-[4.25rem] md:text-[5.5rem] lg:text-[6.25rem]">
-              Built for
-              <br />
-              real life.
+            <h1 className="max-w-4xl font-display text-[2.5rem] uppercase leading-[0.92] tracking-[0.04em] text-white sm:text-[3.5rem] md:text-[4.5rem] lg:text-[5rem]">
+              {MEMBERSHIP_HERO.headline}
             </h1>
-            <p className="mt-5 max-w-lg text-base leading-relaxed text-white/75 md:text-lg">
-              Fitness should create freedom — not dependency. Live kettlebell coaching for busy
-              professionals.
+            <p className="mt-6 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
+              Live coaching and personalised nutrition.
             </p>
-            <div className="mt-8 flex flex-wrap items-center gap-5">
+            <div className="mt-9 flex flex-wrap items-center gap-5">
               <Link
                 to="/join"
                 search={{ plan: plan.id, email: "", name: "" }}
@@ -86,55 +75,28 @@ function AboutPage() {
               >
                 Join now <ArrowRight size={13} />
               </Link>
-              <p className="text-xs uppercase tracking-[0.16em] text-white/50">
-                {COACH.name} · {CONTACT.location}
-              </p>
+              <ZoomMark tone="light" size="sm" label="live" />
             </div>
           </FadeUp>
         </div>
       </header>
 
-      {/* Story — tight editorial */}
-      <section className="border-b border-border">
-        <div className="container-x section-y">
-          <FadeUp className="mx-auto max-w-3xl text-center">
-            <p className="eyebrow justify-center">
-              <span className="w-6 h-px bg-accent" />
-              The story
-            </p>
-            <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl lg:text-[2.75rem]">
-              No gimmicks. Just systems that fit.
-            </h2>
-            <p className="mt-6 type-lead mx-auto max-w-2xl !text-center">
-              LEANMOVEMENT is a live coaching membership — no detoxes, no PDF plans, no unnecessary
-              restrictions. Only training that works inside a real schedule.
-            </p>
-            <div className="mt-6 flex justify-center">
-              <ZoomMark size="md" label="live coaching" />
-            </div>
-            <p className="mt-4 type-body mx-auto max-w-xl text-center">
-              The sessions shift. The principles don&apos;t.
-            </p>
-          </FadeUp>
-        </div>
-      </section>
-
-      {/* Coach — full-bleed dark feature */}
-      <section className="border-b border-border bg-black text-white">
+      {/* Your coach */}
+      <section className="bg-black text-white">
         <div className="container-x section-y">
           <div className="grid items-center gap-10 lg:grid-cols-12 lg:gap-14">
             <FadeUp className="lg:col-span-5">
               <div className="relative aspect-[4/5] overflow-hidden bg-[#111111]">
                 <img
                   src={ABOUT_HERO.src}
-                  alt={COACH.image.alt}
-                  width={1200}
-                  height={1500}
+                  alt={ABOUT_HERO.alt}
+                  width={768}
+                  height={1024}
                   loading="lazy"
                   decoding="async"
-                  className="absolute inset-0 h-full w-full object-cover object-[center_15%]"
+                  className="absolute inset-0 h-full w-full object-cover object-[center_35%]"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
               </div>
             </FadeUp>
 
@@ -170,22 +132,28 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Quote band */}
-      <section className="border-b border-border bg-surface">
+      {/* Train with me */}
+      <section className="bg-black text-white">
         <div className="container-x section-y">
-          <FadeUp className="mx-auto max-w-3xl text-center">
-            <blockquote className="font-display text-2xl uppercase leading-[1.15] tracking-[0.04em] text-foreground md:text-3xl">
-              &ldquo;{quote.quote}&rdquo;
-            </blockquote>
-            <p className="mt-8 type-meta text-muted-foreground">
-              — {quote.name} · {quote.detail}
+          <FadeUp className="mx-auto max-w-3xl">
+            <p className="eyebrow !text-white/45">
+              <span className="w-6 h-px bg-accent" />
+              The work
             </p>
+            <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
+              {MEMBERSHIP_STATEMENT.title}
+            </h2>
+            <div className="mt-8 space-y-5 text-lg leading-relaxed text-white/75 md:text-xl md:leading-[1.65]">
+              {MEMBERSHIP_STATEMENT.paragraphs.map((p) => (
+                <p key={p}>{p}</p>
+              ))}
+            </div>
           </FadeUp>
         </div>
       </section>
 
-      {/* Principles — solid, not sparse */}
-      <section className="border-b border-border bg-black text-white">
+      {/* Principles */}
+      <section className="bg-black text-white">
         <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-2xl text-center">
             <p className="eyebrow justify-center !text-white/45">
@@ -193,22 +161,24 @@ function AboutPage() {
               Principles
             </p>
             <h2 className="mt-3 font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
-              What we stand for
+              What I stand for
             </h2>
           </FadeUp>
-          <div className="mx-auto mt-12 max-w-3xl divide-y divide-white/10">
+          <div className="mx-auto mt-12 max-w-3xl space-y-10 md:space-y-12">
             {PRINCIPLES.map((p, i) => (
               <FadeUp
                 key={p.t}
                 delay={i * 0.05}
-                className="grid grid-cols-[auto_1fr] gap-5 py-8 md:gap-8 md:py-9"
+                className="grid grid-cols-[auto_1fr] gap-5 md:gap-8"
               >
                 <span className="font-mono text-xs text-accent pt-1">{p.n}</span>
                 <div>
                   <h3 className="font-display text-2xl uppercase tracking-[0.06em] md:text-[1.75rem]">
                     {p.t}
                   </h3>
-                  <p className="mt-2 max-w-lg text-base leading-relaxed text-white/70 md:text-lg">{p.d}</p>
+                  <p className="mt-2 max-w-lg text-base leading-relaxed text-white/70 md:text-lg">
+                    {p.d}
+                  </p>
                 </div>
               </FadeUp>
             ))}
@@ -216,23 +186,25 @@ function AboutPage() {
         </div>
       </section>
 
-      {/* Close */}
-      <section className="border-t border-border bg-background">
+      {/* Close → Join */}
+      <section className="bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
             <h2 className="font-display text-3xl uppercase tracking-[0.06em] md:text-4xl">
-              Ready to <span className="text-accent">train</span>?
+              Train with <span className="text-accent">{COACH.name.split(" ")[0]}</span>
             </h2>
-            <p className="mt-4 mx-auto max-w-md text-center text-base leading-relaxed text-foreground/70 md:text-lg">
-              Live kettlebell coaching · 3× per week · {plan.price}/mo
+            <p className="mt-4 mx-auto max-w-md text-center text-base leading-relaxed text-white/70 md:text-lg">
+              Live coaching. Training and nutrition. Built for real schedules.
             </p>
-            <Link
-              to="/join"
-              search={{ plan: plan.id, email: "", name: "" }}
-              className="btn-primary mt-8 inline-flex"
-            >
-              Join now <ArrowRight size={14} />
-            </Link>
+            <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
+              <Link
+                to="/join"
+                search={{ plan: plan.id, email: "", name: "" }}
+                className="btn-primary inline-flex"
+              >
+                Join now · {plan.price}/mo <ArrowRight size={14} />
+              </Link>
+            </div>
           </FadeUp>
         </div>
       </section>

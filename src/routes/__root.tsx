@@ -71,35 +71,35 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lean Movement — Live Coaching Membership | LEANMOVEMENT" },
+      { title: "Lean Movement - Live Coaching Membership | LEANMOVEMENT" },
       {
         name: "description",
         content:
-          "Train live. Stay lean. Three live kettlebell coaching sessions every week — Tue / Thu / Sat · 6–7 AM IST. ₹6,999/mo.",
+          "Evidence-based coaching to get lean, stronger, and healthier - without living in the gym. Live sessions Tue / Thu / Sat · 6–7 AM IST. Nutrition included. ₹6,969/mo.",
       },
       { name: "author", content: "LEANMOVEMENT" },
       { name: "theme-color", content: "#111111" },
       { name: "msapplication-TileColor", content: "#111111" },
-      { property: "og:title", content: "Lean Movement — LEANMOVEMENT" },
+      { property: "og:title", content: "Lean Movement - LEANMOVEMENT" },
       {
         property: "og:description",
         content:
-          "Train live three mornings a week. Build strength, improve endurance, stay lean.",
+          "Live coaching three mornings a week. Personalised training and nutrition. Strength. Muscle. Consistency.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://www.leanmovement.in/" },
       { property: "og:site_name", content: "LEANMOVEMENT" },
       { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:title", content: "Lean Movement — LEANMOVEMENT" },
+      { name: "twitter:title", content: "Lean Movement - LEANMOVEMENT" },
       {
         name: "twitter:description",
-        content: "Live kettlebell coaching — Tue / Thu / Sat mornings. ₹6,999/mo.",
+        content: "Evidence-based live coaching - Tue / Thu / Sat mornings. Nutrition included. ₹6,969/mo.",
       },
       { property: "og:image", content: heroImageUrl(1200) },
       { name: "twitter:image", content: heroImageUrl(1200) },
     ],
     links: [
-      // ICO first — browsers + Google request /favicon.ico by default
+      // ICO first - browsers + Google request /favicon.ico by default
       { rel: "icon", href: "/favicon.ico", sizes: "48x48" },
       { rel: "icon", href: "/favicon.svg", type: "image/svg+xml" },
       { rel: "icon", href: "/favicon-32x32.png", type: "image/png", sizes: "32x32" },

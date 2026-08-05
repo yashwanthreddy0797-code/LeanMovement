@@ -51,7 +51,7 @@ export function PlanCard({ plan, light = false }: { plan: Plan; light?: boolean 
           </div>
         </div>
         <Link
-          to="/programs"
+          to="/about"
           aria-label={`Choose ${plan.name}`}
           className={`w-12 h-12 rounded-full border grid place-items-center transition-all ${
             isPopular
@@ -73,7 +73,7 @@ export const CORE_PLANS: Plan[] = [
     description: "Build the base. Training and nutrition fundamentals dialed in.",
     features: [
       "Customized training plan",
-      "Macro & calorie targets",
+      "Macro targets",
       "Weekly check-in (text)",
       "App-based tracking",
       "Email support",

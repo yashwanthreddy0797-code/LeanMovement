@@ -1,3 +1,4 @@
+import { PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { pickNextLiveSession } from "@/lib/portal/live-session";
 import type {
@@ -5,6 +6,7 @@ import type {
   Membership,
   MembershipPlan,
   Onboarding,
+  MemberIntake,
   Profile,
   RecordingRow,
 } from "@/lib/supabase/types";
@@ -12,6 +14,7 @@ import type {
 export type CoachMember = Profile & {
   membership: Membership | null;
   onboarding: Onboarding | null;
+  intake: MemberIntake | null;
 };
 
 export type CoachStats = {
@@ -34,19 +37,19 @@ export type CoachDashboardData = {
 };
 
 const PLAN_MONTHLY_INR: Record<MembershipPlan, number> = {
-  monthly: 6999,
-  quarterly: 6999,
-  founding: 6999,
+  monthly: PROGRAM_AMOUNT_INR,
+  quarterly: PROGRAM_AMOUNT_INR,
+  founding: PROGRAM_AMOUNT_INR,
 };
 
 export const PLAN_LABELS: Record<MembershipPlan, string> = {
-  monthly: "Lean Program · ₹6,999",
-  quarterly: "Lean Program · ₹6,999",
-  founding: "Lean Program · ₹6,999",
+  monthly: "Lean Movement · ₹6,969",
+  quarterly: "Lean Movement · ₹6,969",
+  founding: "Lean Movement · ₹6,969",
 };
 
 export function formatSessionTime(t: string | null | undefined) {
-  if (!t || typeof t !== "string") return "—";
+  if (!t || typeof t !== "string") return "-";
   const [h, m] = t.split(":");
   const hour = parseInt(h, 10);
   if (!Number.isFinite(hour)) return t;
@@ -119,7 +122,7 @@ const MOCK_MEMBERS: CoachMember[] = [
       product: "lean_kettlebell",
       plan: "monthly",
       status: "active",
-      amount_inr: 6999,
+      amount_inr: PROGRAM_AMOUNT_INR,
       razorpay_subscription_id: null,
       razorpay_payment_id: null,
       started_at: "2026-02-01T00:00:00Z",
@@ -132,7 +135,10 @@ const MOCK_MEMBERS: CoachMember[] = [
       foundations_booked_at: "2026-02-02T00:00:00Z",
       foundations_completed_at: "2026-02-05T00:00:00Z",
       whatsapp_joined: true,
+      session_ids: [],
+      sessions_selected_at: null,
     },
+    intake: null,
   },
   {
     id: "2",
@@ -159,7 +165,10 @@ const MOCK_MEMBERS: CoachMember[] = [
       foundations_booked_at: null,
       foundations_completed_at: null,
       whatsapp_joined: false,
+      session_ids: [],
+      sessions_selected_at: null,
     },
+    intake: null,
   },
 ];
 
@@ -252,7 +261,7 @@ function mockDashboard(): CoachDashboardData {
     recordings: [],
     siteConfig: {
       whatsapp_invite_url: "https://chat.whatsapp.com/demo",
-      foundations_calendly_url: "https://calendly.com/demo",
+      foundations_calendly_url: "",
       cohort_start_date: "April 2026",
     },
     stats: computeStats(members),
@@ -264,11 +273,12 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
 
   const supabase = getSupabase()!;
 
-  const [profilesRes, membershipsRes, onboardingRes, liveRes, recRes, cfgRes] =
+  const [profilesRes, membershipsRes, onboardingRes, intakeRes, liveRes, recRes, cfgRes] =
     await Promise.all([
       supabase.from("profiles").select("*").order("created_at", { ascending: false }),
       supabase.from("memberships").select("*").eq("product", "lean_kettlebell"),
       supabase.from("onboarding").select("*"),
+      supabase.from("member_intake").select("*"),
       supabase.from("live_sessions").select("*").order("sort_order"),
       supabase.from("recordings").select("*").order("recorded_at", { ascending: false }),
       supabase.from("site_config").select("*"),
@@ -278,11 +288,13 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
 
   const memberships = (membershipsRes.data ?? []) as Membership[];
   const onboarding = (onboardingRes.data ?? []) as Onboarding[];
+  const intakes = (intakeRes.data ?? []) as MemberIntake[];
 
   const members: CoachMember[] = ((profilesRes.data ?? []) as Profile[]).map((p) => ({
     ...p,
     membership: memberships.find((m) => m.user_id === p.id) ?? null,
     onboarding: onboarding.find((o) => o.user_id === p.id) ?? null,
+    intake: intakes.find((i) => i.user_id === p.id) ?? null,
   }));
 
   const configMap = Object.fromEntries(
@@ -293,9 +305,8 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
     source: "supabase",
     members,
     liveSessions: (liveRes.data as LiveSessionRow[]) ?? MOCK_SESSIONS,
-    recordings: ((recRes.data as RecordingRow[]) ?? []).filter(
-      (row) => !row.expires_at || new Date(row.expires_at) > new Date(),
-    ),
+    // Coach sees the full library (including expired). Members still filter by expires_at.
+    recordings: (recRes.data as RecordingRow[]) ?? [],
     siteConfig: configMap,
     stats: computeStats(members),
   };
@@ -316,7 +327,7 @@ export function formatInr(n: number) {
 }
 
 export function formatDate(iso: string | null | undefined) {
-  if (!iso) return "—";
+  if (!iso) return "-";
   return new Date(iso).toLocaleDateString("en-IN", {
     day: "numeric",
     month: "short",

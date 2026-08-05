@@ -6,7 +6,7 @@ export const clientProfile = {
   name: "Rahul",
   fullName: "Rahul Mehta",
   email: "rahul@example.com",
-  program: "Lean Transformation — 12 Week",
+  program: "Lean Transformation - 12 Week",
   goal: "Lose 8kg, build lean muscle",
   coach: COACH.name,
   dayNumber: 23,
@@ -20,7 +20,7 @@ export const kpis = [
   { label: "Goal Weight", value: "72.0", unit: "kg", delta: "6.4 to go", tone: "neutral" as const },
   { label: "Weight Lost", value: "8.6", unit: "kg", delta: "since Jan 12", tone: "up" as const },
   { label: "Body Fat", value: "18.2", unit: "%", delta: "-2.4% in 30d", tone: "down" as const },
-  { label: "Daily Calories", value: "2,140", unit: "kcal", delta: "Target 2,200", tone: "neutral" as const },
+  { label: "Daily Protein", value: "158", unit: "g", delta: "Target 165g", tone: "neutral" as const },
   { label: "Water Intake", value: "2.8", unit: "L", delta: "Target 3.5L", tone: "neutral" as const },
   { label: "Workout Streak", value: "14", unit: "days", delta: "Personal best", tone: "up" as const },
   { label: "Sleep Avg", value: "7.4", unit: "hrs", delta: "+0.6 this week", tone: "up" as const },
@@ -46,7 +46,7 @@ export const waistTrend = [
 ];
 
 export const workoutToday = {
-  title: "Upper Body — Push Focus",
+  title: "Upper Body - Push Focus",
   duration: "55 min",
   exercises: [
     { name: "Barbell Bench Press", sets: 4, reps: "6-8", rest: "120s", done: true },
@@ -59,17 +59,17 @@ export const workoutToday = {
 };
 
 export const meals = [
-  { type: "Breakfast", title: "Egg white scramble, oats, berries", kcal: 520, p: 38, c: 62, f: 12, img: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=800&q=70&auto=format&fit=crop" },
-  { type: "Lunch", title: "Grilled chicken, brown rice, salad", kcal: 680, p: 52, c: 70, f: 16, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=70&auto=format&fit=crop" },
-  { type: "Snack", title: "Greek yogurt, almonds, honey", kcal: 280, p: 22, c: 24, f: 10, img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=70&auto=format&fit=crop" },
-  { type: "Dinner", title: "Pan-seared salmon, quinoa, greens", kcal: 660, p: 46, c: 48, f: 22, img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=70&auto=format&fit=crop" },
+  { type: "Breakfast", title: "Egg white scramble, oats, berries", p: 38, c: 62, f: 12, img: "https://images.unsplash.com/photo-1517673132405-a56a62b18caf?w=800&q=70&auto=format&fit=crop" },
+  { type: "Lunch", title: "Grilled chicken, brown rice, salad", p: 52, c: 70, f: 16, img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800&q=70&auto=format&fit=crop" },
+  { type: "Snack", title: "Greek yogurt, almonds, honey", p: 22, c: 24, f: 10, img: "https://images.unsplash.com/photo-1488477181946-6428a0291777?w=800&q=70&auto=format&fit=crop" },
+  { type: "Dinner", title: "Pan-seared salmon, quinoa, greens", p: 46, c: 48, f: 22, img: "https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=800&q=70&auto=format&fit=crop" },
 ];
 
-export const nutritionTargets = { kcal: 2200, p: 165, c: 220, f: 65 };
-export const nutritionConsumed = { kcal: 2140, p: 158, c: 204, f: 60 };
+export const nutritionTargets = { p: 165, c: 220, f: 65 };
+export const nutritionConsumed = { p: 158, c: 204, f: 60 };
 
 export const messages = [
-  { from: "coach", text: "Morning Rahul — how did yesterday's session feel?", time: "8:02 AM" },
+  { from: "coach", text: "Morning Rahul - how did yesterday's session feel?", time: "8:02 AM" },
   { from: "me", text: "Strong. Hit a PR on bench. Sleep was 7h.", time: "8:12 AM" },
   { from: "coach", text: "Beautiful. Add 2.5kg next session and keep the bar path tight.", time: "8:14 AM" },
   { from: "me", text: "Got it. Sending today's meals shortly.", time: "8:15 AM" },

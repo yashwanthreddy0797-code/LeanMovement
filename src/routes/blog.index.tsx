@@ -7,9 +7,9 @@ import { POSTS } from "@/lib/posts";
 export const Route = createFileRoute("/blog/")({
   head: () => ({
     meta: [
-      { title: "Journal — LEANMOVEMENT Coaching" },
-      { name: "description", content: "Notes on training, nutrition, and recovery — for the modern Indian lifter. No clickbait, no fluff." },
-      { property: "og:title", content: "Journal — LEANMOVEMENT Coaching" },
+      { title: "Journal - LEANMOVEMENT Coaching" },
+      { name: "description", content: "Notes on training, nutrition, and recovery - for the modern Indian lifter. No clickbait, no fluff." },
+      { property: "og:title", content: "Journal - LEANMOVEMENT Coaching" },
       { property: "og:description", content: "Long-form notes on training and nutrition." },
     ],
   }),
@@ -22,7 +22,7 @@ export const Route = createFileRoute("/blog/")({
 function BlogIndex() {
   return (
     <>
-      <PageHero eyebrow="The Journal" title="Notes & Essays." subtitle="Training, nutrition, and recovery — written for people who train seriously." compact />
+      <PageHero eyebrow="The Journal" title="Notes & Essays." subtitle="Training, nutrition, and recovery - written for people who train seriously." compact />
 
       <section className="bg-white text-black">
         <div className="container-x py-20 pb-32">

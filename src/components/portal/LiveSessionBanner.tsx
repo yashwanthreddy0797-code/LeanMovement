@@ -21,7 +21,7 @@ export function LiveSessionBadge({ liveState, minutesUntilStart, className = "" 
       } ${className}`}
     >
       <Radio size={11} className={isLive ? "animate-pulse" : ""} />
-      {isLive ? "Live now" : `Starts in ${minutesUntilStart ?? "—"} min`}
+      {isLive ? "Live now" : `Starts in ${minutesUntilStart ?? "-"} min`}
     </span>
   );
 }
@@ -48,13 +48,13 @@ export function LiveJoinButton({
       : "px-5 py-2.5";
 
   return (
-    <div className={`flex flex-col items-stretch sm:items-end gap-2 shrink-0 ${className}`}>
+    <div className={`flex w-full flex-col items-stretch gap-2 sm:w-auto sm:shrink-0 sm:items-end ${className}`}>
       <LiveSessionBadge liveState={liveState} minutesUntilStart={minutesUntilStart} />
       <a
         href={joinUrl}
         target="_blank"
         rel="noopener noreferrer"
-        className={`${isActive ? "portal-btn-accent portal-btn" : "portal-btn"} ${sizeClass}`}
+        className={`${isActive ? "portal-btn-accent portal-btn" : "portal-btn"} w-full sm:w-auto ${sizeClass}`}
       >
         {isActive ? "Join live now" : "Open session link"}
       </a>

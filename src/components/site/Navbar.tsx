@@ -5,7 +5,6 @@ import { BrandLogo } from "@/components/brand/BrandLogo";
 
 const links = [
   { to: "/", label: "Home" },
-  { to: "/programs", label: "Membership" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
 ] as const;
@@ -25,7 +24,7 @@ export function Navbar() {
       <header className="fixed inset-x-0 top-0 z-50 bg-black/90 border-b border-border backdrop-blur-md">
         <div className="container-x">
           <div className="flex items-center justify-between h-16 md:h-20">
-            <Link to="/" aria-label="LEANMOVEMENT home" className="text-white min-w-0">
+            <Link to="/" aria-label="Lean Movement home" className="text-white min-w-0">
               <BrandLogo variant="navbar" className="text-white" />
             </Link>
 

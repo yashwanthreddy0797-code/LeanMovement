@@ -261,5 +261,5 @@ export const recordSessionJoin = createServerFn({ method: "POST" })
     return { ok: true as const, attendedAt: now };
   });
 
-/** Legacy alias — first-time save after payment. */
+/** Legacy alias - first-time save after payment. */
 export { saveMemberWeeklySessions as saveMemberSessionPicks };

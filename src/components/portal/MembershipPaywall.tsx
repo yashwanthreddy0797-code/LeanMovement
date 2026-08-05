@@ -32,8 +32,8 @@ export function MembershipPaywall({
           {isPending
             ? "Complete secure payment on the join page to unlock live sessions and your calendar."
             : access.inGrace
-              ? "Your 30-day cycle ended. You have a few grace days — renew now to keep coaching uninterrupted."
-              : "Your membership has ended. Renew to continue live coaching with your coach."}
+              ? "Your 30-day cycle ended. You have a few grace days - renew now to keep coaching uninterrupted."
+              : "Your membership has ended. Renew to continue live coaching with me."}
         </p>
 
         {userEmail && (
