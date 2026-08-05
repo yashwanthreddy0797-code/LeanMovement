@@ -84,7 +84,7 @@ function HomePage() {
       </header>
 
       {/* Why this exists */}
-      <section className="border-b border-border bg-black text-white">
+      <section className="bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-[2.25rem] uppercase leading-[0.95] tracking-[0.04em] sm:text-4xl md:text-5xl">
@@ -100,19 +100,19 @@ function HomePage() {
       </section>
 
       {/* Offer + schedule - one section */}
-      <section className="border-b border-border">
+      <section className="bg-black text-white">
         <div className="container-x section-y-sm">
           <div className="mx-auto grid max-w-5xl gap-14 lg:grid-cols-12 lg:gap-16">
             <FadeUp className="lg:col-span-7">
-              <p className="eyebrow">
+              <p className="eyebrow !text-white/45">
                 <span className="w-6 h-px bg-accent" />
                 What you get
               </p>
-              <ul className="mt-8 space-y-0">
+              <ul className="mt-8 space-y-5 md:space-y-6">
                 {HOME_INCLUDED.map((item) => (
                   <li
                     key={item}
-                    className="flex gap-3 border-t border-border py-4 text-base leading-relaxed text-foreground/85 md:text-lg"
+                    className="flex gap-3 text-base leading-relaxed text-white/85 md:text-lg"
                   >
                     <Check size={16} className="mt-1 shrink-0 text-accent" />
                     {item}
@@ -121,7 +121,7 @@ function HomePage() {
               </ul>
             </FadeUp>
             <FadeUp delay={0.06} className="lg:col-span-5">
-              <p className="eyebrow">
+              <p className="eyebrow !text-white/45">
                 <span className="w-6 h-px bg-accent" />
                 Schedule
               </p>
@@ -131,12 +131,12 @@ function HomePage() {
               <p className="mt-3 font-display text-xl text-accent md:text-2xl">
                 {schedule.time} IST
               </p>
-              <p className="mt-5 text-base leading-relaxed text-foreground/65">
+              <p className="mt-5 text-base leading-relaxed text-white/65">
                 One hour. Before work. Strength, muscle, conditioning.
               </p>
               <Link
                 to="/about"
-                className="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-accent hover:text-foreground"
+                className="mt-8 inline-flex items-center gap-2 text-xs uppercase tracking-[0.14em] text-accent hover:text-white"
               >
                 Meet the coach <ArrowRight size={13} />
               </Link>
@@ -146,7 +146,7 @@ function HomePage() {
       </section>
 
       {/* How it works */}
-      <section className="border-b border-border bg-black text-white">
+      <section className="bg-black text-white">
         <div className="container-x section-y-sm">
           <FadeUp className="mx-auto max-w-3xl text-center">
             <p className="eyebrow justify-center !text-white/45">
@@ -170,16 +170,16 @@ function HomePage() {
       </section>
 
       {/* Price → Join */}
-      <section id="pricing" className="border-b border-border scroll-mt-24">
+      <section id="pricing" className="scroll-mt-24 bg-black text-white">
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-xl text-center">
-            <p className="eyebrow justify-center">
+            <p className="eyebrow justify-center !text-white/45">
               <span className="w-6 h-px bg-accent" />
               {plan.name}
             </p>
             <p className="mt-6 font-display text-5xl text-accent md:text-6xl">{plan.price}</p>
-            <p className="mt-2 text-xs uppercase tracking-[0.14em] text-muted-foreground">{plan.period}</p>
-            <p className="mt-6 text-base leading-relaxed text-foreground/70 md:text-lg">
+            <p className="mt-2 text-xs uppercase tracking-[0.14em] text-white/45">{plan.period}</p>
+            <p className="mt-6 text-base leading-relaxed text-white/70 md:text-lg">
               {plan.description}
             </p>
             <Link
