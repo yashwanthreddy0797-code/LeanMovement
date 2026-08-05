@@ -45,13 +45,13 @@ function HomePage() {
         className="relative grid min-h-[100dvh] max-h-[100dvh] grid-rows-[minmax(0,1.2fr)_auto] gap-5 overflow-hidden bg-black md:grid-rows-[minmax(0,1.35fr)_auto] md:gap-8"
       >
         <div
-          className="flex min-h-0 items-end justify-center px-5 pt-20 pb-0 sm:px-8 md:pt-28"
+          className="flex min-h-0 items-end justify-center px-5 pt-20 pb-0 sm:px-8 md:pt-28 md:pb-2"
           aria-hidden
         >
           <img
             src="/brand/lean-movement-wordmark.png"
             alt=""
-            className="h-auto w-full max-w-[min(92vw,640px)] max-h-[min(34vh,280px)] object-contain object-bottom sm:max-w-[min(90vw,700px)] sm:max-h-[min(36vh,320px)] md:max-w-[760px] md:max-h-[min(46vh,440px)] lg:max-w-[840px] lg:max-h-[min(48vh,480px)]"
+            className="h-auto w-full max-w-[min(92vw,640px)] max-h-[min(34vh,280px)] object-contain object-bottom sm:max-w-[min(90vw,700px)] sm:max-h-[min(36vh,320px)] md:max-w-[760px] md:max-h-[min(46vh,440px)] md:translate-y-10 lg:max-w-[840px] lg:max-h-[min(48vh,480px)] lg:translate-y-12"
             fetchPriority="high"
           />
         </div>
