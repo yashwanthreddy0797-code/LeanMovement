@@ -20,11 +20,8 @@ export type CoachMember = Profile & {
 export type CoachStats = {
   activeMembers: number;
   pendingMembers: number;
-  expiringSoon: number;
-  mrrInr: number;
-  foundationsPending: number;
+  onboardingPending: number;
   whatsappPending: number;
-  totalMembers: number;
 };
 
 export type CoachDashboardData = {
@@ -34,12 +31,6 @@ export type CoachDashboardData = {
   recordings: RecordingRow[];
   siteConfig: Record<string, string>;
   stats: CoachStats;
-};
-
-const PLAN_MONTHLY_INR: Record<MembershipPlan, number> = {
-  monthly: PROGRAM_AMOUNT_INR,
-  quarterly: PROGRAM_AMOUNT_INR,
-  founding: PROGRAM_AMOUNT_INR,
 };
 
 export const PLAN_LABELS: Record<MembershipPlan, string> = {
@@ -66,33 +57,12 @@ export function getNextLiveSession(sessions: LiveSessionRow[]) {
   return pickNextLiveSession(sessions)?.row ?? null;
 }
 
-function monthlyEquivalent(m: Membership): number {
-  if (m.amount_inr) {
-    if (m.plan === "quarterly") return Math.round(m.amount_inr / 3);
-    return m.amount_inr;
-  }
-  return PLAN_MONTHLY_INR[m.plan];
-}
-
 function computeStats(members: CoachMember[]): CoachStats {
   const memberRows = members.filter((m) => m.role === "member");
   const active = memberRows.filter((m) => m.membership?.status === "active");
   const pending = memberRows.filter((m) => m.membership?.status === "pending");
-  const in14Days = Date.now() + 14 * 24 * 60 * 60 * 1000;
 
-  const expiringSoon = active.filter((m) => {
-    const r = m.membership?.renews_at;
-    if (!r) return false;
-    const t = new Date(r).getTime();
-    return t <= in14Days && t >= Date.now();
-  }).length;
-
-  const mrrInr = active.reduce((sum, m) => {
-    if (!m.membership) return sum;
-    return sum + monthlyEquivalent(m.membership);
-  }, 0);
-
-  const foundationsPending = active.filter(
+  const onboardingPending = active.filter(
     (m) => !m.onboarding?.foundations_completed_at,
   ).length;
 
@@ -101,11 +71,8 @@ function computeStats(members: CoachMember[]): CoachStats {
   return {
     activeMembers: active.length,
     pendingMembers: pending.length,
-    expiringSoon,
-    mrrInr,
-    foundationsPending,
+    onboardingPending,
     whatsappPending,
-    totalMembers: memberRows.length,
   };
 }
 
@@ -322,11 +289,6 @@ export {
   addRecording,
   deleteRecording,
 } from "./coach-mutations";
-
-export function formatInr(n: number) {
-  if (n >= 100000) return `₹${(n / 100000).toFixed(1)}L`;
-  return `₹${n.toLocaleString("en-IN")}`;
-}
 
 export function formatDate(iso: string | null | undefined) {
   if (!iso) return "-";

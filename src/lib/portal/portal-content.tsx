@@ -17,7 +17,7 @@ export function PortalContentProvider({
   useLiveSessionsRealtime(enabled);
 
   const query = useQuery({
-    queryKey: ["portal-content", "v3"],
+    queryKey: ["portal-content", "v4"],
     queryFn: fetchPortalContent,
     enabled,
     staleTime: 15_000,
@@ -49,7 +49,6 @@ export function usePortalPageContent() {
     nextLiveSession: data?.nextLiveSession ?? null,
     weeklySchedule: data?.weeklySchedule ?? [],
     recordings: data?.recordings ?? [],
-    circuits: data?.circuits ?? [],
     siteConfig: data?.siteConfig ?? {
       whatsappInviteUrl: "",
       foundationsCalendlyUrl: "",

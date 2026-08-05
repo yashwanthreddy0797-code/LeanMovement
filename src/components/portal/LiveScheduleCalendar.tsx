@@ -37,11 +37,16 @@ import {
 } from "date-fns";
 import { SoftCard } from "@/components/portal/ui";
 
-const VIEWS: { id: CalendarView; label: string }[] = [
+const COACH_VIEWS: { id: CalendarView; label: string }[] = [
   { id: "year", label: "Year" },
   { id: "month", label: "Month" },
   { id: "week", label: "Week" },
   { id: "day", label: "Day" },
+];
+
+const MEMBER_VIEWS: { id: CalendarView; label: string }[] = [
+  { id: "month", label: "Month" },
+  { id: "week", label: "Week" },
 ];
 
 const HOUR_START = 6;
@@ -49,9 +54,13 @@ const HOUR_END = 21;
 
 type Props = {
   sessions?: LiveSessionRow[];
+  /** Coach: full calendar. Member: month + week (+ day when drilling in). */
+  variant?: "coach" | "member";
 };
 
-export function LiveScheduleCalendar({ sessions = [] }: Props) {
+export function LiveScheduleCalendar({ sessions = [], variant = "coach" }: Props) {
+  const views = variant === "member" ? MEMBER_VIEWS : COACH_VIEWS;
+  const isMember = variant === "member";
   const [view, setView] = useState<CalendarView>("month");
   const [anchor, setAnchor] = useState(() => new Date());
   const [selected, setSelected] = useState(() => new Date());
@@ -59,12 +68,16 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
   useEffect(() => {
     const mq = window.matchMedia("(max-width: 767px)");
     const apply = () => {
-      if (mq.matches) setView((v) => (v === "month" || v === "year" ? "day" : v));
+      if (!mq.matches) return;
+      setView((v) => {
+        if (isMember) return v === "month" ? "day" : v;
+        return v === "month" || v === "year" ? "day" : v;
+      });
     };
     apply();
     mq.addEventListener("change", apply);
     return () => mq.removeEventListener("change", apply);
-  }, []);
+  }, [isMember]);
 
   const go = (dir: -1 | 1) => setAnchor((d) => navigateDate(d, view, dir));
   const goToday = () => {
@@ -91,7 +104,7 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
         </div>
 
         <div className="inline-flex w-full overflow-x-auto border border-border bg-white p-0.5 sm:w-auto">
-          {VIEWS.map((v) => (
+          {views.map((v) => (
             <button
               key={v.id}
               type="button"
@@ -164,6 +177,7 @@ export function LiveScheduleCalendar({ sessions = [] }: Props) {
             date={selected}
             sessions={sessions}
             onShift={(d) => setSelected(d)}
+            variant={variant}
           />
         )}
       </div>
@@ -454,10 +468,12 @@ function DayView({
   date,
   sessions,
   onShift,
+  variant = "coach",
 }: {
   date: Date;
   sessions: LiveSessionRow[];
   onShift: (d: Date) => void;
+  variant?: "coach" | "member";
 }) {
   const daySessions = sessionsOnDate(date, sessions);
   const occs = daySessions.map((s) => toOccurrence(date, s));
@@ -525,18 +541,21 @@ function DayView({
                     href={occ.session.join_url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="portal-btn"
+                    className="portal-btn portal-btn-accent"
                   >
-                    <Play size={14} /> Host
+                    <Play size={14} fill="currentColor" />
+                    {variant === "member" ? "Join Zoom" : "Host"}
                   </a>
-                  <a
-                    href={occ.session.join_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="portal-btn portal-btn-ghost"
-                  >
-                    <ExternalLink size={14} /> Link
-                  </a>
+                  {variant === "coach" && (
+                    <a
+                      href={occ.session.join_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="portal-btn portal-btn-ghost"
+                    >
+                      <ExternalLink size={14} /> Link
+                    </a>
+                  )}
                 </div>
               </div>
             </div>

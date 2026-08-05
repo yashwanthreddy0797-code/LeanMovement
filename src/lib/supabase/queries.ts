@@ -1,8 +1,7 @@
 import { getSupabase, isSupabaseConfigured } from "./client";
-import type { CircuitRow, LiveSessionRow, RecordingRow } from "./types";
+import type { LiveSessionRow, RecordingRow } from "./types";
 import { COACH } from "@/lib/lean-kettlebell";
 import {
-  countPastSessionsThisMonth,
   formatTimeIst,
   getNextOccurrence,
   getSessionTiming,
@@ -10,7 +9,6 @@ import {
   todayWeekday,
 } from "@/lib/portal/live-session";
 import {
-  circuits as mockCircuits,
   nextLiveSession as mockNextLive,
   recordings as mockRecordings,
   weeklySchedule as mockSchedule,
@@ -53,17 +51,6 @@ export type PortalRecording = {
   videoUrl: string;
 };
 
-export type PortalCircuit = {
-  id: string;
-  name: string;
-  duration: string;
-  rounds: string;
-  difficulty: string;
-  exercises: string[];
-  description: string;
-  videoUrl?: string | null;
-};
-
 export type PortalSiteConfig = {
   whatsappInviteUrl: string;
   foundationsCalendlyUrl: string;
@@ -76,10 +63,7 @@ export type PortalContent = {
   weeklySchedule: PortalWeeklySession[];
   nextLiveSession: PortalNextLive;
   recordings: PortalRecording[];
-  circuits: PortalCircuit[];
   siteConfig: PortalSiteConfig;
-  sessionsThisMonth: number;
-  totalSessionsPerMonth: number;
 };
 
 function todayWeekdayLabel() {
@@ -166,20 +150,6 @@ function mapRecording(row: RecordingRow): PortalRecording {
   };
 }
 
-function mapCircuit(row: CircuitRow): PortalCircuit {
-  const exercises = Array.isArray(row.exercises) ? row.exercises : [];
-  return {
-    id: row.id,
-    name: row.name,
-    duration: row.duration ?? "",
-    rounds: row.rounds ?? "",
-    difficulty: row.difficulty ?? "",
-    exercises,
-    description: row.description ?? "",
-    videoUrl: row.video_url,
-  };
-}
-
 function mockContent(): PortalContent {
   const mockRows: LiveSessionRow[] = mockSchedule.map((s, i) => ({
     id: `mock-${i}`,
@@ -193,7 +163,6 @@ function mockContent(): PortalContent {
     join_url: mockNextLive.joinUrl,
     sort_order: i + 1,
   }));
-  const sessionDays = mockRows.map((s) => s.day_of_week);
 
   return {
     source: "mock",
@@ -209,22 +178,11 @@ function mockContent(): PortalContent {
       thumbnail: r.thumbnail,
       videoUrl: r.thumbnail,
     })),
-    circuits: mockCircuits.map((c) => ({
-      id: c.id,
-      name: c.name,
-      duration: c.duration,
-      rounds: c.rounds,
-      difficulty: c.difficulty,
-      exercises: c.exercises,
-      description: c.description,
-    })),
     siteConfig: {
       whatsappInviteUrl: mockWhatsApp.inviteUrl,
       foundationsCalendlyUrl: "",
       cohortStartDate: "April 2026",
     },
-    sessionsThisMonth: countPastSessionsThisMonth(sessionDays),
-    totalSessionsPerMonth: 12,
   };
 }
 
@@ -235,10 +193,9 @@ export async function fetchPortalContent(): Promise<PortalContent> {
     const supabase = getSupabase()!;
     if (!supabase) return mockContent();
 
-    const [liveRes, recRes, cirRes, cfgRes] = await Promise.all([
+    const [liveRes, recRes, cfgRes] = await Promise.all([
       supabase.from("live_sessions").select("*").order("sort_order"),
       supabase.from("recordings").select("*").order("recorded_at", { ascending: false }),
-      supabase.from("circuits").select("*").order("sort_order"),
       supabase.from("site_config").select("*"),
     ]);
 
@@ -257,7 +214,6 @@ export async function fetchPortalContent(): Promise<PortalContent> {
     const configMap = Object.fromEntries(
       ((cfgRes.data ?? []) as { key: string; value: string }[]).map((c) => [c.key, c.value]),
     );
-    const sessionDays = liveRows.map((r) => r.day_of_week);
     const fallback = mockContent();
 
     return {
@@ -268,14 +224,11 @@ export async function fetchPortalContent(): Promise<PortalContent> {
       recordings: recRes.data
         ? (recRes.data as RecordingRow[]).filter(isRecordingActive).map(mapRecording)
         : fallback.recordings,
-      circuits: (cirRes.data as CircuitRow[] | null)?.map(mapCircuit) ?? fallback.circuits,
       siteConfig: {
         whatsappInviteUrl: configMap.whatsapp_invite_url ?? mockWhatsApp.inviteUrl,
         foundationsCalendlyUrl: configMap.foundations_calendly_url ?? "",
         cohortStartDate: configMap.cohort_start_date ?? "April 2026",
       },
-      sessionsThisMonth: countPastSessionsThisMonth(sessionDays),
-      totalSessionsPerMonth: 12,
     };
   } catch (err) {
     console.error("[portal-content] fetch failed", err);

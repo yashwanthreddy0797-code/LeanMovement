@@ -6,7 +6,6 @@ import { usePortalSession } from "@/lib/portal/session";
 import { CoachRegistrationAlerts } from "@/components/portal/CoachRegistrationAlerts";
 import { CoachContactInbox } from "@/components/portal/CoachContactInbox";
 import {
-  formatInr,
   formatSessionTime,
   getNextLiveSession,
   todayWeekday,
@@ -39,21 +38,30 @@ function CoachDashboard() {
   return (
     <div className="space-y-5 sm:space-y-6">
       <section className="border border-border bg-[#0F1217] p-5 text-background sm:p-6 md:p-8">
-        <h1 className="font-display text-2xl uppercase tracking-[0.04em] sm:text-3xl">
+        <p className="text-[11px] uppercase tracking-[0.16em] text-background/45">Coach home</p>
+        <h1 className="mt-2 font-display text-2xl uppercase tracking-[0.04em] sm:text-3xl">
           {firstName}
         </h1>
-        <div className="mt-4 flex flex-wrap gap-5 text-sm">
-          <Stat label="Active" value={String(stats.activeMembers)} />
-          <Stat label="Pending" value={String(stats.pendingMembers)} />
-          <Stat label="MRR" value={formatInr(stats.mrrInr)} />
-        </div>
+        <p className="mt-2 text-sm text-background/60">
+          {stats.activeMembers} active
+          {stats.pendingMembers > 0 ? ` · ${stats.pendingMembers} pending activation` : ""}
+        </p>
         <div className="mt-5 flex flex-wrap gap-2">
           <Link to="/portal/coach/members" className="portal-btn portal-btn-accent inline-flex gap-2">
             <UserPlus size={14} />
             Members
           </Link>
-          <Link to="/portal/coach/onboarding" className="portal-btn portal-btn-ghost !border-background/20 !text-background">
+          <Link
+            to="/portal/coach/onboarding"
+            className="portal-btn portal-btn-ghost !border-background/20 !text-background"
+          >
             Onboarding
+          </Link>
+          <Link
+            to="/portal/coach/schedule"
+            className="portal-btn portal-btn-ghost !border-background/20 !text-background"
+          >
+            Schedule
           </Link>
         </div>
       </section>
@@ -61,13 +69,16 @@ function CoachDashboard() {
       <CoachRegistrationAlerts coachId={coachId} />
       <CoachContactInbox coachId={coachId} />
 
-      {(stats.foundationsPending > 0 || stats.whatsappPending > 0) && (
+      {(stats.onboardingPending > 0 || stats.whatsappPending > 0) && (
         <Link
           to="/portal/coach/onboarding"
           className="flex items-center justify-between gap-3 border border-border bg-white px-4 py-3"
         >
           <p className="text-sm">
-            {stats.foundationsPending} Foundations · {stats.whatsappPending} WhatsApp pending
+            {stats.onboardingPending > 0 && `${stats.onboardingPending} onboarding`}
+            {stats.onboardingPending > 0 && stats.whatsappPending > 0 ? " · " : ""}
+            {stats.whatsappPending > 0 && `${stats.whatsappPending} WhatsApp`}
+            {(stats.onboardingPending > 0 || stats.whatsappPending > 0) && " pending"}
           </p>
           <ArrowRight size={14} className="shrink-0 text-accent" />
         </Link>
@@ -102,15 +113,6 @@ function CoachDashboard() {
           </div>
         </div>
       )}
-    </div>
-  );
-}
-
-function Stat({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <div className="text-[10px] uppercase tracking-[0.12em] text-background/45">{label}</div>
-      <div className="mt-0.5 font-medium">{value}</div>
     </div>
   );
 }
