@@ -5,7 +5,7 @@ import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
 import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
-import { normalizeCalendlyUrl } from "@/lib/calendly";
+import { normalizeCalendlyUrl, resolveOnboardingCalendlyUrl } from "@/lib/calendly";
 import { updateSiteConfig } from "@/lib/portal/coach-queries";
 import { Save } from "lucide-react";
 import { toast } from "sonner";
@@ -32,7 +32,11 @@ function SettingsPage() {
   useEffect(() => {
     if (!data) return;
     setWhatsapp(data.siteConfig.whatsapp_invite_url ?? "");
-    setCalendly(data.siteConfig.foundations_calendly_url ?? "");
+    setCalendly(
+      data.siteConfig.foundations_calendly_url?.trim()
+        ? data.siteConfig.foundations_calendly_url
+        : resolveOnboardingCalendlyUrl(""),
+    );
     setCohort(data.siteConfig.cohort_start_date ?? "");
   }, [data]);
 
@@ -90,7 +94,7 @@ function SettingsPage() {
             <input
               value={calendly}
               onChange={(e) => setCalendly(e.target.value)}
-              placeholder="https://calendly.com/your-name/leanmovement-onboarding"
+              placeholder="https://calendly.com/coach-leanmovement/30min"
               className="w-full border border-border px-4 py-3 text-sm outline-none focus:border-accent"
             />
             <p className="mt-2 text-xs leading-relaxed text-muted-foreground">

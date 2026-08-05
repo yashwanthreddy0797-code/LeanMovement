@@ -16,6 +16,11 @@ export const CONTACT = {
   formsubmitId: "349bef5b7cb4223b3cccaebf4163fe69",
 } as const;
 
+/** Member onboarding call — Calendly event (30 min Zoom). */
+export const ONBOARDING = {
+  calendlyUrl: "https://calendly.com/coach-leanmovement/30min",
+} as const;
+
 export const COACH = {
   name: "Mohith Chowdary",
   title: "Strength & Kettlebell Coach",

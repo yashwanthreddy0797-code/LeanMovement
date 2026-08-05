@@ -306,7 +306,7 @@ on conflict do nothing;
 
 insert into public.site_config (key, value) values
   ('whatsapp_invite_url', 'https://chat.whatsapp.com/demo-lean-kettlebell'),
-  ('foundations_calendly_url', ''),
+  ('foundations_calendly_url', 'https://calendly.com/coach-leanmovement/30min'),
   ('cohort_start_date', 'April 2026')
 on conflict (key) do update set value = excluded.value;
 

@@ -1,3 +1,5 @@
+import { ONBOARDING } from "@/lib/lean-kettlebell";
+
 /** Placeholder from early seed - never treat as a real booking link. */
 const PLACEHOLDER_HOSTS = new Set(["calendly.com/apex-coaching", "calendly.com/demo"]);
 
@@ -31,12 +33,14 @@ export function isCalendlyUrlConfigured(raw?: string | null): boolean {
   return Boolean(normalizeCalendlyUrl(raw));
 }
 
-/** Site config first, then optional VITE_CALENDLY_ONBOARDING_URL fallback. */
+/** Site config → env → built-in Lean Movement Calendly event. */
 export function resolveOnboardingCalendlyUrl(siteConfigUrl?: string | null): string {
   const fromSite = normalizeCalendlyUrl(siteConfigUrl);
   if (fromSite) return fromSite;
   const envUrl = import.meta.env.VITE_CALENDLY_ONBOARDING_URL as string | undefined;
-  return normalizeCalendlyUrl(envUrl);
+  const fromEnv = normalizeCalendlyUrl(envUrl);
+  if (fromEnv) return fromEnv;
+  return normalizeCalendlyUrl(ONBOARDING.calendlyUrl);
 }
 
 export function calendlyUrlWithPrefill(
