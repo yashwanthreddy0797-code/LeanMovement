@@ -27,7 +27,6 @@ export const COACH = {
   location: "Hyderabad",
   bio: [
     "I coach people who want to get lean, stronger, and healthier - without living in the gym.",
-    "I coach the basics done properly: train hard, eat well, recover, repeat.",
   ],
   credentials: [
     "Strength & conditioning coach",
