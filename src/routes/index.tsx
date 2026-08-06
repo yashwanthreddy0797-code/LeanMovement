@@ -65,6 +65,8 @@ function HomePage() {
               </h1>
             <p className="mt-5 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
               {HOME_HERO.sessionsLine}
+              <br />
+              {HOME_HERO.sublines.join(" ")}
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-5">
               <Link
