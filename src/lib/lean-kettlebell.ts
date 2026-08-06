@@ -142,7 +142,7 @@ export const SESSION_SCHEDULE = {
 } as const;
 
 export const EQUIPMENT_MINIMUM =
-  "A pair of kettlebells 1/8th of body weight to start with and as energy progresses, we will need higher weight kettlebells" as const;
+  "A pair of kettlebells 1/8th of body weight to start with and as energy progresses, we will need higher weight kettlebells." as const;
 
 export const REQUIREMENTS = {
   title: "What You'll Need",
@@ -255,13 +255,13 @@ export const COMMUNITY = {
 
 /** Short homepage teaser - full list lives on Membership. */
 export const HOME_INCLUDED = [
-  "Live coached sessions - three mornings a week",
-  "Personalised training and progressive programming",
-  "Personalised nutrition included - macros and meal guidance",
+  "Live coached sessions - three mornings a week.",
+  "Personalised training and progressive programming.",
+  "Personalised nutrition included - macros and meal guidance.",
   EQUIPMENT_MINIMUM,
-  "Foundations technique session with me",
-  "Progress reviews, technique feedback, accountability",
-  "Session recordings for 7 days",
+  "Foundations technique session with me.",
+  "Progress reviews, technique feedback, accountability.",
+  "Session recordings for 7 days.",
 ] as const;
 
 /** Compact homepage steps - detail expands on Membership. */
