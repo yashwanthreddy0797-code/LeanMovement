@@ -57,7 +57,7 @@ export const HOME_HERO = {
   headline: "Train live.\nStay lean.",
   sublines: ["Strength.", "Conditioning.", "Consistency."],
   sessionsLine:
-    "Live Kettlebell coaching - Strength and Conditioning. Nutrition macro mapping. Three mornings a week.",
+    "Live Kettlebell Coaching - Strength and Conditioning. Nutrition macro mapping. Three mornings a week.",
 } as const;
 
 export const MEMBERSHIP_HERO = {
