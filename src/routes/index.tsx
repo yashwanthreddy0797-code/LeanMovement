@@ -88,7 +88,9 @@ function HomePage() {
         <div className="container-x section-y">
           <FadeUp className="mx-auto max-w-3xl">
             <h2 className="font-display text-[2.25rem] uppercase leading-[0.95] tracking-[0.04em] sm:text-4xl md:text-5xl">
-              {HOME_STATEMENT.title}
+              {HOME_STATEMENT.titleLines[0]}
+              <br />
+              {HOME_STATEMENT.titleLines[1]}
             </h2>
             <div className="mt-8 space-y-5 text-lg leading-relaxed text-white/70 md:text-xl md:leading-[1.65]">
               {HOME_STATEMENT.paragraphs.map((p) => (

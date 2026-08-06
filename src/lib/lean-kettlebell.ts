@@ -90,11 +90,12 @@ export function heroImageSrcSet() {
 export const HERO_IMAGE_DEFAULT = heroImageUrl(1920);
 
 export const HOME_STATEMENT = {
-  title: "This is coaching. Not a workout plan.",
+  titleLines: ["This is coaching.", "Not a workout plan."],
   paragraphs: [
     "You don't need more exercises. You need a coach.",
-    "Every session is coached live - technique corrected in the moment, training and nutrition dialled in, progress tracked.",
-    "You show up. The coaching is handled.",
+    "I don't just program training, strain and recovery. I live them every single day, right alongside you.",
+    "Every session is coached live. Technique corrected, training and nutrition adjusted, progress tracked.",
+    "Let's get looking good, athletic, and powerful.",
   ],
 } as const;
 
