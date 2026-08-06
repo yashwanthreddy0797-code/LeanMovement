@@ -140,7 +140,7 @@ export const SESSION_SCHEDULE = {
 } as const;
 
 export const EQUIPMENT_MINIMUM =
-  "As a minimum, you'll need a pair of kettlebells (one lighter, one heavier), a mat, and enough space to train safely." as const;
+  "A pair of kettlebells 1/8th of body weight to start with and as energy progresses, we will need higher weight kettlebells" as const;
 
 export const REQUIREMENTS = {
   title: "What You'll Need",
