@@ -23,10 +23,13 @@ export const ONBOARDING = {
 
 export const COACH = {
   name: "Mohith Chowdary",
-  title: "Strength & Kettlebell Coach",
+  title: "Strength & Conditioning Coach",
   location: "Hyderabad",
   bio: [
-    "I coach people who want to get lean, stronger, and healthier - without living in the gym.",
+    "I don't coach six-week transformations.",
+    "I coach people who want to build a body that performs, lasts, and turns heads. Strong. Athletic. Lean.",
+    "Everything starts with the basics. Train with intent, eat to fuel your body, recover with purpose, and show up again.",
+    "That's how real change happens.",
   ],
   credentials: [
     "Strength & conditioning coach",

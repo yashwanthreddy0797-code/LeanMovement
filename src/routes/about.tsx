@@ -118,8 +118,6 @@ function AboutPage() {
                 ))}
               </div>
 
-              <p className="mt-8 text-base text-white/50">{COACH.credentials.join(" · ")}</p>
-
               <Link
                 to="/join"
                 search={{ plan: plan.id, email: "", name: "" }}
