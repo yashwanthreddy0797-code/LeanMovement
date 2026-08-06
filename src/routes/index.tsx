@@ -63,11 +63,10 @@ function HomePage() {
                 <br />
                 <span className="text-accent">Stay lean.</span>
               </h1>
-            <p className="mt-5 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
-              {HOME_HERO.sessionsLine}
-              <br />
-              {HOME_HERO.sublines.join(" ")}
-            </p>
+            <div className="mt-5 space-y-1 text-base leading-relaxed text-white/75 md:text-lg">
+              <p>{HOME_HERO.sessionsLine}</p>
+              <p>{HOME_HERO.sublines.join(" ")}</p>
+            </div>
             <div className="mt-9 flex flex-wrap items-center gap-5">
               <Link
                 to="/join"
