@@ -51,15 +51,6 @@ export function Footer() {
                   Sign in
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/join"
-                  search={{ plan: "standard", email: "", name: "" }}
-                  className="font-display text-lg uppercase tracking-[0.08em] text-white/70 transition-colors hover:text-accent"
-                >
-                  Join
-                </Link>
-              </li>
             </ul>
           </div>
 

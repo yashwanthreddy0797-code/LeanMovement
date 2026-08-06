@@ -207,13 +207,6 @@ function HomePage() {
             <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
               {HOME_CLOSING.subline}
             </p>
-            <Link
-              to="/join"
-              search={{ plan: "standard", email: "", name: "" }}
-              className="btn-primary mt-8 inline-flex"
-            >
-              Join now <ArrowRight size={13} />
-            </Link>
           </FadeUp>
         </div>
       </section>

@@ -67,14 +67,7 @@ function AboutPage() {
             <p className="mt-6 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
               Live coaching and personalised nutrition.
             </p>
-            <div className="mt-9 flex flex-wrap items-center gap-5">
-              <Link
-                to="/join"
-                search={{ plan: plan.id, email: "", name: "" }}
-                className="btn-primary inline-flex"
-              >
-                Join now <ArrowRight size={13} />
-              </Link>
+            <div className="mt-9">
               <ZoomMark tone="light" size="sm" label="live" />
             </div>
           </FadeUp>
@@ -117,14 +110,6 @@ function AboutPage() {
                   <p key={paragraph.slice(0, 40)}>{paragraph}</p>
                 ))}
               </div>
-
-              <Link
-                to="/join"
-                search={{ plan: plan.id, email: "", name: "" }}
-                className="btn-primary mt-10 inline-flex"
-              >
-                Train with {COACH.name.split(" ")[0]} <ArrowRight size={13} />
-              </Link>
             </FadeUp>
           </div>
         </div>

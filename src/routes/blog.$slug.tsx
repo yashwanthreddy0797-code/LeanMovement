@@ -97,7 +97,13 @@ function BlogPost() {
         </div>
       </section>
 
-      <CTABanner />
+      <CTABanner
+        title="Want coaching built around your life?"
+        highlight="your life"
+        subtitle="See how live sessions, nutrition, and onboarding work."
+        ctaText="About the program"
+        ctaTo="/about"
+      />
     </>
   );
 }
