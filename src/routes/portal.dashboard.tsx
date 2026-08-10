@@ -4,9 +4,7 @@ import { LiveSessionBadge } from "@/components/portal/LiveSessionBanner";
 import { OnboardingChecklist } from "@/components/portal/OnboardingChecklist";
 import { WeeklySessionsPanel } from "@/components/portal/WeeklySessionsPanel";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import {
-  useMemberOnboarding,
-} from "@/hooks/useMemberOnboarding";
+import { useMarkWhatsAppJoined, useMemberOnboarding } from "@/hooks/useMemberOnboarding";
 import { isIntakeComplete, useMemberIntake } from "@/hooks/useMemberIntake";
 import { useWeeklySessions } from "@/hooks/useWeeklySessions";
 import { usePortalPageContent } from "@/lib/portal/portal-content";
@@ -26,8 +24,12 @@ function Dashboard() {
   const session = usePortalSession();
   const navigate = useNavigate();
   const { isLoading, isError, nextLiveSession, siteConfig } = usePortalPageContent();
-  const { data: onboarding, isLoading: onboardingLoading, refetch: refetchOnboarding } =
-    useMemberOnboarding(session.user?.id);
+  const {
+    data: onboarding,
+    isLoading: onboardingLoading,
+    refetch: refetchOnboarding,
+  } = useMemberOnboarding(session.user?.id);
+  const markWhatsAppJoined = useMarkWhatsAppJoined(session.user?.id);
   const { data: intakeResult, isLoading: intakeLoading } = useMemberIntake(session.user?.id);
   const intakeComplete = isIntakeComplete(intakeResult?.intake);
   const {
@@ -37,33 +39,15 @@ function Dashboard() {
   } = useWeeklySessions(session.user?.id);
 
   const calendlyUrl = resolveOnboardingCalendlyUrl(siteConfig.foundationsCalendlyUrl);
-  const needsOnboardingBooking =
-    Boolean(session.user?.id) &&
-    intakeComplete &&
-    !onboardingLoading &&
-    !onboarding?.foundations_completed_at &&
-    !onboarding?.foundations_booked_at;
 
+  // Keep the first-step flow: new members still land on the questionnaire.
+  // Later steps stay on the dashboard as clickable Finish setup items.
   useEffect(() => {
     if (!session.user?.id || intakeLoading || !isSupabaseConfigured()) return;
     if (intakeComplete) return;
     if (intakeResult && "needsMigration" in intakeResult && intakeResult.needsMigration) return;
     void navigate({ to: "/portal/intake" });
   }, [session.user?.id, intakeLoading, intakeResult, intakeComplete, navigate]);
-
-  useEffect(() => {
-    if (!session.user?.id || intakeLoading || onboardingLoading || !isSupabaseConfigured()) return;
-    if (!intakeComplete) return;
-    if (!needsOnboardingBooking) return;
-    void navigate({ to: "/portal/book-onboarding" });
-  }, [
-    session.user?.id,
-    intakeLoading,
-    onboardingLoading,
-    intakeComplete,
-    needsOnboardingBooking,
-    navigate,
-  ]);
 
   if (isLoading) {
     return <PortalPageSkeleton lines={3} />;
@@ -124,7 +108,10 @@ function Dashboard() {
             <Radio size={14} />
             {live.liveState === "live" ? "Join live" : "Open Zoom"}
           </a>
-          <Link to="/portal/live" className="portal-btn portal-btn-ghost !border-background/20 !text-background">
+          <Link
+            to="/portal/live"
+            className="portal-btn portal-btn-ghost !border-background/20 !text-background"
+          >
             Full schedule
           </Link>
         </div>
@@ -136,12 +123,19 @@ function Dashboard() {
         calendlyUrl={calendlyUrl}
         whatsappUrl={whatsappUrl}
         loading={onboardingLoading || intakeLoading}
+        onOpenWhatsApp={() => {
+          if (!onboarding?.whatsapp_joined) {
+            void markWhatsAppJoined.mutateAsync().catch(() => undefined);
+          }
+        }}
       />
 
       {session.user?.id && (
         <WeeklySessionsPanel
           userId={session.user.id}
-          data={weeklySessions && "ok" in weeklySessions && weeklySessions.ok ? weeklySessions : null}
+          data={
+            weeklySessions && "ok" in weeklySessions && weeklySessions.ok ? weeklySessions : null
+          }
           loading={weeklyLoading}
           onRefresh={() => {
             void refetchWeekly();

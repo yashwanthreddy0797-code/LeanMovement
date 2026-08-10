@@ -60,17 +60,10 @@ function BookOnboardingPage() {
       void navigate({ to: "/portal/intake" });
       return;
     }
-    if (foundationsDone || foundationsBooked) {
+    if (foundationsDone) {
       void navigate({ to: "/portal/dashboard" });
     }
-  }, [
-    intakeLoading,
-    onboardingLoading,
-    intakeComplete,
-    foundationsDone,
-    foundationsBooked,
-    navigate,
-  ]);
+  }, [intakeLoading, onboardingLoading, intakeComplete, foundationsDone, navigate]);
 
   const onScheduled = async () => {
     try {
@@ -102,39 +95,33 @@ function BookOnboardingPage() {
     );
   }
 
-  if (foundationsBooked && !foundationsDone) {
-    return (
-      <div className="mx-auto max-w-lg py-16 text-center">
-        <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center bg-accent/10 text-accent">
-          <Check size={24} />
-        </div>
-        <h1 className="font-display text-2xl uppercase tracking-[0.06em]">Call booked</h1>
-        <p className="mt-3 text-sm text-muted-foreground">
-          Check your email for the Zoom link. {COACH.name.split(" ")[0]} will confirm once
-          you&apos;ve had the session.
-        </p>
-        <Link to="/portal/dashboard" className="portal-btn portal-btn-accent mt-8 inline-flex">
-          Go to dashboard
-        </Link>
-      </div>
-    );
-  }
-
   return (
     <div className="mx-auto w-full max-w-4xl space-y-5 pb-24 sm:space-y-6">
       <PortalPageHeader
         eyebrow="Step 2 of 3"
-        title="Book your onboarding call"
+        title={foundationsBooked ? "Your onboarding call" : "Book your onboarding call"}
         description="30 minutes on Zoom with your coach — before your first live class."
       />
+
+      {foundationsBooked && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border border-border bg-white px-4 py-3 text-sm">
+          <p className="inline-flex items-center gap-2 text-muted-foreground">
+            <Check size={14} className="text-accent" />
+            Already booked — check email for Zoom, or reschedule below.
+          </p>
+          <Link to="/portal/dashboard" className="type-link !text-accent hover:!text-foreground">
+            Back to dashboard →
+          </Link>
+        </div>
+      )}
 
       <SoftCard className="!p-4 sm:!p-5">
         <div className="flex items-start gap-3">
           <Calendar size={18} className="mt-0.5 shrink-0 text-accent" />
           <div className="text-sm leading-relaxed text-muted-foreground">
             <p>
-              Profile saved. Pick a time that works for you — {COACH.name.split(" ")[0]} will walk
-              through your goals, technique basics, and how live sessions work.
+              Questionnaire saved. Pick a time that works for you — {COACH.name.split(" ")[0]} will
+              walk through your goals, technique basics, and how live sessions work.
             </p>
             <p className="mt-2">
               Duration: <span className="text-foreground">30 min</span> · Location: Zoom

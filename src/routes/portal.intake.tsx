@@ -4,6 +4,7 @@ import { Loader2, Check } from "lucide-react";
 import { toast } from "sonner";
 import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { isIntakeComplete, useMemberIntake, useSubmitMemberIntake } from "@/hooks/useMemberIntake";
+import { useMemberOnboarding } from "@/hooks/useMemberOnboarding";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   TRAINING_DAYS_OPTIONS,
@@ -14,7 +15,7 @@ import {
 import { COACH } from "@/lib/lean-kettlebell";
 
 export const Route = createFileRoute("/portal/intake")({
-  head: () => ({ meta: [{ title: "Your profile - LEANMOVEMENT Portal" }] }),
+  head: () => ({ meta: [{ title: "Questionnaire - LEANMOVEMENT Portal" }] }),
   component: MemberIntakePage,
 });
 
@@ -38,8 +39,12 @@ function MemberIntakePage() {
   const navigate = useNavigate();
   const userId = session.user?.id;
   const { data: intakeResult, isLoading } = useMemberIntake(userId);
+  const { data: onboarding } = useMemberOnboarding(userId);
   const submitIntake = useSubmitMemberIntake(userId);
   const [submitted, setSubmitted] = useState(false);
+  const alreadyComplete = isIntakeComplete(intakeResult?.intake);
+  const needsOnboardingBooking =
+    alreadyComplete && !onboarding?.foundations_completed_at && !onboarding?.foundations_booked_at;
 
   const [form, setForm] = useState<FormState>({
     full_name: "",
@@ -64,10 +69,6 @@ function MemberIntakePage() {
 
   useEffect(() => {
     if (isLoading || !intakeResult?.ok) return;
-    if (isIntakeComplete(intakeResult.intake) && !submitted) {
-      void navigate({ to: "/portal/book-onboarding" });
-      return;
-    }
     const intake = intakeResult.intake;
     if (intake) {
       setForm({
@@ -90,7 +91,7 @@ function MemberIntakePage() {
       ...prev,
       full_name: session.profile?.full_name ?? session.user?.name ?? prev.full_name,
     }));
-  }, [intakeResult, isLoading, session.profile, session.user, navigate, submitted]);
+  }, [intakeResult, isLoading, session.profile, session.user]);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -116,12 +117,17 @@ function MemberIntakePage() {
       });
 
       if (!result.ok) {
-        toast.error("message" in result ? result.message : "Could not save your profile");
+        toast.error("message" in result ? result.message : "Could not save your questionnaire");
         return;
       }
 
       setSubmitted(true);
-      toast.success("Profile saved — book your onboarding call next");
+      if (alreadyComplete && !needsOnboardingBooking) {
+        toast.success("Questionnaire updated");
+        void navigate({ to: "/portal/dashboard" });
+        return;
+      }
+      toast.success("Questionnaire saved — book your onboarding call next");
       void navigate({ to: "/portal/book-onboarding" });
     } catch {
       toast.error("Something went wrong. Please try again.");
@@ -142,11 +148,14 @@ function MemberIntakePage() {
         <div className="mx-auto mb-6 flex h-14 w-14 items-center justify-center bg-accent/10 text-accent">
           <Check size={24} />
         </div>
-        <h1 className="font-display text-2xl uppercase tracking-[0.06em]">Profile saved</h1>
+        <h1 className="font-display text-2xl uppercase tracking-[0.06em]">Questionnaire saved</h1>
         <p className="mt-3 text-sm text-muted-foreground">
           Next: book your 30-minute onboarding call with {COACH.name.split(" ")[0]}.
         </p>
-        <Link to="/portal/book-onboarding" className="portal-btn portal-btn-accent mt-8 inline-flex">
+        <Link
+          to="/portal/book-onboarding"
+          className="portal-btn portal-btn-accent mt-8 inline-flex"
+        >
           Book onboarding call
         </Link>
       </div>
@@ -156,10 +165,23 @@ function MemberIntakePage() {
   return (
     <div className="mx-auto max-w-2xl space-y-6 pb-16 lg:pb-0">
       <PortalPageHeader
-        eyebrow="Welcome"
-        title="Tell me about you"
-        description="You're in. Help me coach you properly — then book your onboarding call."
+        eyebrow={alreadyComplete ? "Finish setup" : "Welcome"}
+        title={alreadyComplete ? "Your questionnaire" : "Tell me about you"}
+        description={
+          alreadyComplete
+            ? "Update anytime — your coach uses this to coach you properly."
+            : "You're in. Help me coach you properly — then book your onboarding call."
+        }
       />
+
+      {alreadyComplete && (
+        <div className="flex flex-wrap items-center justify-between gap-3 border border-border bg-white px-4 py-3 text-sm">
+          <p className="text-muted-foreground">Saved — you can update answers below.</p>
+          <Link to="/portal/dashboard" className="type-link !text-accent hover:!text-foreground">
+            Back to dashboard →
+          </Link>
+        </div>
+      )}
 
       <SoftCard className="!p-5 sm:!p-8">
         <form onSubmit={(e) => void onSubmit(e)} className="space-y-10">
@@ -328,6 +350,8 @@ function MemberIntakePage() {
               <span className="inline-flex items-center gap-2">
                 <Loader2 size={14} className="animate-spin" /> Saving…
               </span>
+            ) : alreadyComplete ? (
+              "Save updates"
             ) : (
               "Save & continue"
             )}
