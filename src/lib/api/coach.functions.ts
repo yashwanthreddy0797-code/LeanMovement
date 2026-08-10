@@ -83,33 +83,40 @@ export const coachUpdateOnboarding = createServerFn({ method: "POST" })
         .eq("user_id", data.memberId)
         .maybeSingle();
 
-      const updates: Record<string, unknown> = {};
+      const now = new Date().toISOString();
+      let foundationsBookedAt = row?.foundations_booked_at ?? null;
+      let foundationsCompletedAt = row?.foundations_completed_at ?? null;
+      let whatsappJoined = row?.whatsapp_joined ?? false;
 
       if (data.foundationsBooked !== undefined) {
-        updates.foundations_booked_at = data.foundationsBooked
-          ? row?.foundations_booked_at ?? new Date().toISOString()
+        foundationsBookedAt = data.foundationsBooked
+          ? foundationsBookedAt ?? now
           : null;
       }
       if (data.foundationsCompleted !== undefined) {
-        updates.foundations_completed_at = data.foundationsCompleted
-          ? row?.foundations_completed_at ?? new Date().toISOString()
+        foundationsCompletedAt = data.foundationsCompleted
+          ? foundationsCompletedAt ?? now
           : null;
-        if (data.foundationsCompleted && !updates.foundations_booked_at && !row?.foundations_booked_at) {
-          updates.foundations_booked_at = new Date().toISOString();
+        if (data.foundationsCompleted && !foundationsBookedAt) {
+          foundationsBookedAt = now;
         }
       }
       if (data.whatsappJoined !== undefined) {
-        updates.whatsapp_joined = data.whatsappJoined;
+        whatsappJoined = data.whatsappJoined;
       }
 
-      const { data: updated, error } = await admin
-        .from("onboarding")
-        .update(updates)
-        .eq("user_id", data.memberId)
-        .select("user_id");
+      const payload = {
+        user_id: data.memberId,
+        foundations_booked_at: foundationsBookedAt,
+        foundations_completed_at: foundationsCompletedAt,
+        whatsapp_joined: whatsappJoined,
+        session_ids: row?.session_ids ?? [],
+        sessions_selected_at: row?.sessions_selected_at ?? null,
+      };
+
+      const { error } = await admin.from("onboarding").upsert(payload, { onConflict: "user_id" });
 
       if (error) return { ok: false as const, message: error.message };
-      if (!updated?.length) return { ok: false as const, message: "Onboarding record not found" };
       return { ok: true as const };
     } catch (err) {
       return { ok: false as const, message: authErrorMessage(err) };

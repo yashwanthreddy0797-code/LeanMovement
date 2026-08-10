@@ -16,6 +16,7 @@ export function useCoachData() {
       const result = await fetchCoachDashboard();
       setData(result);
     } catch (e) {
+      // Keep last good snapshot so the coach can still work if a refresh fails.
       setError(e instanceof Error ? e.message : "Failed to load coach data");
     } finally {
       setLoading(false);

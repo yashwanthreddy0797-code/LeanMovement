@@ -31,6 +31,8 @@ export type CoachDashboardData = {
   recordings: RecordingRow[];
   siteConfig: Record<string, string>;
   stats: CoachStats;
+  /** Soft failures (e.g. intake table RLS) — page still loads. */
+  warnings?: string[];
 };
 
 export const PLAN_LABELS: Record<MembershipPlan, string> = {
@@ -348,6 +350,7 @@ function mockDashboard(): CoachDashboardData {
       cohort_start_date: "",
     },
     stats: computeStats(members),
+    warnings: ["Showing preview members — connect Supabase for live data."],
   };
 }
 
@@ -355,6 +358,7 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   if (!isSupabaseConfigured()) return mockDashboard();
 
   const supabase = getSupabase()!;
+  const warnings: string[] = [];
 
   const [profilesRes, membershipsRes, onboardingRes, intakeRes, liveRes, recRes, cfgRes] =
     await Promise.all([
@@ -370,18 +374,21 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   if (profilesRes.error) {
     throw new Error(profilesRes.error.message || "Could not load coach dashboard");
   }
+  if (membershipsRes.error) {
+    warnings.push(`Memberships: ${membershipsRes.error.message}`);
+  }
   if (intakeRes.error) {
-    console.warn("[coach] member_intake:", intakeRes.error.message);
+    warnings.push(`Questionnaires unavailable: ${intakeRes.error.message}`);
   }
   if (onboardingRes.error) {
-    console.warn("[coach] onboarding:", onboardingRes.error.message);
+    warnings.push(`Onboarding status unavailable: ${onboardingRes.error.message}`);
   }
 
   const memberships = (membershipsRes.data ?? []) as Membership[];
   const onboarding = (onboardingRes.data ?? []) as Onboarding[];
   const intakes = (intakeRes.data ?? []) as MemberIntake[];
 
-  let members: CoachMember[] = ((profilesRes.data ?? []) as Profile[])
+  const members: CoachMember[] = ((profilesRes.data ?? []) as Profile[])
     .filter((p) => p.role === "member")
     .map((p) => ({
       ...p,
@@ -390,9 +397,24 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
       intake: intakes.find((i) => i.user_id === p.id) ?? null,
     }));
 
-  // Preview roster so coach can click through questionnaire + onboarding details.
+  // Only fall back to demos when there are no real member profiles yet.
   if (members.length === 0) {
-    members = getDemoCoachMembers();
+    const demo = mockDashboard();
+    return {
+      ...demo,
+      siteConfig: {
+        ...demo.siteConfig,
+        ...Object.fromEntries(
+          ((cfgRes.data ?? []) as { key: string; value: string }[]).map((c) => [c.key, c.value]),
+        ),
+      },
+      liveSessions: (liveRes.data as LiveSessionRow[]) ?? demo.liveSessions,
+      recordings: (recRes.data as RecordingRow[]) ?? [],
+      warnings: [
+        "No members yet — showing preview profiles so you can try the flow.",
+        ...warnings,
+      ],
+    };
   }
 
   const configMap = Object.fromEntries(
@@ -400,10 +422,9 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   );
 
   return {
-    source: members.some((m) => m.id.startsWith("demo-")) ? "mock" : "supabase",
+    source: "supabase",
     members,
     liveSessions: (liveRes.data as LiveSessionRow[]) ?? [],
-    // Coach sees the full library (including expired). Members still filter by expires_at.
     recordings: (recRes.data as RecordingRow[]) ?? [],
     siteConfig: {
       whatsapp_invite_url: "",
@@ -412,6 +433,7 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
       ...configMap,
     },
     stats: computeStats(members),
+    warnings: warnings.length ? warnings : undefined,
   };
 }
 

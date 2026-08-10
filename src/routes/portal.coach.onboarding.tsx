@@ -7,7 +7,6 @@ import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   formatDate,
-  getDemoCoachMembers,
   membershipStatusLabel,
   statusChipClass,
   updateOnboarding,
@@ -70,23 +69,40 @@ function needsAttention(m: CoachMember) {
 
 function OnboardingPage() {
   const session = usePortalSession();
-  const { data, loading, refresh } = useCoachData();
+  const { data, loading, error, refresh } = useCoachData();
   const coachId = session.user?.id;
   const [q, setQ] = useState("");
   const [filter, setFilter] = useState<FilterKey>("all");
   const [selectedId, setSelectedId] = useState<string | null>(null);
 
-  if (loading || !data) {
+  if (loading && !data) {
     return <PortalPageSkeleton />;
   }
 
-  const realMembers = data.members.filter((m) => m.role === "member");
-  // Always include the demo roster so the coach can click through questionnaire + details.
-  const demo = getDemoCoachMembers();
-  const members = [
-    ...demo,
-    ...realMembers.filter((m) => !m.id.startsWith("demo-")),
-  ];
+  if (error && !data) {
+    return (
+      <div className="space-y-4 pb-20 lg:pb-0">
+        <PortalPageHeader title="Onboarding" description="Could not load member data." />
+        <SoftCard className="!p-5">
+          <p className="text-sm text-muted-foreground">{error}</p>
+          <button
+            type="button"
+            onClick={() => void refresh()}
+            className="btn-primary mt-4 inline-flex"
+          >
+            Retry
+          </button>
+        </SoftCard>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <PortalPageSkeleton />;
+  }
+
+  const isPreview = data.source === "mock";
+  const members = data.members.filter((m) => m.role === "member");
   const activeMembers = members.filter((m) => m.membership?.status === "active");
 
   const intakeDone = members.filter(isIntakeDone);
@@ -184,9 +200,25 @@ function OnboardingPage() {
         }
       />
 
-      <div className="border border-border bg-amber-50 px-4 py-3 text-sm text-amber-950">
-        Preview members are included below so you can click through the full questionnaire and onboarding details.
-      </div>
+      {isPreview && (
+        <div className="border border-border bg-amber-50 px-4 py-3 text-sm text-amber-950">
+          Preview members — real member profiles appear here automatically after signup and payment.
+        </div>
+      )}
+
+      {(data.warnings?.length ?? 0) > 0 && !isPreview && (
+        <div className="border border-border bg-amber-50 px-4 py-3 text-sm text-amber-950">
+          {data.warnings!.map((w) => (
+            <p key={w}>{w}</p>
+          ))}
+        </div>
+      )}
+
+      {error && (
+        <div className="border border-border bg-red-50 px-4 py-3 text-sm text-red-800">
+          Refresh issue: {error}
+        </div>
+      )}
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         <KPICard label="Members" value={String(members.length)} delta={`${activeMembers.length} active`} />
