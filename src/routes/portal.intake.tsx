@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { isIntakeComplete, useMemberIntake, useSubmitMemberIntake } from "@/hooks/useMemberIntake";
 import { useMemberOnboarding } from "@/hooks/useMemberOnboarding";
+import { preloadCalendly } from "@/lib/calendly-preload";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   TRAINING_DAYS_OPTIONS,
@@ -66,6 +67,11 @@ function MemberIntakePage() {
       void navigate({ to: "/login", search: { redirect: "/portal/intake" } });
     }
   }, [session.loading, session.user, navigate]);
+
+  // Next step is Calendly — warm the connection while they fill the form.
+  useEffect(() => {
+    preloadCalendly();
+  }, []);
 
   useEffect(() => {
     if (isLoading || !intakeResult?.ok) return;

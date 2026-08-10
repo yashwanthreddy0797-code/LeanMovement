@@ -1,38 +1,9 @@
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { Loader2 } from "lucide-react";
+import { calendlyEmbedSrc, preloadCalendly } from "@/lib/calendly-preload";
 
-const CALENDLY_SCRIPT = "https://assets.calendly.com/assets/external/widget.js";
 /** Tall enough for month + time slots on desktop; grows via page_height events. */
 const INITIAL_HEIGHT_PX = 1100;
-
-function loadCalendlyScript(): Promise<void> {
-  if (typeof window === "undefined") return Promise.resolve();
-  if (window.Calendly) return Promise.resolve();
-
-  const existing = document.querySelector(`script[src="${CALENDLY_SCRIPT}"]`);
-  if (existing) {
-    return new Promise((resolve) => {
-      if (window.Calendly) resolve();
-      else existing.addEventListener("load", () => resolve(), { once: true });
-    });
-  }
-
-  return new Promise((resolve, reject) => {
-    const script = document.createElement("script");
-    script.src = CALENDLY_SCRIPT;
-    script.async = true;
-    script.onload = () => resolve();
-    script.onerror = () => reject(new Error("Could not load Calendly"));
-    document.head.appendChild(script);
-  });
-}
-
-declare global {
-  interface Window {
-    Calendly?: {
-      initInlineWidget: (options: { url: string; parentElement: HTMLElement }) => void;
-    };
-  }
-}
 
 function parseCalendlyHeight(data: unknown): number | null {
   if (!data || typeof data !== "object") return null;
@@ -50,9 +21,23 @@ export function CalendlyInlineWidget({
   url: string;
   onScheduled?: () => void;
 }) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const widgetId = useId().replace(/:/g, "");
   const [height, setHeight] = useState(INITIAL_HEIGHT_PX);
+  const [loaded, setLoaded] = useState(false);
+  const [failed, setFailed] = useState(false);
+
+  const embedSrc = useMemo(() => {
+    if (!url || typeof window === "undefined") return "";
+    return calendlyEmbedSrc(url, window.location.hostname);
+  }, [url]);
+
+  useEffect(() => {
+    preloadCalendly();
+  }, []);
+
+  useEffect(() => {
+    setLoaded(false);
+    setFailed(false);
+  }, [embedSrc]);
 
   useEffect(() => {
     const onMessage = (event: MessageEvent) => {
@@ -65,62 +50,56 @@ export function CalendlyInlineWidget({
 
       const next = parseCalendlyHeight(event.data);
       if (next != null) {
-        // Extra padding so the footer / timezone row isn't clipped
         setHeight(Math.max(INITIAL_HEIGHT_PX, next + 24));
+        setLoaded(true);
       }
     };
     window.addEventListener("message", onMessage);
     return () => window.removeEventListener("message", onMessage);
   }, [onScheduled]);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el || !url) return;
-
-    let cancelled = false;
-    el.innerHTML = "";
-
-    void loadCalendlyScript()
-      .then(() => {
-        if (cancelled || !containerRef.current || !window.Calendly) return;
-        window.Calendly.initInlineWidget({
-          url,
-          parentElement: containerRef.current,
-        });
-
-        // Calendly injects an iframe — force it to fill the resized parent
-        const iframe = containerRef.current.querySelector("iframe");
-        if (iframe) {
-          iframe.style.width = "100%";
-          iframe.style.height = "100%";
-          iframe.style.border = "0";
-          iframe.setAttribute("title", "Book onboarding call");
-        }
-      })
-      .catch(() => {
-        /* parent page can show fallback */
-      });
-
-    return () => {
-      cancelled = true;
-    };
-  }, [url, widgetId]);
-
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
-    const iframe = el.querySelector("iframe");
-    if (iframe) {
-      iframe.style.height = "100%";
-    }
-  }, [height]);
+  if (!embedSrc) return null;
 
   return (
     <div
-      ref={containerRef}
-      className="calendly-inline-host w-full border border-border bg-white"
+      className="calendly-inline-host relative w-full overflow-hidden border border-border bg-white"
       style={{ minWidth: 320, height, minHeight: INITIAL_HEIGHT_PX }}
       aria-label="Book onboarding call"
-    />
+    >
+      {!loaded && !failed && (
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-3 bg-white">
+          <Loader2 className="animate-spin text-accent" size={22} />
+          <p className="text-sm text-muted-foreground">Loading booking calendar…</p>
+        </div>
+      )}
+
+      {failed ? (
+        <div className="flex h-full min-h-[320px] flex-col items-center justify-center gap-3 p-6 text-center">
+          <p className="text-sm text-muted-foreground">Calendar is slow to load in this view.</p>
+          <a
+            href={url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="portal-btn portal-btn-accent"
+          >
+            Open Calendly in a new tab
+          </a>
+        </div>
+      ) : (
+        <iframe
+          key={embedSrc}
+          src={embedSrc}
+          title="Book onboarding call"
+          className="h-full w-full border-0"
+          style={{ minHeight: height }}
+          loading="eager"
+          // Calendly needs scripts inside the frame; keep sandbox off.
+          allow="payment *; microphone *; camera *; geolocation *"
+          referrerPolicy="no-referrer-when-downgrade"
+          onLoad={() => setLoaded(true)}
+          onError={() => setFailed(true)}
+        />
+      )}
+    </div>
   );
 }

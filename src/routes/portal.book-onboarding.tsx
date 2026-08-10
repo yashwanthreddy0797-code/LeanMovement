@@ -1,5 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useMemo } from "react";
+import { useEffect, useState } from "react";
 import { Calendar, Check, ExternalLink, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { CalendlyInlineWidget } from "@/components/portal/CalendlyInlineWidget";
@@ -9,6 +9,7 @@ import { useMarkFoundationsBooked, useMemberOnboarding } from "@/hooks/useMember
 import { usePortalPageContent } from "@/lib/portal/portal-content";
 import { usePortalSession } from "@/lib/portal/session";
 import { calendlyUrlWithPrefill, resolveOnboardingCalendlyUrl } from "@/lib/calendly";
+import { preloadCalendly } from "@/lib/calendly-preload";
 import { COACH, CONTACT } from "@/lib/lean-kettlebell";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
 
@@ -31,20 +32,29 @@ function BookOnboardingPage() {
   const foundationsBooked = Boolean(onboarding?.foundations_booked_at);
 
   const calendlyBase = resolveOnboardingCalendlyUrl(siteConfig.foundationsCalendlyUrl);
-  const calendlyUrl = useMemo(() => {
-    if (!calendlyBase) return "";
-    return calendlyUrlWithPrefill(calendlyBase, {
-      name: session.profile?.full_name ?? session.user?.name ?? undefined,
-      email: session.user?.email,
-      phone: intakeResult?.intake?.phone ?? undefined,
-    });
+
+  // Lock embed URL once — avoids remounting Calendly when intake phone arrives later.
+  const [calendlyUrl, setCalendlyUrl] = useState("");
+  useEffect(() => {
+    if (calendlyUrl || !calendlyBase || !session.user) return;
+    setCalendlyUrl(
+      calendlyUrlWithPrefill(calendlyBase, {
+        name: session.profile?.full_name ?? session.user?.name ?? undefined,
+        email: session.user?.email,
+        phone: intakeResult?.intake?.phone ?? undefined,
+      }),
+    );
   }, [
+    calendlyUrl,
     calendlyBase,
     session.profile?.full_name,
-    session.user?.name,
-    session.user?.email,
+    session.user,
     intakeResult?.intake?.phone,
   ]);
+
+  useEffect(() => {
+    preloadCalendly();
+  }, []);
 
   useEffect(() => {
     if (session.loading) return;
@@ -87,7 +97,8 @@ function BookOnboardingPage() {
     }
   };
 
-  if (session.loading || intakeLoading || onboardingLoading) {
+  // Only block on auth — start Calendly immediately; don't wait for intake/onboarding round-trips.
+  if (session.loading) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
         <Loader2 className="animate-spin text-accent" size={24} />

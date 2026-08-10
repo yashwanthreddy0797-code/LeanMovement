@@ -1,5 +1,5 @@
 import { Link, useRouter, useRouterState } from "@tanstack/react-router";
-import { type ReactNode } from "react";
+import { type ReactNode, useEffect } from "react";
 import { PortalGate } from "@/components/portal/PortalGate";
 import { SidebarBrand } from "@/components/portal/SidebarBrand";
 import { BrandLogo } from "@/components/brand/BrandLogo";
@@ -9,6 +9,7 @@ import { formatPlanLabel, membershipSummary } from "@/lib/portal/member-format";
 import { useSidebarCollapse } from "@/hooks/useSidebarCollapse";
 import { useMemberChatUnread } from "@/hooks/useMemberChatUnread";
 import { UnreadBadge } from "@/components/portal/UnreadBadge";
+import { preloadCalendly } from "@/lib/calendly-preload";
 import {
   LayoutDashboard,
   Radio,
@@ -32,6 +33,11 @@ export function ClientShell({ children }: { children: ReactNode }) {
   const router = useRouter();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const { collapsed, toggle, ready } = useSidebarCollapse("member-sidebar-collapsed");
+
+  // Warm Calendly connections as soon as a member is in the portal.
+  useEffect(() => {
+    preloadCalendly();
+  }, []);
 
   const signOut = async () => {
     await signOutPortal();
