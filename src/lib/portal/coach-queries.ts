@@ -1,5 +1,6 @@
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import { pickNextLiveSession } from "@/lib/portal/live-session";
+import { DEFAULT_SESSION_IDS } from "@/lib/sessions";
 import type {
   LiveSessionRow,
   Membership,
@@ -162,18 +163,191 @@ const MOCK_SESSIONS: LiveSessionRow[] = [
   },
 ];
 
+export function getDemoCoachMembers(): CoachMember[] {
+  const now = new Date();
+  const daysAgo = (n: number) => new Date(now.getTime() - n * 86400000).toISOString();
+
+  const baseMembership = (userId: string, status: Membership["status"], days: number): Membership => ({
+    id: `mem-${userId}`,
+    user_id: userId,
+    product: "lean_kettlebell",
+    plan: "monthly",
+    status,
+    amount_inr: 6969,
+    razorpay_subscription_id: null,
+    razorpay_payment_id: null,
+    started_at: daysAgo(days),
+    renews_at: daysAgo(days - 30),
+    cancelled_at: null,
+    created_at: daysAgo(days),
+  });
+
+  return [
+    {
+      id: "demo-rahul",
+      email: "rahul.mehta@example.com",
+      full_name: "Rahul Mehta",
+      role: "member",
+      created_at: daysAgo(12),
+      membership: baseMembership("demo-rahul", "active", 12),
+      onboarding: {
+        user_id: "demo-rahul",
+        foundations_booked_at: daysAgo(10),
+        foundations_completed_at: daysAgo(8),
+        whatsapp_joined: true,
+        session_ids: [...DEFAULT_SESSION_IDS],
+        sessions_selected_at: daysAgo(11),
+      },
+      intake: {
+        user_id: "demo-rahul",
+        full_name: "Rahul Mehta",
+        age: 34,
+        height: "178 cm",
+        weight: "82 kg",
+        occupation: "Product manager",
+        goal: "Lose 8kg and get stronger for weekend treks.",
+        biggest_struggle: "Travel weeks wreck my consistency.",
+        training_experience: "Intermediate",
+        training_days_per_week: "3",
+        why_now: "Wedding season in 4 months and energy is low.",
+        instagram_handle: "rahul.moves",
+        phone: "+91 98765 43210",
+        completed_at: daysAgo(11),
+        updated_at: daysAgo(11),
+      },
+    },
+    {
+      id: "demo-priya",
+      email: "priya.sharma@example.com",
+      full_name: "Priya Sharma",
+      role: "member",
+      created_at: daysAgo(6),
+      membership: baseMembership("demo-priya", "active", 6),
+      onboarding: {
+        user_id: "demo-priya",
+        foundations_booked_at: daysAgo(4),
+        foundations_completed_at: null,
+        whatsapp_joined: false,
+        session_ids: [...DEFAULT_SESSION_IDS],
+        sessions_selected_at: daysAgo(5),
+      },
+      intake: {
+        user_id: "demo-priya",
+        full_name: "Priya Sharma",
+        age: 29,
+        height: "162 cm",
+        weight: "68 kg",
+        occupation: "Consultant",
+        goal: "Get lean and build a sustainable training habit.",
+        biggest_struggle: "Late client calls — mornings are the only free slot.",
+        training_experience: "Beginner",
+        training_days_per_week: "3",
+        why_now: "Tired of restarting every January.",
+        instagram_handle: "priya.trains",
+        phone: "+91 98111 22334",
+        completed_at: daysAgo(5),
+        updated_at: daysAgo(5),
+      },
+    },
+    {
+      id: "demo-karan",
+      email: "karan.malhotra@example.com",
+      full_name: "Karan Malhotra",
+      role: "member",
+      created_at: daysAgo(3),
+      membership: baseMembership("demo-karan", "active", 3),
+      onboarding: {
+        user_id: "demo-karan",
+        foundations_booked_at: null,
+        foundations_completed_at: null,
+        whatsapp_joined: false,
+        session_ids: [...DEFAULT_SESSION_IDS],
+        sessions_selected_at: daysAgo(2),
+      },
+      intake: {
+        user_id: "demo-karan",
+        full_name: "Karan Malhotra",
+        age: 41,
+        height: "175 cm",
+        weight: "91 kg",
+        occupation: "Founder",
+        goal: "Drop belly fat and feel athletic again.",
+        biggest_struggle: "No structure — I overdo it then burn out.",
+        training_experience: "Advanced",
+        training_days_per_week: "4",
+        why_now: "Back pain and poor sleep finally forced the change.",
+        instagram_handle: "karan.kb",
+        phone: "+91 99000 11223",
+        completed_at: daysAgo(2),
+        updated_at: daysAgo(2),
+      },
+    },
+    {
+      id: "demo-neha",
+      email: "neha.arora@example.com",
+      full_name: "Neha Arora",
+      role: "member",
+      created_at: daysAgo(2),
+      membership: baseMembership("demo-neha", "active", 2),
+      onboarding: {
+        user_id: "demo-neha",
+        foundations_booked_at: null,
+        foundations_completed_at: null,
+        whatsapp_joined: false,
+        session_ids: [],
+        sessions_selected_at: null,
+      },
+      intake: null,
+    },
+    {
+      id: "demo-aditya",
+      email: "aditya.singh@example.com",
+      full_name: "Aditya Singh",
+      role: "member",
+      created_at: daysAgo(9),
+      membership: baseMembership("demo-aditya", "pending", 9),
+      onboarding: {
+        user_id: "demo-aditya",
+        foundations_booked_at: daysAgo(7),
+        foundations_completed_at: daysAgo(6),
+        whatsapp_joined: false,
+        session_ids: [...DEFAULT_SESSION_IDS],
+        sessions_selected_at: daysAgo(8),
+      },
+      intake: {
+        user_id: "demo-aditya",
+        full_name: "Aditya Singh",
+        age: 27,
+        height: "180 cm",
+        weight: "76 kg",
+        occupation: "Software engineer",
+        goal: "Build strength without living in the gym.",
+        biggest_struggle: "Desk job posture and evening fatigue.",
+        training_experience: "Intermediate",
+        training_days_per_week: "3",
+        why_now: "Want a coached system I can stick to.",
+        instagram_handle: "adi.lifts",
+        phone: "+91 98222 44556",
+        completed_at: daysAgo(8),
+        updated_at: daysAgo(8),
+      },
+    },
+  ];
+}
+
 function mockDashboard(): CoachDashboardData {
+  const members = getDemoCoachMembers();
   return {
     source: "mock",
-    members: [],
+    members,
     liveSessions: MOCK_SESSIONS,
     recordings: [],
     siteConfig: {
-      whatsapp_invite_url: "",
-      foundations_calendly_url: "",
+      whatsapp_invite_url: "https://chat.whatsapp.com/demo-invite",
+      foundations_calendly_url: "https://calendly.com/leanmovement/foundations",
       cohort_start_date: "",
     },
-    stats: EMPTY_STATS,
+    stats: computeStats(members),
   };
 }
 
@@ -207,26 +381,36 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   const onboarding = (onboardingRes.data ?? []) as Onboarding[];
   const intakes = (intakeRes.data ?? []) as MemberIntake[];
 
-  const members: CoachMember[] = ((profilesRes.data ?? []) as Profile[])
+  let members: CoachMember[] = ((profilesRes.data ?? []) as Profile[])
     .filter((p) => p.role === "member")
     .map((p) => ({
-    ...p,
-    membership: memberships.find((m) => m.user_id === p.id) ?? null,
-    onboarding: onboarding.find((o) => o.user_id === p.id) ?? null,
-    intake: intakes.find((i) => i.user_id === p.id) ?? null,
-  }));
+      ...p,
+      membership: memberships.find((m) => m.user_id === p.id) ?? null,
+      onboarding: onboarding.find((o) => o.user_id === p.id) ?? null,
+      intake: intakes.find((i) => i.user_id === p.id) ?? null,
+    }));
+
+  // Preview roster so coach can click through questionnaire + onboarding details.
+  if (members.length === 0) {
+    members = getDemoCoachMembers();
+  }
 
   const configMap = Object.fromEntries(
     ((cfgRes.data ?? []) as { key: string; value: string }[]).map((c) => [c.key, c.value]),
   );
 
   return {
-    source: "supabase",
+    source: members.some((m) => m.id.startsWith("demo-")) ? "mock" : "supabase",
     members,
     liveSessions: (liveRes.data as LiveSessionRow[]) ?? [],
     // Coach sees the full library (including expired). Members still filter by expires_at.
     recordings: (recRes.data as RecordingRow[]) ?? [],
-    siteConfig: configMap,
+    siteConfig: {
+      whatsapp_invite_url: "",
+      foundations_calendly_url: "",
+      cohort_start_date: "",
+      ...configMap,
+    },
     stats: computeStats(members),
   };
 }

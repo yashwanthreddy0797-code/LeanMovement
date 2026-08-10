@@ -7,6 +7,7 @@ import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   formatDate,
+  getDemoCoachMembers,
   membershipStatusLabel,
   statusChipClass,
   updateOnboarding,
@@ -79,7 +80,13 @@ function OnboardingPage() {
     return <PortalPageSkeleton />;
   }
 
-  const members = data.members.filter((m) => m.role === "member");
+  const realMembers = data.members.filter((m) => m.role === "member");
+  // Always include the demo roster so the coach can click through questionnaire + details.
+  const demo = getDemoCoachMembers();
+  const members = [
+    ...demo,
+    ...realMembers.filter((m) => !m.id.startsWith("demo-")),
+  ];
   const activeMembers = members.filter((m) => m.membership?.status === "active");
 
   const intakeDone = members.filter(isIntakeDone);
@@ -107,6 +114,10 @@ function OnboardingPage() {
     patch: Parameters<typeof updateOnboarding>[2],
     label: string,
   ) => {
+    if (memberId.startsWith("demo-")) {
+      toast.message("Demo member — status toggles apply to real members only.");
+      return;
+    }
     const { error } = await updateOnboarding(coachId, memberId, patch);
     if (error) toast.error(error);
     else {
@@ -172,6 +183,10 @@ function OnboardingPage() {
           </div>
         }
       />
+
+      <div className="border border-border bg-amber-50 px-4 py-3 text-sm text-amber-950">
+        Preview members are included below so you can click through the full questionnaire and onboarding details.
+      </div>
 
       <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
         <KPICard label="Members" value={String(members.length)} delta={`${activeMembers.length} active`} />
@@ -363,6 +378,7 @@ function OnboardingPage() {
 }
 
 function MemberRow({ member: m, onOpen }: { member: CoachMember; onOpen: () => void }) {
+  const isDemo = m.id.startsWith("demo-");
   return (
     <button
       type="button"
@@ -375,6 +391,11 @@ function MemberRow({ member: m, onOpen }: { member: CoachMember; onOpen: () => v
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-center gap-2">
           <p className="truncate text-sm font-medium">{m.full_name ?? m.email}</p>
+          {isDemo && (
+            <span className="inline-flex bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-800">
+              Demo
+            </span>
+          )}
           <span
             className={`inline-flex px-2 py-0.5 text-[11px] font-medium ${statusChipClass(m.membership?.status)}`}
           >
