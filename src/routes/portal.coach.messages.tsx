@@ -7,6 +7,7 @@ import { useChatThread, useCoachChatInbox } from "@/hooks/useChatThread";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
+import { UnreadBadge } from "@/components/portal/UnreadBadge";
 import { ArrowLeft, MessageCircle, Search } from "lucide-react";
 
 export const Route = createFileRoute("/portal/coach/messages")({
@@ -95,6 +96,7 @@ function CoachMessagesPage() {
         preview: t.last_message_preview,
         lastAt: t.last_message_at,
         unread: Boolean(t.unread),
+        unreadCount: t.unreadCount || 0,
         hasThread: true,
       };
     });
@@ -109,6 +111,7 @@ function CoachMessagesPage() {
         preview: null as string | null,
         lastAt: null as string | null,
         unread: false,
+        unreadCount: 0,
         hasThread: false,
       }));
 
@@ -150,7 +153,7 @@ function CoachMessagesPage() {
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
           {inbox.unreadCount > 0
-            ? `${inbox.unreadCount} unread · private 1:1 with members`
+            ? `${inbox.unreadCount} unread message${inbox.unreadCount === 1 ? "" : "s"} · private 1:1`
             : "Private 1:1 chats with active members"}
         </p>
       </div>
@@ -210,13 +213,13 @@ function CoachMessagesPage() {
                       </div>
                       <div className="mt-0.5 flex items-center gap-2">
                         <p
-                          className={`truncate text-xs ${
+                          className={`min-w-0 flex-1 truncate text-xs ${
                             r.unread ? "font-medium text-foreground" : "text-muted-foreground"
                           }`}
                         >
                           {r.preview || (r.hasThread ? "No messages yet" : "Start a chat")}
                         </p>
-                        {r.unread && <span className="h-2 w-2 shrink-0 rounded-full bg-accent" />}
+                        <UnreadBadge count={r.unreadCount} className="shrink-0" />
                       </div>
                     </div>
                   </button>

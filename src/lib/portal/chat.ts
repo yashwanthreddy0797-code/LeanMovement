@@ -6,6 +6,7 @@ export const CHAT_BODY_MAX = 2000;
 export type CoachInboxThread = ChatThread & {
   member: Pick<Profile, "id" | "email" | "full_name"> | null;
   unread: boolean;
+  unreadCount: number;
 };
 
 export function threadUnreadForRole(thread: ChatThread, role: "member" | "coach"): boolean {
@@ -13,6 +14,38 @@ export function threadUnreadForRole(thread: ChatThread, role: "member" | "coach"
   const lastRead = role === "member" ? thread.member_last_read_at : thread.coach_last_read_at;
   if (!lastRead) return true;
   return new Date(thread.last_message_at).getTime() > new Date(lastRead).getTime();
+}
+
+function lastReadMs(thread: ChatThread, role: "member" | "coach") {
+  const lastRead = role === "member" ? thread.member_last_read_at : thread.coach_last_read_at;
+  return lastRead ? new Date(lastRead).getTime() : 0;
+}
+
+/** Count messages from the other person after this role's last-read timestamp. */
+export async function countUnreadMessages(
+  thread: ChatThread,
+  role: "member" | "coach",
+): Promise<number> {
+  if (!threadUnreadForRole(thread, role)) return 0;
+  const supabase = getSupabase();
+  if (!supabase) return threadUnreadForRole(thread, role) ? 1 : 0;
+
+  const selfId = role === "member" ? thread.member_id : thread.coach_id;
+  const since = lastReadMs(thread, role);
+
+  let query = supabase
+    .from("chat_messages")
+    .select("id", { count: "exact", head: true })
+    .eq("thread_id", thread.id)
+    .neq("sender_id", selfId);
+
+  if (since > 0) {
+    query = query.gt("created_at", new Date(since).toISOString());
+  }
+
+  const { count, error } = await query;
+  if (error) return threadUnreadForRole(thread, role) ? 1 : 0;
+  return count ?? 0;
 }
 
 export async function resolveCoachProfileId(): Promise<string | null> {
@@ -227,12 +260,18 @@ export async function listCoachInbox(): Promise<{
 
   const byId = new Map((profiles ?? []).map((p) => [p.id, p]));
 
+  const unreadCounts = await Promise.all(rows.map((t) => countUnreadMessages(t, "coach")));
+
   return {
-    threads: rows.map((t) => ({
-      ...t,
-      member: byId.get(t.member_id) ?? null,
-      unread: threadUnreadForRole(t, "coach"),
-    })),
+    threads: rows.map((t, i) => {
+      const unreadCount = unreadCounts[i] ?? 0;
+      return {
+        ...t,
+        member: byId.get(t.member_id) ?? null,
+        unread: unreadCount > 0,
+        unreadCount,
+      };
+    }),
     error: null,
   };
 }

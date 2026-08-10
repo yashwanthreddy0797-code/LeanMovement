@@ -182,7 +182,8 @@ export function useCoachChatInbox(coachId: string | undefined, enabled = true) {
     };
   }, [enabled, coachId, instanceId, load]);
 
-  const unreadCount = threads.filter((t) => t.unread).length;
+  const unreadThreadCount = threads.filter((t) => t.unread).length;
+  const unreadCount = threads.reduce((sum, t) => sum + (t.unreadCount || 0), 0);
 
-  return { threads, loading, error, refresh: load, unreadCount };
+  return { threads, loading, error, refresh: load, unreadCount, unreadThreadCount };
 }

@@ -1,15 +1,15 @@
 import { useEffect, useState } from "react";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
-import { threadUnreadForRole } from "@/lib/portal/chat";
+import { countUnreadMessages } from "@/lib/portal/chat";
 import type { ChatThread } from "@/lib/supabase/types";
 
-/** Lightweight unread flag for member nav badge. */
+/** Unread message count for member nav badge. */
 export function useMemberChatUnread(memberId: string | undefined, enabled = true) {
-  const [unread, setUnread] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
 
   useEffect(() => {
     if (!enabled || !memberId || !isSupabaseConfigured()) {
-      setUnread(false);
+      setUnreadCount(0);
       return;
     }
 
@@ -25,7 +25,12 @@ export function useMemberChatUnread(memberId: string | undefined, enabled = true
         .eq("member_id", memberId)
         .maybeSingle();
       if (cancelled) return;
-      setUnread(data ? threadUnreadForRole(data as ChatThread, "member") : false);
+      if (!data) {
+        setUnreadCount(0);
+        return;
+      }
+      const count = await countUnreadMessages(data as ChatThread, "member");
+      if (!cancelled) setUnreadCount(count);
     };
 
     void refresh();
@@ -50,5 +55,5 @@ export function useMemberChatUnread(memberId: string | undefined, enabled = true
     };
   }, [enabled, memberId]);
 
-  return unread;
+  return unreadCount;
 }

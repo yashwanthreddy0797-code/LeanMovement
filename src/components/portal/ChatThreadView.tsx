@@ -22,6 +22,10 @@ function formatChatTime(iso: string) {
   });
 }
 
+function isMine(senderId: string, currentUserId: string) {
+  return String(senderId).trim() === String(currentUserId).trim();
+}
+
 export function ChatThreadView({
   messages,
   currentUserId,
@@ -72,35 +76,42 @@ export function ChatThreadView({
     >
       {header}
 
-      <div className="relative flex-1 overflow-y-auto bg-[linear-gradient(180deg,#fafafa_0%,#fff_40%)] px-3 py-4 sm:px-5">
+      <div className="relative flex-1 overflow-y-auto bg-[#efeae2]/[background-image:radial-gradient(rgba(0,0,0,0.03)_1px,transparent_1px)] [background-size:18px_18px] px-3 py-4 sm:px-5">
         {loading ? (
           <div className="flex h-full min-h-[16rem] items-center justify-center gap-2 text-sm text-muted-foreground">
             <Loader2 size={16} className="animate-spin" /> Loading conversation…
           </div>
         ) : messages.length === 0 ? (
           <div className="flex h-full min-h-[16rem] flex-col items-center justify-center px-6 text-center">
-            <div className="mb-3 grid h-12 w-12 place-items-center bg-accent/10 text-accent">
+            <div className="mb-3 grid h-12 w-12 place-items-center bg-white text-accent shadow-sm">
               <Send size={18} />
             </div>
             <p className="max-w-xs text-sm text-muted-foreground">{emptyLabel}</p>
           </div>
         ) : (
-          <div className="mx-auto flex max-w-2xl flex-col gap-2.5">
-            {messages.map((m) => {
-              const mine = m.sender_id === currentUserId;
+          <div className="mx-auto flex max-w-2xl flex-col gap-1.5">
+            {messages.map((m, idx) => {
+              const mine = isMine(m.sender_id, currentUserId);
+              const prev = messages[idx - 1];
+              const prevMine = prev ? isMine(prev.sender_id, currentUserId) : null;
+              const stacked = prevMine === mine;
+
               return (
-                <div key={m.id} className={`flex ${mine ? "justify-end" : "justify-start"}`}>
+                <div
+                  key={m.id}
+                  className={`flex ${mine ? "justify-end" : "justify-start"} ${stacked ? "mt-0.5" : "mt-2"}`}
+                >
                   <div
-                    className={`max-w-[88%] px-3.5 py-2.5 text-sm leading-relaxed shadow-sm sm:max-w-[72%] ${
+                    className={`max-w-[85%] px-3 py-2 text-sm leading-relaxed shadow-sm sm:max-w-[70%] ${
                       mine
-                        ? "bg-accent text-white"
-                        : "border border-border bg-white text-foreground"
+                        ? "rounded-2xl rounded-br-md bg-accent text-white"
+                        : "rounded-2xl rounded-bl-md border border-black/5 bg-white text-foreground"
                     }`}
                   >
                     <p className="whitespace-pre-wrap break-words">{m.body}</p>
                     <p
-                      className={`mt-1.5 text-[10px] tabular-nums ${
-                        mine ? "text-white/70" : "text-muted-foreground"
+                      className={`mt-1 text-right text-[10px] tabular-nums ${
+                        mine ? "text-white/75" : "text-muted-foreground"
                       }`}
                     >
                       {formatChatTime(m.created_at)}

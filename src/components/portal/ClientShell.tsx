@@ -8,6 +8,7 @@ import { signOutPortal, usePortalSession } from "@/lib/portal/session";
 import { formatPlanLabel, membershipSummary } from "@/lib/portal/member-format";
 import { useSidebarCollapse } from "@/hooks/useSidebarCollapse";
 import { useMemberChatUnread } from "@/hooks/useMemberChatUnread";
+import { UnreadBadge } from "@/components/portal/UnreadBadge";
 import {
   LayoutDashboard,
   Radio,
@@ -100,7 +101,7 @@ function ClientShellInner({
   useSharedPortalContent();
   const messagesUnread = useMemberChatUnread(
     session.user?.id,
-    session.hasActiveMembership && !session.isCoach,
+    Boolean(session.user?.id) && session.hasActiveMembership,
   );
 
   return (
@@ -120,7 +121,7 @@ function ClientShellInner({
             {nav.map((n) => {
               const Icon = n.icon;
               const active = pathname === n.to || pathname.startsWith(`${n.to}/`);
-              const showUnread = n.to === "/portal/messages" && messagesUnread && !active;
+              const showUnread = n.to === "/portal/messages" && messagesUnread > 0 && !active;
               return (
                 <Link
                   key={n.to}
@@ -133,11 +134,16 @@ function ClientShellInner({
                 >
                   <span className="relative shrink-0">
                     <Icon size={17} strokeWidth={1.6} />
-                    {showUnread && (
-                      <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 bg-accent" />
+                    {showUnread && collapsed && (
+                      <span className="absolute -right-1 -top-1">
+                        <UnreadBadge count={messagesUnread} className="!h-4 !min-w-4 !text-[9px]" />
+                      </span>
                     )}
                   </span>
                   {!collapsed && <span className="truncate">{n.label}</span>}
+                  {showUnread && !collapsed && (
+                    <UnreadBadge count={messagesUnread} className="ml-auto" />
+                  )}
                 </Link>
               );
             })}
@@ -216,7 +222,7 @@ function ClientShellInner({
           {nav.map((n) => {
             const Icon = n.icon;
             const active = pathname === n.to || pathname.startsWith(`${n.to}/`);
-            const showUnread = n.to === "/portal/messages" && messagesUnread && !active;
+            const showUnread = n.to === "/portal/messages" && messagesUnread > 0 && !active;
             return (
               <Link
                 key={n.to}
@@ -232,7 +238,9 @@ function ClientShellInner({
                     className={active ? "text-accent" : undefined}
                   />
                   {showUnread && (
-                    <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 bg-accent" />
+                    <span className="absolute -right-2 -top-1.5">
+                      <UnreadBadge count={messagesUnread} className="!h-4 !min-w-4 !text-[9px]" />
+                    </span>
                   )}
                 </span>
                 {n.label}

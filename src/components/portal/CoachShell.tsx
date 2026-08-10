@@ -5,6 +5,9 @@ import { SidebarBrand } from "@/components/portal/SidebarBrand";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { signOutPortal, usePortalSession } from "@/lib/portal/session";
 import { useSidebarCollapse } from "@/hooks/useSidebarCollapse";
+import { useCoachChatInbox } from "@/hooks/useChatThread";
+import { UnreadBadge } from "@/components/portal/UnreadBadge";
+import { isSupabaseConfigured } from "@/lib/supabase/client";
 import {
   LayoutDashboard,
   Users,
@@ -67,6 +70,13 @@ export function CoachShell({ children }: { children: ReactNode }) {
   const sidebarW = collapsed ? "lg:w-[72px]" : "lg:w-64";
   const mainMl = collapsed ? "lg:ml-[72px]" : "lg:ml-64";
   const moreActive = moreNav.some((n) => pathActive(pathname, n.to));
+  const inbox = useCoachChatInbox(
+    session.user?.id,
+    Boolean(session.user?.id) &&
+      isSupabaseConfigured() &&
+      !pathname.startsWith("/portal/coach/messages"),
+  );
+  const messagesUnread = inbox.unreadCount;
 
   return (
     <CoachGate>
@@ -86,6 +96,8 @@ export function CoachShell({ children }: { children: ReactNode }) {
               {desktopNav.map((n) => {
                 const Icon = n.icon;
                 const active = pathActive(pathname, n.to, "exact" in n ? n.exact : false);
+                const showUnread =
+                  n.to === "/portal/coach/messages" && messagesUnread > 0 && !active;
                 return (
                   <Link
                     key={n.to}
@@ -96,8 +108,21 @@ export function CoachShell({ children }: { children: ReactNode }) {
                       collapsed ? "justify-center p-2.5" : "gap-3 px-3.5 py-2.5"
                     }`}
                   >
-                    <Icon size={17} strokeWidth={1.6} className="shrink-0" />
+                    <span className="relative shrink-0">
+                      <Icon size={17} strokeWidth={1.6} />
+                      {showUnread && collapsed && (
+                        <span className="absolute -right-1 -top-1">
+                          <UnreadBadge
+                            count={messagesUnread}
+                            className="!h-4 !min-w-4 !text-[9px]"
+                          />
+                        </span>
+                      )}
+                    </span>
                     {!collapsed && <span className="truncate">{n.label}</span>}
+                    {showUnread && !collapsed && (
+                      <UnreadBadge count={messagesUnread} className="ml-auto" />
+                    )}
                   </Link>
                 );
               })}
@@ -176,6 +201,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
             {nav.map((n) => {
               const Icon = n.icon;
               const active = pathActive(pathname, n.to, "exact" in n ? n.exact : false);
+              const showUnread = n.to === "/portal/coach/messages" && messagesUnread > 0 && !active;
               return (
                 <Link
                   key={n.to}
@@ -185,11 +211,18 @@ export function CoachShell({ children }: { children: ReactNode }) {
                     active ? "text-white" : "text-white/50"
                   }`}
                 >
-                  <Icon
-                    size={18}
-                    strokeWidth={1.6}
-                    className={active ? "text-accent" : undefined}
-                  />
+                  <span className="relative">
+                    <Icon
+                      size={18}
+                      strokeWidth={1.6}
+                      className={active ? "text-accent" : undefined}
+                    />
+                    {showUnread && (
+                      <span className="absolute -right-2 -top-1.5">
+                        <UnreadBadge count={messagesUnread} className="!h-4 !min-w-4 !text-[9px]" />
+                      </span>
+                    )}
+                  </span>
                   <span className="truncate">{n.label}</span>
                   {active && (
                     <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-5 bg-accent" />
