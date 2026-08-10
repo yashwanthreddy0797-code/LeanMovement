@@ -31,15 +31,15 @@ const PLANS: Record<string, PlanInfo> = {
       "Travel & restaurant guides",
     ],
   },
-  "Muscle Gain": {
-    name: "Muscle Gain",
+  "Strength Gain": {
+    name: "Strength Gain",
     tag: "Self-Guided · 12 Weeks",
     tagline: "Build size & strength.",
     price: "₹5,999",
     priceNumber: 5999,
     period: "one-time payment · lifetime access",
     highlights: [
-      "12 week hypertrophy plan",
+      "12 week strength plan",
       "Upper / Lower split",
       "Progressive overload framework",
       "Warm-up & mobility protocols",
@@ -64,7 +64,7 @@ const PLANS: Record<string, PlanInfo> = {
 };
 
 const searchSchema = z.object({
-  plan: z.enum(["Fat Loss", "Muscle Gain", "Hybrid"]).catch("Hybrid"),
+  plan: z.enum(["Fat Loss", "Strength Gain", "Hybrid"]).catch("Hybrid"),
 });
 
 export const Route = createFileRoute("/checkout")({

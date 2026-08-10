@@ -84,7 +84,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       {
         property: "og:description",
         content:
-          "Live coaching three mornings a week. Personalised training and nutrition. Strength. Muscle. Consistency.",
+          "Live coaching three mornings a week. Personalised training and nutrition. Strength. Lean. Consistency.",
       },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://www.leanmovement.in/" },

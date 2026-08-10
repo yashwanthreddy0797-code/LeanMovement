@@ -205,7 +205,11 @@ function HomePage() {
               {HOME_CLOSING.headline}
             </h2>
             <p className="mt-4 text-base leading-relaxed text-white/60 md:text-lg">
-              {HOME_CLOSING.subline}
+              {HOME_CLOSING.sublines.map((line) => (
+                <span key={line} className="block">
+                  {line}
+                </span>
+              ))}
             </p>
           </FadeUp>
         </div>

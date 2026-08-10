@@ -23,7 +23,7 @@ export const Route = createFileRoute("/about")({
       { property: "og:title", content: `About - ${COACH.name} | LEANMOVEMENT` },
       {
         property: "og:description",
-        content: `Live coaching with ${COACH.name}. Training and nutrition - strength, muscle, conditioning, consistency.`,
+        content: `Live coaching with ${COACH.name}. Training and nutrition - strength, conditioning, consistency.`,
       },
       { property: "og:image", content: PROGRAM_HERO.src },
     ],

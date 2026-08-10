@@ -104,7 +104,7 @@ export const HOME_STATEMENT = {
 export const MEMBERSHIP_STATEMENT = {
   title: "Train with me.",
   paragraphs: [
-    "Training and nutrition are the focus - strength, muscle, conditioning, and macros, coached together.",
+    "Training and nutrition are the focus - strength, conditioning, and macros, coached together.",
     "Personalised sessions and macros. Meal guidance that fits real life.",
     "The goal isn't to exhaust you. It's to build a body that's capable today and still capable years from now.",
   ],
@@ -315,7 +315,7 @@ export const MEMBERSHIP_PILLARS = [
     duration: "3× per week · 60 min",
     summary: "Train live with me. Real-time technique feedback. Progressive programming.",
     description:
-      "Tuesday, Thursday, and Saturday mornings. Strength, muscle, and conditioning. Coached live. Recorded for 7 days.",
+      "Tuesday, Thursday, and Saturday mornings. Strength and conditioning. Coached live. Recorded for 7 days.",
     includes: LIVE_SESSIONS.days.map((d) => `${d.day} · ${d.name} - ${d.focus}`),
     outcome: "Join from your portal when the session goes live.",
   },
@@ -378,7 +378,7 @@ export const MEMBERSHIP_PILLARS = [
 export const MEMBERSHIP_JOURNEY = [
   { step: "01", title: "Enroll & pay", detail: "One program · ₹6,969/mo · portal access after payment." },
   { step: "02", title: "Book Foundations", detail: "One-on-one technique session with me before your first live class." },
-  { step: "03", title: "Train with me", detail: "Tue / Thu / Sat · 6:00–7:00 AM · strength, muscle, conditioning." },
+  { step: "03", title: "Train with me", detail: "Tue / Thu / Sat · 6:00–7:00 AM · strength and conditioning." },
 ] as const;
 
 export const PRICING_PLANS = [
@@ -395,7 +395,7 @@ export const PRICING_PLANS = [
 ] as const;
 
 export const INCLUDED_SUMMARY = [
-  "Live coaching - strength, muscle & conditioning",
+  "Live coaching - strength & conditioning",
   "Personalised nutrition included",
   "Pair of kettlebells, mat, and space to train",
   "Foundations session + 7-day recordings",
@@ -595,7 +595,7 @@ export const TESTIMONIALS = [
 
 export const HOME_CLOSING = {
   headline: "Strong. Athletic. Built to last.",
-  subline: "Live coaching for training and nutrition - structured, sustainable, and built for busy schedules.",
+  sublines: ["Live Coaching.", "Structured for Training & Nutrition"],
 } as const;
 
 export const MEMBERSHIP_CLOSING = {

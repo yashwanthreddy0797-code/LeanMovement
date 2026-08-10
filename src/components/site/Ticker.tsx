@@ -1,6 +1,6 @@
 const items = [
   "Fat Loss",
-  "Muscle Building",
+  "Strength Building",
   "Nutrition Coaching",
   "Online Programs",
   "1:1 Coaching",

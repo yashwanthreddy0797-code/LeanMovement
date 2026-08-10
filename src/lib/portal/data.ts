@@ -7,7 +7,7 @@ export const clientProfile = {
   fullName: "Rahul Mehta",
   email: "rahul@example.com",
   program: "Lean Transformation - 12 Week",
-  goal: "Lose 8kg, build lean muscle",
+  goal: "Lose 8kg, get leaner and stronger",
   coach: COACH.name,
   dayNumber: 23,
   totalDays: 90,
@@ -85,7 +85,7 @@ export const invoices = [
 
 export const communityFeed = [
   { user: "Priya S.", program: "Fat Loss", time: "2h", text: `Down 12kg and finally fitting back into my wedding lehenga. Thank you ${COACH.name.split(" ")[0]} 🙏`, likes: 84, comments: 12, img: "https://images.unsplash.com/photo-1518611012118-696072aa579a?w=900&q=70&auto=format&fit=crop" },
-  { user: "Karan M.", program: "Muscle Gain", time: "5h", text: "First time deadlifting 180kg. Slow and steady wins.", likes: 142, comments: 22, img: null },
+  { user: "Karan M.", program: "Strength Gain", time: "5h", text: "First time deadlifting 180kg. Slow and steady wins.", likes: 142, comments: 22, img: null },
   { user: "Neha A.", program: "Lean & Strong", time: "1d", text: "30 days of consistency. Energy levels are unreal.", likes: 56, comments: 8, img: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=900&q=70&auto=format&fit=crop" },
 ];
 
@@ -102,7 +102,7 @@ export const coachKPIs = [
 export const coachClients = [
   { name: "Rahul Mehta", program: "Lean Transformation 12W", goal: "Lose 8kg", join: "Jan 12, 2026", renew: "Apr 12, 2026", status: "Active" },
   { name: "Priya Sharma", program: "Fat Loss 16W", goal: "Lose 12kg", join: "Dec 02, 2025", renew: "Mar 24, 2026", status: "Active" },
-  { name: "Karan Malhotra", program: "Muscle Gain 24W", goal: "+8kg lean", join: "Nov 08, 2025", renew: "May 08, 2026", status: "Active" },
+  { name: "Karan Malhotra", program: "Strength Gain 24W", goal: "+8kg lean", join: "Nov 08, 2025", renew: "May 08, 2026", status: "Active" },
   { name: "Neha Arora", program: "Lean & Strong 12W", goal: "Body recomp", join: "Feb 01, 2026", renew: "May 01, 2026", status: "Active" },
   { name: "Aditya Singh", program: "Fat Loss 8W", goal: "Lose 6kg", join: "Feb 10, 2026", renew: "Apr 10, 2026", status: "Onboarding" },
   { name: "Meera Iyer", program: "Lean Transformation 12W", goal: "Lose 5kg", join: "Oct 15, 2025", renew: "Mar 15, 2026", status: "Renewal due" },
