@@ -93,16 +93,16 @@ if (profileError) {
 }
 console.log("✓ Profile role set to coach");
 
-// Activate membership
+// Activate membership — match live Lean Movement plan (₹6,969 / month)
 const renews = new Date();
-renews.setDate(renews.getDate() + 365);
+renews.setMonth(renews.getMonth() + 1);
 
 const { error: membershipError } = await admin
   .from("memberships")
   .update({
     status: "active",
-    plan: "founding",
-    amount_inr: 5999,
+    plan: "monthly",
+    amount_inr: 6969,
     started_at: new Date().toISOString(),
     renews_at: renews.toISOString(),
   })

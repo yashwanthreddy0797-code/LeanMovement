@@ -47,12 +47,19 @@ export function planPriceInr(_plan?: MembershipPlan | string | null) {
   return PROGRAM_AMOUNT_INR;
 }
 
+const STALE_MARKETING_AMOUNTS = new Set([5999, 9999, 14999]);
+
 export function membershipSummary(membership: Membership | null) {
   const plan = membership?.plan ?? "monthly";
+  const rawAmount = membership?.amount_inr;
+  const amountInr =
+    rawAmount == null || rawAmount <= 0 || STALE_MARKETING_AMOUNTS.has(rawAmount)
+      ? planPriceInr(plan)
+      : rawAmount;
   return {
     planLabel: formatPlanLabel(plan),
     statusLabel: formatMembershipStatus(membership?.status),
-    price: formatInr(membership?.amount_inr ?? planPriceInr(plan)),
+    price: formatInr(amountInr),
     renewsOn: formatPortalDate(membership?.renews_at),
     memberSince: formatPortalDate(membership?.started_at, "Not started"),
     isActive: membership?.status === "active",

@@ -1,7 +1,9 @@
 import { planAmountInr } from "@/lib/enrollment/plans";
+import { sendWelcomeEmailAfterPayment } from "@/lib/email/welcome-mail.server";
 import { recordVerifiedPayment, extendMembershipRenewal } from "@/lib/membership/renewal";
 import { pushCoachRegistrationAlert } from "@/lib/coach-notify";
 import { getEnrollmentFromSiteConfig } from "@/lib/enrollment/store";
+import { fetchRazorpaySubscription, razorpayUnixToIso } from "@/lib/razorpay.server";
 import { DEFAULT_SESSION_IDS, getWeekStartDate } from "@/lib/sessions";
 import type { MembershipPlan } from "@/lib/supabase/types";
 import type { SupabaseClient } from "@supabase/supabase-js";
@@ -42,12 +44,23 @@ export async function activateMembershipForUser(
     if (m?.status === "active") return { alreadyProcessed: true as const };
   }
 
+  let renewsAt: string | null = null;
+  if (input.subscriptionId) {
+    try {
+      const sub = await fetchRazorpaySubscription(input.subscriptionId);
+      renewsAt = razorpayUnixToIso(sub?.charge_at) ?? razorpayUnixToIso(sub?.current_end) ?? null;
+    } catch (err) {
+      console.warn("[activateMembership] subscription renews_at fetch failed", err);
+    }
+  }
+
   await extendMembershipRenewal(admin, {
     userId: input.userId,
     plan: input.plan,
     paymentId: input.paymentId,
     amountInr,
     subscriptionId: input.subscriptionId,
+    renewsAt,
   });
 
   const now = new Date().toISOString();
@@ -102,6 +115,19 @@ export async function activateMembershipForUser(
       });
     } catch (err) {
       console.warn("[activateMembership] coach alert failed", err);
+    }
+
+    try {
+      const welcome = await sendWelcomeEmailAfterPayment({
+        email: input.email,
+        fullName: profile?.full_name ?? config?.full_name ?? input.email.split("@")[0],
+        amountInr,
+      });
+      if (!welcome.ok) {
+        console.warn("[activateMembership] welcome email skipped:", welcome.error);
+      }
+    } catch (err) {
+      console.warn("[activateMembership] welcome email failed", err);
     }
   }
 

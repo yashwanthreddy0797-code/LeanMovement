@@ -9,10 +9,39 @@ type RazorpayOrder = {
   status: string;
 };
 
-type RazorpaySubscription = {
+export type RazorpaySubscription = {
   id: string;
   status: string;
   plan_id: string;
+  current_start?: number | null;
+  current_end?: number | null;
+  charge_at?: number | null;
+  paid_count?: number;
+  total_count?: number;
+  notes?: Record<string, string>;
+};
+
+export type RazorpayPayment = {
+  id: string;
+  status: string;
+  amount: number;
+  currency: string;
+  order_id?: string;
+  created_at: number;
+  method?: string;
+  notes?: Record<string, string>;
+};
+
+export type RazorpayPlan = {
+  id: string;
+  period: string;
+  interval: number;
+  item: {
+    name: string;
+    amount: number;
+    currency: string;
+    description?: string;
+  };
 };
 
 function getCredentials() {
@@ -182,12 +211,7 @@ export async function fetchRazorpayPayment(paymentId: string) {
     headers: { Authorization: authHeader(keyId, keySecret) },
   });
   if (!response.ok) return null;
-  return (await response.json()) as {
-    status: string;
-    order_id?: string;
-    amount: number;
-    notes?: Record<string, string>;
-  };
+  return (await response.json()) as RazorpayPayment;
 }
 
 export async function fetchRazorpaySubscription(subscriptionId: string) {
@@ -196,9 +220,22 @@ export async function fetchRazorpaySubscription(subscriptionId: string) {
     headers: { Authorization: authHeader(keyId, keySecret) },
   });
   if (!response.ok) return null;
-  return (await response.json()) as RazorpaySubscription & {
-    notes?: Record<string, string>;
-  };
+  return (await response.json()) as RazorpaySubscription;
+}
+
+export async function fetchRazorpayPlan(planId: string) {
+  const { keyId, keySecret } = getCredentials();
+  const response = await fetch(`https://api.razorpay.com/v1/plans/${planId}`, {
+    headers: { Authorization: authHeader(keyId, keySecret) },
+  });
+  if (!response.ok) return null;
+  return (await response.json()) as RazorpayPlan;
+}
+
+/** Unix seconds → ISO, or null when missing/invalid. */
+export function razorpayUnixToIso(unix?: number | null) {
+  if (!unix || unix <= 0) return null;
+  return new Date(unix * 1000).toISOString();
 }
 
 export function membershipRenewalIso(plan: MembershipPlan) {

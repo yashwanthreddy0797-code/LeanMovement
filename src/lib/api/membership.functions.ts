@@ -3,6 +3,7 @@ import { z } from "zod";
 import { accessTokenSchema } from "@/lib/api/auth-input";
 import { planAmountInr, toMembershipPlan, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 import { activateMembershipForUser } from "@/lib/membership/activate";
+import { resolveMemberBillingDetails } from "@/lib/membership/billing.server";
 import { runMembershipLifecycleJob } from "@/lib/membership/renewal";
 import {
   createRazorpayOrder,
@@ -33,9 +34,7 @@ export const getPaymentConfig = createServerFn({ method: "GET" }).handler(async 
 });
 
 export const getMemberCheckout = createServerFn({ method: "GET" })
-  .inputValidator(
-    z.object({ accessToken: accessTokenSchema, userId: z.string().uuid() }),
-  )
+  .inputValidator(z.object({ accessToken: accessTokenSchema, userId: z.string().uuid() }))
   .handler(async ({ data }) => {
     try {
       await requireMemberCaller(data.accessToken, data.userId);
@@ -68,7 +67,12 @@ export const getMemberCheckout = createServerFn({ method: "GET" })
     const config = Object.fromEntries((configRows ?? []).map((r) => [r.key, r.value]));
 
     const plan = membership?.plan ?? "monthly";
-    const amountInr = membership?.amount_inr ?? planAmountInr(plan);
+    const staleAmounts = new Set([5999, 9999, 14999]);
+    const rawAmount = membership?.amount_inr;
+    const amountInr =
+      rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
+        ? planAmountInr(plan)
+        : rawAmount;
 
     return {
       ok: true as const,
@@ -90,6 +94,46 @@ export const getMemberCheckout = createServerFn({ method: "GET" })
     };
   });
 
+/** Live billing card for /portal/payments — prefers Razorpay subscription/payment truth. */
+export const getMemberBillingDetails = createServerFn({ method: "GET" })
+  .inputValidator(z.object({ accessToken: accessTokenSchema, userId: z.string().uuid() }))
+  .handler(async ({ data }) => {
+    try {
+      await requireMemberCaller(data.accessToken, data.userId);
+    } catch (err) {
+      return { ok: false as const, message: authErrorMessage(err) };
+    }
+
+    const admin = getSupabaseAdmin();
+    if (!admin) {
+      return { ok: false as const, message: "Server not configured" };
+    }
+
+    const { data: membership, error } = await admin
+      .from("memberships")
+      .select("*")
+      .eq("user_id", data.userId)
+      .maybeSingle();
+
+    if (error) {
+      return { ok: false as const, message: error.message };
+    }
+
+    try {
+      const billing = await resolveMemberBillingDetails(admin, membership);
+      return {
+        ok: true as const,
+        billing,
+        razorpayEnabled: isRazorpayConfigured(),
+      };
+    } catch (err) {
+      return {
+        ok: false as const,
+        message: err instanceof Error ? err.message : "Could not load billing",
+      };
+    }
+  });
+
 async function createCheckoutForUser(
   admin: NonNullable<ReturnType<typeof getSupabaseAdmin>>,
   profile: { id: string; email: string; full_name: string | null },
@@ -102,7 +146,12 @@ async function createCheckoutForUser(
     .maybeSingle();
 
   const plan = (membership?.plan ?? "monthly") as MembershipPlan;
-  const amountInr = membership?.amount_inr ?? planAmountInr(plan);
+  const staleAmounts = new Set([5999, 9999, 14999]);
+  const rawAmount = membership?.amount_inr;
+  const amountInr =
+    rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
+      ? planAmountInr(plan)
+      : rawAmount;
   const kind = opts?.kind ?? (membership?.status === "active" ? "renewal" : "initial");
 
   // Prefer Razorpay Subscriptions for autopay when available
@@ -326,10 +375,13 @@ export const verifyMemberRazorpayPayment = createServerFn({ method: "POST" })
       .maybeSingle();
 
     const plan = (membership?.plan ?? "monthly") as MembershipPlan;
-    const amountInr = membership?.amount_inr ?? Math.round(payment.amount / 100);
+    // Charged Razorpay amount is the source of truth — never reuse a stale membership price.
+    const amountInr = Math.round(payment.amount / 100) || planAmountInr(plan);
     const kind =
       data.kind ??
-      (membership?.status === "active" || membership?.status === "past_due" ? "renewal" : "initial");
+      (membership?.status === "active" || membership?.status === "past_due"
+        ? "renewal"
+        : "initial");
 
     try {
       const result = await activateMembershipForUser(admin, {

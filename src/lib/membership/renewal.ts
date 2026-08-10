@@ -1,6 +1,10 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { planAmountInr } from "@/lib/enrollment/plans";
-import { MEMBERSHIP_GRACE_DAYS, RENEWAL_REMINDER_DAYS_BEFORE, addDays } from "@/lib/membership/access";
+import {
+  MEMBERSHIP_GRACE_DAYS,
+  RENEWAL_REMINDER_DAYS_BEFORE,
+  addDays,
+} from "@/lib/membership/access";
 import { membershipRenewalIso } from "@/lib/razorpay.server";
 import type { MembershipPlan } from "@/lib/supabase/types";
 
@@ -22,7 +26,11 @@ export async function recordVerifiedPayment(
   },
 ) {
   const key = `${PAYMENT_LEDGER_PREFIX}${input.paymentId}`;
-  const { data: existing } = await admin.from("site_config").select("key").eq("key", key).maybeSingle();
+  const { data: existing } = await admin
+    .from("site_config")
+    .select("key")
+    .eq("key", key)
+    .maybeSingle();
   if (existing) return { duplicate: true as const };
 
   await admin.from("site_config").upsert({
@@ -45,10 +53,12 @@ export async function extendMembershipRenewal(
     paymentId: string;
     amountInr?: number;
     subscriptionId?: string | null;
+    /** Prefer Razorpay subscription current_end / charge_at when available. */
+    renewsAt?: string | null;
   },
 ) {
   const amountInr = input.amountInr ?? planAmountInr(input.plan);
-  const renewsAt = membershipRenewalIso(input.plan);
+  const renewsAt = input.renewsAt ?? membershipRenewalIso(input.plan);
   const now = new Date().toISOString();
 
   const patch: Record<string, unknown> = {
@@ -107,21 +117,14 @@ export async function runMembershipLifecycleJob(admin: Admin) {
       (row.status === "past_due" || (row.status === "active" && now > renews)) &&
       now > graceEnd
     ) {
-      await admin
-        .from("memberships")
-        .update({ status: "expired" })
-        .eq("user_id", row.user_id);
+      await admin.from("memberships").update({ status: "expired" }).eq("user_id", row.user_id);
       markedExpired += 1;
       continue;
     }
 
     const msUntil = renews.getTime() - now.getTime();
     const daysUntil = msUntil / (24 * 60 * 60 * 1000);
-    if (
-      row.status === "active" &&
-      daysUntil <= RENEWAL_REMINDER_DAYS_BEFORE &&
-      daysUntil >= 0
-    ) {
+    if (row.status === "active" && daysUntil <= RENEWAL_REMINDER_DAYS_BEFORE && daysUntil >= 0) {
       reminderUserIds.push(row.user_id);
     }
   }
