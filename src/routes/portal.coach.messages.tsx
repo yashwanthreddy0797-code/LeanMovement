@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { ChatThreadView } from "@/components/portal/ChatThreadView";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
@@ -11,12 +11,33 @@ import { ArrowLeft, MessageCircle, Search } from "lucide-react";
 
 export const Route = createFileRoute("/portal/coach/messages")({
   head: () => ({ meta: [{ title: "Messages - Lean Movement Coach" }] }),
-  component: () => (
+  component: CoachMessagesRoute,
+  errorComponent: CoachMessagesError,
+});
+
+function CoachMessagesError({ error, reset }: { error: Error; reset: () => void }) {
+  return (
+    <div className="coach-portal flex min-h-screen items-center justify-center bg-background px-4">
+      <div className="max-w-md text-center">
+        <h1 className="font-display text-3xl uppercase tracking-[0.04em]">Messages error</h1>
+        <p className="mt-3 text-sm text-muted-foreground break-words">
+          {error?.message || "Something went wrong loading chat."}
+        </p>
+        <button type="button" onClick={() => reset()} className="portal-btn portal-btn-accent mt-6">
+          Try again
+        </button>
+      </div>
+    </div>
+  );
+}
+
+function CoachMessagesRoute() {
+  return (
     <CoachShell>
       <CoachMessagesPage />
     </CoachShell>
-  ),
-});
+  );
+}
 
 function formatPreviewTime(iso: string | null) {
   if (!iso) return "";
@@ -33,6 +54,10 @@ function formatPreviewTime(iso: string | null) {
   return d.toLocaleDateString("en-IN", { day: "numeric", month: "short" });
 }
 
+function memberLabel(name: string | null | undefined, email: string | null | undefined) {
+  return (name && name.trim()) || (email && email.trim()) || "Member";
+}
+
 function CoachMessagesPage() {
   const session = usePortalSession();
   const coachId = session.user?.id;
@@ -40,6 +65,17 @@ function CoachMessagesPage() {
   const inbox = useCoachChatInbox(coachId, Boolean(coachId) && isSupabaseConfigured());
   const [selectedMemberId, setSelectedMemberId] = useState<string | null>(null);
   const [q, setQ] = useState("");
+
+  // Avoid stale selection after inbox refresh
+  useEffect(() => {
+    if (!selectedMemberId) return;
+    const exists =
+      inbox.threads.some((t) => t.member_id === selectedMemberId) ||
+      (coachData?.members ?? []).some((m) => m.id === selectedMemberId);
+    if (!exists && inbox.threads.length === 0 && !coachLoading) {
+      // keep selection — coach can still start a thread for known member ids
+    }
+  }, [selectedMemberId, inbox.threads, coachData?.members, coachLoading]);
 
   const activeMembers = useMemo(
     () =>
@@ -50,23 +86,26 @@ function CoachMessagesPage() {
   );
 
   const rows = useMemo(() => {
-    const fromInbox = inbox.threads.map((t) => ({
-      memberId: t.member_id,
-      name: t.member?.full_name || t.member?.email || "Member",
-      email: t.member?.email ?? "",
-      preview: t.last_message_preview,
-      lastAt: t.last_message_at,
-      unread: t.unread,
-      hasThread: true,
-    }));
+    const fromInbox = (inbox.threads ?? []).map((t) => {
+      const name = memberLabel(t.member?.full_name, t.member?.email);
+      return {
+        memberId: t.member_id,
+        name,
+        email: t.member?.email ?? "",
+        preview: t.last_message_preview,
+        lastAt: t.last_message_at,
+        unread: Boolean(t.unread),
+        hasThread: true,
+      };
+    });
 
     const seen = new Set(fromInbox.map((r) => r.memberId));
     const extras = activeMembers
       .filter((m) => !seen.has(m.id))
       .map((m) => ({
         memberId: m.id,
-        name: m.full_name || m.email,
-        email: m.email,
+        name: memberLabel(m.full_name, m.email),
+        email: m.email ?? "",
         preview: null as string | null,
         lastAt: null as string | null,
         unread: false,
@@ -77,7 +116,7 @@ function CoachMessagesPage() {
     const query = q.trim().toLowerCase();
     if (!query) return all;
     return all.filter(
-      (r) => r.name.toLowerCase().includes(query) || r.email.toLowerCase().includes(query),
+      (r) => r.name.toLowerCase().includes(query) || (r.email || "").toLowerCase().includes(query),
     );
   }, [inbox.threads, activeMembers, q]);
 
@@ -119,7 +158,6 @@ function CoachMessagesPage() {
       {inbox.error && <p className="text-sm text-red-600">{inbox.error}</p>}
 
       <div className="grid overflow-hidden border border-border bg-white lg:grid-cols-[minmax(0,19rem)_1fr] xl:grid-cols-[minmax(0,22rem)_1fr]">
-        {/* Inbox list */}
         <div
           className={`border-border lg:border-r ${showThreadMobile ? "hidden lg:block" : "block"}`}
         >
@@ -137,7 +175,7 @@ function CoachMessagesPage() {
               />
             </div>
           </div>
-          <div className="max-h-[min(70vh,36rem)] overflow-y-auto lg:max-h-[min(72vh,40rem)]">
+          <div className="max-h-[70vh] overflow-y-auto lg:max-h-[72vh]">
             {inbox.loading && rows.length === 0 ? (
               <p className="px-4 py-10 text-center text-sm text-muted-foreground">Loading…</p>
             ) : rows.length === 0 ? (
@@ -150,6 +188,7 @@ function CoachMessagesPage() {
             ) : (
               rows.map((r) => {
                 const active = r.memberId === selectedMemberId;
+                const initial = (r.name?.[0] || "M").toUpperCase();
                 return (
                   <button
                     key={r.memberId}
@@ -160,7 +199,7 @@ function CoachMessagesPage() {
                     }`}
                   >
                     <div className="grid h-10 w-10 shrink-0 place-items-center bg-accent/10 text-xs font-semibold text-accent">
-                      {r.name[0]?.toUpperCase() ?? "M"}
+                      {initial}
                     </div>
                     <div className="min-w-0 flex-1">
                       <div className="flex items-center justify-between gap-2">
@@ -187,10 +226,9 @@ function CoachMessagesPage() {
           </div>
         </div>
 
-        {/* Thread pane */}
         <div className={`min-w-0 ${showThreadMobile ? "block" : "hidden lg:block"}`}>
           {!selectedMemberId || !coachId ? (
-            <div className="flex min-h-[min(70vh,36rem)] flex-col items-center justify-center px-6 text-center text-sm text-muted-foreground lg:min-h-[min(72vh,40rem)]">
+            <div className="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center text-sm text-muted-foreground lg:min-h-[72vh]">
               <MessageCircle size={28} className="mb-3 text-accent" />
               <p className="font-medium text-foreground">Your inbox</p>
               <p className="mt-1 max-w-xs">Select a member on the left to open their chat.</p>
@@ -208,7 +246,7 @@ function CoachMessagesPage() {
                 void inbox.refresh();
                 return result;
               }}
-              className="min-h-[min(70vh,36rem)] border-0 lg:min-h-[min(72vh,40rem)]"
+              className="min-h-[70vh] border-0 lg:min-h-[72vh]"
               header={
                 <div className="flex items-center gap-3 border-b border-border px-3 py-3 sm:px-4">
                   <button
@@ -220,13 +258,13 @@ function CoachMessagesPage() {
                     <ArrowLeft size={18} />
                   </button>
                   <div className="grid h-10 w-10 shrink-0 place-items-center bg-accent text-sm font-semibold text-white">
-                    {(selected?.name ?? "M")[0]?.toUpperCase()}
+                    {(selected?.name?.[0] || "M").toUpperCase()}
                   </div>
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium">{selected?.name ?? "Member"}</p>
-                    {selected?.email && (
+                    {selected?.email ? (
                       <p className="truncate text-xs text-muted-foreground">{selected.email}</p>
-                    )}
+                    ) : null}
                   </div>
                 </div>
               }

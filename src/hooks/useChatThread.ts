@@ -1,8 +1,9 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useId, useState } from "react";
 import { getSupabase, isSupabaseConfigured } from "@/lib/supabase/client";
 import {
   ensureCoachThread,
   ensureMemberThread,
+  listCoachInbox,
   listThreadMessages,
   markThreadRead,
   sendChatMessage,
@@ -133,6 +134,7 @@ export function useChatThread(opts: {
 }
 
 export function useCoachChatInbox(coachId: string | undefined, enabled = true) {
+  const instanceId = useId();
   const [threads, setThreads] = useState<CoachInboxThread[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -144,11 +146,16 @@ export function useCoachChatInbox(coachId: string | undefined, enabled = true) {
       return;
     }
     setLoading(true);
-    const { listCoachInbox } = await import("@/lib/portal/chat");
-    const result = await listCoachInbox();
-    setThreads(result.threads);
-    setError(result.error);
-    setLoading(false);
+    try {
+      const result = await listCoachInbox();
+      setThreads(Array.isArray(result.threads) ? result.threads : []);
+      setError(result.error);
+    } catch (err) {
+      setThreads([]);
+      setError(err instanceof Error ? err.message : "Could not load inbox");
+    } finally {
+      setLoading(false);
+    }
   }, [enabled, coachId]);
 
   useEffect(() => {
@@ -161,7 +168,7 @@ export function useCoachChatInbox(coachId: string | undefined, enabled = true) {
     if (!supabase) return;
 
     const channel = supabase
-      .channel("chat_inbox_sync")
+      .channel(`chat_inbox_sync_${coachId}_${instanceId}`)
       .on("postgres_changes", { event: "*", schema: "public", table: "chat_threads" }, () => {
         void load();
       })
@@ -173,7 +180,7 @@ export function useCoachChatInbox(coachId: string | undefined, enabled = true) {
     return () => {
       void supabase.removeChannel(channel);
     };
-  }, [enabled, coachId, load]);
+  }, [enabled, coachId, instanceId, load]);
 
   const unreadCount = threads.filter((t) => t.unread).length;
 

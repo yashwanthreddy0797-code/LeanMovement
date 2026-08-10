@@ -5,8 +5,6 @@ import { SidebarBrand } from "@/components/portal/SidebarBrand";
 import { BrandLogo } from "@/components/brand/BrandLogo";
 import { signOutPortal, usePortalSession } from "@/lib/portal/session";
 import { useSidebarCollapse } from "@/hooks/useSidebarCollapse";
-import { useCoachChatInbox } from "@/hooks/useChatThread";
-import { isSupabaseConfigured } from "@/lib/supabase/client";
 import {
   LayoutDashboard,
   Users,
@@ -69,11 +67,6 @@ export function CoachShell({ children }: { children: ReactNode }) {
   const sidebarW = collapsed ? "lg:w-[72px]" : "lg:w-64";
   const mainMl = collapsed ? "lg:ml-[72px]" : "lg:ml-64";
   const moreActive = moreNav.some((n) => pathActive(pathname, n.to));
-  const inbox = useCoachChatInbox(
-    session.user?.id,
-    Boolean(session.user?.id) && isSupabaseConfigured(),
-  );
-  const messagesUnread = inbox.unreadCount > 0;
 
   return (
     <CoachGate>
@@ -93,7 +86,6 @@ export function CoachShell({ children }: { children: ReactNode }) {
               {desktopNav.map((n) => {
                 const Icon = n.icon;
                 const active = pathActive(pathname, n.to, "exact" in n ? n.exact : false);
-                const showUnread = n.to === "/portal/coach/messages" && messagesUnread && !active;
                 return (
                   <Link
                     key={n.to}
@@ -104,12 +96,7 @@ export function CoachShell({ children }: { children: ReactNode }) {
                       collapsed ? "justify-center p-2.5" : "gap-3 px-3.5 py-2.5"
                     }`}
                   >
-                    <span className="relative shrink-0">
-                      <Icon size={17} strokeWidth={1.6} />
-                      {showUnread && (
-                        <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 bg-accent" />
-                      )}
-                    </span>
+                    <Icon size={17} strokeWidth={1.6} className="shrink-0" />
                     {!collapsed && <span className="truncate">{n.label}</span>}
                   </Link>
                 );
@@ -189,7 +176,6 @@ export function CoachShell({ children }: { children: ReactNode }) {
             {nav.map((n) => {
               const Icon = n.icon;
               const active = pathActive(pathname, n.to, "exact" in n ? n.exact : false);
-              const showUnread = n.to === "/portal/coach/messages" && messagesUnread && !active;
               return (
                 <Link
                   key={n.to}
@@ -199,16 +185,11 @@ export function CoachShell({ children }: { children: ReactNode }) {
                     active ? "text-white" : "text-white/50"
                   }`}
                 >
-                  <span className="relative">
-                    <Icon
-                      size={18}
-                      strokeWidth={1.6}
-                      className={active ? "text-accent" : undefined}
-                    />
-                    {showUnread && (
-                      <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 bg-accent" />
-                    )}
-                  </span>
+                  <Icon
+                    size={18}
+                    strokeWidth={1.6}
+                    className={active ? "text-accent" : undefined}
+                  />
                   <span className="truncate">{n.label}</span>
                   {active && (
                     <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-5 bg-accent" />

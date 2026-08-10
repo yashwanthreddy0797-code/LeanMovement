@@ -204,7 +204,7 @@ export async function listCoachInbox(): Promise<{
   const { data: threads, error } = await supabase
     .from("chat_threads")
     .select("*")
-    .order("last_message_at", { ascending: false, nullsFirst: false });
+    .order("last_message_at", { ascending: false });
 
   if (error) {
     if (/chat_threads|relation|schema/i.test(error.message)) {
