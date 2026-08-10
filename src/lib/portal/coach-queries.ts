@@ -196,6 +196,12 @@ export async function fetchCoachDashboard(): Promise<CoachDashboardData> {
   if (profilesRes.error) {
     throw new Error(profilesRes.error.message || "Could not load coach dashboard");
   }
+  if (intakeRes.error) {
+    console.warn("[coach] member_intake:", intakeRes.error.message);
+  }
+  if (onboardingRes.error) {
+    console.warn("[coach] onboarding:", onboardingRes.error.message);
+  }
 
   const memberships = (membershipsRes.data ?? []) as Membership[];
   const onboarding = (onboardingRes.data ?? []) as Onboarding[];

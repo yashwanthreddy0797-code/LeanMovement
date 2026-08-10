@@ -1,16 +1,28 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
+import { KPICard, PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   formatDate,
+  membershipStatusLabel,
+  statusChipClass,
   updateOnboarding,
   type CoachMember,
 } from "@/lib/portal/coach-queries";
-import { Calendar, CheckCircle2, MessageCircle, Circle, ClipboardList } from "lucide-react";
+import { formatSelectedSessions } from "@/lib/sessions";
 import { MemberIntakeSummary } from "@/components/portal/MemberIntakeSummary";
+import {
+  Calendar,
+  CheckCircle2,
+  ChevronDown,
+  Circle,
+  ClipboardList,
+  MessageCircle,
+  Search,
+} from "lucide-react";
 import { toast } from "sonner";
 
 export const Route = createFileRoute("/portal/coach/onboarding")({
@@ -22,26 +34,59 @@ export const Route = createFileRoute("/portal/coach/onboarding")({
   ),
 });
 
+type FilterKey = "all" | "attention" | "intake" | "foundations" | "whatsapp" | "done";
+
+function isIntakeDone(m: CoachMember) {
+  return Boolean(m.intake?.completed_at);
+}
+
+function isFoundationsBooked(m: CoachMember) {
+  return Boolean(m.onboarding?.foundations_booked_at);
+}
+
+function isFoundationsDone(m: CoachMember) {
+  return Boolean(m.onboarding?.foundations_completed_at);
+}
+
+function isWhatsappDone(m: CoachMember) {
+  return Boolean(m.onboarding?.whatsapp_joined);
+}
+
+function isFullyOnboarded(m: CoachMember) {
+  return isIntakeDone(m) && isFoundationsDone(m) && isWhatsappDone(m);
+}
+
+function needsAttention(m: CoachMember) {
+  return m.membership?.status === "active" && !isFullyOnboarded(m);
+}
+
 function OnboardingPage() {
   const session = usePortalSession();
   const { data, loading, refresh } = useCoachData();
   const coachId = session.user?.id;
+  const [q, setQ] = useState("");
+  const [filter, setFilter] = useState<FilterKey>("all");
+  const [expandedId, setExpandedId] = useState<string | null>(null);
 
   if (loading || !data) {
     return <PortalPageSkeleton />;
   }
 
-  const activeMembers = data.members.filter(
-    (m) => m.role === "member" && m.membership?.status === "active",
-  );
+  const members = data.members.filter((m) => m.role === "member");
+  const activeMembers = members.filter((m) => m.membership?.status === "active");
 
-  const intakeDue = activeMembers.filter((m) => !m.intake?.completed_at);
+  const intakeDone = members.filter(isIntakeDone);
+  const intakeDue = activeMembers.filter((m) => !isIntakeDone(m));
   const foundationsDue = activeMembers.filter(
-    (m) => m.intake?.completed_at && !m.onboarding?.foundations_completed_at,
+    (m) => isIntakeDone(m) && !isFoundationsDone(m),
   );
   const whatsappDue = activeMembers.filter(
-    (m) => m.onboarding?.foundations_completed_at && !m.onboarding?.whatsapp_joined,
+    (m) => isFoundationsDone(m) && !isWhatsappDone(m),
   );
+  const foundationsDoneCount = members.filter(isFoundationsDone).length;
+  const whatsappDoneCount = members.filter(isWhatsappDone).length;
+  const fullyDoneCount = members.filter(isFullyOnboarded).length;
+  const attentionCount = activeMembers.filter(needsAttention).length;
 
   const calendly = data.siteConfig.foundations_calendly_url;
   const whatsapp = data.siteConfig.whatsapp_invite_url;
@@ -59,28 +104,106 @@ function OnboardingPage() {
     }
   };
 
+  const query = q.trim().toLowerCase();
+  const filtered = members
+    .filter((m) => {
+      if (filter === "attention") return needsAttention(m);
+      if (filter === "intake") return !isIntakeDone(m);
+      if (filter === "foundations") return isIntakeDone(m) && !isFoundationsDone(m);
+      if (filter === "whatsapp") return isFoundationsDone(m) && !isWhatsappDone(m);
+      if (filter === "done") return isFullyOnboarded(m);
+      return true;
+    })
+    .filter((m) => {
+      if (!query) return true;
+      const haystack = [
+        m.full_name,
+        m.email,
+        m.intake?.phone,
+        m.intake?.goal,
+        m.intake?.instagram_handle,
+      ]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase();
+      return haystack.includes(query);
+    })
+    .sort((a, b) => {
+      const aDone = isFullyOnboarded(a) ? 1 : 0;
+      const bDone = isFullyOnboarded(b) ? 1 : 0;
+      if (aDone !== bDone) return aDone - bDone;
+      return (a.full_name ?? a.email).localeCompare(b.full_name ?? b.email);
+    });
+
+  const filters: { key: FilterKey; label: string; count: number }[] = [
+    { key: "all", label: "All", count: members.length },
+    { key: "attention", label: "Needs attention", count: attentionCount },
+    { key: "intake", label: "Profile due", count: intakeDue.length },
+    { key: "foundations", label: "Foundations due", count: foundationsDue.length },
+    { key: "whatsapp", label: "WhatsApp due", count: whatsappDue.length },
+    { key: "done", label: "Complete", count: fullyDoneCount },
+  ];
+
   return (
-    <div className="space-y-8 pb-20 lg:pb-0">
+    <div className="space-y-6 pb-20 sm:space-y-8 lg:pb-0">
       <PortalPageHeader
         title="Onboarding"
-        description="Intake, Foundations, and WhatsApp — one list per step."
+        description="Every member’s profile, Foundations call, and WhatsApp status — with questionnaire answers."
+        action={
+          <div className="relative w-full sm:w-auto">
+            <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <input
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+              placeholder="Search name, email, phone…"
+              className="w-full border border-border bg-white py-2.5 pl-9 pr-4 text-sm outline-none focus:border-accent sm:w-64"
+            />
+          </div>
+        }
       />
 
-      <div className="grid gap-5 lg:grid-cols-2">
-        <OnboardingList
+      <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-5">
+        <KPICard label="Members" value={String(members.length)} delta={`${activeMembers.length} active`} />
+        <KPICard
+          label="Profiles"
+          value={`${intakeDone.length}/${members.length}`}
+          delta={intakeDue.length ? `${intakeDue.length} waiting` : "All received"}
+          tone={intakeDue.length ? "down" : "up"}
+        />
+        <KPICard
+          label="Foundations"
+          value={`${foundationsDoneCount}/${members.length}`}
+          delta={foundationsDue.length ? `${foundationsDue.length} to complete` : "All caught up"}
+          tone={foundationsDue.length ? "down" : "up"}
+        />
+        <KPICard
+          label="WhatsApp"
+          value={`${whatsappDoneCount}/${members.length}`}
+          delta={whatsappDue.length ? `${whatsappDue.length} to add` : "All in"}
+          tone={whatsappDue.length ? "down" : "up"}
+        />
+        <KPICard
+          label="Fully onboarded"
+          value={`${fullyDoneCount}/${members.length}`}
+          delta={attentionCount ? `${attentionCount} still in progress` : "Everyone ready"}
+          tone={attentionCount ? "neutral" : "up"}
+        />
+      </div>
+
+      <div className="grid gap-5 lg:grid-cols-3">
+        <OnboardingQueue
           title="Member profile"
           eyebrow="Step 1"
-          members={intakeDue}
+          count={intakeDue.length}
           icon={ClipboardList}
           hint={<p className="text-xs text-muted-foreground">New members fill this after payment.</p>}
-          steps={[]}
+          members={intakeDue}
           emptyLabel="All profiles received."
         />
-
-        <OnboardingList
+        <OnboardingQueue
           title="Foundations session"
           eyebrow="Step 2"
-          members={foundationsDue}
+          count={foundationsDue.length}
           icon={Calendar}
           hint={
             calendly ? (
@@ -98,11 +221,13 @@ function OnboardingPage() {
               </Link>
             )
           }
+          members={foundationsDue}
+          emptyLabel="All caught up."
           steps={[
             {
               key: "booked",
               label: "Booked",
-              done: (m) => !!m.onboarding?.foundations_booked_at,
+              done: isFoundationsBooked,
               action: (m) =>
                 toggle(
                   m.id,
@@ -113,7 +238,7 @@ function OnboardingPage() {
             {
               key: "done",
               label: "Completed",
-              done: (m) => !!m.onboarding?.foundations_completed_at,
+              done: isFoundationsDone,
               action: (m) =>
                 toggle(
                   m.id,
@@ -123,11 +248,10 @@ function OnboardingPage() {
             },
           ]}
         />
-
-        <OnboardingList
+        <OnboardingQueue
           title="WhatsApp community"
           eyebrow="Step 3"
-          members={whatsappDue}
+          count={whatsappDue.length}
           icon={MessageCircle}
           hint={
             whatsapp ? (
@@ -145,11 +269,13 @@ function OnboardingPage() {
               </Link>
             )
           }
+          members={whatsappDue}
+          emptyLabel="All caught up."
           steps={[
             {
               key: "wa",
               label: "Joined group",
-              done: (m) => !!m.onboarding?.whatsapp_joined,
+              done: isWhatsappDone,
               action: (m) =>
                 toggle(
                   m.id,
@@ -161,52 +287,285 @@ function OnboardingPage() {
         />
       </div>
 
-      {activeMembers.some((m) => m.intake?.completed_at) && (
-        <SoftCard className="!p-5 md:!p-6">
-          <h2 className="mb-4 font-display text-xl uppercase tracking-[0.06em]">Member profiles</h2>
-          <div className="space-y-4">
-            {activeMembers
-              .filter((m) => m.intake?.completed_at)
-              .map((m) => (
-                <div key={m.id} className="border border-border bg-surface p-4">
-                  <div className="flex flex-wrap items-start justify-between gap-2">
-                    <div>
-                      <p className="font-medium">{m.full_name ?? m.email}</p>
-                      <p className="text-xs text-muted-foreground">{m.email}</p>
+      <SoftCard className="!p-5 md:!p-6">
+        <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <h2 className="font-display text-xl uppercase tracking-[0.06em]">All members</h2>
+            <p className="mt-1 text-sm text-muted-foreground">
+              Open a row for the full questionnaire and onboarding actions.
+            </p>
+          </div>
+          <p className="text-xs uppercase tracking-[0.14em] text-muted-foreground">
+            Showing {filtered.length} of {members.length}
+          </p>
+        </div>
+
+        <div className="mb-5 flex flex-wrap gap-2">
+          {filters.map((f) => (
+            <button
+              key={f.key}
+              type="button"
+              onClick={() => setFilter(f.key)}
+              className={`inline-flex min-h-9 items-center gap-2 px-3 py-1.5 text-[11px] uppercase tracking-[0.12em] transition-colors ${
+                filter === f.key
+                  ? "bg-foreground text-background"
+                  : "border border-border bg-white text-muted-foreground hover:bg-surface"
+              }`}
+            >
+              {f.label}
+              <span className={filter === f.key ? "text-background/70" : "text-muted-foreground/80"}>
+                {f.count}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {filtered.length === 0 ? (
+          <p className="border border-border bg-surface px-4 py-10 text-center text-sm text-muted-foreground">
+            No members match this view.
+          </p>
+        ) : (
+          <div className="space-y-3">
+            {filtered.map((m) => {
+              const open = expandedId === m.id;
+              const sessions =
+                formatSelectedSessions(m.onboarding?.session_ids ?? []) || "Not selected yet";
+              return (
+                <div key={m.id} className="border border-border bg-white">
+                  <button
+                    type="button"
+                    onClick={() => setExpandedId(open ? null : m.id)}
+                    className="flex w-full items-start gap-3 p-4 text-left transition-colors hover:bg-surface/60"
+                  >
+                    <div className="grid h-10 w-10 shrink-0 place-items-center bg-surface text-xs font-semibold text-accent">
+                      {(m.full_name ?? m.email)[0]?.toUpperCase()}
                     </div>
-                    <p className="text-[11px] uppercase tracking-[0.12em] text-muted-foreground">
-                      {formatDate(m.intake?.completed_at)}
-                    </p>
-                  </div>
-                  {m.intake && (
-                    <div className="mt-4 border-t border-border pt-4">
-                      <MemberIntakeSummary intake={m.intake} />
+                    <div className="min-w-0 flex-1">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <p className="truncate text-sm font-medium">{m.full_name ?? m.email}</p>
+                        <span
+                          className={`inline-flex px-2 py-0.5 text-[11px] font-medium ${statusChipClass(m.membership?.status)}`}
+                        >
+                          {membershipStatusLabel(m.membership?.status)}
+                        </span>
+                        {isFullyOnboarded(m) && (
+                          <span className="inline-flex bg-emerald-50 px-2 py-0.5 text-[11px] font-medium text-emerald-800">
+                            Onboarded
+                          </span>
+                        )}
+                      </div>
+                      <p className="mt-0.5 truncate text-xs text-muted-foreground">{m.email}</p>
+                      <div className="mt-3 flex flex-wrap gap-1.5">
+                        <StatusChip label="Profile" done={isIntakeDone(m)} />
+                        <StatusChip
+                          label={
+                            isFoundationsDone(m)
+                              ? "Foundations done"
+                              : isFoundationsBooked(m)
+                                ? "Foundations booked"
+                                : "Foundations"
+                          }
+                          done={isFoundationsDone(m)}
+                          partial={isFoundationsBooked(m) && !isFoundationsDone(m)}
+                        />
+                        <StatusChip label="WhatsApp" done={isWhatsappDone(m)} />
+                      </div>
+                      {m.intake && (
+                        <div className="mt-3">
+                          <MemberIntakeSummary intake={m.intake} compact />
+                        </div>
+                      )}
+                    </div>
+                    <ChevronDown
+                      size={16}
+                      className={`mt-1 shrink-0 text-muted-foreground transition-transform ${open ? "rotate-180" : ""}`}
+                    />
+                  </button>
+
+                  {open && (
+                    <div className="border-t border-border bg-surface/40 px-4 py-4 md:px-5">
+                      <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
+                        <div>
+                          <p className="mb-3 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                            Questionnaire
+                          </p>
+                          {m.intake ? (
+                            <div className="border border-border bg-white p-4">
+                              <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                                <p className="text-xs text-muted-foreground">
+                                  Submitted {formatDate(m.intake.completed_at)}
+                                </p>
+                                {m.intake.phone && (
+                                  <a
+                                    href={`tel:${m.intake.phone}`}
+                                    className="text-xs text-accent hover:underline"
+                                  >
+                                    {m.intake.phone}
+                                  </a>
+                                )}
+                              </div>
+                              <MemberIntakeSummary intake={m.intake} />
+                            </div>
+                          ) : (
+                            <p className="border border-dashed border-border bg-white px-4 py-6 text-sm text-muted-foreground">
+                              Profile questionnaire not submitted yet.
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="space-y-4">
+                          <div className="border border-border bg-white p-4">
+                            <p className="mb-3 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                              Onboarding actions
+                            </p>
+                            <div className="flex flex-wrap gap-2">
+                              <ToggleChip
+                                label="Foundations booked"
+                                done={isFoundationsBooked(m)}
+                                onClick={() =>
+                                  void toggle(
+                                    m.id,
+                                    { foundationsBooked: !m.onboarding?.foundations_booked_at },
+                                    "Foundations booking updated",
+                                  )
+                                }
+                              />
+                              <ToggleChip
+                                label="Foundations completed"
+                                done={isFoundationsDone(m)}
+                                onClick={() =>
+                                  void toggle(
+                                    m.id,
+                                    {
+                                      foundationsCompleted: !m.onboarding?.foundations_completed_at,
+                                    },
+                                    "Foundations marked complete",
+                                  )
+                                }
+                              />
+                              <ToggleChip
+                                label="WhatsApp joined"
+                                done={isWhatsappDone(m)}
+                                onClick={() =>
+                                  void toggle(
+                                    m.id,
+                                    { whatsappJoined: !m.onboarding?.whatsapp_joined },
+                                    "WhatsApp status updated",
+                                  )
+                                }
+                              />
+                            </div>
+                          </div>
+
+                          <div className="border border-border bg-white p-4">
+                            <p className="mb-2 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                              Weekly sessions
+                            </p>
+                            <p className="text-sm leading-relaxed text-foreground">{sessions}</p>
+                            {m.onboarding?.sessions_selected_at && (
+                              <p className="mt-2 text-xs text-muted-foreground">
+                                Updated {formatDate(m.onboarding.sessions_selected_at)}
+                              </p>
+                            )}
+                          </div>
+
+                          <div className="border border-border bg-white p-4">
+                            <p className="mb-2 text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+                              Membership
+                            </p>
+                            <dl className="space-y-2 text-sm">
+                              <div className="flex justify-between gap-3">
+                                <dt className="text-muted-foreground">Status</dt>
+                                <dd>{membershipStatusLabel(m.membership?.status)}</dd>
+                              </div>
+                              <div className="flex justify-between gap-3">
+                                <dt className="text-muted-foreground">Joined</dt>
+                                <dd>{formatDate(m.created_at)}</dd>
+                              </div>
+                              <div className="flex justify-between gap-3">
+                                <dt className="text-muted-foreground">Renews</dt>
+                                <dd>{formatDate(m.membership?.renews_at)}</dd>
+                              </div>
+                            </dl>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
-              ))}
+              );
+            })}
           </div>
-        </SoftCard>
-      )}
+        )}
+      </SoftCard>
     </div>
   );
 }
 
-function OnboardingList({
+function StatusChip({
+  label,
+  done,
+  partial,
+}: {
+  label: string;
+  done: boolean;
+  partial?: boolean;
+}) {
+  const className = done
+    ? "bg-emerald-50 text-emerald-800"
+    : partial
+      ? "bg-amber-50 text-amber-800"
+      : "bg-surface text-muted-foreground";
+  return (
+    <span className={`inline-flex items-center gap-1 px-2 py-0.5 text-[11px] font-medium ${className}`}>
+      {done ? <CheckCircle2 size={10} /> : <Circle size={10} />}
+      {label}
+    </span>
+  );
+}
+
+function ToggleChip({
+  label,
+  done,
+  onClick,
+}: {
+  label: string;
+  done: boolean;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`inline-flex min-h-9 items-center gap-1.5 px-2.5 py-1.5 text-[11px] uppercase tracking-[0.1em] transition-colors ${
+        done
+          ? "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+          : "border border-border bg-white text-muted-foreground hover:bg-surface"
+      }`}
+    >
+      {done ? <CheckCircle2 size={10} /> : <Circle size={10} />}
+      {label}
+    </button>
+  );
+}
+
+function OnboardingQueue({
   title,
   eyebrow,
+  count,
   members,
   icon: Icon,
   hint,
-  steps,
+  steps = [],
   emptyLabel = "All caught up.",
 }: {
   title: string;
   eyebrow: string;
+  count: number;
   members: CoachMember[];
   icon: typeof Calendar;
   hint: React.ReactNode;
-  steps: {
+  steps?: {
     key: string;
     label: string;
     done: (m: CoachMember) => boolean;
@@ -216,9 +575,12 @@ function OnboardingList({
 }) {
   return (
     <SoftCard className="!p-5 md:!p-6">
-      <div className="mb-1 flex items-center gap-2">
-        <Icon size={15} className="text-accent" />
-        <h2 className="font-display text-xl uppercase tracking-[0.06em]">{title}</h2>
+      <div className="mb-1 flex items-center justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <Icon size={15} className="text-accent" />
+          <h2 className="font-display text-xl uppercase tracking-[0.06em]">{title}</h2>
+        </div>
+        <span className="text-xs font-medium text-muted-foreground">{count}</span>
       </div>
       <p className="mb-1 text-xs uppercase tracking-[0.14em] text-muted-foreground">{eyebrow}</p>
       <div className="mb-4">{hint}</div>
@@ -231,23 +593,28 @@ function OnboardingList({
               <div className="min-w-0 flex-1">
                 <div className="text-sm font-medium">{m.full_name ?? m.email}</div>
                 <div className="text-xs text-muted-foreground">{m.email}</div>
-                <div className="mt-2 flex flex-wrap gap-2">
-                  {steps.map((s) => (
-                    <button
-                      key={s.key}
-                      type="button"
-                      onClick={() => void s.action(m)}
-                      className={`inline-flex min-h-9 items-center gap-1.5 px-2.5 py-1.5 text-[11px] uppercase tracking-[0.1em] transition-colors ${
-                        s.done(m)
-                          ? "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
-                          : "border border-border bg-white text-muted-foreground hover:bg-surface"
-                      }`}
-                    >
-                      {s.done(m) ? <CheckCircle2 size={10} /> : <Circle size={10} />}
-                      {s.label}
-                    </button>
-                  ))}
-                </div>
+                {m.intake?.goal && (
+                  <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{m.intake.goal}</p>
+                )}
+                {steps.length > 0 && (
+                  <div className="mt-2 flex flex-wrap gap-2">
+                    {steps.map((s) => (
+                      <button
+                        key={s.key}
+                        type="button"
+                        onClick={() => void s.action(m)}
+                        className={`inline-flex min-h-9 items-center gap-1.5 px-2.5 py-1.5 text-[11px] uppercase tracking-[0.1em] transition-colors ${
+                          s.done(m)
+                            ? "bg-emerald-50 text-emerald-800 hover:bg-emerald-100"
+                            : "border border-border bg-white text-muted-foreground hover:bg-surface"
+                        }`}
+                      >
+                        {s.done(m) ? <CheckCircle2 size={10} /> : <Circle size={10} />}
+                        {s.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           ))}
