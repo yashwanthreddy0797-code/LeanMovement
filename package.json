@@ -12,6 +12,7 @@
     "format": "prettier --write .",
     "supabase:verify": "node scripts/verify-supabase.mjs",
     "supabase:fix-rls": "node scripts/apply-fix-rls.mjs",
+    "supabase:chat": "node scripts/apply-chat.mjs",
     "supabase:enrollment": "node scripts/apply-enrollment-intents.mjs",
     "supabase:create-coach": "node scripts/create-coach.mjs",
     "supabase:update-sessions": "node scripts/update-live-sessions.mjs",

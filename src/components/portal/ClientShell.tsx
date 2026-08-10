@@ -7,6 +7,7 @@ import { PortalContentProvider, useSharedPortalContent } from "@/lib/portal/port
 import { signOutPortal, usePortalSession } from "@/lib/portal/session";
 import { formatPlanLabel, membershipSummary } from "@/lib/portal/member-format";
 import { useSidebarCollapse } from "@/hooks/useSidebarCollapse";
+import { useMemberChatUnread } from "@/hooks/useMemberChatUnread";
 import {
   LayoutDashboard,
   Radio,
@@ -21,7 +22,7 @@ const nav = [
   { to: "/portal/dashboard", label: "Home", icon: LayoutDashboard },
   { to: "/portal/live", label: "Live", icon: Radio },
   { to: "/portal/recordings", label: "Recordings", icon: Video },
-  { to: "/portal/community", label: "Coach", icon: MessageCircle },
+  { to: "/portal/messages", label: "Messages", icon: MessageCircle },
   { to: "/portal/payments", label: "Billing", icon: CreditCard },
 ] as const;
 
@@ -97,6 +98,10 @@ function ClientShellInner({
   onSignOut: () => void;
 }) {
   useSharedPortalContent();
+  const messagesUnread = useMemberChatUnread(
+    session.user?.id,
+    session.hasActiveMembership && !session.isCoach,
+  );
 
   return (
     <div className="member-portal portal-theme min-h-screen">
@@ -115,6 +120,7 @@ function ClientShellInner({
             {nav.map((n) => {
               const Icon = n.icon;
               const active = pathname === n.to || pathname.startsWith(`${n.to}/`);
+              const showUnread = n.to === "/portal/messages" && messagesUnread && !active;
               return (
                 <Link
                   key={n.to}
@@ -125,7 +131,12 @@ function ClientShellInner({
                     collapsed ? "justify-center p-2.5" : "gap-3 px-3.5 py-2.5"
                   }`}
                 >
-                  <Icon size={17} strokeWidth={1.6} className="shrink-0" />
+                  <span className="relative shrink-0">
+                    <Icon size={17} strokeWidth={1.6} />
+                    {showUnread && (
+                      <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 bg-accent" />
+                    )}
+                  </span>
                   {!collapsed && <span className="truncate">{n.label}</span>}
                 </Link>
               );
@@ -153,7 +164,9 @@ function ClientShellInner({
                 </div>
                 <div className="min-w-0">
                   <div className="text-sm font-medium truncate">{userName}</div>
-                  <div className="text-[11px] text-muted-foreground truncate">{membershipLabel}</div>
+                  <div className="text-[11px] text-muted-foreground truncate">
+                    {membershipLabel}
+                  </div>
                 </div>
               </div>
             ) : (
@@ -203,6 +216,7 @@ function ClientShellInner({
           {nav.map((n) => {
             const Icon = n.icon;
             const active = pathname === n.to || pathname.startsWith(`${n.to}/`);
+            const showUnread = n.to === "/portal/messages" && messagesUnread && !active;
             return (
               <Link
                 key={n.to}
@@ -211,7 +225,16 @@ function ClientShellInner({
                   active ? "text-foreground" : "text-muted-foreground"
                 }`}
               >
-                <Icon size={18} strokeWidth={1.6} className={active ? "text-accent" : undefined} />
+                <span className="relative">
+                  <Icon
+                    size={18}
+                    strokeWidth={1.6}
+                    className={active ? "text-accent" : undefined}
+                  />
+                  {showUnread && (
+                    <span className="absolute -right-0.5 -top-0.5 h-1.5 w-1.5 bg-accent" />
+                  )}
+                </span>
                 {n.label}
                 {active && (
                   <span className="absolute bottom-1 left-1/2 -translate-x-1/2 h-0.5 w-5 bg-accent" />

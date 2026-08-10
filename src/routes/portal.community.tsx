@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { PortalPageHeader } from "@/components/portal/ui";
 import { usePortalPageContent } from "@/lib/portal/portal-content";
 import { CONTACT, COACH } from "@/lib/lean-kettlebell";
@@ -17,25 +17,31 @@ function CoachContact() {
     <div className="mx-auto max-w-md space-y-6">
       <PortalPageHeader
         title="Your coach"
-        description={`${COACH.name} · ${CONTACT.replyNote}`}
+        description={`${COACH.name} · prefer portal chat for training questions`}
       />
 
       <div className="border border-border bg-white p-6 text-center sm:p-8">
         <p className="text-sm text-muted-foreground">
-          Session questions, schedule, or progress — reach out directly.
+          Message {COACH.name.split(" ")[0]} inside the portal — private, saved with your
+          membership.
         </p>
-        <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:justify-center">
-          <a
-            href={whatsappUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="portal-btn portal-btn-accent"
-          >
-            <MessageCircle size={16} /> WhatsApp
-          </a>
-          <a href={`mailto:${CONTACT.email}`} className="portal-btn portal-btn-ghost">
-            <Mail size={16} /> Email
-          </a>
+        <div className="mt-5 flex flex-col gap-2">
+          <Link to="/portal/messages" className="portal-btn portal-btn-accent">
+            <MessageCircle size={16} /> Open messages
+          </Link>
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row sm:justify-center">
+            <a
+              href={whatsappUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="portal-btn portal-btn-ghost"
+            >
+              <MessageCircle size={16} /> WhatsApp
+            </a>
+            <a href={`mailto:${CONTACT.email}`} className="portal-btn portal-btn-ghost">
+              <Mail size={16} /> Email
+            </a>
+          </div>
         </div>
       </div>
     </div>

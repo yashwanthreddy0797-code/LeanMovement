@@ -10,7 +10,7 @@ import {
   getNextLiveSession,
   todayWeekday,
 } from "@/lib/portal/coach-queries";
-import { ArrowRight, Play, Radio, UserPlus } from "lucide-react";
+import { ArrowRight, MessageCircle, Play, Radio, UserPlus } from "lucide-react";
 
 export const Route = createFileRoute("/portal/coach/")({
   head: () => ({ meta: [{ title: "Coach - LEANMOVEMENT" }] }),
@@ -53,6 +53,13 @@ function CoachDashboard() {
           <Link to="/portal/coach/members" className="portal-btn portal-btn-accent inline-flex gap-2">
             <UserPlus size={14} />
             Members
+          </Link>
+          <Link
+            to="/portal/coach/messages"
+            className="portal-btn portal-btn-ghost !border-background/20 !text-background inline-flex gap-2"
+          >
+            <MessageCircle size={14} />
+            Messages
           </Link>
           <Link
             to="/portal/coach/onboarding"

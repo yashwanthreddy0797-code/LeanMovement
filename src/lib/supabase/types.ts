@@ -91,17 +91,71 @@ export type CircuitRow = {
   sort_order: number;
 };
 
+export type ChatThread = {
+  id: string;
+  member_id: string;
+  coach_id: string;
+  member_last_read_at: string | null;
+  coach_last_read_at: string | null;
+  last_message_at: string | null;
+  last_message_preview: string | null;
+  created_at: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  thread_id: string;
+  sender_id: string;
+  body: string;
+  created_at: string;
+};
+
+type TableDef<Row, Insert = Partial<Row>, Update = Partial<Row>> = {
+  Row: Row;
+  Insert: Insert;
+  Update: Update;
+  Relationships: [];
+};
+
 export type Database = {
   public: {
     Tables: {
-      profiles: { Row: Profile; Insert: Partial<Profile>; Update: Partial<Profile> };
-      memberships: { Row: Membership; Insert: Partial<Membership>; Update: Partial<Membership> };
-      onboarding: { Row: Onboarding; Insert: Partial<Onboarding>; Update: Partial<Onboarding> };
-      member_intake: { Row: MemberIntake; Insert: Partial<MemberIntake>; Update: Partial<MemberIntake> };
-      live_sessions: { Row: LiveSessionRow; Insert: Partial<LiveSessionRow>; Update: Partial<LiveSessionRow> };
-      recordings: { Row: RecordingRow; Insert: Partial<RecordingRow>; Update: Partial<RecordingRow> };
-      circuits: { Row: CircuitRow; Insert: Partial<CircuitRow>; Update: Partial<CircuitRow> };
-      site_config: { Row: { key: string; value: string; updated_at: string }; Insert: { key: string; value: string }; Update: { value: string } };
+      profiles: TableDef<Profile>;
+      memberships: TableDef<Membership>;
+      onboarding: TableDef<Onboarding>;
+      member_intake: TableDef<MemberIntake>;
+      live_sessions: TableDef<LiveSessionRow>;
+      recordings: TableDef<RecordingRow>;
+      circuits: TableDef<CircuitRow>;
+      site_config: TableDef<
+        { key: string; value: string; updated_at: string },
+        { key: string; value: string },
+        { value?: string; updated_at?: string }
+      >;
+      chat_threads: TableDef<
+        ChatThread,
+        Partial<ChatThread> & Pick<ChatThread, "member_id" | "coach_id">
+      >;
+      chat_messages: TableDef<
+        ChatMessage,
+        Partial<ChatMessage> & Pick<ChatMessage, "thread_id" | "sender_id" | "body">
+      >;
+      contact_messages: TableDef<{
+        id: string;
+        name: string;
+        email: string;
+        whatsapp: string | null;
+        message: string;
+        source: string;
+        read: boolean;
+        created_at: string;
+      }>;
     };
+    Views: Record<string, never>;
+    Functions: {
+      get_primary_coach_id: { Args: Record<PropertyKey, never>; Returns: string | null };
+    };
+    Enums: Record<string, never>;
+    CompositeTypes: Record<string, never>;
   };
 };
