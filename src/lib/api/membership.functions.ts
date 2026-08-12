@@ -1,7 +1,13 @@
 import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { accessTokenSchema } from "@/lib/api/auth-input";
-import { planAmountInr, toMembershipPlan, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
+import {
+  chargeAmountInr,
+  isChargeAmountOverridden,
+  planAmountInr,
+  toMembershipPlan,
+  PROGRAM_AMOUNT_INR,
+} from "@/lib/enrollment/plans";
 import { activateMembershipForUser } from "@/lib/membership/activate";
 import { resolveMemberBillingDetails } from "@/lib/membership/billing.server";
 import { runMembershipLifecycleJob } from "@/lib/membership/renewal";
@@ -69,8 +75,9 @@ export const getMemberCheckout = createServerFn({ method: "GET" })
     const plan = membership?.plan ?? "monthly";
     const staleAmounts = new Set([5999, 9999, 14999]);
     const rawAmount = membership?.amount_inr;
-    const amountInr =
-      rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
+    const amountInr = isChargeAmountOverridden()
+      ? chargeAmountInr()
+      : rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
         ? planAmountInr(plan)
         : rawAmount;
 
@@ -148,8 +155,10 @@ async function createCheckoutForUser(
   const plan = (membership?.plan ?? "monthly") as MembershipPlan;
   const staleAmounts = new Set([5999, 9999, 14999]);
   const rawAmount = membership?.amount_inr;
-  const amountInr =
-    rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
+  // Test override wins so live E2E always charges the temporary amount (e.g. ₹50).
+  const amountInr = isChargeAmountOverridden()
+    ? chargeAmountInr()
+    : rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
       ? planAmountInr(plan)
       : rawAmount;
   const kind = opts?.kind ?? (membership?.status === "active" ? "renewal" : "initial");

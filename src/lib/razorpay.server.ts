@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { MembershipPlan } from "@/lib/supabase/types";
-import { PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
+import { chargeAmountInr, isChargeAmountOverridden, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 
 type RazorpayOrder = {
   id: string;
@@ -133,17 +133,20 @@ export async function createRazorpayOrder(input: {
 }
 
 /** Process-local cache so we don't create a new Razorpay plan on every checkout. */
-let cachedMonthlyPlanId: string | null = null;
+const cachedMonthlyPlanIdByAmount = new Map<number, string>();
 
 /** Ensure a monthly plan exists - uses env plan id or creates one via API. */
 export async function ensureMonthlyPlanId() {
-  if (process.env.RAZORPAY_PLAN_ID_MONTHLY) {
+  const amountInr = chargeAmountInr();
+  // Skip pinned ₹6969 plan while a test charge override is active.
+  if (!isChargeAmountOverridden() && process.env.RAZORPAY_PLAN_ID_MONTHLY) {
     return process.env.RAZORPAY_PLAN_ID_MONTHLY;
   }
-  if (cachedMonthlyPlanId) return cachedMonthlyPlanId;
+  const cached = cachedMonthlyPlanIdByAmount.get(amountInr);
+  if (cached) return cached;
 
   const { keyId, keySecret } = getCredentials();
-  const amountPaise = Math.round(PROGRAM_AMOUNT_INR * 100);
+  const amountPaise = Math.round(amountInr * 100);
 
   const response = await fetch("https://api.razorpay.com/v1/plans", {
     method: "POST",
@@ -155,7 +158,10 @@ export async function ensureMonthlyPlanId() {
       period: "monthly",
       interval: 1,
       item: {
-        name: "LEANMOVEMENT Lean Movement",
+        name:
+          amountInr === PROGRAM_AMOUNT_INR
+            ? "LEANMOVEMENT Lean Movement"
+            : `LEANMOVEMENT Lean Movement (test ₹${amountInr})`,
         amount: amountPaise,
         currency: "INR",
         description: "Live coaching + personalised nutrition - monthly.",
@@ -170,7 +176,7 @@ export async function ensureMonthlyPlanId() {
   }
 
   const plan = (await response.json()) as { id: string };
-  cachedMonthlyPlanId = plan.id;
+  cachedMonthlyPlanIdByAmount.set(amountInr, plan.id);
   return plan.id;
 }
 
