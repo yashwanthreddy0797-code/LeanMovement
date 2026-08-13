@@ -455,6 +455,17 @@ export function formatDate(iso: string | null | undefined) {
   });
 }
 
+/** How long a member stays flagged as newly subscribed in the coach console. */
+export const NEW_MEMBER_DAYS = 7;
+
+export function isNewMember(member: Pick<CoachMember, "created_at" | "membership">) {
+  const joined = member.membership?.started_at ?? member.created_at;
+  if (!joined) return false;
+  const started = new Date(joined).getTime();
+  if (!Number.isFinite(started)) return false;
+  return Date.now() - started <= NEW_MEMBER_DAYS * 24 * 60 * 60 * 1000;
+}
+
 export function membershipStatusLabel(status: Membership["status"] | undefined) {
   switch (status) {
     case "active":

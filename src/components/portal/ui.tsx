@@ -1,5 +1,23 @@
 import { type ReactNode } from "react";
-import { ArrowDownRight, ArrowUpRight, Minus } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Minus, Star } from "lucide-react";
+
+export function NewMemberStar({
+  label = "Newly subscribed",
+  className = "",
+}: {
+  label?: string;
+  className?: string;
+}) {
+  return (
+    <span
+      title={label}
+      aria-label={label}
+      className={`inline-flex shrink-0 items-center text-accent ${className}`}
+    >
+      <Star size={14} className="fill-current" />
+    </span>
+  );
+}
 
 export function KPICard({
   label,

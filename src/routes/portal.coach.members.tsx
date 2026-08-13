@@ -4,11 +4,12 @@ import { CoachShell } from "@/components/portal/CoachShell";
 import { MemberActionButtons } from "@/components/portal/ActivateMemberButton";
 import { PendingEnrollmentsPanel } from "@/components/portal/PendingEnrollmentsPanel";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import { PortalPageHeader, SoftCard } from "@/components/portal/ui";
+import { NewMemberStar, PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   formatDate,
+  isNewMember,
   membershipStatusLabel,
   PLAN_LABELS,
   statusChipClass,
@@ -81,11 +82,14 @@ function MembersPage() {
                     <div className="truncate text-xs text-muted-foreground">{m.email}</div>
                   </div>
                 </div>
-                <span
-                  className={`shrink-0 inline-flex px-2 py-0.5 text-[11px] font-medium ${statusChipClass(m.membership?.status)}`}
-                >
-                  {membershipStatusLabel(m.membership?.status)}
-                </span>
+                <div className="flex shrink-0 items-center gap-2">
+                  <span
+                    className={`inline-flex px-2 py-0.5 text-[11px] font-medium ${statusChipClass(m.membership?.status)}`}
+                  >
+                    {membershipStatusLabel(m.membership?.status)}
+                  </span>
+                  {isNewMember(m) && <NewMemberStar />}
+                </div>
               </div>
               <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-xs text-muted-foreground">
                 <span>
@@ -152,12 +156,15 @@ function MembersPage() {
                         {membershipStatusLabel(m.membership?.status)}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-right md:px-6">
-                      <MemberActionButtons
-                        coachId={coachId}
-                        member={m}
-                        onDone={() => void refresh()}
-                      />
+                    <td className="px-5 py-4 md:px-6">
+                      <div className="flex items-center justify-end gap-2">
+                        <MemberActionButtons
+                          coachId={coachId}
+                          member={m}
+                          onDone={() => void refresh()}
+                        />
+                        {isNewMember(m) && <NewMemberStar />}
+                      </div>
                     </td>
                   </tr>
                 ))

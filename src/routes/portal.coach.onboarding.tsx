@@ -2,11 +2,12 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { CoachShell } from "@/components/portal/CoachShell";
 import { PortalPageSkeleton } from "@/components/portal/PortalPageSkeleton";
-import { KPICard, PortalPageHeader, SoftCard } from "@/components/portal/ui";
+import { KPICard, NewMemberStar, PortalPageHeader, SoftCard } from "@/components/portal/ui";
 import { useCoachData } from "@/hooks/useCoachData";
 import { usePortalSession } from "@/lib/portal/session";
 import {
   formatDate,
+  isNewMember,
   membershipStatusLabel,
   statusChipClass,
   updateOnboarding,
@@ -463,7 +464,8 @@ function MemberRow({ member: m, onOpen }: { member: CoachMember; onOpen: () => v
           <p className="mt-3 text-xs text-muted-foreground">Questionnaire not submitted yet.</p>
         )}
       </div>
-      <span className="mt-1 inline-flex shrink-0 items-center gap-1 text-[11px] uppercase tracking-[0.12em] text-accent">
+      <span className="mt-1 inline-flex shrink-0 items-center gap-1.5 text-[11px] uppercase tracking-[0.12em] text-accent">
+        {isNewMember(m) && <NewMemberStar />}
         View
         <ChevronRight size={14} />
       </span>

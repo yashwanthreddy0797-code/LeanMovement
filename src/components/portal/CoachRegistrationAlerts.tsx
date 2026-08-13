@@ -12,7 +12,7 @@ import { formatSelectedSessions } from "@/lib/sessions";
 import { formatInr } from "@/lib/portal/member-format";
 import { withCoachAuth } from "@/lib/api/coach-call";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
-import { SoftCard } from "@/components/portal/ui";
+import { NewMemberStar, SoftCard } from "@/components/portal/ui";
 import { Bell, Mail, MessageCircle } from "lucide-react";
 
 export function CoachRegistrationAlerts({ coachId }: { coachId?: string }) {
@@ -74,8 +74,11 @@ export function CoachRegistrationAlerts({ coachId }: { coachId?: string }) {
         {alerts.slice(0, 8).map((alert) => (
           <div
             key={alert.id}
-            className={`border p-4 ${alert.read ? "border-border bg-white" : "border-accent/30 bg-white"}`}
+            className={`relative border p-4 ${alert.read ? "border-border bg-white" : "border-accent/30 bg-white"}`}
           >
+            {!alert.read && (
+              <NewMemberStar label="New registration" className="absolute right-3 top-3" />
+            )}
             <div className="flex flex-wrap items-start justify-between gap-3">
               <div>
                 <div className="font-medium text-foreground">{alert.full_name}</div>
