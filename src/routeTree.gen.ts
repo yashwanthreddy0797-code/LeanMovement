@@ -9,100 +9,55 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as ApplyRouteImport } from './routes/apply'
-import { Route as BookRouteImport } from './routes/book'
-import { Route as CheckoutRouteImport } from './routes/checkout'
-import { Route as ContactRouteImport } from './routes/contact'
-import { Route as JoinRouteImport } from './routes/join'
-import { Route as LoginRouteImport } from './routes/login'
-import { Route as PortalRouteImport } from './routes/portal'
-import { Route as PricingRouteImport } from './routes/pricing'
-import { Route as ProgramsRouteImport } from './routes/programs'
 import { Route as SignupRouteImport } from './routes/signup'
-import { Route as BlogIndexRouteImport } from './routes/blog.index'
-import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
-import { Route as JoinIndexRouteImport } from './routes/join.index'
-import { Route as JoinSuccessRouteImport } from './routes/join.success'
+import { Route as ProgramsRouteImport } from './routes/programs'
+import { Route as PricingRouteImport } from './routes/pricing'
+import { Route as PortalRouteImport } from './routes/portal'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as JoinRouteImport } from './routes/join'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CheckoutRouteImport } from './routes/checkout'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as ApplyRouteImport } from './routes/apply'
+import { Route as AboutRouteImport } from './routes/about'
+import { Route as IndexRouteImport } from './routes/index'
 import { Route as PortalIndexRouteImport } from './routes/portal.index'
-import { Route as PortalAdminRouteImport } from './routes/portal.admin'
-import { Route as PortalBookOnboardingRouteImport } from './routes/portal.book-onboarding'
-import { Route as PortalCheckinRouteImport } from './routes/portal.checkin'
-import { Route as PortalCheckoutRouteImport } from './routes/portal.checkout'
-import { Route as PortalCommunityRouteImport } from './routes/portal.community'
-import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
-import { Route as PortalForgotRouteImport } from './routes/portal.forgot'
-import { Route as PortalIntakeRouteImport } from './routes/portal.intake'
-import { Route as PortalLiveRouteImport } from './routes/portal.live'
-import { Route as PortalLoginRouteImport } from './routes/portal.login'
-import { Route as PortalMessagesRouteImport } from './routes/portal.messages'
-import { Route as PortalNutritionRouteImport } from './routes/portal.nutrition'
-import { Route as PortalPaymentsRouteImport } from './routes/portal.payments'
-import { Route as PortalProgressRouteImport } from './routes/portal.progress'
-import { Route as PortalRecordingsRouteImport } from './routes/portal.recordings'
-import { Route as PortalResetPasswordRouteImport } from './routes/portal.reset-password'
-import { Route as PortalSignupRouteImport } from './routes/portal.signup'
+import { Route as JoinIndexRouteImport } from './routes/join.index'
+import { Route as BlogIndexRouteImport } from './routes/blog.index'
 import { Route as PortalWorkoutsRouteImport } from './routes/portal.workouts'
+import { Route as PortalSignupRouteImport } from './routes/portal.signup'
+import { Route as PortalResetPasswordRouteImport } from './routes/portal.reset-password'
+import { Route as PortalRecordingsRouteImport } from './routes/portal.recordings'
+import { Route as PortalProgressRouteImport } from './routes/portal.progress'
+import { Route as PortalPaymentsRouteImport } from './routes/portal.payments'
+import { Route as PortalNutritionRouteImport } from './routes/portal.nutrition'
+import { Route as PortalMessagesRouteImport } from './routes/portal.messages'
+import { Route as PortalLoginRouteImport } from './routes/portal.login'
+import { Route as PortalLiveRouteImport } from './routes/portal.live'
+import { Route as PortalIntakeRouteImport } from './routes/portal.intake'
+import { Route as PortalForgotRouteImport } from './routes/portal.forgot'
+import { Route as PortalDashboardRouteImport } from './routes/portal.dashboard'
+import { Route as PortalCommunityRouteImport } from './routes/portal.community'
+import { Route as PortalCheckoutRouteImport } from './routes/portal.checkout'
+import { Route as PortalCheckinRouteImport } from './routes/portal.checkin'
+import { Route as PortalBookOnboardingRouteImport } from './routes/portal.book-onboarding'
+import { Route as PortalAdminRouteImport } from './routes/portal.admin'
+import { Route as JoinSuccessRouteImport } from './routes/join.success'
+import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
 import { Route as PortalCoachIndexRouteImport } from './routes/portal.coach.index'
-import { Route as PortalCoachAnalyticsRouteImport } from './routes/portal.coach.analytics'
-import { Route as PortalCoachCheckinsRouteImport } from './routes/portal.coach.checkins'
-import { Route as PortalCoachClientsRouteImport } from './routes/portal.coach.clients'
-import { Route as PortalCoachMembersRouteImport } from './routes/portal.coach.members'
-import { Route as PortalCoachMessagesRouteImport } from './routes/portal.coach.messages'
-import { Route as PortalCoachOnboardingRouteImport } from './routes/portal.coach.onboarding'
-import { Route as PortalCoachRecordingsRouteImport } from './routes/portal.coach.recordings'
-import { Route as PortalCoachScheduleRouteImport } from './routes/portal.coach.schedule'
 import { Route as PortalCoachSettingsRouteImport } from './routes/portal.coach.settings'
+import { Route as PortalCoachScheduleRouteImport } from './routes/portal.coach.schedule'
+import { Route as PortalCoachRecordingsRouteImport } from './routes/portal.coach.recordings'
+import { Route as PortalCoachOnboardingRouteImport } from './routes/portal.coach.onboarding'
+import { Route as PortalCoachMessagesRouteImport } from './routes/portal.coach.messages'
+import { Route as PortalCoachMembersRouteImport } from './routes/portal.coach.members'
+import { Route as PortalCoachClientsRouteImport } from './routes/portal.coach.clients'
+import { Route as PortalCoachCheckinsRouteImport } from './routes/portal.coach.checkins'
+import { Route as PortalCoachAnalyticsRouteImport } from './routes/portal.coach.analytics'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApplyRoute = ApplyRouteImport.update({
-  id: '/apply',
-  path: '/apply',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const BookRoute = BookRouteImport.update({
-  id: '/book',
-  path: '/book',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CheckoutRoute = CheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ContactRoute = ContactRouteImport.update({
-  id: '/contact',
-  path: '/contact',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const JoinRoute = JoinRouteImport.update({
-  id: '/join',
-  path: '/join',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const LoginRoute = LoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PortalRoute = PortalRouteImport.update({
-  id: '/portal',
-  path: '/portal',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const PricingRoute = PricingRouteImport.update({
-  id: '/pricing',
-  path: '/pricing',
+const SignupRoute = SignupRouteImport.update({
+  id: '/signup',
+  path: '/signup',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProgramsRoute = ProgramsRouteImport.update({
@@ -110,114 +65,74 @@ const ProgramsRoute = ProgramsRouteImport.update({
   path: '/programs',
   getParentRoute: () => rootRouteImport,
 } as any)
-const SignupRoute = SignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
+const PricingRoute = PricingRouteImport.update({
+  id: '/pricing',
+  path: '/pricing',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogIndexRoute = BlogIndexRouteImport.update({
-  id: '/blog/',
-  path: '/blog/',
+const PortalRoute = PortalRouteImport.update({
+  id: '/portal',
+  path: '/portal',
   getParentRoute: () => rootRouteImport,
 } as any)
-const BlogSlugRoute = BlogSlugRouteImport.update({
-  id: '/blog/$slug',
-  path: '/blog/$slug',
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
-const JoinIndexRoute = JoinIndexRouteImport.update({
+const JoinRoute = JoinRouteImport.update({
+  id: '/join',
+  path: '/join',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CheckoutRoute = CheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplyRoute = ApplyRouteImport.update({
+  id: '/apply',
+  path: '/apply',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AboutRoute = AboutRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => JoinRoute,
-} as any)
-const JoinSuccessRoute = JoinSuccessRouteImport.update({
-  id: '/success',
-  path: '/success',
-  getParentRoute: () => JoinRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PortalIndexRoute = PortalIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => PortalRoute,
 } as any)
-const PortalAdminRoute = PortalAdminRouteImport.update({
-  id: '/admin',
-  path: '/admin',
-  getParentRoute: () => PortalRoute,
+const JoinIndexRoute = JoinIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => JoinRoute,
 } as any)
-const PortalBookOnboardingRoute = PortalBookOnboardingRouteImport.update({
-  id: '/book-onboarding',
-  path: '/book-onboarding',
-  getParentRoute: () => PortalRoute,
+const BlogIndexRoute = BlogIndexRouteImport.update({
+  id: '/blog/',
+  path: '/blog/',
+  getParentRoute: () => rootRouteImport,
 } as any)
-const PortalCheckinRoute = PortalCheckinRouteImport.update({
-  id: '/checkin',
-  path: '/checkin',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCheckoutRoute = PortalCheckoutRouteImport.update({
-  id: '/checkout',
-  path: '/checkout',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCommunityRoute = PortalCommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalDashboardRoute = PortalDashboardRouteImport.update({
-  id: '/dashboard',
-  path: '/dashboard',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalForgotRoute = PortalForgotRouteImport.update({
-  id: '/forgot',
-  path: '/forgot',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalIntakeRoute = PortalIntakeRouteImport.update({
-  id: '/intake',
-  path: '/intake',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalLiveRoute = PortalLiveRouteImport.update({
-  id: '/live',
-  path: '/live',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalLoginRoute = PortalLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalMessagesRoute = PortalMessagesRouteImport.update({
-  id: '/messages',
-  path: '/messages',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalNutritionRoute = PortalNutritionRouteImport.update({
-  id: '/nutrition',
-  path: '/nutrition',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalPaymentsRoute = PortalPaymentsRouteImport.update({
-  id: '/payments',
-  path: '/payments',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalProgressRoute = PortalProgressRouteImport.update({
-  id: '/progress',
-  path: '/progress',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalRecordingsRoute = PortalRecordingsRouteImport.update({
-  id: '/recordings',
-  path: '/recordings',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalResetPasswordRoute = PortalResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
+const PortalWorkoutsRoute = PortalWorkoutsRouteImport.update({
+  id: '/workouts',
+  path: '/workouts',
   getParentRoute: () => PortalRoute,
 } as any)
 const PortalSignupRoute = PortalSignupRouteImport.update({
@@ -225,49 +140,104 @@ const PortalSignupRoute = PortalSignupRouteImport.update({
   path: '/signup',
   getParentRoute: () => PortalRoute,
 } as any)
-const PortalWorkoutsRoute = PortalWorkoutsRouteImport.update({
-  id: '/workouts',
-  path: '/workouts',
+const PortalResetPasswordRoute = PortalResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
   getParentRoute: () => PortalRoute,
+} as any)
+const PortalRecordingsRoute = PortalRecordingsRouteImport.update({
+  id: '/recordings',
+  path: '/recordings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalProgressRoute = PortalProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalPaymentsRoute = PortalPaymentsRouteImport.update({
+  id: '/payments',
+  path: '/payments',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalNutritionRoute = PortalNutritionRouteImport.update({
+  id: '/nutrition',
+  path: '/nutrition',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalMessagesRoute = PortalMessagesRouteImport.update({
+  id: '/messages',
+  path: '/messages',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalLoginRoute = PortalLoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalLiveRoute = PortalLiveRouteImport.update({
+  id: '/live',
+  path: '/live',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalIntakeRoute = PortalIntakeRouteImport.update({
+  id: '/intake',
+  path: '/intake',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalForgotRoute = PortalForgotRouteImport.update({
+  id: '/forgot',
+  path: '/forgot',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalDashboardRoute = PortalDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCommunityRoute = PortalCommunityRouteImport.update({
+  id: '/community',
+  path: '/community',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCheckoutRoute = PortalCheckoutRouteImport.update({
+  id: '/checkout',
+  path: '/checkout',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCheckinRoute = PortalCheckinRouteImport.update({
+  id: '/checkin',
+  path: '/checkin',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalBookOnboardingRoute = PortalBookOnboardingRouteImport.update({
+  id: '/book-onboarding',
+  path: '/book-onboarding',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalAdminRoute = PortalAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => PortalRoute,
+} as any)
+const JoinSuccessRoute = JoinSuccessRouteImport.update({
+  id: '/success',
+  path: '/success',
+  getParentRoute: () => JoinRoute,
+} as any)
+const BlogSlugRoute = BlogSlugRouteImport.update({
+  id: '/blog/$slug',
+  path: '/blog/$slug',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const PortalCoachIndexRoute = PortalCoachIndexRouteImport.update({
   id: '/coach/',
   path: '/coach/',
   getParentRoute: () => PortalRoute,
 } as any)
-const PortalCoachAnalyticsRoute = PortalCoachAnalyticsRouteImport.update({
-  id: '/coach/analytics',
-  path: '/coach/analytics',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCoachCheckinsRoute = PortalCoachCheckinsRouteImport.update({
-  id: '/coach/checkins',
-  path: '/coach/checkins',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCoachClientsRoute = PortalCoachClientsRouteImport.update({
-  id: '/coach/clients',
-  path: '/coach/clients',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCoachMembersRoute = PortalCoachMembersRouteImport.update({
-  id: '/coach/members',
-  path: '/coach/members',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCoachMessagesRoute = PortalCoachMessagesRouteImport.update({
-  id: '/coach/messages',
-  path: '/coach/messages',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCoachOnboardingRoute = PortalCoachOnboardingRouteImport.update({
-  id: '/coach/onboarding',
-  path: '/coach/onboarding',
-  getParentRoute: () => PortalRoute,
-} as any)
-const PortalCoachRecordingsRoute = PortalCoachRecordingsRouteImport.update({
-  id: '/coach/recordings',
-  path: '/coach/recordings',
+const PortalCoachSettingsRoute = PortalCoachSettingsRouteImport.update({
+  id: '/coach/settings',
+  path: '/coach/settings',
   getParentRoute: () => PortalRoute,
 } as any)
 const PortalCoachScheduleRoute = PortalCoachScheduleRouteImport.update({
@@ -275,9 +245,39 @@ const PortalCoachScheduleRoute = PortalCoachScheduleRouteImport.update({
   path: '/coach/schedule',
   getParentRoute: () => PortalRoute,
 } as any)
-const PortalCoachSettingsRoute = PortalCoachSettingsRouteImport.update({
-  id: '/coach/settings',
-  path: '/coach/settings',
+const PortalCoachRecordingsRoute = PortalCoachRecordingsRouteImport.update({
+  id: '/coach/recordings',
+  path: '/coach/recordings',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachOnboardingRoute = PortalCoachOnboardingRouteImport.update({
+  id: '/coach/onboarding',
+  path: '/coach/onboarding',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachMessagesRoute = PortalCoachMessagesRouteImport.update({
+  id: '/coach/messages',
+  path: '/coach/messages',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachMembersRoute = PortalCoachMembersRouteImport.update({
+  id: '/coach/members',
+  path: '/coach/members',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachClientsRoute = PortalCoachClientsRouteImport.update({
+  id: '/coach/clients',
+  path: '/coach/clients',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachCheckinsRoute = PortalCoachCheckinsRouteImport.update({
+  id: '/coach/checkins',
+  path: '/coach/checkins',
+  getParentRoute: () => PortalRoute,
+} as any)
+const PortalCoachAnalyticsRoute = PortalCoachAnalyticsRouteImport.update({
+  id: '/coach/analytics',
+  path: '/coach/analytics',
   getParentRoute: () => PortalRoute,
 } as any)
 
@@ -582,74 +582,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/apply': {
-      id: '/apply'
-      path: '/apply'
-      fullPath: '/apply'
-      preLoaderRoute: typeof ApplyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/book': {
-      id: '/book'
-      path: '/book'
-      fullPath: '/book'
-      preLoaderRoute: typeof BookRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/checkout': {
-      id: '/checkout'
-      path: '/checkout'
-      fullPath: '/checkout'
-      preLoaderRoute: typeof CheckoutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/contact': {
-      id: '/contact'
-      path: '/contact'
-      fullPath: '/contact'
-      preLoaderRoute: typeof ContactRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/join': {
-      id: '/join'
-      path: '/join'
-      fullPath: '/join'
-      preLoaderRoute: typeof JoinRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/login': {
-      id: '/login'
-      path: '/login'
-      fullPath: '/login'
-      preLoaderRoute: typeof LoginRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/portal': {
-      id: '/portal'
-      path: '/portal'
-      fullPath: '/portal'
-      preLoaderRoute: typeof PortalRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/pricing': {
-      id: '/pricing'
-      path: '/pricing'
-      fullPath: '/pricing'
-      preLoaderRoute: typeof PricingRouteImport
+    '/signup': {
+      id: '/signup'
+      path: '/signup'
+      fullPath: '/signup'
+      preLoaderRoute: typeof SignupRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/programs': {
@@ -659,40 +596,75 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgramsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/signup': {
-      id: '/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof SignupRouteImport
+    '/pricing': {
+      id: '/pricing'
+      path: '/pricing'
+      fullPath: '/pricing'
+      preLoaderRoute: typeof PricingRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/': {
-      id: '/blog/'
-      path: '/blog'
-      fullPath: '/blog/'
-      preLoaderRoute: typeof BlogIndexRouteImport
+    '/portal': {
+      id: '/portal'
+      path: '/portal'
+      fullPath: '/portal'
+      preLoaderRoute: typeof PortalRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/blog/$slug': {
-      id: '/blog/$slug'
-      path: '/blog/$slug'
-      fullPath: '/blog/$slug'
-      preLoaderRoute: typeof BlogSlugRouteImport
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/join/': {
-      id: '/join/'
+    '/join': {
+      id: '/join'
+      path: '/join'
+      fullPath: '/join'
+      preLoaderRoute: typeof JoinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/checkout': {
+      id: '/checkout'
+      path: '/checkout'
+      fullPath: '/checkout'
+      preLoaderRoute: typeof CheckoutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/apply': {
+      id: '/apply'
+      path: '/apply'
+      fullPath: '/apply'
+      preLoaderRoute: typeof ApplyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
       path: '/'
-      fullPath: '/join/'
-      preLoaderRoute: typeof JoinIndexRouteImport
-      parentRoute: typeof JoinRoute
-    }
-    '/join/success': {
-      id: '/join/success'
-      path: '/success'
-      fullPath: '/join/success'
-      preLoaderRoute: typeof JoinSuccessRouteImport
-      parentRoute: typeof JoinRoute
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/portal/': {
       id: '/portal/'
@@ -701,116 +673,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalIndexRouteImport
       parentRoute: typeof PortalRoute
     }
-    '/portal/admin': {
-      id: '/portal/admin'
-      path: '/admin'
-      fullPath: '/portal/admin'
-      preLoaderRoute: typeof PortalAdminRouteImport
-      parentRoute: typeof PortalRoute
+    '/join/': {
+      id: '/join/'
+      path: '/'
+      fullPath: '/join/'
+      preLoaderRoute: typeof JoinIndexRouteImport
+      parentRoute: typeof JoinRoute
     }
-    '/portal/book-onboarding': {
-      id: '/portal/book-onboarding'
-      path: '/book-onboarding'
-      fullPath: '/portal/book-onboarding'
-      preLoaderRoute: typeof PortalBookOnboardingRouteImport
-      parentRoute: typeof PortalRoute
+    '/blog/': {
+      id: '/blog/'
+      path: '/blog'
+      fullPath: '/blog/'
+      preLoaderRoute: typeof BlogIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
-    '/portal/checkin': {
-      id: '/portal/checkin'
-      path: '/checkin'
-      fullPath: '/portal/checkin'
-      preLoaderRoute: typeof PortalCheckinRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/checkout': {
-      id: '/portal/checkout'
-      path: '/checkout'
-      fullPath: '/portal/checkout'
-      preLoaderRoute: typeof PortalCheckoutRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/community': {
-      id: '/portal/community'
-      path: '/community'
-      fullPath: '/portal/community'
-      preLoaderRoute: typeof PortalCommunityRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/dashboard': {
-      id: '/portal/dashboard'
-      path: '/dashboard'
-      fullPath: '/portal/dashboard'
-      preLoaderRoute: typeof PortalDashboardRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/forgot': {
-      id: '/portal/forgot'
-      path: '/forgot'
-      fullPath: '/portal/forgot'
-      preLoaderRoute: typeof PortalForgotRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/intake': {
-      id: '/portal/intake'
-      path: '/intake'
-      fullPath: '/portal/intake'
-      preLoaderRoute: typeof PortalIntakeRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/live': {
-      id: '/portal/live'
-      path: '/live'
-      fullPath: '/portal/live'
-      preLoaderRoute: typeof PortalLiveRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/login': {
-      id: '/portal/login'
-      path: '/login'
-      fullPath: '/portal/login'
-      preLoaderRoute: typeof PortalLoginRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/messages': {
-      id: '/portal/messages'
-      path: '/messages'
-      fullPath: '/portal/messages'
-      preLoaderRoute: typeof PortalMessagesRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/nutrition': {
-      id: '/portal/nutrition'
-      path: '/nutrition'
-      fullPath: '/portal/nutrition'
-      preLoaderRoute: typeof PortalNutritionRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/payments': {
-      id: '/portal/payments'
-      path: '/payments'
-      fullPath: '/portal/payments'
-      preLoaderRoute: typeof PortalPaymentsRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/progress': {
-      id: '/portal/progress'
-      path: '/progress'
-      fullPath: '/portal/progress'
-      preLoaderRoute: typeof PortalProgressRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/recordings': {
-      id: '/portal/recordings'
-      path: '/recordings'
-      fullPath: '/portal/recordings'
-      preLoaderRoute: typeof PortalRecordingsRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/reset-password': {
-      id: '/portal/reset-password'
-      path: '/reset-password'
-      fullPath: '/portal/reset-password'
-      preLoaderRoute: typeof PortalResetPasswordRouteImport
+    '/portal/workouts': {
+      id: '/portal/workouts'
+      path: '/workouts'
+      fullPath: '/portal/workouts'
+      preLoaderRoute: typeof PortalWorkoutsRouteImport
       parentRoute: typeof PortalRoute
     }
     '/portal/signup': {
@@ -820,12 +701,131 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalSignupRouteImport
       parentRoute: typeof PortalRoute
     }
-    '/portal/workouts': {
-      id: '/portal/workouts'
-      path: '/workouts'
-      fullPath: '/portal/workouts'
-      preLoaderRoute: typeof PortalWorkoutsRouteImport
+    '/portal/reset-password': {
+      id: '/portal/reset-password'
+      path: '/reset-password'
+      fullPath: '/portal/reset-password'
+      preLoaderRoute: typeof PortalResetPasswordRouteImport
       parentRoute: typeof PortalRoute
+    }
+    '/portal/recordings': {
+      id: '/portal/recordings'
+      path: '/recordings'
+      fullPath: '/portal/recordings'
+      preLoaderRoute: typeof PortalRecordingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/progress': {
+      id: '/portal/progress'
+      path: '/progress'
+      fullPath: '/portal/progress'
+      preLoaderRoute: typeof PortalProgressRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/payments': {
+      id: '/portal/payments'
+      path: '/payments'
+      fullPath: '/portal/payments'
+      preLoaderRoute: typeof PortalPaymentsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/nutrition': {
+      id: '/portal/nutrition'
+      path: '/nutrition'
+      fullPath: '/portal/nutrition'
+      preLoaderRoute: typeof PortalNutritionRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/messages': {
+      id: '/portal/messages'
+      path: '/messages'
+      fullPath: '/portal/messages'
+      preLoaderRoute: typeof PortalMessagesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/login': {
+      id: '/portal/login'
+      path: '/login'
+      fullPath: '/portal/login'
+      preLoaderRoute: typeof PortalLoginRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/live': {
+      id: '/portal/live'
+      path: '/live'
+      fullPath: '/portal/live'
+      preLoaderRoute: typeof PortalLiveRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/intake': {
+      id: '/portal/intake'
+      path: '/intake'
+      fullPath: '/portal/intake'
+      preLoaderRoute: typeof PortalIntakeRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/forgot': {
+      id: '/portal/forgot'
+      path: '/forgot'
+      fullPath: '/portal/forgot'
+      preLoaderRoute: typeof PortalForgotRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/dashboard': {
+      id: '/portal/dashboard'
+      path: '/dashboard'
+      fullPath: '/portal/dashboard'
+      preLoaderRoute: typeof PortalDashboardRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/community': {
+      id: '/portal/community'
+      path: '/community'
+      fullPath: '/portal/community'
+      preLoaderRoute: typeof PortalCommunityRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/checkout': {
+      id: '/portal/checkout'
+      path: '/checkout'
+      fullPath: '/portal/checkout'
+      preLoaderRoute: typeof PortalCheckoutRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/checkin': {
+      id: '/portal/checkin'
+      path: '/checkin'
+      fullPath: '/portal/checkin'
+      preLoaderRoute: typeof PortalCheckinRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/book-onboarding': {
+      id: '/portal/book-onboarding'
+      path: '/book-onboarding'
+      fullPath: '/portal/book-onboarding'
+      preLoaderRoute: typeof PortalBookOnboardingRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/admin': {
+      id: '/portal/admin'
+      path: '/admin'
+      fullPath: '/portal/admin'
+      preLoaderRoute: typeof PortalAdminRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/join/success': {
+      id: '/join/success'
+      path: '/success'
+      fullPath: '/join/success'
+      preLoaderRoute: typeof JoinSuccessRouteImport
+      parentRoute: typeof JoinRoute
+    }
+    '/blog/$slug': {
+      id: '/blog/$slug'
+      path: '/blog/$slug'
+      fullPath: '/blog/$slug'
+      preLoaderRoute: typeof BlogSlugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/portal/coach/': {
       id: '/portal/coach/'
@@ -834,53 +834,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalCoachIndexRouteImport
       parentRoute: typeof PortalRoute
     }
-    '/portal/coach/analytics': {
-      id: '/portal/coach/analytics'
-      path: '/coach/analytics'
-      fullPath: '/portal/coach/analytics'
-      preLoaderRoute: typeof PortalCoachAnalyticsRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/coach/checkins': {
-      id: '/portal/coach/checkins'
-      path: '/coach/checkins'
-      fullPath: '/portal/coach/checkins'
-      preLoaderRoute: typeof PortalCoachCheckinsRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/coach/clients': {
-      id: '/portal/coach/clients'
-      path: '/coach/clients'
-      fullPath: '/portal/coach/clients'
-      preLoaderRoute: typeof PortalCoachClientsRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/coach/members': {
-      id: '/portal/coach/members'
-      path: '/coach/members'
-      fullPath: '/portal/coach/members'
-      preLoaderRoute: typeof PortalCoachMembersRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/coach/messages': {
-      id: '/portal/coach/messages'
-      path: '/coach/messages'
-      fullPath: '/portal/coach/messages'
-      preLoaderRoute: typeof PortalCoachMessagesRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/coach/onboarding': {
-      id: '/portal/coach/onboarding'
-      path: '/coach/onboarding'
-      fullPath: '/portal/coach/onboarding'
-      preLoaderRoute: typeof PortalCoachOnboardingRouteImport
-      parentRoute: typeof PortalRoute
-    }
-    '/portal/coach/recordings': {
-      id: '/portal/coach/recordings'
-      path: '/coach/recordings'
-      fullPath: '/portal/coach/recordings'
-      preLoaderRoute: typeof PortalCoachRecordingsRouteImport
+    '/portal/coach/settings': {
+      id: '/portal/coach/settings'
+      path: '/coach/settings'
+      fullPath: '/portal/coach/settings'
+      preLoaderRoute: typeof PortalCoachSettingsRouteImport
       parentRoute: typeof PortalRoute
     }
     '/portal/coach/schedule': {
@@ -890,11 +848,53 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PortalCoachScheduleRouteImport
       parentRoute: typeof PortalRoute
     }
-    '/portal/coach/settings': {
-      id: '/portal/coach/settings'
-      path: '/coach/settings'
-      fullPath: '/portal/coach/settings'
-      preLoaderRoute: typeof PortalCoachSettingsRouteImport
+    '/portal/coach/recordings': {
+      id: '/portal/coach/recordings'
+      path: '/coach/recordings'
+      fullPath: '/portal/coach/recordings'
+      preLoaderRoute: typeof PortalCoachRecordingsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/onboarding': {
+      id: '/portal/coach/onboarding'
+      path: '/coach/onboarding'
+      fullPath: '/portal/coach/onboarding'
+      preLoaderRoute: typeof PortalCoachOnboardingRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/messages': {
+      id: '/portal/coach/messages'
+      path: '/coach/messages'
+      fullPath: '/portal/coach/messages'
+      preLoaderRoute: typeof PortalCoachMessagesRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/members': {
+      id: '/portal/coach/members'
+      path: '/coach/members'
+      fullPath: '/portal/coach/members'
+      preLoaderRoute: typeof PortalCoachMembersRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/clients': {
+      id: '/portal/coach/clients'
+      path: '/coach/clients'
+      fullPath: '/portal/coach/clients'
+      preLoaderRoute: typeof PortalCoachClientsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/checkins': {
+      id: '/portal/coach/checkins'
+      path: '/coach/checkins'
+      fullPath: '/portal/coach/checkins'
+      preLoaderRoute: typeof PortalCoachCheckinsRouteImport
+      parentRoute: typeof PortalRoute
+    }
+    '/portal/coach/analytics': {
+      id: '/portal/coach/analytics'
+      path: '/coach/analytics'
+      fullPath: '/portal/coach/analytics'
+      preLoaderRoute: typeof PortalCoachAnalyticsRouteImport
       parentRoute: typeof PortalRoute
     }
   }
@@ -998,3 +998,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

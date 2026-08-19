@@ -10,29 +10,21 @@ const SLUG_TO_PLAN: Record<PlanSlug, MembershipPlan> = {
   founding: "monthly",
 };
 
+/** Single source of truth for what members are charged, in INR. */
 export const PROGRAM_AMOUNT_INR = 6969;
 
-/**
- * TEMP live E2E test charge. Flip back to PROGRAM_AMOUNT_INR (6969) after testing.
- * Env RAZORPAY_CHARGE_AMOUNT_INR still wins when set.
- */
-const TEMP_TEST_CHARGE_INR = 50;
+/** Amounts left over from earlier pricing and from the ₹50 live-payment test. */
+const LEGACY_AMOUNTS_INR = new Set([50, 5999, 9999, 14999]);
 
 /**
- * Amount Razorpay actually charges.
- * Website marketing copy keeps using PROGRAM_AMOUNT_INR (₹6969).
+ * Price to charge for a membership. A stored amount is only trusted when it is a
+ * real current price, so missing or legacy amounts are re-quoted at PROGRAM_AMOUNT_INR.
  */
-export function chargeAmountInr(): number {
-  const raw = process.env.RAZORPAY_CHARGE_AMOUNT_INR?.trim();
-  if (raw) {
-    const n = Number(raw);
-    if (Number.isFinite(n) && n > 0) return Math.round(n);
+export function resolveChargeAmountInr(amount: number | null | undefined): number {
+  if (amount == null || amount <= 0 || LEGACY_AMOUNTS_INR.has(amount)) {
+    return PROGRAM_AMOUNT_INR;
   }
-  return TEMP_TEST_CHARGE_INR;
-}
-
-export function isChargeAmountOverridden(): boolean {
-  return chargeAmountInr() !== PROGRAM_AMOUNT_INR;
+  return amount;
 }
 
 export function toMembershipPlan(slug: string): MembershipPlan {
@@ -40,7 +32,7 @@ export function toMembershipPlan(slug: string): MembershipPlan {
 }
 
 export function planAmountInr(_plan?: MembershipPlan): number {
-  return chargeAmountInr();
+  return PROGRAM_AMOUNT_INR;
 }
 
 export function planSlugFromSearch(_slug?: string | null): PlanSlug {

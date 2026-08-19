@@ -1,6 +1,6 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import type { MembershipPlan } from "@/lib/supabase/types";
-import { chargeAmountInr, isChargeAmountOverridden, PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
+import { PROGRAM_AMOUNT_INR } from "@/lib/enrollment/plans";
 
 type RazorpayOrder = {
   id: string;
@@ -133,20 +133,46 @@ export async function createRazorpayOrder(input: {
 }
 
 /** Process-local cache so we don't create a new Razorpay plan on every checkout. */
-const cachedMonthlyPlanIdByAmount = new Map<number, string>();
+let cachedMonthlyPlanId: string | null = null;
 
-/** Ensure a monthly plan exists - uses env plan id or creates one via API. */
-export async function ensureMonthlyPlanId() {
-  const amountInr = chargeAmountInr();
-  // Skip pinned ₹6969 plan while a test charge override is active.
-  if (!isChargeAmountOverridden() && process.env.RAZORPAY_PLAN_ID_MONTHLY) {
-    return process.env.RAZORPAY_PLAN_ID_MONTHLY;
+/** A pinned plan is only reused when it still bills the current program price. */
+async function planBillsProgramAmount(
+  planId: string,
+  amountPaise: number,
+  keyId: string,
+  keySecret: string,
+) {
+  try {
+    const response = await fetch(`https://api.razorpay.com/v1/plans/${planId}`, {
+      headers: { Authorization: authHeader(keyId, keySecret) },
+    });
+    if (!response.ok) return false;
+    const plan = (await response.json()) as {
+      item?: { amount?: number; currency?: string };
+    };
+    return plan.item?.amount === amountPaise && (plan.item?.currency ?? "INR") === "INR";
+  } catch {
+    return false;
   }
-  const cached = cachedMonthlyPlanIdByAmount.get(amountInr);
-  if (cached) return cached;
+}
+
+/** Ensure a monthly ₹6969 plan exists - uses env plan id or creates one via API. */
+export async function ensureMonthlyPlanId() {
+  if (cachedMonthlyPlanId) return cachedMonthlyPlanId;
 
   const { keyId, keySecret } = getCredentials();
-  const amountPaise = Math.round(amountInr * 100);
+  const amountPaise = Math.round(PROGRAM_AMOUNT_INR * 100);
+
+  const pinnedPlanId = process.env.RAZORPAY_PLAN_ID_MONTHLY?.trim();
+  if (pinnedPlanId) {
+    if (await planBillsProgramAmount(pinnedPlanId, amountPaise, keyId, keySecret)) {
+      cachedMonthlyPlanId = pinnedPlanId;
+      return pinnedPlanId;
+    }
+    console.warn(
+      `[razorpay] Ignoring RAZORPAY_PLAN_ID_MONTHLY=${pinnedPlanId}: it does not bill ₹${PROGRAM_AMOUNT_INR}.`,
+    );
+  }
 
   const response = await fetch("https://api.razorpay.com/v1/plans", {
     method: "POST",
@@ -158,10 +184,7 @@ export async function ensureMonthlyPlanId() {
       period: "monthly",
       interval: 1,
       item: {
-        name:
-          amountInr === PROGRAM_AMOUNT_INR
-            ? "LEANMOVEMENT Lean Movement"
-            : `LEANMOVEMENT Lean Movement (test ₹${amountInr})`,
+        name: "LEANMOVEMENT Lean Movement",
         amount: amountPaise,
         currency: "INR",
         description: "Live coaching + personalised nutrition - monthly.",
@@ -176,7 +199,7 @@ export async function ensureMonthlyPlanId() {
   }
 
   const plan = (await response.json()) as { id: string };
-  cachedMonthlyPlanIdByAmount.set(amountInr, plan.id);
+  cachedMonthlyPlanId = plan.id;
   return plan.id;
 }
 

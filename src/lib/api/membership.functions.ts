@@ -2,9 +2,8 @@ import { createServerFn } from "@tanstack/react-start";
 import { z } from "zod";
 import { accessTokenSchema } from "@/lib/api/auth-input";
 import {
-  chargeAmountInr,
-  isChargeAmountOverridden,
   planAmountInr,
+  resolveChargeAmountInr,
   toMembershipPlan,
   PROGRAM_AMOUNT_INR,
 } from "@/lib/enrollment/plans";
@@ -73,13 +72,7 @@ export const getMemberCheckout = createServerFn({ method: "GET" })
     const config = Object.fromEntries((configRows ?? []).map((r) => [r.key, r.value]));
 
     const plan = membership?.plan ?? "monthly";
-    const staleAmounts = new Set([5999, 9999, 14999]);
-    const rawAmount = membership?.amount_inr;
-    const amountInr = isChargeAmountOverridden()
-      ? chargeAmountInr()
-      : rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
-        ? planAmountInr(plan)
-        : rawAmount;
+    const amountInr = resolveChargeAmountInr(membership?.amount_inr);
 
     return {
       ok: true as const,
@@ -153,14 +146,7 @@ async function createCheckoutForUser(
     .maybeSingle();
 
   const plan = (membership?.plan ?? "monthly") as MembershipPlan;
-  const staleAmounts = new Set([5999, 9999, 14999]);
-  const rawAmount = membership?.amount_inr;
-  // Test override wins so live E2E always charges the temporary amount (e.g. ₹50).
-  const amountInr = isChargeAmountOverridden()
-    ? chargeAmountInr()
-    : rawAmount == null || rawAmount <= 0 || staleAmounts.has(rawAmount)
-      ? planAmountInr(plan)
-      : rawAmount;
+  const amountInr = resolveChargeAmountInr(membership?.amount_inr);
   const kind = opts?.kind ?? (membership?.status === "active" ? "renewal" : "initial");
 
   // Prefer Razorpay Subscriptions for autopay when available

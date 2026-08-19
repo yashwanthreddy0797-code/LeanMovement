@@ -3,7 +3,7 @@ import { z } from "zod";
 import { accessTokenSchema } from "@/lib/api/auth-input";
 import { getSupabaseAdmin } from "@/lib/supabase/server";
 import { authErrorMessage, requireCoachCaller } from "@/lib/supabase/server-auth";
-import { planAmountInr, toMembershipPlan } from "@/lib/enrollment/plans";
+import { planAmountInr, resolveChargeAmountInr, toMembershipPlan } from "@/lib/enrollment/plans";
 import type { MembershipPlan } from "@/lib/supabase/types";
 import {
   type EnrollmentRecord,
@@ -278,11 +278,14 @@ export const linkEnrollmentAfterSignup = createServerFn({ method: "POST" })
 
     if (tableIntent.row) {
       plan = tableIntent.row.plan as MembershipPlan;
-      amountInr = tableIntent.row.amount_inr ?? planAmountInr(plan);
+      amountInr = tableIntent.row.amount_inr;
     } else if (configIntent) {
       plan = configIntent.plan;
       amountInr = configIntent.amount_inr;
     }
+
+    // An intent saved under older pricing must never decide what the member pays.
+    amountInr = resolveChargeAmountInr(amountInr);
 
     const { error } = await admin
       .from("memberships")
